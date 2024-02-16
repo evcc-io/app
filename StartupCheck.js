@@ -8,7 +8,7 @@ function CheckForSavedURL() {
   const checkForSavedURL = async () => {
     const url = await AsyncStorage.getItem("serverURL");
     if (url) {
-      navigation.navigate("WebView", { url });
+      //navigation.navigate("WebView", { url });
     }
   };
 
