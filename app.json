@@ -15,10 +15,16 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocalNetworkUsageDescription": "This app uses local network to discover your evcc installation."
+      }
+    },
+    "android": {
+      "permissions": ["android.permission.ACCESS_NETWORK_STATE", "android.permission.ACCESS_WIFI_STATE", "android.permission.CHANGE_WIFI_MULTICAST_STATE"]
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
   }
 }

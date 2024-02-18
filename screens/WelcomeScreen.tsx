@@ -1,17 +1,17 @@
 import React from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 
-const WelcomeScreen = ({ navigation }) => {
+export default function WelcomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Welcome to evcc</Text>
       <Button
         title="Get Started"
-        onPress={() => navigation.navigate("URLInput")}
+        onPress={() => navigation.navigate("Server")}
       />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -24,5 +24,3 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 });
-
-export default WelcomeScreen;
