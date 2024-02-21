@@ -5,26 +5,46 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash-dark.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#1c2445"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
       "supportsTablet": true,
+      "bundleIdentifier": "io.evcc.app",
       "infoPlist": {
         "NSLocalNetworkUsageDescription": "This app uses local network to discover your evcc installation."
       }
-    },
+    },    
     "android": {
-      "permissions": ["android.permission.ACCESS_NETWORK_STATE", "android.permission.ACCESS_WIFI_STATE", "android.permission.CHANGE_WIFI_MULTICAST_STATE"]
+      "permissions": ["android.permission.ACCESS_NETWORK_STATE", "android.permission.ACCESS_WIFI_STATE", "android.permission.CHANGE_WIFI_MULTICAST_STATE"],
+      "package": "io.evcc.app"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "jsEngine": "jsc",
+    "plugins": [
+      "react-native-v8",
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/Montserrat-Bold.ttf",
+            "./assets/fonts/Montserrat-Medium.ttf"
+          ]
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "fafa06a3-8bba-4177-b19e-38ac748eb360"
+      }
     },
   }
 }
