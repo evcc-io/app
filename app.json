@@ -26,7 +26,8 @@
       "package": "io.evcc.app"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "build": { "babel": { "include": [ "@ui-kitten/components" ] } }
     },
     "jsEngine": "jsc",
     "plugins": [

@@ -1,85 +1,115 @@
 import React, { useState } from "react";
-import axios from "axios";
 import Zeroconf from "react-native-zeroconf";
-import { View, TextInput, Button, StyleSheet, Alert, Text } from "react-native";
+import { View } from "react-native";
+import { Layout, Text, Button, Spinner } from "@ui-kitten/components";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useAppContext } from "../components/AppContext";
+import ServerList from "../components/ServerList";
 
-export default function ServerScreen() {
-  const [url, setUrl] = useState("");
+function LoadingIndicator() {
+  return (
+    <View style={{ justifyContent: "center", alignItems: "center" }}>
+      <Spinner status="control" size="small" />
+    </View>
+  );
+}
+
+let zeroconf = null;
+
+export default function ServerScreen({ navigation }) {
+  const [searching, setSearching] = useState(false);
+  const [found, setFound] = useState([]);
   const { updateServerUrl } = useAppContext();
 
-  const validateAndSaveURL = async () => {
-    try {
-      const response = await axios.get(url);
-      if (response.data.includes("evcc")) {
-        updateServerUrl(url);
-      } else {
-        Alert.alert(
-          "Validation Error",
-          "The URL does not contain the required content.",
-        );
-      }
-    } catch (error) {
-      Alert.alert(
-        "Error",
-        "Failed to fetch the URL. Please check the URL and your network connection.",
-      );
-    }
-  };
-
   const scanNetwork = () => {
-    const zeroconf = new Zeroconf();
+    setSearching(true);
+    setFound([]);
+    if (zeroconf) {
+      zeroconf.stop();
+    }
+    zeroconf = new Zeroconf();
     console.log({ zeroconf }, zeroconf.scan);
     zeroconf.scan("http", "tcp", "local.");
     zeroconf.on("resolved", (service) => {
       console.log("resolved", service);
       if (service.txt && service.name?.includes("evcc")) {
         console.log("found evcc", service);
-        zeroconf.stop();
         const {
+          name,
           host,
           port,
           txt: { path },
         } = service;
-        setUrl(`http://${host}:${port}${path}`);
+        const entry = {
+          title: name,
+          url: `http://${host}:${port}${path}`,
+        };
+        setFound((prev) => [...prev, entry]);
       }
     });
     zeroconf.on("error", (error) => {
+      setSearching(false);
       console.log("error", error);
     });
     zeroconf.on("stop", () => {
+      setSearching(false);
       console.log("stop");
     });
   };
 
+  const useDemoServer = () => {
+    updateServerUrl("https://demo.evcc.io/");
+  };
+
+  const manualEntry = () => {
+    navigation.navigate("ServerManual");
+  };
+
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        onChangeText={setUrl}
-        value={url}
-        placeholder="http://evcc.local:7070/"
-        autoCapitalize="none"
-      />
-      <Button title="Go" onPress={validateAndSaveURL} />
-      <Button title="Detect" onPress={scanNetwork} />
-    </View>
+    <Layout style={{ flex: 1, paddingHorizontal: 16 }}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <Layout style={{ flex: 1 }}>
+          <Text style={{ marginVertical: 32 }} category="h2">
+            Server einrichten
+          </Text>
+          <Text style={{ marginBottom: 32 }} category="p1">
+            Durchsuche dein Netzwerk und deine evcc Installation zu finden.
+          </Text>
+
+          <Button
+            style={{ marginTop: 8, marginBottom: 32 }}
+            appearance="filled"
+            size="giant"
+            onPress={scanNetwork}
+            accessoryLeft={searching ? LoadingIndicator : null}
+          >
+            Suche starten
+          </Button>
+          <ServerList
+            entries={found}
+            onSelect={(url) => updateServerUrl(url)}
+          />
+        </Layout>
+        <Layout style={{ paddingVertical: 16 }}>
+          <Button
+            style={{ marginVertical: 8 }}
+            appearance="outline"
+            status="primary"
+            onPress={manualEntry}
+          >
+            Adresse manuell eingeben
+          </Button>
+          <Button
+            style={{ marginVertical: 8 }}
+            appearance="ghost"
+            status="basic"
+            onPress={useDemoServer}
+          >
+            Testinstanz verwenden
+          </Button>
+        </Layout>
+      </SafeAreaView>
+    </Layout>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: 20,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "gray",
-    marginBottom: 20,
-    paddingHorizontal: 10,
-    height: 40,
-    fontSize: 18,
-  },
-});

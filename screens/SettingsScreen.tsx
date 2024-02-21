@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { View, Text, Button, TextInput, StyleSheet } from "react-native";
+import { Layout, Text, Button, Input } from "@ui-kitten/components";
+import { SafeAreaView } from "react-native-safe-area-context";
+
 import { useAppContext } from "../components/AppContext";
 
 export default function SettingsScreen({ navigation }) {
@@ -16,33 +18,34 @@ export default function SettingsScreen({ navigation }) {
   }
 
   return (
-    <View>
-      <Button title="Server zurücksetzen" onPress={() => updateServerUrl("")} />
-      <Text>-</Text>
-      <TextInput
-        style={styles.input}
-        value={url}
-        onChangeText={setUrl}
-        autoCapitalize="none"
-      />
-      <Button title="Save" onPress={saveServer} />
-      <Button title="Done" onPress={navigateToMain} />
-    </View>
+    <Layout style={{ flex: 1, paddingHorizontal: 16 }}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <Text category="h4" style={{ marginTop: 0, marginBottom: 32 }}>
+          Server ändern
+        </Text>
+        <Input
+          style={{ marginBottom: 16 }}
+          placeholder="http://evcc.local:7070/"
+          value={url}
+          size="large"
+          onChangeText={(nextValue) => setUrl(nextValue)}
+        />
+        <Button
+          style={{ marginVertical: 16 }}
+          appearance="filled"
+          onPress={updateServerUrl}
+        >
+          Speichern
+        </Button>
+        <Button
+          style={{ marginVertical: 16 }}
+          appearance="ghost"
+          status="danger"
+          onPress={() => updateServerUrl("")}
+        >
+          Server entfernen
+        </Button>
+      </SafeAreaView>
+    </Layout>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: 20,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "gray",
-    marginBottom: 20,
-    paddingHorizontal: 10,
-    height: 40,
-    fontSize: 18,
-  },
-});

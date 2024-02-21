@@ -1,69 +1,23 @@
 import React from "react";
-import {
-  View,
-  Text,
-  Pressable,
-  StyleSheet,
-  useColorScheme,
-} from "react-native";
+import { Layout, Text, Button } from "@ui-kitten/components";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function WelcomeScreen({ navigation }) {
-  const colorScheme = useColorScheme();
-  const style = colorScheme === "light" ? light : dark;
-
   return (
-    <View style={style.container}>
-      <Text style={style.text}>Welcome to evcc {colorScheme}</Text>
-      <Pressable
-        style={style.button}
-        onPress={() => navigation.navigate("Server")}
-      >
-        <Text style={style.buttonText}>Get Started</Text>
-      </Pressable>
-    </View>
+    <Layout style={{ flex: 1, paddingHorizontal: 16 }}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <Text style={{ marginVertical: 32 }} category="h2">
+          Welcome to evcc
+        </Text>
+        <Button
+          appearance="filled"
+          size="giant"
+          style={{ marginVertical: 64 }}
+          onPress={() => navigation.navigate("Server")}
+        >
+          Get Started
+        </Button>
+      </SafeAreaView>
+    </Layout>
   );
 }
-
-const baseStyles = {
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  text: {
-    fontFamily: "Montserrat-Bold",
-    fontSize: 24,
-    marginBottom: 20,
-  },
-  button: {
-    backgroundColor: "#0ba631",
-  },
-  buttonText: {
-    fontFamily: "Montserrat-Bold",
-    color: "white",
-  },
-};
-
-const dark = StyleSheet.create({
-  ...baseStyles,
-  container: {
-    ...baseStyles.container,
-    backgroundColor: "#1c2445",
-  },
-  text: {
-    ...baseStyles.text,
-    color: "white",
-  },
-});
-
-const light = StyleSheet.create({
-  ...baseStyles,
-  container: {
-    ...baseStyles.container,
-    backgroundColor: "#F3F3F7",
-  },
-  text: {
-    ...baseStyles.text,
-    color: "#28293e",
-  },
-});
