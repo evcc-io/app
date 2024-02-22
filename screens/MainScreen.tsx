@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { WebView } from "react-native-webview";
-import {
-  Linking,
-  ActivityIndicator,
-  View,
-  Text,
-  Button,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
+import { Linking, ActivityIndicator, View, StyleSheet } from "react-native";
+import { Text, Layout, Spinner, Button } from "@ui-kitten/components";
 import { useAppContext } from "../components/AppContext";
 
 function LoadingScreen() {
@@ -16,9 +9,9 @@ function LoadingScreen() {
 }
 
 export default function MainScreen({ navigation }) {
-  const [isConnected, setIsConnected] = useState(true);
+  const [isConnected, setIsConnected] = useState(false);
   const [webViewKey, setWebViewKey] = useState(0);
-  const { serverUrl, updateServerUrl } = useAppContext();
+  const { serverUrl } = useAppContext();
 
   useEffect(() => {
     let intervalId;
@@ -33,10 +26,23 @@ export default function MainScreen({ navigation }) {
     return () => clearInterval(intervalId);
   }, [isConnected]);
 
+  function openSettings() {
+    navigation.navigate("Settings");
+  }
+
   const handleMessage = (event) => {
-    const data = event.nativeEvent.data;
-    if (data === "settings") {
-      navigation.navigate("Settings");
+    const data = JSON.parse(event.nativeEvent.data);
+    console.log("message", data);
+    switch (data.type) {
+      case "offline":
+        setIsConnected(false);
+        break;
+      case "online":
+        setIsConnected(true);
+        break;
+      case "settings":
+        openSettings();
+        break;
     }
   };
 
@@ -53,7 +59,7 @@ export default function MainScreen({ navigation }) {
         bounces={false}
         overScrollMode="never"
         setBuiltInZoomControls={false}
-        applicationNameForUserAgent={"evcc-app/0.0.1"}
+        applicationNameForUserAgent={"evcc/0.0.1"}
         onError={() => setIsConnected(false)}
         onLoad={() => setIsConnected(true)}
         onMessage={handleMessage}
@@ -66,17 +72,21 @@ export default function MainScreen({ navigation }) {
         }}
       />
       {!isConnected && (
-        <View style={styles.overlay}>
-          <Text style={styles.text}>
-            The site is not reachable. Attempting to reconnect...
-          </Text>
-          <TouchableOpacity
-            onPress={() => setWebViewKey((prevKey) => prevKey + 1)} // Manually trigger reload
-            style={styles.button}
+        <Layout style={styles.overlay}>
+          <Layout
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           >
-            <Text style={styles.buttonText}>Retry Now</Text>
-          </TouchableOpacity>
-        </View>
+            <Text style={{ marginVertical: 32 }} category="p1">
+              Suche nach Verbindung ...
+            </Text>
+            <Spinner size="large" />
+          </Layout>
+          <Layout style={{ paddingVertical: 32 }}>
+            <Button appearance="ghost" status="basic" onPress={openSettings}>
+              Server ändern
+            </Button>
+          </Layout>
+        </Layout>
       )}
     </View>
   );
@@ -85,22 +95,6 @@ export default function MainScreen({ navigation }) {
 const styles = StyleSheet.create({
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    justifyContent: "center",
-    alignItems: "center",
     zIndex: 1,
-  },
-  text: {
-    color: "white",
-    textAlign: "center",
-    marginBottom: 20,
-  },
-  button: {
-    backgroundColor: "#007bff",
-    padding: 10,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: "white",
   },
 });

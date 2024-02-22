@@ -27,3 +27,7 @@ npm run ios
 npm run android
 npm run web
 ```
+
+## Testing
+
+https://expo.dev/register-device/163a8bda-1bc7-4ec3-8d7f-d91acd98ca04
