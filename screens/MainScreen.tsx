@@ -46,8 +46,8 @@ export default function MainScreen({ navigation }) {
     }
   };
 
-  function onLoadStart() {
-    console.log("onLoadStart");
+  function onLoad() {
+    console.log("onLoad");
     setIsConnected(true);
   }
 
@@ -71,7 +71,7 @@ export default function MainScreen({ navigation }) {
         setBuiltInZoomControls={false}
         applicationNameForUserAgent={"evcc/0.0.1"}
         onError={onError}
-        onLoadStart={onLoadStart}
+        onLoad={onLoad}
         onMessage={handleMessage}
         onShouldStartLoadWithRequest={(event) => {
           if (!event.url.startsWith(serverUrl)) {
