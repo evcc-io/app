@@ -33,7 +33,7 @@ export default function SettingsScreen({ navigation }) {
         <Button
           style={{ marginVertical: 16 }}
           appearance="filled"
-          onPress={updateServerUrl}
+          onPress={saveServer}
         >
           Speichern
         </Button>
