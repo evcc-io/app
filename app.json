@@ -5,12 +5,17 @@
     "description": "open source solar charging",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon-dark.png",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash-light.png",
       "resizeMode": "cover",
-      "backgroundColor": "#66D95A"
+      "backgroundColor": "#0FDE41",
+      "dark": {
+        "image": "./assets/splash-dark.png",
+        "resizeMode": "cover",
+        "backgroundColor": "#010322"
+      }
     },
     "assetBundlePatterns": [
       "**/*"

@@ -1,65 +1,77 @@
 import React, { useState } from "react";
 import Zeroconf from "react-native-zeroconf";
-import { View } from "react-native";
-import { Layout, Text, Button, Spinner } from "@ui-kitten/components";
+import { Layout, Text, Button } from "@ui-kitten/components";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Alert } from "react-native";
 
 import { useAppContext } from "../components/AppContext";
 import ServerList from "../components/ServerList";
-
-function LoadingIndicator() {
-  return (
-    <View style={{ justifyContent: "center", alignItems: "center" }}>
-      <Spinner status="control" size="small" />
-    </View>
-  );
-}
+import LoadingIndicator from "../components/LoadingIndicator";
+import { verifyEvccServer } from "../utils/server";
 
 let zeroconf = null;
 
 export default function ServerScreen({ navigation }) {
   const [searching, setSearching] = useState(false);
+  const [finished, setFinished] = useState(false);
+  const [scanNotPossible, setScanNotPossible] = useState(false);
   const [found, setFound] = useState([]);
   const { updateServerUrl } = useAppContext();
 
   const scanNetwork = () => {
     setSearching(true);
+    setFinished(false);
     setFound([]);
-    if (zeroconf) {
-      zeroconf.stop();
+
+    try {
+      if (zeroconf) {
+        zeroconf.stop();
+      }
+      zeroconf = new Zeroconf();
+      zeroconf.scan("http", "tcp", "local.");
+    } catch (e) {
+      console.log("error", e);
+      setSearching(false);
+      setScanNotPossible(true);
     }
-    zeroconf = new Zeroconf();
-    console.log({ zeroconf }, zeroconf.scan);
-    zeroconf.scan("http", "tcp", "local.");
+
     zeroconf.on("resolved", (service) => {
       console.log("resolved", service);
       if (service.txt && service.name?.includes("evcc")) {
         console.log("found evcc", service);
-        const {
-          name,
-          host,
-          port,
-          txt: { path },
-        } = service;
+        // remove trailing dots
+        const host = service.host.replace(/\.$/, "");
         const entry = {
-          title: name,
-          url: `http://${host}:${port}${path}`,
+          title: service.name,
+          url: `http://${host}:${service.port}${service.txt.path}`,
         };
         setFound((prev) => [...prev, entry]);
       }
     });
     zeroconf.on("error", (error) => {
       setSearching(false);
+      zeroconf.stop();
       console.log("error", error);
     });
     zeroconf.on("stop", () => {
       setSearching(false);
+      setFinished(true);
+      zeroconf.removeDeviceListeners();
       console.log("stop");
     });
   };
 
-  const useDemoServer = () => {
-    updateServerUrl("https://demo.evcc.io/");
+  const selectDemoServer = async () => {
+    await selectServer("https://demo.evcc.io/");
+  };
+
+  const selectServer = async (url) => {
+    try {
+      await verifyEvccServer(url);
+      updateServerUrl(url);
+    } catch (error) {
+      Alert.alert(error.message);
+    }
   };
 
   const manualEntry = () => {
@@ -83,13 +95,24 @@ export default function ServerScreen({ navigation }) {
             size="giant"
             onPress={scanNetwork}
             accessoryLeft={searching ? LoadingIndicator : null}
+            disabled={scanNotPossible}
           >
             Suche starten
           </Button>
-          <ServerList
-            entries={found}
-            onSelect={(url) => updateServerUrl(url)}
-          />
+
+          {scanNotPossible ? (
+            <Text style={{ marginVertical: 16 }} category="p1">
+              Die Suche ist auf diesem Gerät nicht möglich. Nutze die manuelle
+              Eingabe.
+            </Text>
+          ) : null}
+          {finished && found.length === 0 ? (
+            <Text style={{ marginVertical: 16 }} category="p1">
+              Es wurde kein evcc Server gefunden.
+            </Text>
+          ) : (
+            <ServerList entries={found} onSelect={selectServer} />
+          )}
         </Layout>
         <Layout style={{ paddingVertical: 16 }}>
           <Button
@@ -104,7 +127,7 @@ export default function ServerScreen({ navigation }) {
             style={{ marginVertical: 8 }}
             appearance="ghost"
             status="basic"
-            onPress={useDemoServer}
+            onPress={selectDemoServer}
           >
             Testinstanz verwenden
           </Button>

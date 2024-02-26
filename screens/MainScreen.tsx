@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { WebView } from "react-native-webview";
 import { Linking, ActivityIndicator, View, StyleSheet } from "react-native";
 import { Text, Layout, Spinner, Button } from "@ui-kitten/components";
@@ -9,10 +9,12 @@ function LoadingScreen() {
 }
 
 export default function MainScreen({ navigation }) {
+  const webViewRef = useRef(null);
   const [isConnected, setIsConnected] = useState(false);
   const [webViewKey, setWebViewKey] = useState(0);
   const { serverUrl } = useAppContext();
 
+  // Reconnect if connection is lost
   useEffect(() => {
     let intervalId;
 
@@ -60,6 +62,8 @@ export default function MainScreen({ navigation }) {
     return <LoadingScreen />;
   }
 
+  console.log("serverUrl", { serverUrl, isConnected });
+
   return (
     <View style={{ flex: 1 }}>
       <WebView
@@ -67,6 +71,7 @@ export default function MainScreen({ navigation }) {
         style={{ flex: 1 }}
         key={webViewKey}
         bounces={false}
+        ref={webViewRef}
         overScrollMode="never"
         setBuiltInZoomControls={false}
         applicationNameForUserAgent={"evcc/0.0.1"}
@@ -81,7 +86,7 @@ export default function MainScreen({ navigation }) {
           return true;
         }}
       />
-      {!isConnected && (
+      {!isConnected ? (
         <Layout style={styles.overlay}>
           <Layout
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
@@ -97,7 +102,7 @@ export default function MainScreen({ navigation }) {
             </Button>
           </Layout>
         </Layout>
-      )}
+      ) : null}
     </View>
   );
 }

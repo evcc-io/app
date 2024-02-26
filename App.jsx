@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as eva from "@eva-design/eva";
-import { ApplicationProvider } from "@ui-kitten/components";
+import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import { Appearance } from "react-native";
+import mapping from "./style.json";
 
-import WelcomeScreen from "./screens/WelcomeScreen";
 import ServerScreen from "./screens/ServerScreen";
 import ServerManualScreen from "./screens/ServerManualScreen";
 import MainScreen from "./screens/MainScreen";
@@ -13,11 +13,13 @@ import SettingsScreen from "./screens/SettingsScreen";
 import { AppProvider, useAppContext } from "./components/AppContext";
 import { ThemeContext } from "./components/ThemeContext";
 import custom from "./themes.json";
+import { useFonts } from "expo-font";
+import { EvaIconsPack } from "@ui-kitten/eva-icons";
 
 const Stack = createNativeStackNavigator();
 
 function AppNavigator() {
-  const { serverUrl, updateServerUrl } = useAppContext();
+  const { serverUrl } = useAppContext();
 
   //updateServerUrl("");
 
@@ -35,16 +37,13 @@ function AppNavigator() {
               name="Settings"
               component={SettingsScreen}
               options={{
-                //headerTitle: "Settings",
                 animation: "slide_from_bottom",
                 presentation: "modal",
-                //headerShown: true,
               }}
             />
           </>
         ) : (
           <>
-            <Stack.Screen name="Welcome" component={WelcomeScreen} />
             <Stack.Screen name="Server" component={ServerScreen} />
             <Stack.Screen
               name="ServerManual"
@@ -64,6 +63,10 @@ function AppNavigator() {
 export default function App() {
   const colorScheme = Appearance.getColorScheme();
   const [theme, setTheme] = React.useState(colorScheme);
+  const [fontsLoaded] = useFonts({
+    "Montserrat-Bold": require("./assets/fonts/Montserrat-Bold.ttf"),
+    "Montserrat-Medium": require("./assets/fonts/Montserrat-Medium.ttf"),
+  });
 
   const toggleTheme = () => {
     const nextTheme = theme === "light" ? "dark" : "light";
@@ -79,43 +82,26 @@ export default function App() {
   }, []);
 
   const mergedTheme = { ...eva[theme], ...custom[theme] };
-  const mapping = {
-    strict: {
-      "text-font-family": "Montserrat-Bold",
-      "border-radius": 8,
-    },
-    components: {
-      Button: {
-        appearances: {
-          outline: {
-            variantGroups: {
-              status: {
-                primary: {
-                  backgroundColor: "none",
-                  state: {
-                    hover: { backgroundColor: "none" },
-                    active: { backgroundColor: "none" },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-  };
+
+  if (!fontsLoaded) {
+    return null;
+  }
+  console.log("render");
 
   return (
-    <AppProvider>
-      <ThemeContext.Provider value={{ theme, toggleTheme }}>
-        <ApplicationProvider
-          {...eva}
-          theme={mergedTheme}
-          customMapping={mapping}
-        >
-          <AppNavigator />
-        </ApplicationProvider>
-      </ThemeContext.Provider>
-    </AppProvider>
+    <>
+      <IconRegistry icons={EvaIconsPack} />
+      <AppProvider>
+        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+          <ApplicationProvider
+            {...eva}
+            theme={mergedTheme}
+            customMapping={mapping}
+          >
+            <AppNavigator />
+          </ApplicationProvider>
+        </ThemeContext.Provider>
+      </AppProvider>
+    </>
   );
 }

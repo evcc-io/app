@@ -1,42 +1,29 @@
-import React, { useState } from "react";
-import { Layout, Text, Button, Input } from "@ui-kitten/components";
-import { SafeAreaView } from "react-native-safe-area-context";
+import React from "react";
+import { Layout, Button } from "@ui-kitten/components";
+import { View } from "react-native";
+import ServerForm from "../components/ServerForm";
 
 import { useAppContext } from "../components/AppContext";
+import Header from "../components/Header";
 
 export default function SettingsScreen({ navigation }) {
   const { serverUrl, updateServerUrl } = useAppContext();
-  const [url, setUrl] = useState(serverUrl);
 
   function navigateToMain() {
     navigation.navigate("Main");
   }
 
-  function saveServer() {
+  function saveServer(url) {
     updateServerUrl(url);
     navigateToMain();
   }
 
   return (
-    <Layout style={{ flex: 1, paddingHorizontal: 16 }}>
-      <SafeAreaView style={{ flex: 1 }}>
-        <Text category="h4" style={{ marginTop: 0, marginBottom: 32 }}>
-          Server ändern
-        </Text>
-        <Input
-          style={{ marginBottom: 16 }}
-          placeholder="http://evcc.local:7070/"
-          value={url}
-          size="large"
-          onChangeText={(nextValue) => setUrl(nextValue)}
-        />
-        <Button
-          style={{ marginVertical: 16 }}
-          appearance="filled"
-          onPress={saveServer}
-        >
-          Speichern
-        </Button>
+    <Layout style={{ flex: 1, paddingBottom: 32 }}>
+      <Header title="Server ändern" showDone onDone={navigateToMain} />
+      <View style={{ paddingHorizontal: 16 }}>
+        <ServerForm url={serverUrl} onChange={saveServer} />
+
         <Button
           style={{ marginVertical: 16 }}
           appearance="ghost"
@@ -45,7 +32,7 @@ export default function SettingsScreen({ navigation }) {
         >
           Server entfernen
         </Button>
-      </SafeAreaView>
+      </View>
     </Layout>
   );
 }
