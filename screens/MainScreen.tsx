@@ -39,25 +39,29 @@ export default function MainScreen({ navigation }) {
   const loadScale = useRef(new Animated.Value(isConnected ? 1.2 : 1)).current;
 
   useEffect(() => {
+    const duration = 600;
+    const smallDelay = 1000;
+    const largeDelay = smallDelay + duration * 0.3;
+    const useNativeDriver = true;
     Animated.timing(contFade, {
       toValue: isConnected ? 1 : 0,
-      duration: 600,
-      delay: isConnected ? 400 : 0,
-      useNativeDriver: true,
+      delay: isConnected ? largeDelay : smallDelay,
+      duration,
+      useNativeDriver,
     }).start();
 
     Animated.timing(loadFade, {
       toValue: isConnected ? 0 : 1,
-      duration: 600,
-      delay: isConnected ? 0 : 400,
-      useNativeDriver: true,
+      delay: isConnected ? smallDelay : largeDelay,
+      duration,
+      useNativeDriver,
     }).start();
 
     Animated.timing(loadScale, {
       toValue: isConnected ? 1.2 : 1,
-      duration: 600,
-      delay: isConnected ? 0 : 400,
-      useNativeDriver: true,
+      delay: isConnected ? smallDelay : largeDelay,
+      duration,
+      useNativeDriver,
     }).start();
   }, [isConnected]);
 

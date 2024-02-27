@@ -7,20 +7,20 @@
     "orientation": "portrait",
     "icon": "./assets/icon-dark.png",
     "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/splash-light.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#0FDE41",
-      "dark": {
-        "image": "./assets/splash-dark.png",
-        "resizeMode": "cover",
-        "backgroundColor": "#010322"
-      }
-    },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
+      "splash": {
+        "image": "./assets/splash-light.png",
+        "resizeMode": "cover",
+        "backgroundColor": "#0FDE41",
+        "dark": {
+          "image": "./assets/splash-dark.png",
+          "resizeMode": "cover",
+          "backgroundColor": "#010322"
+        },
+      },
       "supportsTablet": true,
       "bundleIdentifier": "io.evcc.ios",
       "infoPlist": {
