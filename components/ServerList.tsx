@@ -2,10 +2,15 @@ import React from "react";
 import { Button, List, ListItem } from "@ui-kitten/components";
 import { StyleSheet } from "react-native";
 
+interface ServerListProps {
+  entries: Array<{ title: string; url: string }>;
+  onSelect?: (url: string) => Promise<void>;
+}
+
 export default function ServerList({
   entries = [],
-  onSelect = () => {},
-}): React.ReactElement {
+  onSelect,
+}: ServerListProps): React.ReactElement {
   const renderItemAccessory = (url) => (
     <Button
       size="small"

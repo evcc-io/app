@@ -17,7 +17,13 @@ export function CloseIcon(props) {
   );
 }
 
-export default function Header({ title, showDone, onDone }) {
+interface HeaderProps {
+  title: string;
+  showDone?: boolean;
+  onDone?: () => void;
+}
+
+export default function Header({ title, showDone, onDone }: HeaderProps) {
   return (
     <View
       style={{

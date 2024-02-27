@@ -39,7 +39,8 @@
     "react-native-webview": "^13.6.4",
     "react-native-zeroconf": "^0.13.8",
     "typescript": "^5.3.0",
-    "v8-android-jit": "^11.1000.4"
+    "v8-android-jit": "^11.1000.4",
+    "expo-splash-screen": "~0.26.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

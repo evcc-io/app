@@ -1,6 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { WebView } from "react-native-webview";
-import { Linking, ActivityIndicator, View, StyleSheet } from "react-native";
+import {
+  Linking,
+  ActivityIndicator,
+  View,
+  StyleSheet,
+  Animated,
+} from "react-native";
 import { Text, Layout, Spinner, Button } from "@ui-kitten/components";
 import { useAppContext } from "../components/AppContext";
 
@@ -26,6 +32,33 @@ export default function MainScreen({ navigation }) {
     }
 
     return () => clearInterval(intervalId);
+  }, [isConnected]);
+
+  const contFade = useRef(new Animated.Value(isConnected ? 1 : 0)).current;
+  const loadFade = useRef(new Animated.Value(isConnected ? 0 : 1)).current;
+  const loadScale = useRef(new Animated.Value(isConnected ? 1.2 : 1)).current;
+
+  useEffect(() => {
+    Animated.timing(contFade, {
+      toValue: isConnected ? 1 : 0,
+      duration: 600,
+      delay: isConnected ? 400 : 0,
+      useNativeDriver: true,
+    }).start();
+
+    Animated.timing(loadFade, {
+      toValue: isConnected ? 0 : 1,
+      duration: 600,
+      delay: isConnected ? 0 : 400,
+      useNativeDriver: true,
+    }).start();
+
+    Animated.timing(loadScale, {
+      toValue: isConnected ? 1.2 : 1,
+      duration: 600,
+      delay: isConnected ? 0 : 400,
+      useNativeDriver: true,
+    }).start();
   }, [isConnected]);
 
   function openSettings() {
@@ -58,6 +91,11 @@ export default function MainScreen({ navigation }) {
     setIsConnected(false);
   }
 
+  function onTerminate(event) {
+    console.log("onTerminate", event);
+    setIsConnected(false);
+  }
+
   if (!serverUrl || serverUrl === "unknown") {
     return <LoadingScreen />;
   }
@@ -65,45 +103,53 @@ export default function MainScreen({ navigation }) {
   console.log("serverUrl", { serverUrl, isConnected });
 
   return (
-    <View style={{ flex: 1 }}>
-      <WebView
-        source={{ uri: serverUrl }}
-        style={{ flex: 1 }}
-        key={webViewKey}
-        bounces={false}
-        ref={webViewRef}
-        overScrollMode="never"
-        setBuiltInZoomControls={false}
-        applicationNameForUserAgent={"evcc/0.0.1"}
-        onError={onError}
-        onLoad={onLoad}
-        onMessage={handleMessage}
-        onShouldStartLoadWithRequest={(event) => {
-          if (!event.url.startsWith(serverUrl)) {
-            Linking.openURL(event.url);
-            return false;
-          }
-          return true;
+    <Layout style={{ flex: 1 }}>
+      <Animated.View style={{ flex: 1, opacity: contFade }}>
+        <WebView
+          source={{ uri: serverUrl }}
+          style={{ flex: 1 }}
+          key={webViewKey}
+          bounces={false}
+          ref={webViewRef}
+          overScrollMode="never"
+          setBuiltInZoomControls={false}
+          applicationNameForUserAgent={"evcc/0.0.1"}
+          onError={onError}
+          onLoad={onLoad}
+          onContentProcessDidTerminate={onTerminate}
+          onMessage={handleMessage}
+          onShouldStartLoadWithRequest={(event) => {
+            if (!event.url.startsWith(serverUrl)) {
+              Linking.openURL(event.url);
+              return false;
+            }
+            return true;
+          }}
+        />
+      </Animated.View>
+      <Animated.View
+        style={{
+          ...styles.overlay,
+          opacity: loadFade,
+          transform: [{ scale: loadScale }],
+          pointerEvents: isConnected ? "none" : "auto",
         }}
-      />
-      {!isConnected ? (
-        <Layout style={styles.overlay}>
-          <Layout
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-          >
-            <Text style={{ marginVertical: 32 }} category="p1">
-              Suche nach Verbindung ...
-            </Text>
-            <Spinner size="large" />
-          </Layout>
-          <Layout style={{ paddingVertical: 32 }}>
-            <Button appearance="ghost" status="basic" onPress={openSettings}>
-              Server ändern
-            </Button>
-          </Layout>
+      >
+        <Layout
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <Text style={{ marginVertical: 32 }} category="p1">
+            Suche nach Verbindung ...
+          </Text>
+          <Spinner size="large" />
         </Layout>
-      ) : null}
-    </View>
+        <Layout style={{ paddingVertical: 32 }}>
+          <Button appearance="ghost" status="basic" onPress={openSettings}>
+            Server ändern
+          </Button>
+        </Layout>
+      </Animated.View>
+    </Layout>
   );
 }
 

@@ -15,6 +15,9 @@ import { ThemeContext } from "./components/ThemeContext";
 import custom from "./themes.json";
 import { useFonts } from "expo-font";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
+import * as SplashScreen from "expo-splash-screen";
+
+SplashScreen.preventAutoHideAsync();
 
 const Stack = createNativeStackNavigator();
 
@@ -67,6 +70,13 @@ export default function App() {
     "Montserrat-Bold": require("./assets/fonts/Montserrat-Bold.ttf"),
     "Montserrat-Medium": require("./assets/fonts/Montserrat-Medium.ttf"),
   });
+
+  // hide splash screen after 750ms
+  useEffect(() => {
+    setTimeout(async () => {
+      await SplashScreen.hideAsync();
+    }, 750);
+  }, []);
 
   const toggleTheme = () => {
     const nextTheme = theme === "light" ? "dark" : "light";

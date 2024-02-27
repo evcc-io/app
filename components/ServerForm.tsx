@@ -3,7 +3,15 @@ import { Text, Button, Input } from "@ui-kitten/components";
 import { cleanServerUrl, verifyEvccServer } from "../utils/server";
 import LoadingIndicator from "../components/LoadingIndicator";
 
-export default function ServerForm({ url: initalUrl = "", onChange }) {
+interface ServerFormProps {
+  url?: string;
+  onChange: (url: string) => void;
+}
+
+export default function ServerForm({
+  url: initalUrl = "",
+  onChange,
+}: ServerFormProps) {
   const [inProgress, setInProgress] = useState(false);
   const [url, setUrl] = useState(initalUrl);
   const [error, setError] = useState("");

@@ -22,10 +22,21 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "io.evcc.app",
+      "bundleIdentifier": "io.evcc.ios",
       "infoPlist": {
-        "NSLocalNetworkUsageDescription": "This app uses local network to discover your evcc installation."
-      }
+        "NSLocalNetworkUsageDescription": "Die App benötigt Zugriff auf das lokale Netzwerk, um deine evcc Instanz zu finden.",
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true
+        },
+        "NSBonjourServices": [
+          "_http._tcp.",
+          "_https._tcp."
+        ]
+      },
+      "config": {
+        "usesNonExemptEncryption": false
+      },
+      "buildNumber": "2"
     },
     "android": {
       "permissions": [
@@ -33,7 +44,7 @@
         "android.permission.ACCESS_WIFI_STATE",
         "android.permission.CHANGE_WIFI_MULTICAST_STATE"
       ],
-      "package": "io.evcc.app"
+      "package": "io.evcc.android"
     },
     "web": {
       "favicon": "./assets/favicon.png",
