@@ -37,7 +37,7 @@ export default function ServerList({
 
 const styles = StyleSheet.create({
   container: {
-    maxHeight: 192,
+    flex: 1,
     backgroundColor: "transparent",
   },
 });

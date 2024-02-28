@@ -1,12 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { WebView } from "react-native-webview";
-import {
-  Linking,
-  ActivityIndicator,
-  View,
-  StyleSheet,
-  Animated,
-} from "react-native";
+import { Linking, ActivityIndicator, StyleSheet, Animated } from "react-native";
 import { Text, Layout, Spinner, Button } from "@ui-kitten/components";
 import { useAppContext } from "../components/AppContext";
 

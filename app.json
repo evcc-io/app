@@ -4,7 +4,7 @@
     "slug": "evcc",
     "description": "open source solar charging",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/icon-dark.png",
     "userInterfaceStyle": "automatic",
     "assetBundlePatterns": [
@@ -19,7 +19,7 @@
           "image": "./assets/splash-dark.png",
           "resizeMode": "cover",
           "backgroundColor": "#010322"
-        },
+        }
       },
       "supportsTablet": true,
       "bundleIdentifier": "io.evcc.ios",
@@ -36,7 +36,7 @@
       "config": {
         "usesNonExemptEncryption": false
       },
-      "buildNumber": "2"
+      "buildNumber": "3"
     },
     "android": {
       "permissions": [
