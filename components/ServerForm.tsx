@@ -15,7 +15,8 @@ export default function ServerForm({
   const [inProgress, setInProgress] = useState(false);
   const [url, setUrl] = useState(initalUrl);
   const [error, setError] = useState("");
-  const inputRef = React.createRef();
+
+  const inputRef = React.createRef<Input>();
 
   const validateAndSaveURL = async () => {
     if (inProgress) {

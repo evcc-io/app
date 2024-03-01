@@ -7,9 +7,7 @@
     "orientation": "default",
     "icon": "./assets/icon-dark.png",
     "userInterfaceStyle": "automatic",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "splash": {
         "image": "./assets/splash-light.png",
@@ -28,10 +26,7 @@
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": true
         },
-        "NSBonjourServices": [
-          "_http._tcp.",
-          "_https._tcp."
-        ]
+        "NSBonjourServices": ["_http._tcp.", "_https._tcp."]
       },
       "config": {
         "usesNonExemptEncryption": false
@@ -50,9 +45,7 @@
       "favicon": "./assets/favicon.png",
       "build": {
         "babel": {
-          "include": [
-            "@ui-kitten/components"
-          ]
+          "include": ["@ui-kitten/components"]
         }
       }
     },

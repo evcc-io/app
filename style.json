@@ -1,35 +1,35 @@
 {
-    "strict": {
-        "text-font-family": "Montserrat-Medium",
-        "text-heading-1-font-family": "Montserrat-Bold",
-        "text-heading-2-font-family": "Montserrat-Bold",
-        "text-heading-3-font-family": "Montserrat-Bold",
-        "text-heading-1-weight": "bold",
-        "text-heading-2-weight": "bold",
-        "text-heading-3-weight": "bold",
-        "border-radius": 8
-    },
-    "components": {
-        "Button": {
-            "appearances": {
-                "outline": {
-                    "variantGroups": {
-                        "status": {
-                            "primary": {
-                                "backgroundColor": "none",
-                                "state": {
-                                    "hover": {
-                                        "backgroundColor": "none"
-                                    },
-                                    "active": {
-                                        "backgroundColor": "none"
-                                    }
-                                }
-                            }
-                        }
-                    }
+  "strict": {
+    "text-font-family": "Montserrat-Medium",
+    "text-heading-1-font-family": "Montserrat-Bold",
+    "text-heading-2-font-family": "Montserrat-Bold",
+    "text-heading-3-font-family": "Montserrat-Bold",
+    "text-heading-1-weight": "bold",
+    "text-heading-2-weight": "bold",
+    "text-heading-3-weight": "bold",
+    "border-radius": 8
+  },
+  "components": {
+    "Button": {
+      "appearances": {
+        "outline": {
+          "variantGroups": {
+            "status": {
+              "primary": {
+                "backgroundColor": "none",
+                "state": {
+                  "hover": {
+                    "backgroundColor": "none"
+                  },
+                  "active": {
+                    "backgroundColor": "none"
+                  }
                 }
+              }
             }
+          }
         }
+      }
     }
+  }
 }

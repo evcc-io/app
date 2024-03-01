@@ -106,7 +106,7 @@ export default function App() {
           <ApplicationProvider
             {...eva}
             theme={mergedTheme}
-            customMapping={mapping}
+            customMapping={{ ...eva.mapping, ...mapping }}
           >
             <AppNavigator />
           </ApplicationProvider>
