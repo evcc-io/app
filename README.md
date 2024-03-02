@@ -1,8 +1,46 @@
 # evcc Native App
 
-Native app wrapper for evcc UI based on [react-native](https://reactnative.dev/) and [expo.dev](https://expo.dev/).
+Native app wrapper for evcc UI based on [react-native](https://reactnative.dev/) and [expo.dev](https://expo.dev/). It uses [UI Kitten / Eva](https://akveo.github.io/react-native-ui-kitten/) as a design system. Native parts are written in TypeScript and kept to a minimum.
 
-This is just a thin wrapper around the web UI. It contains an onboarding flow to configure the server URL.
+## iOS Beta Testing
+
+Join the beta program via TestFlight:
+
+https://testflight.apple.com/join/8Y4elMpv
+
+## Features
+
+- Onboarding
+  - find evcc instances in local network via mDNS
+  - add instance manually via URL
+  - try the app using the demo instance
+- Full screen evcc UI
+  - use the app in a full screen web view
+  - UI runs in an optimized mode that respects insets (notch, ...)
+  - better gesture support (swipe, ...) by disabling browser zoom and overscroll
+- Online/offline detection
+  - app shows loading screen when instance is not reachable
+  - automatic reconnection when instance becomes reachable again
+  - avoids missleading situations where the app is shown but not functional
+- Configured URL can be changed
+  - in offline mode
+  - via additional top navigation entry "Server ändern"
+- Light and dark mode for native UI
+  - based on system settings (not configurable)
+
+## Screenshots
+
+![iOS Screenshots](./ressources/evcc_app_ios_v1.png)
+
+## Known limitations
+
+- Only German language is supported #2
+- No support for multiple instances #3
+- mDNS discovery only supports HTTP #1
+- No Android release yet #4
+- Not (basic) auth support #5
+
+We'll work on these in a future release. Feel free to vote 👍 to help priorization and add new feature ideas.
 
 ## Development
 
@@ -27,7 +65,3 @@ npm run ios
 npm run android
 npm run web
 ```
-
-## Testing
-
-https://expo.dev/register-device/163a8bda-1bc7-4ec3-8d7f-d91acd98ca04
