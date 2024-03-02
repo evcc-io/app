@@ -34,11 +34,11 @@ https://testflight.apple.com/join/8Y4elMpv
 
 ## Known limitations
 
-- Only German language is supported #2
-- No support for multiple instances #3
-- mDNS discovery only supports HTTP #1
-- No Android release yet #4
-- Not (basic) auth support #5
+- Only German language is supported [#2](https://github.com/evcc-io/app/issues/2)
+- No support for multiple instances [#3](https://github.com/evcc-io/app/issues/3)
+- mDNS discovery only supports HTTP [#1](https://github.com/evcc-io/app/issues/1)
+- No Android release yet [#4](https://github.com/evcc-io/app/issues/4)
+- Not (basic) auth support [#5](https://github.com/evcc-io/app/issues/5)
 
 We'll work on these in a future release. Feel free to vote 👍 to help priorization and add new feature ideas.
 
