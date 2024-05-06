@@ -6,23 +6,35 @@ import ServerForm from "../components/ServerForm";
 import { useAppContext } from "../components/AppContext";
 import Header from "../components/Header";
 
-export default function SettingsScreen({ navigation }) {
+function navigateToMain(navigation) {
+  navigation.navigate("Main");
+}
+
+function SettingsScreen({ navigation }) {
   const { serverUrl, updateServerUrl } = useAppContext();
 
-  function navigateToMain() {
-    navigation.navigate("Main");
-  }
+  const saveServer = React.useCallback(
+    (url) => {
+      updateServerUrl(url);
+      navigateToMain(navigation);
+    },
+    [navigation, updateServerUrl],
+  );
 
-  function saveServer(url) {
-    updateServerUrl(url);
-    navigateToMain();
-  }
+  const serverForm = React.useMemo(
+    () => <ServerForm url={serverUrl} onChange={saveServer} />,
+    [serverUrl, saveServer],
+  );
 
   return (
     <Layout style={{ flex: 1, paddingBottom: 32 }}>
-      <Header title="Server ändern" showDone onDone={navigateToMain} />
+      <Header
+        title="Server ändern"
+        showDone
+        onDone={() => navigateToMain(navigation)}
+      />
       <View style={{ paddingHorizontal: 16 }}>
-        <ServerForm url={serverUrl} onChange={saveServer} />
+        {serverForm}
 
         <Button
           style={{ marginVertical: 16 }}
@@ -36,3 +48,5 @@ export default function SettingsScreen({ navigation }) {
     </Layout>
   );
 }
+
+export default React.memo(SettingsScreen);

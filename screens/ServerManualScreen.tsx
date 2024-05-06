@@ -6,19 +6,34 @@ import Header from "../components/Header";
 
 import { useAppContext } from "../components/AppContext";
 
-export default function ServerManualScreen({ navigation }) {
+function navigateToServer(navigation) {
+  navigation.navigate("Server");
+}
+
+function ServerManualScreen({ navigation }) {
   const { updateServerUrl } = useAppContext();
 
-  function navigateToServer() {
-    navigation.navigate("Server");
-  }
+  const memoizedUpdateServerUrl = React.useCallback(updateServerUrl, []);
+
+  const memoizedHeader = React.useMemo(
+    () => (
+      <Header
+        title="URL eingeben"
+        showDone
+        onDone={() => navigateToServer(navigation)}
+      />
+    ),
+    [navigation],
+  );
 
   return (
     <Layout style={{ flex: 1 }}>
-      <Header title="URL eingeben" showDone onDone={navigateToServer} />
+      {memoizedHeader}
       <View style={{ paddingHorizontal: 16 }}>
-        <ServerForm onChange={updateServerUrl} />
+        <ServerForm onChange={memoizedUpdateServerUrl} />
       </View>
     </Layout>
   );
 }
+
+export default React.memo(ServerManualScreen);

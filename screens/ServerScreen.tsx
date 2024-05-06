@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import Zeroconf from "react-native-zeroconf";
 import { Layout, Text, Button } from "@ui-kitten/components";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -9,8 +9,6 @@ import ServerList from "../components/ServerList";
 import LoadingIndicator from "../components/LoadingIndicator";
 import { verifyEvccServer } from "../utils/server";
 
-let zeroconf = null;
-
 export default function ServerScreen({ navigation }) {
   const [searching, setSearching] = useState(false);
   const [finished, setFinished] = useState(false);
@@ -18,10 +16,12 @@ export default function ServerScreen({ navigation }) {
   const [found, setFound] = useState([]);
   const { updateServerUrl } = useAppContext();
 
-  const scanNetwork = () => {
+  const scanNetwork = useCallback(() => {
     setSearching(true);
     setFinished(false);
     setFound([]);
+
+    let zeroconf = null;
 
     try {
       if (zeroconf) {
@@ -35,17 +35,16 @@ export default function ServerScreen({ navigation }) {
       setScanNotPossible(true);
     }
 
-    zeroconf.on("resolved", (service) => {
-      console.log("resolved", service);
-      if (service.txt && service.name?.includes("evcc")) {
-        console.log("found evcc", service);
+    zeroconf.on("resolved", ({ txt, name, host, port }) => {
+      console.log("resolved", name);
+      if (txt && name?.includes("evcc")) {
+        console.log("found evcc", name);
         // remove trailing dots
-        const host = service.host.replace(/\.$/, "");
         const entry = {
-          title: service.name,
-          url: `http://${host}:${service.port}${service.txt.path}`,
+          title: name,
+          url: `http://${host.replace(/\.$/, "")}:${port}${txt.path}`,
         };
-        setFound((prev) => [...prev, entry]);
+        setFound((prevFound) => [...prevFound, entry]);
       }
     });
     zeroconf.on("error", (error) => {
@@ -59,24 +58,27 @@ export default function ServerScreen({ navigation }) {
       zeroconf.removeDeviceListeners();
       console.log("stop");
     });
-  };
+  }, []);
 
-  const selectDemoServer = async () => {
+  const selectDemoServer = useCallback(async () => {
     await selectServer("https://demo.evcc.io/");
-  };
+  }, []);
 
-  const selectServer = async (url) => {
-    try {
-      await verifyEvccServer(url);
-      updateServerUrl(url);
-    } catch (error) {
-      Alert.alert(error.message);
-    }
-  };
+  const selectServer = useCallback(
+    async (url) => {
+      try {
+        await verifyEvccServer(url);
+        updateServerUrl(url);
+      } catch (error) {
+        Alert.alert(error.message);
+      }
+    },
+    [updateServerUrl],
+  );
 
-  const manualEntry = () => {
+  const manualEntry = useCallback(() => {
     navigation.navigate("ServerManual");
-  };
+  }, [navigation]);
 
   return (
     <Layout style={{ flex: 1, paddingHorizontal: 16 }}>
