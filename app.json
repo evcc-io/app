@@ -24,6 +24,11 @@
       "supportsTablet": true,
       "bundleIdentifier": "io.evcc.ios",
       "infoPlist": {
+        "CFBundleLocalizations": [
+          "de"
+        ],
+        "CFBundleDevelopmentRegion": "de",
+        "CFBundleAllowMixedLocalizations": true,
         "NSLocalNetworkUsageDescription": "Die App benötigt Zugriff auf das lokale Netzwerk, um deine evcc Instanz zu finden.",
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": true
@@ -56,6 +61,9 @@
         }
       }
     },
+    "locales": {
+      "de": "./i18n/de.json"
+    },
     "jsEngine": "jsc",
     "plugins": [
       [
@@ -75,7 +83,8 @@
             "./assets/fonts/Montserrat-Medium.ttf"
           ]
         }
-      ]
+      ],
+      "expo-localization"
     ],
     "extra": {
       "eas": {
