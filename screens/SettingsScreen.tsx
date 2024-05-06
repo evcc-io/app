@@ -13,18 +13,26 @@ function navigateToMain(navigation) {
 function SettingsScreen({ navigation }) {
   const { serverUrl, updateServerUrl } = useAppContext();
 
-  const saveServer = React.useCallback((url) => {
-    updateServerUrl(url);
-    navigateToMain(navigation);
-  }, [navigation, updateServerUrl]);
+  const saveServer = React.useCallback(
+    (url) => {
+      updateServerUrl(url);
+      navigateToMain(navigation);
+    },
+    [navigation, updateServerUrl],
+  );
 
-  const serverForm = React.useMemo(() => (
-    <ServerForm url={serverUrl} onChange={saveServer} />
-  ), [serverUrl, saveServer]);
+  const serverForm = React.useMemo(
+    () => <ServerForm url={serverUrl} onChange={saveServer} />,
+    [serverUrl, saveServer],
+  );
 
   return (
     <Layout style={{ flex: 1, paddingBottom: 32 }}>
-      <Header title="Server ändern" showDone onDone={() => navigateToMain(navigation)} />
+      <Header
+        title="Server ändern"
+        showDone
+        onDone={() => navigateToMain(navigation)}
+      />
       <View style={{ paddingHorizontal: 16 }}>
         {serverForm}
 

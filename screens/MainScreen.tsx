@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useMemo,
+} from "react";
 import { WebView } from "react-native-webview";
 import { Linking, ActivityIndicator, StyleSheet, Animated } from "react-native";
 import { Text, Layout, Spinner, Button } from "@ui-kitten/components";
@@ -18,24 +24,28 @@ export default function MainScreen({ navigation }) {
   const loadFade = useRef(new Animated.Value(isConnected ? 0 : 1)).current;
   const loadScale = useRef(new Animated.Value(isConnected ? 1.2 : 1)).current;
 
-  const duration = useMemo(() => 600, []);
-  const smallDelay = useMemo(() => 1000, []);
-  const largeDelay = useMemo(() => smallDelay + duration * 0.3, []);
-
   const openSettings = useCallback(() => {
     navigation.navigate("Settings");
   }, [navigation]);
 
+  // Reconnect if connection is lost
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      console.log("Attempting to reconnect...");
-      setWebViewKey((prevKey) => prevKey + 1);
-    }, 5000);
+    let intervalId;
+
+    if (!isConnected) {
+      intervalId = setInterval(() => {
+        console.log("Attempting to reconnect...");
+        setWebViewKey((prevKey) => prevKey + 1);
+      }, 5000);
+    }
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [isConnected]);
 
   useEffect(() => {
+    const duration = 600;
+    const smallDelay = 1000;
+    const largeDelay = smallDelay + duration * 0.3;
     Animated.timing(contFade, {
       toValue: isConnected ? 1 : 0,
       delay: isConnected ? largeDelay : smallDelay,
@@ -58,29 +68,35 @@ export default function MainScreen({ navigation }) {
     }).start();
   }, [isConnected]);
 
-  const handleMessage = useCallback((event) => {
-    const data = JSON.parse(event.nativeEvent.data);
-    console.log("message", data);
-    switch (data.type) {
-      case "offline":
-        setIsConnected(false);
-        break;
-      case "online":
-        setIsConnected(true);
-        break;
-      case "settings":
-        openSettings();
-        break;
-    }
-  }, [openSettings]);
+  const handleMessage = useCallback(
+    (event) => {
+      const data = JSON.parse(event.nativeEvent.data);
+      console.log("message", data);
+      switch (data.type) {
+        case "offline":
+          setIsConnected(false);
+          break;
+        case "online":
+          setIsConnected(true);
+          break;
+        case "settings":
+          openSettings();
+          break;
+      }
+    },
+    [openSettings],
+  );
 
-  const onShouldStartLoadWithRequest = useCallback((event) => {
-    if (!event.url.startsWith(serverUrl)) {
-      Linking.openURL(event.url);
-      return false;
-    }
-    return true;
-  }, [serverUrl]);
+  const onShouldStartLoadWithRequest = useCallback(
+    (event) => {
+      if (!event.url.startsWith(serverUrl)) {
+        Linking.openURL(event.url);
+        return false;
+      }
+      return true;
+    },
+    [serverUrl],
+  );
 
   const onLoad = useCallback(() => {
     console.log("onLoad");
@@ -156,7 +172,7 @@ export default function MainScreen({ navigation }) {
       handleMessage,
       onShouldStartLoadWithRequest,
       openSettings,
-    ]
+    ],
   );
 
   if (!serverUrl || serverUrl === "unknown") {

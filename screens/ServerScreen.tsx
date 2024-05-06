@@ -73,7 +73,7 @@ export default function ServerScreen({ navigation }) {
         Alert.alert(error.message);
       }
     },
-    [updateServerUrl]
+    [updateServerUrl],
   );
 
   const manualEntry = useCallback(() => {

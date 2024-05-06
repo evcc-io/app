@@ -1,12 +1,12 @@
 import axios from "axios";
 
 export function cleanServerUrl(url) {
-  const result = url.trim();
+  let result = url.trim();
   if (!result.startsWith("http://") && !result.startsWith("https://")) {
-    return `http://${result}/`;
+    result = `http://${result}`;
   }
   if (!result.endsWith("/")) {
-    return `${result}/`;
+    result += "/";
   }
   return result;
 }

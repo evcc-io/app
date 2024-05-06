@@ -17,9 +17,13 @@ function ServerManualScreen({ navigation }) {
 
   const memoizedHeader = React.useMemo(
     () => (
-      <Header title="URL eingeben" showDone onDone={() => navigateToServer(navigation)} />
+      <Header
+        title="URL eingeben"
+        showDone
+        onDone={() => navigateToServer(navigation)}
+      />
     ),
-    [navigation]
+    [navigation],
   );
 
   return (
