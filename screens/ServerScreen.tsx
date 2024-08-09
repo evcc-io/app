@@ -8,6 +8,7 @@ import { useAppContext } from "../components/AppContext";
 import ServerList from "../components/ServerList";
 import LoadingIndicator from "../components/LoadingIndicator";
 import { verifyEvccServer } from "../utils/server";
+import { BasicAuthInformation } from "../interfaces/basic-auth-information";
 
 export default function ServerScreen({ navigation }) {
   const [searching, setSearching] = useState(false);
@@ -67,10 +68,18 @@ export default function ServerScreen({ navigation }) {
   const selectServer = useCallback(
     async (url) => {
       try {
-        await verifyEvccServer(url);
-        updateServerUrl(url);
+        await verifyEvccServer(url, {basicAuthRequired: false} as BasicAuthInformation);
+        updateServerUrl(url, {basicAuthRequired: false} as BasicAuthInformation);
       } catch (error) {
-        Alert.alert(error.message);
+        if(error.message == "Missing Authentication")
+        {
+          navigation.navigate("ServerManual", {
+            url: url,
+            basicAuthInformation: {basicAuthRequired: true} as BasicAuthInformation
+          });
+        } else {
+          Alert.alert(error.message);
+        }
       }
     },
     [updateServerUrl],

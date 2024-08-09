@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 export function cleanServerUrl(url) {
   let result = url.trim();
@@ -11,10 +11,24 @@ export function cleanServerUrl(url) {
   return result;
 }
 
-export async function verifyEvccServer(url) {
+
+
+export async function verifyEvccServer(url, authOptions) {
   try {
-    const response = await axios.get(url, { timeout: 10000 });
+    options =  {
+      timeout: 10000
+    };
+    if(authOptions)
+    {
+      options.auth = {
+        username: authOptions.username,
+        password: authOptions.password
+      }
+    }
+
+    const response = await axios.get(url, options);
     const { data } = response;
+    console.log(data);
     if (!data.includes("evcc-app-compatible")) {
       if (data.includes("evcc")) {
         throw new Error(
@@ -26,7 +40,19 @@ export async function verifyEvccServer(url) {
         );
       }
     }
-  } catch (error) {
+    console.log(data);
+  } catch (error) {     
+    if(error instanceof AxiosError)
+    {
+      var resp = error.response;
+      if(resp)
+      {
+        if(resp.status == 401)
+        {
+          throw new Error("Missing Authentication");
+        }
+      }
+    }
     console.log(error);
     throw new Error("Server nicht erreichbar. Bitte prüfe die Adresse.");
   }

@@ -16,6 +16,15 @@ import custom from "./themes.json";
 import { useFonts } from "expo-font";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import * as SplashScreen from "expo-splash-screen";
+import {decode, encode} from 'base-64'
+
+if (!global.btoa) {
+  global.btoa = encode;
+}
+
+if (!global.atob) {
+  global.atob = decode;
+}
 
 SplashScreen.preventAutoHideAsync();
 

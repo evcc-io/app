@@ -15,7 +15,7 @@ function LoadingScreen() {
 }
 
 export default function MainScreen({ navigation }) {
-  const { serverUrl } = useAppContext();
+  const { serverUrl, basicAuthInformation } = useAppContext();
   const webViewRef = useRef(null);
   const [isConnected, setIsConnected] = useState(false);
   const [webViewKey, setWebViewKey] = useState(0);
@@ -101,6 +101,7 @@ export default function MainScreen({ navigation }) {
   const onLoad = useCallback(() => {
     console.log("onLoad");
     setIsConnected(true);
+    
   }, []);
 
   const onError = useCallback((event) => {
@@ -120,6 +121,12 @@ export default function MainScreen({ navigation }) {
       <Layout style={{ flex: 1 }}>
         <Animated.View style={{ flex: 1, opacity: contFade }}>
           <WebView
+            basicAuthCredential={basicAuthInformation.basicAuthRequired ? 
+              {
+                username: basicAuthInformation.username,
+                password: basicAuthInformation.password
+              } : undefined
+            }
             source={{ uri: serverUrl }}
             style={{ flex: 1 }}
             key={webViewKey}

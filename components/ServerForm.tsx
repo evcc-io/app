@@ -1,22 +1,36 @@
 import React, { useState, useEffect } from "react";
-import { Text, Button, Input } from "@ui-kitten/components";
+import { Icon, IconElement, Text, Button, Input, CheckBox, } from "@ui-kitten/components";
 import { cleanServerUrl, verifyEvccServer } from "../utils/server";
 import LoadingIndicator from "../components/LoadingIndicator";
+import {TouchableWithoutFeedback } from 'react-native';
+import { LearnMoreLinks } from "react-native/Libraries/NewAppScreen";
+import { BasicAuthInformation } from "../interfaces/basic-auth-information";
 
 interface ServerFormProps {
   url?: string;
-  onChange: (url: string) => void;
+  basicAuth: BasicAuthInformation
+  onChange: (url: string, baiscAuth: BasicAuthInformation) => void;
 }
 
 export default function ServerForm({
   url: initalUrl = "",
+  basicAuth: initialBasicAuth = {basicAuthRequired: false} as BasicAuthInformation,
   onChange,
 }: ServerFormProps) {
+
+
   const [inProgress, setInProgress] = useState(false);
   const [url, setUrl] = useState(initalUrl);
   const [error, setError] = useState("");
+  const [basicAuth, setBasicAuth] = useState(initialBasicAuth)
+  const [basicAuthPasswordShow, setBasicAuthPasswordShow] = useState(false)
 
   const inputRef = React.createRef<Input>();
+  const usernameRef = React.createRef<Input>();
+  const passwordRef = React.createRef<Input>();
+
+  const validateUsername = () => basicAuth.basicAuthRequired && basicAuth.username != null && basicAuth.username.length > 0;
+  const validatePassword = () => basicAuth.basicAuthRequired && basicAuth.password != null && basicAuth.password.length > 0;
 
   const validateAndSaveURL = async () => {
     if (inProgress) {
@@ -28,9 +42,8 @@ export default function ServerForm({
     setInProgress(true);
 
     try {
-      console.log("validating", cleanUrl);
-      await verifyEvccServer(cleanUrl);
-      onChange(cleanUrl);
+      await verifyEvccServer(cleanUrl, basicAuth);
+      onChange(cleanUrl, basicAuth);
     } catch (error) {
       setError(error.message);
     } finally {
@@ -42,10 +55,23 @@ export default function ServerForm({
     inputRef.current.focus();
   }, []);
 
+  const renderIcon = (props): React.ReactElement => (
+    <TouchableWithoutFeedback onPress={() => setBasicAuthPasswordShow(!basicAuthPasswordShow)}>
+      <Icon
+        {...props}
+        name={!basicAuthPasswordShow ? 'eye-off' : 'eye'}
+      />
+    </TouchableWithoutFeedback>
+  );
+
+  const setBasicAuthRequired = (value: boolean) =>  setBasicAuth({...basicAuth, basicAuthRequired: value});
+  const setBasicAuthUserName = (value: string) => setBasicAuth({...basicAuth, username: value});
+  const setBasicAuthPassword = (value: string) => setBasicAuth({...basicAuth, password: value});
+
   return (
     <>
       <Input
-        style={{ marginBottom: 32 }}
+        style={{ marginBottom: 10 }}
         placeholder="http://evcc.local:7070/"
         value={url}
         size="large"
@@ -55,10 +81,52 @@ export default function ServerForm({
         inputMode="url"
         keyboardType="url"
         autoCapitalize="none"
-        onSubmitEditing={validateAndSaveURL}
-        returnKeyType="go"
+        onSubmitEditing={() => basicAuth.basicAuthRequired ? usernameRef.current.focus() : validateAndSaveURL()}
+        returnKeyType={basicAuth.basicAuthRequired ? "next" : "go"}
         autoCorrect={false}
       />
+      <CheckBox checked={basicAuth.basicAuthRequired} onChange={(nextValue) => setBasicAuthRequired(nextValue)}>Anmeldung erforderlich</CheckBox>
+      {basicAuth.basicAuthRequired && (
+        <Input 
+          style={{marginTop: 5}} 
+          size="large" 
+          status={validateUsername() ? "basic" : "danger"}
+          onChangeText={(nextValue) => setBasicAuthUserName(nextValue)} 
+          value={basicAuth.username}
+          inputMode="text" 
+          keyboardType="default" 
+          autoCapitalize="none" 
+          returnKeyType="next" 
+          autoCorrect={false} 
+          placeholder="Benutzer" 
+          label="Benutzer"
+          ref={usernameRef}
+          onSubmitEditing={() => passwordRef.current.focus()}
+        />
+        
+      )}
+      {basicAuth.basicAuthRequired && (
+        <Input 
+          style={{marginTop: 5}} 
+          size="large" 
+          status={validatePassword() ? "basic" : "danger"}
+          onChangeText={(nextValue) => setBasicAuthPassword(nextValue)} 
+          value={basicAuth.password}
+          inputMode="text" 
+          keyboardType="default" 
+          autoCapitalize="none" 
+          returnKeyType="go" 
+          autoCorrect={false} 
+          placeholder="Passwort" 
+          secureTextEntry={!basicAuthPasswordShow} 
+          accessoryRight={renderIcon} 
+          ref={passwordRef}
+          label="Passwort"
+          onSubmitEditing={validateAndSaveURL}
+        />
+      )}
+      
+
       <Button
         style={{ marginTop: 8, marginBottom: 16 }}
         appearance="filled"
