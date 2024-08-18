@@ -25,4 +25,4 @@ jobs:
         run: npm ci
 
       - name: 🚀 Build app
-        run: eas build --non-interactive
+        run: eas build --platform all --non-interactive --no-wait
