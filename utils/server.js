@@ -11,19 +11,16 @@ export function cleanServerUrl(url) {
   return result;
 }
 
-
-
 export async function verifyEvccServer(url, authOptions) {
   try {
-    options =  {
-      timeout: 10000
+    options = {
+      timeout: 10000,
     };
-    if(authOptions)
-    {
+    if (authOptions) {
       options.auth = {
         username: authOptions.username,
-        password: authOptions.password
-      }
+        password: authOptions.password,
+      };
     }
 
     const response = await axios.get(url, options);
@@ -41,14 +38,11 @@ export async function verifyEvccServer(url, authOptions) {
       }
     }
     console.log(data);
-  } catch (error) {     
-    if(error instanceof AxiosError)
-    {
+  } catch (error) {
+    if (error instanceof AxiosError) {
       var resp = error.response;
-      if(resp)
-      {
-        if(resp.status == 401)
-        {
+      if (resp) {
+        if (resp.status == 401) {
           throw new Error("Missing Authentication");
         }
       }
