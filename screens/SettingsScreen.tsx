@@ -3,7 +3,7 @@ import { Layout, Button } from "@ui-kitten/components";
 import { View } from "react-native";
 import ServerForm from "../components/ServerForm";
 
-import {  useAppContext } from "../components/AppContext";
+import { useAppContext } from "../components/AppContext";
 import Header from "../components/Header";
 
 import { BasicAuthInformation } from "../interfaces/basic-auth-information";
@@ -24,7 +24,13 @@ function SettingsScreen({ navigation }) {
   );
 
   const serverForm = React.useMemo(
-    () => <ServerForm url={serverUrl} basicAuth={basicAuthInformation} onChange={saveServer} />,
+    () => (
+      <ServerForm
+        url={serverUrl}
+        basicAuth={basicAuthInformation}
+        onChange={saveServer}
+      />
+    ),
     [serverUrl, saveServer],
   );
 
@@ -42,7 +48,11 @@ function SettingsScreen({ navigation }) {
           style={{ marginVertical: 16 }}
           appearance="ghost"
           status="danger"
-          onPress={() => updateServerUrl("", {basicAuthRequired: false} as BasicAuthInformation)}
+          onPress={() =>
+            updateServerUrl("", {
+              basicAuthRequired: false,
+            } as BasicAuthInformation)
+          }
         >
           Server entfernen
         </Button>

@@ -68,14 +68,19 @@ export default function ServerScreen({ navigation }) {
   const selectServer = useCallback(
     async (url) => {
       try {
-        await verifyEvccServer(url, {basicAuthRequired: false} as BasicAuthInformation);
-        updateServerUrl(url, {basicAuthRequired: false} as BasicAuthInformation);
+        await verifyEvccServer(url, {
+          basicAuthRequired: false,
+        } as BasicAuthInformation);
+        updateServerUrl(url, {
+          basicAuthRequired: false,
+        } as BasicAuthInformation);
       } catch (error) {
-        if(error.message == "Missing Authentication")
-        {
+        if (error.message == "Missing Authentication") {
           navigation.navigate("ServerManual", {
             url: url,
-            basicAuthInformation: {basicAuthRequired: true} as BasicAuthInformation
+            basicAuthInformation: {
+              basicAuthRequired: true,
+            } as BasicAuthInformation,
           });
         } else {
           Alert.alert(error.message);
