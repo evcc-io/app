@@ -114,6 +114,10 @@ export default function MainScreen({ navigation }) {
     setIsConnected(false);
   }, []);
 
+  const onFileDownload = ({ nativeEvent: { downloadUrl } }) => {
+    if (downloadUrl) Linking.openURL(downloadUrl);
+  };
+
   const LoadingScreenMemoized = useMemo(() => <LoadingScreen />, []);
 
   const LayoutMemoized = useMemo(
@@ -142,6 +146,7 @@ export default function MainScreen({ navigation }) {
             onContentProcessDidTerminate={onTerminate}
             onMessage={handleMessage}
             onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
+            onFileDownload={onFileDownload}
           />
         </Animated.View>
         <Animated.View
