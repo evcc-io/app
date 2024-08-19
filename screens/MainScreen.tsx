@@ -9,13 +9,14 @@ import { WebView } from "react-native-webview";
 import { Linking, ActivityIndicator, StyleSheet, Animated } from "react-native";
 import { Text, Layout, Spinner, Button } from "@ui-kitten/components";
 import { useAppContext } from "../components/AppContext";
+import { BasicAuth } from "../interfaces/basicAuth";
 
 function LoadingScreen() {
   return <ActivityIndicator size="large" />;
 }
 
 export default function MainScreen({ navigation }) {
-  const { serverUrl, basicAuthInformation } = useAppContext();
+  const { serverUrl, basicAuth } = useAppContext();
   const webViewRef = useRef(null);
   const [isConnected, setIsConnected] = useState(false);
   const [webViewKey, setWebViewKey] = useState(0);
@@ -121,10 +122,10 @@ export default function MainScreen({ navigation }) {
         <Animated.View style={{ flex: 1, opacity: contFade }}>
           <WebView
             basicAuthCredential={
-              basicAuthInformation.basicAuthRequired
+              basicAuth.required
                 ? {
-                    username: basicAuthInformation.username,
-                    password: basicAuthInformation.password,
+                    username: basicAuth.username,
+                    password: basicAuth.password,
                   }
                 : undefined
             }

@@ -3,9 +3,7 @@ import { Layout } from "@ui-kitten/components";
 import { View } from "react-native";
 import ServerForm from "../components/ServerForm";
 import Header from "../components/Header";
-
 import { useAppContext } from "../components/AppContext";
-import { BasicAuthInformation } from "../interfaces/basic-auth-information";
 
 function navigateToServer(navigation) {
   navigation.navigate("Server");
@@ -13,15 +11,13 @@ function navigateToServer(navigation) {
 
 function ServerManualScreen({ route, navigation }) {
   let paramsUrl = "";
-  let paramsBasicAuthInformation = {
-    basicAuthRequired: false,
-  } as BasicAuthInformation;
+  let paramsBasicAuth = { required: false };
   if (route.params) {
     if (route.params.url) {
       paramsUrl = route.params.url;
     }
-    if (route.params.basicAuthInformation) {
-      paramsBasicAuthInformation = route.params.basicAuthInformation;
+    if (route.params.basicAuth) {
+      paramsBasicAuth = route.params.basicAuth;
     }
   }
   const { updateServerUrl } = useAppContext();
@@ -45,7 +41,7 @@ function ServerManualScreen({ route, navigation }) {
       <View style={{ paddingHorizontal: 16 }}>
         <ServerForm
           url={paramsUrl}
-          basicAuth={paramsBasicAuthInformation}
+          basicAuth={paramsBasicAuth}
           onChange={memoizedUpdateServerUrl}
         />
       </View>

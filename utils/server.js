@@ -13,19 +13,16 @@ export function cleanServerUrl(url) {
 
 export async function verifyEvccServer(url, authOptions) {
   try {
-    options = {
-      timeout: 10000,
-    };
+    options = { timeout: 10000 };
     if (authOptions) {
-      options.auth = {
-        username: authOptions.username,
-        password: authOptions.password,
-      };
+      const { username, password } = authOptions;
+      options.auth = { username, password };
     }
 
     const response = await axios.get(url, options);
+    const finalUrl = response.request.responseURL;
+
     const { data } = response;
-    console.log(data);
     if (!data.includes("evcc-app-compatible")) {
       if (data.includes("evcc")) {
         throw new Error(
@@ -37,7 +34,7 @@ export async function verifyEvccServer(url, authOptions) {
         );
       }
     }
-    console.log(data);
+    return finalUrl;
   } catch (error) {
     if (error instanceof AxiosError) {
       var resp = error.response;

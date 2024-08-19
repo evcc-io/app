@@ -1,15 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { BasicAuthInformation } from "../interfaces/basic-auth-information";
+import { BasicAuth } from "../interfaces/basicAuth";
 
 // Create a context
 const AppContext = createContext({
   serverUrl: "",
-  basicAuthInformation: { basicAuthRequired: false } as BasicAuthInformation,
-  updateServerUrl: async (
-    url: string,
-    basicAuthInformation: BasicAuthInformation,
-  ) => {
+  basicAuth: { required: false } as BasicAuth,
+  updateServerUrl: async (url: string, basicAuth: BasicAuth) => {
     url;
     return;
   },
@@ -18,9 +15,7 @@ const AppContext = createContext({
 // Provider component
 export const AppProvider = ({ children }) => {
   const [serverUrl, setServerUrl] = useState("unknown");
-  const [basicAuthInformation, setBasicAuthInformation] = useState({
-    basicAuthRequired: false,
-  } as BasicAuthInformation);
+  const [basicAuth, setBasicAuth] = useState({ required: false });
 
   // Load the URL from AsyncStorage on startup
   useEffect(() => {
@@ -28,36 +23,26 @@ export const AppProvider = ({ children }) => {
       const url = await AsyncStorage.getItem("serverUrl");
       setServerUrl(url || "");
 
-      const basicAuthJson = await AsyncStorage.getItem("basicAuthInformation");
+      const basicAuthJson = await AsyncStorage.getItem("basicAuth");
       if (basicAuthJson) {
-        setBasicAuthInformation(JSON.parse(basicAuthJson));
+        setBasicAuth(JSON.parse(basicAuthJson));
       } else {
-        setBasicAuthInformation({
-          basicAuthRequired: false,
-        } as BasicAuthInformation);
+        setBasicAuth({ required: false });
       }
     };
 
     loadServerUrl();
   }, []);
 
-  const updateServerUrl = async (
-    url,
-    basicAuthInformation: BasicAuthInformation,
-  ) => {
-    setBasicAuthInformation(basicAuthInformation);
-    await AsyncStorage.setItem(
-      "basicAuthInformation",
-      JSON.stringify(basicAuthInformation),
-    );
+  const updateServerUrl = async (url, basicAuth: BasicAuth) => {
+    setBasicAuth(basicAuth);
+    await AsyncStorage.setItem("basicAuth", JSON.stringify(basicAuth));
     setServerUrl(url);
     await AsyncStorage.setItem("serverUrl", url);
   };
 
   return (
-    <AppContext.Provider
-      value={{ serverUrl, basicAuthInformation, updateServerUrl }}
-    >
+    <AppContext.Provider value={{ serverUrl, basicAuth, updateServerUrl }}>
       {children}
     </AppContext.Provider>
   );
