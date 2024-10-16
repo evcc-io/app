@@ -52,6 +52,8 @@ npm install
 
 Follow the expo instructions to run local simulators for [iOS](https://docs.expo.dev/workflow/ios-simulator/) and [Android](https://docs.expo.dev/workflow/android-studio-emulator/).
 
+Alternatively, if you use VS Code and [devcontainers](https://code.visualstudio.com/docs/devcontainers/containers), you can use the "Dev containers: Clone repository in container volume" action. This will create a devcontainer with the required toolchain and install dependencies. Wait until the startup log says "Done. Press any key to close the terminal." and check for any errors.
+
 Start dev mode to get into an interactive development environment.
 
 ```bash
@@ -65,3 +67,13 @@ npm run ios
 npm run android
 npm run web
 ```
+
+## Building an Android apk
+
+To build an Android apk, in addition to the Development setup explained above, you need to:
+
+- Install the EAS CLI with `npm install --global eas-cli`
+- Create a (free) EAS account on https://expo.dev/
+- Remove `projectId` from app.json
+- Run `eas build -p android --profile preview` and follow the instructions
+- When the build has finished, you should get a link that you can directly use to download the apk and a QR code to scan on your phone, also getting you the apk
