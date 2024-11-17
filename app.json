@@ -33,8 +33,7 @@
       },
       "config": {
         "usesNonExemptEncryption": false
-      },
-      "buildNumber": "8"
+      }
     },
     "android": {
       "permissions": [

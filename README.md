@@ -8,6 +8,10 @@ Join the beta program via TestFlight:
 
 https://testflight.apple.com/join/8Y4elMpv
 
+## Android Beta Testing
+
+Install the APK from the [releases](https://github.com/evcc-io/app/releases) page.
+
 ## Features
 
 - Onboarding
@@ -37,8 +41,6 @@ https://testflight.apple.com/join/8Y4elMpv
 - Only German language is supported [#2](https://github.com/evcc-io/app/issues/2)
 - No support for multiple instances [#3](https://github.com/evcc-io/app/issues/3)
 - mDNS discovery only supports HTTP [#1](https://github.com/evcc-io/app/issues/1)
-- No Android release yet [#4](https://github.com/evcc-io/app/issues/4)
-- Not (basic) auth support [#5](https://github.com/evcc-io/app/issues/5)
 
 We'll work on these in a future release. Feel free to vote 👍 to help priorization and add new feature ideas.
 
