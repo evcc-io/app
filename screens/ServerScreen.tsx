@@ -60,17 +60,13 @@ export default function ServerScreen({ navigation }) {
     });
   }, []);
 
-  const selectDemoServer = useCallback(async () => {
-    await selectServer("https://demo.evcc.io/");
-  }, []);
-
   const selectServer = useCallback(
     async (url) => {
       try {
         const finalUrl = await verifyEvccServer(url, { required: false });
         updateServerUrl(finalUrl, { required: false });
       } catch (error) {
-        if (error.message == "Missing Authentication") {
+        if (error.message === "Missing Authentication") {
           navigation.navigate("ServerManual", {
             url: url,
             basicAuth: { required: true },
@@ -80,8 +76,12 @@ export default function ServerScreen({ navigation }) {
         }
       }
     },
-    [updateServerUrl],
+    [updateServerUrl, navigation],
   );
+
+  const selectDemoServer = useCallback(async () => {
+    await selectServer("https://demo.evcc.io/");
+  }, [selectServer]);
 
   const manualEntry = useCallback(() => {
     navigation.navigate("ServerManual");

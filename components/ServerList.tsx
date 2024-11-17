@@ -3,7 +3,7 @@ import { Button, List, ListItem } from "@ui-kitten/components";
 import { StyleSheet } from "react-native";
 
 interface ServerListProps {
-  entries: Array<{ title: string; url: string }>;
+  entries: { title: string; url: string }[];
   onSelect?: (url: string) => Promise<void>;
 }
 

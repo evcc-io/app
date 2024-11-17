@@ -13,7 +13,7 @@ export function cleanServerUrl(url) {
 
 export async function verifyEvccServer(url, authOptions) {
   try {
-    options = { timeout: 10000 };
+    const options = { timeout: 10000 };
     if (authOptions) {
       const { username, password } = authOptions;
       options.auth = { username, password };
@@ -39,7 +39,7 @@ export async function verifyEvccServer(url, authOptions) {
     if (error instanceof AxiosError) {
       var resp = error.response;
       if (resp) {
-        if (resp.status == 401) {
+        if (resp.status === 401) {
           throw new Error("Missing Authentication");
         }
       }

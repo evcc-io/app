@@ -26,7 +26,7 @@ function SettingsScreen({ navigation }) {
     () => (
       <ServerForm url={serverUrl} basicAuth={basicAuth} onChange={saveServer} />
     ),
-    [serverUrl, saveServer],
+    [serverUrl, basicAuth, saveServer],
   );
 
   return (

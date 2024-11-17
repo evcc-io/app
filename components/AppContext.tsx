@@ -6,10 +6,7 @@ import { BasicAuth } from "../interfaces/basicAuth";
 const AppContext = createContext({
   serverUrl: "",
   basicAuth: { required: false } as BasicAuth,
-  updateServerUrl: async (url: string, basicAuth: BasicAuth) => {
-    url;
-    return;
-  },
+  updateServerUrl: async (url: string, basicAuth: BasicAuth) => {},
 });
 
 // Provider component
