@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Layout } from "@ui-kitten/components";
 import { View } from "react-native";
 import ServerForm from "../components/ServerForm";
@@ -22,7 +22,9 @@ function ServerManualScreen({ route, navigation }) {
   }
   const { updateServerUrl } = useAppContext();
 
-  const memoizedUpdateServerUrl = React.useCallback(updateServerUrl, []);
+  const memoizedUpdateServerUrl = React.useCallback(updateServerUrl, [
+    updateServerUrl,
+  ]);
 
   const memoizedHeader = React.useMemo(
     () => (

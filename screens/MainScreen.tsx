@@ -6,10 +6,18 @@ import React, {
   useMemo,
 } from "react";
 import { WebView } from "react-native-webview";
-import { Linking, ActivityIndicator, StyleSheet, Animated } from "react-native";
+import {
+  Linking,
+  ActivityIndicator,
+  StyleSheet,
+  Animated,
+  Alert,
+  Platform,
+  Share,
+} from "react-native";
 import { Text, Layout, Spinner, Button } from "@ui-kitten/components";
 import { useAppContext } from "../components/AppContext";
-import { BasicAuth } from "../interfaces/basicAuth";
+import RNFetchBlob from "react-native-blob-util";
 
 function LoadingScreen() {
   return <ActivityIndicator size="large" />;
@@ -67,7 +75,7 @@ export default function MainScreen({ navigation }) {
       duration,
       useNativeDriver: true,
     }).start();
-  }, [isConnected]);
+  }, [isConnected, contFade, loadFade, loadScale]);
 
   const handleMessage = useCallback(
     (event) => {
@@ -114,8 +122,48 @@ export default function MainScreen({ navigation }) {
     setIsConnected(false);
   }, []);
 
-  const onFileDownload = ({ nativeEvent: { downloadUrl } }) => {
-    if (downloadUrl) Linking.openURL(downloadUrl);
+  const onFileDownload = async ({ nativeEvent: { downloadUrl } }) => {
+    if (!downloadUrl) return;
+
+    try {
+      // Get filename from URL or use default
+      const filename = downloadUrl.split("/").pop() || "download";
+
+      // Configure download options
+      const config = {
+        fileCache: true,
+        // Use appropriate directory based on platform
+        path: `${RNFetchBlob.fs.dirs.CacheDir}/${filename}`,
+        // Include auth headers if needed
+        headers: basicAuth.required
+          ? {
+              Authorization: `Basic ${btoa(`${basicAuth.username}:${basicAuth.password}`)}`,
+            }
+          : {},
+      };
+
+      // Download the file
+      const res = await RNFetchBlob.config(config).fetch("GET", downloadUrl);
+      const filePath = res.path();
+
+      // Share the file
+      if (Platform.OS === "ios") {
+        // iOS: Use Share API
+        await Share.share({
+          url: `file://${filePath}`,
+        });
+      } else {
+        // Android: Use Android sharing
+        await RNFetchBlob.android.actionViewIntent(filePath, "*/*");
+      }
+
+      // Clean up the temp file
+      await RNFetchBlob.fs.unlink(filePath);
+    } catch (error) {
+      console.error("Download failed:", error);
+      // Show error to user (you can use your preferred UI component)
+      Alert.alert("Download Failed", "Could not download the file.");
+    }
   };
 
   const LoadingScreenMemoized = useMemo(() => <LoadingScreen />, []);
@@ -186,6 +234,9 @@ export default function MainScreen({ navigation }) {
       handleMessage,
       onShouldStartLoadWithRequest,
       openSettings,
+      basicAuth.required,
+      basicAuth.username,
+      basicAuth.password,
     ],
   );
 

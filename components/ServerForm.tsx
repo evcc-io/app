@@ -37,7 +37,7 @@ export default function ServerForm({
       const finalUrl = await verifyEvccServer(cleanUrl, basicAuth);
       onChange(finalUrl, basicAuth);
     } catch (error) {
-      if (error.message == "Missing Authentication") {
+      if (error.message === "Missing Authentication") {
         setError("Fehlende oder falsche Anmeldung");
         setBasicAuthRequired(true);
         return;
@@ -50,7 +50,7 @@ export default function ServerForm({
 
   useEffect(() => {
     inputRef.current.focus();
-  }, []);
+  });
 
   const setBasicAuthRequired = (value: boolean) =>
     setBasicAuth({ ...basicAuth, required: value });
