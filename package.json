@@ -11,6 +11,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "-": "^0.0.1",
     "@eva-design/eva": "^2.2.0",
     "@expo/metro-runtime": "~3.2.1",
     "@material-symbols/svg-400": "^0.22.1",
@@ -32,8 +33,11 @@
     "expo-status-bar": "~1.12.1",
     "expo-system-ui": "~3.0.4",
     "expo-web-browser": "~13.0.3",
+    "g": "^2.0.1",
+    "i18next": "^24.0.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-i18next": "^15.1.4",
     "react-native": "^0.75.1",
     "react-native-eva-icons": "^1.3.1",
     "react-native-gesture-handler": "^2.16.1",
@@ -44,7 +48,7 @@
     "react-native-web": "~0.19.6",
     "react-native-webview": "^13.10.2",
     "react-native-zeroconf": "^0.13.8",
-    "typescript": "^5.5.4",
+    "typescript": "^5.7.2",
     "v8-android-jit": "^11.1000.4"
   },
   "devDependencies": {

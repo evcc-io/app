@@ -1,1 +1,30 @@
-{}
+{
+  "main": {
+    "title": "Server einrichten",
+    "description": "Durchsuche dein Netzwerk, um deine evcc Installation zu finden."
+  },
+  "servers": {
+    "search": {
+      "start": "Suche starten",
+      "notAvailable": "Die Suche ist auf diesem Gerät nicht möglich. Nutze die manuelle Eingabe.",
+      "nothingFound": "Es wurde kein evcc Server gefunden.",
+      "searching": "Suche nach Verbindung ..."
+    },
+    "manually": {
+      "specify": "Adresse manuell eingeben",
+      "user": "Benutzer",
+      "password": "Passwort",
+      "missingOrWrongAuthentication": "Fehlende oder falsche Anmeldung",
+      "authenticationRequired": "Anmeldung erforderlich",
+      "checkAndSave": "Prüfen und speichern",
+      "enterUrl": "Url eingeben",
+      "serverNotAvailable": "Server nicht erreichbar. Bitte prüfe die Adresse.",
+      "checkAdress": "Der Server scheint keine evcc Instanz zu sein. Bitte prüfe die Adresse.",
+      "serverIncompatible": "Die evcc Instanz ist noch nicht App-kompatibel. Aktualisiere deine Installation."
+    },
+    "changeServer": "Server ändern",
+    "removeServer": "Server entfernen",
+    "select": "Auswählen",
+    "useDemo": "Testinstanz verwenden"
+  }
+}

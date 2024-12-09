@@ -4,6 +4,7 @@ import { View } from "react-native";
 import ServerForm from "../components/ServerForm";
 import Header from "../components/Header";
 import { useAppContext } from "../components/AppContext";
+import { useTranslation } from "react-i18next";
 
 function navigateToServer(navigation) {
   navigation.navigate("Server");
@@ -20,6 +21,7 @@ function ServerManualScreen({ route, navigation }) {
       paramsBasicAuth = route.params.basicAuth;
     }
   }
+  const { t } = useTranslation();
   const { updateServerUrl } = useAppContext();
 
   const memoizedUpdateServerUrl = React.useCallback(updateServerUrl, []);
@@ -27,7 +29,7 @@ function ServerManualScreen({ route, navigation }) {
   const memoizedHeader = React.useMemo(
     () => (
       <Header
-        title="URL eingeben"
+        title={t("servers.manually.enterUrl")}
         showDone
         onDone={() => navigateToServer(navigation)}
       />

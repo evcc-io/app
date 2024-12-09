@@ -4,6 +4,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as eva from "@eva-design/eva";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import { Appearance } from "react-native";
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import { getLocales } from "expo-localization";
 import mapping from "./style.json";
 
 import ServerScreen from "./screens/ServerScreen";
@@ -18,6 +21,9 @@ import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import * as SplashScreen from "expo-splash-screen";
 import { decode, encode } from "base-64";
 
+import translationEN from "./i18n/en.json";
+import translationDE from "./i18n/de.json";
+
 if (!global.btoa) {
   global.btoa = encode;
 }
@@ -29,6 +35,23 @@ if (!global.atob) {
 SplashScreen.preventAutoHideAsync();
 
 const Stack = createNativeStackNavigator();
+
+const resources = {
+  en: {
+    translation: translationEN
+  },
+  de: {
+    translation: translationDE
+  }
+};
+
+i18n
+  .use(initReactI18next)
+  .init({
+    resources,
+    lng: getLocales()[0].languageCode,
+    fallbackLng: "en",
+  });
 
 function AppNavigator() {
   const { serverUrl } = useAppContext();
