@@ -1,4 +1,5 @@
 import axios, { AxiosError } from "axios";
+import { t } from "i18next";
 
 export function cleanServerUrl(url) {
   let result = url.trim();
@@ -25,13 +26,9 @@ export async function verifyEvccServer(url, authOptions) {
     const { data } = response;
     if (!data.includes("evcc-app-compatible")) {
       if (data.includes("evcc")) {
-        throw new Error(
-          "Die evcc Instanz ist noch nicht App-kompatibel. Aktualisiere deine Installation.",
-        );
+        throw new Error(t("servers.manually.serverIncompatible"));
       } else {
-        throw new Error(
-          "Der Server scheint keine evcc Instanz zu sein. Bitte prüfe die Adresse.",
-        );
+        throw new Error(t("servers.manually.checkAdress"));
       }
     }
     return finalUrl;
@@ -40,11 +37,11 @@ export async function verifyEvccServer(url, authOptions) {
       var resp = error.response;
       if (resp) {
         if (resp.status == 401) {
-          throw new Error("Missing Authentication");
+          throw new Error(t("servers.manually.missingOrWrongAuthentication"));
         }
       }
     }
     console.log(error);
-    throw new Error("Server nicht erreichbar. Bitte prüfe die Adresse.");
+    throw new Error(t("servers.manually.serverNotAvailable"));
   }
 }

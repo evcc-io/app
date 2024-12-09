@@ -8,8 +8,10 @@ import { useAppContext } from "../components/AppContext";
 import ServerList from "../components/ServerList";
 import LoadingIndicator from "../components/LoadingIndicator";
 import { verifyEvccServer } from "../utils/server";
+import { useTranslation } from "react-i18next";
 
 export default function ServerScreen({ navigation }) {
+  const { t } = useTranslation();
   const [searching, setSearching] = useState(false);
   const [finished, setFinished] = useState(false);
   const [scanNotPossible, setScanNotPossible] = useState(false);
@@ -92,10 +94,10 @@ export default function ServerScreen({ navigation }) {
       <SafeAreaView style={{ flex: 1 }}>
         <Layout style={{ flex: 1 }}>
           <Text style={{ marginVertical: 32 }} category="h2">
-            Server einrichten
+            {t("main.title")}
           </Text>
           <Text style={{ marginBottom: 32 }} category="p1">
-            Durchsuche dein Netzwerk und deine evcc Installation zu finden.
+            {t("main.description")}
           </Text>
 
           <Button
@@ -106,18 +108,17 @@ export default function ServerScreen({ navigation }) {
             accessoryLeft={searching ? LoadingIndicator : null}
             disabled={scanNotPossible}
           >
-            Suche starten
+            {t("servers.search.start")}
           </Button>
 
           {scanNotPossible ? (
             <Text style={{ marginVertical: 16 }} category="p1">
-              Die Suche ist auf diesem Gerät nicht möglich. Nutze die manuelle
-              Eingabe.
+              {t("servers.search.notAvailable")}
             </Text>
           ) : null}
           {finished && found.length === 0 ? (
             <Text style={{ marginVertical: 16 }} category="p1">
-              Es wurde kein evcc Server gefunden.
+              {t("servers.search.nothingFound")}
             </Text>
           ) : (
             <ServerList entries={found} onSelect={selectServer} />
@@ -130,7 +131,7 @@ export default function ServerScreen({ navigation }) {
             status="primary"
             onPress={manualEntry}
           >
-            Adresse manuell eingeben
+            {t("servers.manually.specify")}
           </Button>
           <Button
             style={{ marginVertical: 8 }}
@@ -138,7 +139,7 @@ export default function ServerScreen({ navigation }) {
             status="basic"
             onPress={selectDemoServer}
           >
-            Testinstanz verwenden
+            {t("servers.useDemo")}
           </Button>
         </Layout>
       </SafeAreaView>

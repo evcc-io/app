@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, List, ListItem } from "@ui-kitten/components";
 import { StyleSheet } from "react-native";
+import { useTranslation } from "react-i18next";
 
 interface ServerListProps {
   entries: Array<{ title: string; url: string }>;
@@ -11,6 +12,7 @@ export default function ServerList({
   entries = [],
   onSelect,
 }: ServerListProps): React.ReactElement {
+  const { t } = useTranslation();
   const renderItemAccessory = (url) => (
     <Button
       size="small"
@@ -18,7 +20,7 @@ export default function ServerList({
         onSelect(url);
       }}
     >
-      Auswählen
+      {t("servers.select")}
     </Button>
   );
 

@@ -3,6 +3,7 @@ import { Text, Button, Input, CheckBox } from "@ui-kitten/components";
 import { cleanServerUrl, verifyEvccServer } from "../utils/server";
 import LoadingIndicator from "../components/LoadingIndicator";
 import { BasicAuth } from "../interfaces/basicAuth";
+import { useTranslation } from "react-i18next";
 
 interface ServerFormProps {
   url?: string;
@@ -15,6 +16,7 @@ export default function ServerForm({
   basicAuth: initialBasicAuth = { required: false },
   onChange,
 }: ServerFormProps) {
+  const { t } = useTranslation();
   const [inProgress, setInProgress] = useState(false);
   const [url, setUrl] = useState(initalUrl);
   const [error, setError] = useState("");
@@ -38,7 +40,7 @@ export default function ServerForm({
       onChange(finalUrl, basicAuth);
     } catch (error) {
       if (error.message == "Missing Authentication") {
-        setError("Fehlende oder falsche Anmeldung");
+        setError(t("servers.manually.missingOrWrongAuthentication"));
         setBasicAuthRequired(true);
         return;
       }
@@ -85,7 +87,7 @@ export default function ServerForm({
         checked={basicAuth.required}
         onChange={(nextValue) => setBasicAuthRequired(nextValue)}
       >
-        Anmeldung erforderlich
+        {t("servers.manually.authenticationRequired")}
       </CheckBox>
       {basicAuth.required && (
         <>
@@ -100,7 +102,7 @@ export default function ServerForm({
             autoCapitalize="none"
             returnKeyType="next"
             autoCorrect={false}
-            placeholder="Benutzer"
+            placeholder={t("servers.manually.user")}
             ref={usernameRef}
             onSubmitEditing={() => passwordRef.current.focus()}
           />
@@ -115,7 +117,7 @@ export default function ServerForm({
             autoCapitalize="none"
             returnKeyType="go"
             autoCorrect={false}
-            placeholder="Passwort"
+            placeholder={t("servers.manually.password")}
             secureTextEntry={true}
             ref={passwordRef}
             onSubmitEditing={validateAndSaveURL}
@@ -131,7 +133,7 @@ export default function ServerForm({
         accessoryLeft={inProgress ? LoadingIndicator : null}
         onPress={validateAndSaveURL}
       >
-        Prüfen und speichern
+        {t("servers.manually.checkAndSave")}
       </Button>
       {error ? (
         <Text style={{ marginTop: 16 }} category="p1">

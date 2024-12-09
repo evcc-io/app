@@ -6,12 +6,14 @@ import { useAppContext } from "../components/AppContext";
 import Header from "../components/Header";
 
 import { BasicAuth } from "../interfaces/basicAuth";
+import { useTranslation } from "react-i18next";
 
 function navigateToMain(navigation) {
   navigation.navigate("Main");
 }
 
 function SettingsScreen({ navigation }) {
+  const { t } = useTranslation();
   const { serverUrl, basicAuth, updateServerUrl } = useAppContext();
 
   const saveServer = React.useCallback(
@@ -32,7 +34,7 @@ function SettingsScreen({ navigation }) {
   return (
     <Layout style={{ flex: 1, paddingBottom: 32 }}>
       <Header
-        title="Server ändern"
+        title={t("servers.changeServer")}
         showDone
         onDone={() => navigateToMain(navigation)}
       />
@@ -45,7 +47,7 @@ function SettingsScreen({ navigation }) {
           status="danger"
           onPress={() => updateServerUrl("", { required: false })}
         >
-          Server entfernen
+          {t("servers.removeServer")}
         </Button>
       </View>
     </Layout>
