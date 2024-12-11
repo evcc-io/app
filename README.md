@@ -66,3 +66,9 @@ npm run ios
 npm run android
 npm run web
 ```
+
+## Translation
+
+We use [Weblate](https://hosted.weblate.org/projects/evcc/app/) to manage our translations.
+
+[![Translation status](https://hosted.weblate.org/widget/evcc/app/287x66-white.png)](https://hosted.weblate.org/engage/evcc/)
