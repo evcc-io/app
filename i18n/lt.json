@@ -1,7 +1,7 @@
 {
   "main": {
     "description": "Ieškokite savo tinkle, kad rastumėte įdiegtą evcc.",
-    "title": "Nustatykite serverį"
+    "title": "Nustatyti serverį"
   },
   "servers": {
     "changeServer": "Keisti serverį",
@@ -19,9 +19,9 @@
     },
     "removeServer": "Pašalinti serverį",
     "search": {
-      "notAvailable": "Paieška šiame įrenginyje negalima. Suveskite rankomis.",
+      "notAvailable": "Paieška šiame įrenginyje negalima. Įveskite rankiniu būdu.",
       "nothingFound": "Neradome evcc serverio.",
-      "searching": "Ieškoti sąsajos ...",
+      "searching": "Ieškoma sąsaja ...",
       "start": "Pradėti paiešką"
     },
     "select": "Pasirinkite",
