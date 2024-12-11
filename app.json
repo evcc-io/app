@@ -41,7 +41,11 @@
         "android.permission.ACCESS_WIFI_STATE",
         "android.permission.CHANGE_WIFI_MULTICAST_STATE"
       ],
-      "package": "io.evcc.android"
+      "package": "io.evcc.android",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#010322"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png",

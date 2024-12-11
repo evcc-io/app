@@ -23,7 +23,7 @@ import { decode, encode } from "base-64";
 
 import translationEN from "./i18n/en.json";
 import translationDE from "./i18n/de.json";
-
+import translationLT from "./i18n/lt.json";
 if (!global.btoa) {
   global.btoa = encode;
 }
@@ -37,12 +37,9 @@ SplashScreen.preventAutoHideAsync();
 const Stack = createNativeStackNavigator();
 
 const resources = {
-  en: {
-    translation: translationEN,
-  },
-  de: {
-    translation: translationDE,
-  },
+  en: { translation: translationEN },
+  de: { translation: translationDE },
+  lt: { translation: translationLT },
 };
 
 i18n.use(initReactI18next).init({
