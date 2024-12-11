@@ -38,7 +38,6 @@ Install the APK from the [releases](https://github.com/evcc-io/app/releases) pag
 
 ## Known limitations
 
-- Only German language is supported [#2](https://github.com/evcc-io/app/issues/2)
 - No support for multiple instances [#3](https://github.com/evcc-io/app/issues/3)
 - mDNS discovery only supports HTTP [#1](https://github.com/evcc-io/app/issues/1)
 

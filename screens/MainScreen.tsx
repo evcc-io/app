@@ -10,12 +10,14 @@ import { Linking, ActivityIndicator, StyleSheet, Animated } from "react-native";
 import { Text, Layout, Spinner, Button } from "@ui-kitten/components";
 import { useAppContext } from "../components/AppContext";
 import { BasicAuth } from "../interfaces/basicAuth";
+import { useTranslation } from "react-i18next";
 
 function LoadingScreen() {
   return <ActivityIndicator size="large" />;
 }
 
 export default function MainScreen({ navigation }) {
+  const { t } = useTranslation();
   const { serverUrl, basicAuth } = useAppContext();
   const webViewRef = useRef(null);
   const [isConnected, setIsConnected] = useState(false);
@@ -128,9 +130,9 @@ export default function MainScreen({ navigation }) {
             basicAuthCredential={
               basicAuth.required
                 ? {
-                    username: basicAuth.username,
-                    password: basicAuth.password,
-                  }
+                  username: basicAuth.username,
+                  password: basicAuth.password,
+                }
                 : undefined
             }
             source={{ uri: serverUrl }}
@@ -161,13 +163,13 @@ export default function MainScreen({ navigation }) {
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           >
             <Text style={{ marginVertical: 32 }} category="p1">
-              Suche nach Verbindung ...
+              {t("servers.search.searching")}
             </Text>
             <Spinner size="large" />
           </Layout>
           <Layout style={{ paddingVertical: 32 }}>
             <Button appearance="ghost" status="basic" onPress={openSettings}>
-              Server ändern
+              {t("servers.changeServer")}
             </Button>
           </Layout>
         </Animated.View>
