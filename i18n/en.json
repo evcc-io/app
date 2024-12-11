@@ -1,29 +1,29 @@
 {
   "main": {
-    "title": "Setup server",
-    "description": "Search your network to find your evcc installation."
+    "description": "Search your network to find your evcc installation.",
+    "title": "Setup server"
   },
   "servers": {
-    "search": {
-      "start": "Start search",
-      "notAvailable": "The search is not possible on this device. Use the manual input.",
-      "nothingFound": "No evcc server was found.",
-      "searching": "Search for connection ..."
-    },
+    "changeServer": "Change server",
     "manually": {
-      "specify": "Enter address manually",
-      "user": "User",
-      "password": "Password",
-      "missingOrWrongAuthentication": "Missing or incorrect authentication",
       "authenticationRequired": "Authentication required",
+      "checkAdress": "The server does not appear to be an evcc instance. Please check the address.",
       "checkAndSave": "Check and save",
       "enterUrl": "Enter URL",
+      "missingOrWrongAuthentication": "Missing or incorrect authentication",
+      "password": "Password",
+      "serverIncompatible": "The evcc instance is not yet app-compatible. Update your installation.",
       "serverNotAvailable": "Server not available. Please check the address.",
-      "checkAdress": "The server does not appear to be an evcc instance. Please check the address.",
-      "serverIncompatible": "The evcc instance is not yet app-compatible. Update your installation."
+      "specify": "Enter address manually",
+      "user": "User"
     },
-    "changeServer": "Change server",
     "removeServer": "Remove server",
+    "search": {
+      "notAvailable": "The search is not possible on this device. Use the manual input.",
+      "nothingFound": "No evcc server was found.",
+      "searching": "Search for connection ...",
+      "start": "Start search"
+    },
     "select": "Select",
     "useDemo": "Use Demo"
   }

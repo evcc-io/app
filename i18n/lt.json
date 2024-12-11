@@ -1,30 +1,30 @@
 {
-    "servers": {
-        "search": {
-            "start": "Pradėti paiešką",
-            "nothingFound": "Neradome evcc serverio.",
-            "searching": "Ieškoti sąsajos ...",
-            "notAvailable": "Paieška šiame įrenginyje negalima. Suveskite rankomis."
-        },
-        "manually": {
-            "enterUrl": "Įveskite URL",
-            "specify": "Įveskite adresą",
-            "user": "Vartotojas",
-            "password": "Slaptažodis",
-            "authenticationRequired": "Reikalingas autentifikavimas",
-            "checkAndSave": "Patikrinti ir išsaugoti",
-            "serverNotAvailable": "Serveris nepasiekiamas. Patikrinkite adresą.",
-            "missingOrWrongAuthentication": "Nėra autentifikavimo arba jis neteisingas",
-            "checkAdress": "Atrodo, kad serveris nėra evcc serveris. Patikrinkite adresą.",
-            "serverIncompatible": "Evcc egzempliorius dar nesuderinamas su programa. Atnaujinkite įdiegimą."
-        },
-        "changeServer": "Keisti serverį",
-        "removeServer": "Pašalinti serverį",
-        "select": "Pasirinkite",
-        "useDemo": "Naudokite demonstracinę versiją"
+  "main": {
+    "description": "Ieškokite savo tinkle, kad rastumėte įdiegtą evcc.",
+    "title": "Nustatykite serverį"
+  },
+  "servers": {
+    "changeServer": "Keisti serverį",
+    "manually": {
+      "authenticationRequired": "Reikalingas autentifikavimas",
+      "checkAdress": "Atrodo, kad serveris nėra evcc serveris. Patikrinkite adresą.",
+      "checkAndSave": "Patikrinti ir išsaugoti",
+      "enterUrl": "Įveskite URL",
+      "missingOrWrongAuthentication": "Nėra autentifikavimo arba jis neteisingas",
+      "password": "Slaptažodis",
+      "serverIncompatible": "Evcc egzempliorius dar nesuderinamas su programa. Atnaujinkite įdiegimą.",
+      "serverNotAvailable": "Serveris nepasiekiamas. Patikrinkite adresą.",
+      "specify": "Įveskite adresą",
+      "user": "Vartotojas"
     },
-    "main": {
-        "title": "Nustatykite serverį",
-        "description": "Ieškokite savo tinkle, kad rastumėte įdiegtą evcc."
-    }
+    "removeServer": "Pašalinti serverį",
+    "search": {
+      "notAvailable": "Paieška šiame įrenginyje negalima. Suveskite rankomis.",
+      "nothingFound": "Neradome evcc serverio.",
+      "searching": "Ieškoti sąsajos ...",
+      "start": "Pradėti paiešką"
+    },
+    "select": "Pasirinkite",
+    "useDemo": "Naudokite demonstracinę versiją"
+  }
 }

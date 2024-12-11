@@ -6,10 +6,8 @@ import { BasicAuth } from "../interfaces/basicAuth";
 const AppContext = createContext({
   serverUrl: "",
   basicAuth: { required: false } as BasicAuth,
-  updateServerUrl: async (url: string, basicAuth: BasicAuth) => {
-    url;
-    return;
-  },
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  updateServerUrl: async (url: string, basicAuth: BasicAuth) => {},
 });
 
 // Provider component

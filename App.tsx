@@ -38,20 +38,18 @@ const Stack = createNativeStackNavigator();
 
 const resources = {
   en: {
-    translation: translationEN
+    translation: translationEN,
   },
   de: {
-    translation: translationDE
-  }
+    translation: translationDE,
+  },
 };
 
-i18n
-  .use(initReactI18next)
-  .init({
-    resources,
-    lng: getLocales()[0].languageCode,
-    fallbackLng: "en",
-  });
+i18n.use(initReactI18next).init({
+  resources,
+  lng: getLocales()[0].languageCode,
+  fallbackLng: "en",
+});
 
 function AppNavigator() {
   const { serverUrl } = useAppContext();

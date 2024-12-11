@@ -9,7 +9,6 @@ import { WebView } from "react-native-webview";
 import { Linking, ActivityIndicator, StyleSheet, Animated } from "react-native";
 import { Text, Layout, Spinner, Button } from "@ui-kitten/components";
 import { useAppContext } from "../components/AppContext";
-import { BasicAuth } from "../interfaces/basicAuth";
 import { useTranslation } from "react-i18next";
 
 function LoadingScreen() {
@@ -130,9 +129,9 @@ export default function MainScreen({ navigation }) {
             basicAuthCredential={
               basicAuth.required
                 ? {
-                  username: basicAuth.username,
-                  password: basicAuth.password,
-                }
+                    username: basicAuth.username,
+                    password: basicAuth.password,
+                  }
                 : undefined
             }
             source={{ uri: serverUrl }}

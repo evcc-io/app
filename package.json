@@ -7,7 +7,7 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "lint": "tsc --noEmit && eslint --ext .js,.jsx,.ts,.tsx ./",
+    "lint": "tsc --noEmit && eslint .",
     "format": "prettier --write ."
   },
   "dependencies": {
@@ -51,6 +51,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.16.0",
     "@typescript-eslint/eslint-plugin": "^8.1.0",
     "@typescript-eslint/parser": "^8.1.0",
     "eslint": "^9.9.0",
