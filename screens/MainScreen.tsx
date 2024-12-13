@@ -121,19 +121,19 @@ export default function MainScreen({ navigation }) {
 
   const LoadingScreenMemoized = useMemo(() => <LoadingScreen />, []);
 
+  const basicAuthCredential = useMemo(() => {
+    const { required, username, password } = basicAuth;
+    if (required) {
+      return { username, password };
+    }
+  }, [basicAuth]);
+
   const LayoutMemoized = useMemo(
     () => (
       <Layout style={{ flex: 1 }}>
         <Animated.View style={{ flex: 1, opacity: contFade }}>
           <WebView
-            basicAuthCredential={
-              basicAuth.required
-                ? {
-                    username: basicAuth.username,
-                    password: basicAuth.password,
-                  }
-                : undefined
-            }
+            basicAuthCredential={basicAuthCredential}
             source={{ uri: serverUrl }}
             style={{ flex: 1 }}
             key={webViewKey}

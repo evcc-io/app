@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { StatusBar } from "expo-status-bar";
 import * as eva from "@eva-design/eva";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import { Appearance } from "react-native";
@@ -123,7 +124,6 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
-  console.log("render");
 
   return (
     <>
@@ -139,6 +139,11 @@ export default function App() {
           </ApplicationProvider>
         </ThemeContext.Provider>
       </AppProvider>
+      <StatusBar
+        style={theme === "dark" ? "light" : "dark"}
+        backgroundColor={theme === "dark" ? "#010322" : "#f3f3f7"}
+        translucent={false}
+      />
     </>
   );
 }
