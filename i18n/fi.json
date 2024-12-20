@@ -1,0 +1,30 @@
+{
+  "main": {
+    "description": "Hae lähiverkosta löytääksesi evcc-asennuksesi.",
+    "title": "Asenna palvelin"
+  },
+  "servers": {
+    "changeServer": "Vaihda palvelinta",
+    "manually": {
+      "authenticationRequired": "Todennus vaaditaan",
+      "checkAdress": "Palvelin ei näytä olevan evcc-esiintymä. Tarkista osoite.",
+      "checkAndSave": "Tarkista ja tallenna",
+      "enterUrl": "Anna URL-osoite",
+      "missingOrWrongAuthentication": "Todennus puuttuu tai virheellinen",
+      "password": "Salasana",
+      "serverIncompatible": "Evcc-versiosi ei ole vielä sovellusyhteensopiva. Päivitä asennuksesi.",
+      "serverNotAvailable": "Palvelin ei ole käytettävissä. Tarkista osoite.",
+      "specify": "Anna osoite manuaalisesti",
+      "user": "Käyttäjä"
+    },
+    "removeServer": "Poista palvelin",
+    "search": {
+      "notAvailable": "Haku ei ole mahdollista tällä laitteella. Käytä manuaalista osoitetta.",
+      "nothingFound": "Evcc-palvelinta ei löytynyt.",
+      "searching": "Etsi yhteyttä ...",
+      "start": "Aloita haku"
+    },
+    "select": "Valitse",
+    "useDemo": "Käytä demo-näkymää"
+  }
+}
