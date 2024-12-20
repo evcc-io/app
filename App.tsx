@@ -21,10 +21,8 @@ import { useFonts } from "expo-font";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import * as SplashScreen from "expo-splash-screen";
 import { decode, encode } from "base-64";
+import translations from './i18n';
 
-import translationEN from "./i18n/en.json";
-import translationDE from "./i18n/de.json";
-import translationLT from "./i18n/lt.json";
 if (!global.btoa) {
   global.btoa = encode;
 }
@@ -37,17 +35,12 @@ SplashScreen.preventAutoHideAsync();
 
 const Stack = createNativeStackNavigator();
 
-const resources = {
-  en: { translation: translationEN },
-  de: { translation: translationDE },
-  lt: { translation: translationLT },
-};
-
 i18n.use(initReactI18next).init({
-  resources,
+  resources: translations,
   lng: getLocales()[0].languageCode,
   fallbackLng: "en",
 });
+console.log(getLocales());
 
 function AppNavigator() {
   const { serverUrl } = useAppContext();
