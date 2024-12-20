@@ -1,0 +1,30 @@
+{
+  "main": {
+    "description": "Duerchsich däin Netzwierk, fir deng evcc Installatioun ze fannen.",
+    "title": "Server ariichten"
+  },
+  "servers": {
+    "changeServer": "Server änneren",
+    "manually": {
+      "authenticationRequired": "Umellung néideg",
+      "checkAdress": "De Server schéngt keng evcc Instanz ze sinn. Iwwerpréif wgl. d'Adress.",
+      "checkAndSave": "Iwwerpréiwen a späicheren",
+      "enterUrl": "URL aginn",
+      "missingOrWrongAuthentication": "Fehlend oder falsch Umeldung",
+      "password": "Passwuert",
+      "serverIncompatible": "D'evcc Instanz ass nach net App-kompatibel. Aktualiséier deng Installatioun.",
+      "serverNotAvailable": "Server net erreechbar. Iwwerpréif wgl. d'Adress.",
+      "specify": "Adress manuell aginn",
+      "user": "Benotzer"
+    },
+    "removeServer": "Server ewechhuelen",
+    "search": {
+      "notAvailable": "D'Sich ass op auf dësem Gerät net méiglech. Benotz de manuellen Input.",
+      "nothingFound": "Et gouf keen evcc Server fonnt.",
+      "searching": "Siche no enger Verbindung ...",
+      "start": "Sich starten"
+    },
+    "select": "Auswielen",
+    "useDemo": "Demoinstanz verwennen"
+  }
+}
