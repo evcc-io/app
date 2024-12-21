@@ -1,1 +1,30 @@
-{}
+{
+  "main": {
+    "description": "Procure na sua rede para encontrar a sua instalação evcc.",
+    "title": "Configurar o servidor"
+  },
+  "servers": {
+    "changeServer": "Substituir o servidor",
+    "manually": {
+      "authenticationRequired": "Autenticação necessária",
+      "checkAdress": "O servidor não parece ser uma instância do evcc. Por favor, verifique o endereço.",
+      "checkAndSave": "Verificar e guardar",
+      "enterUrl": "Indicar URL",
+      "missingOrWrongAuthentication": "Autenticação inexistente ou incorrecta",
+      "password": "Password",
+      "serverIncompatible": "A instância evcc ainda não é compatível com a aplicação. Actualize a sua instalação.",
+      "serverNotAvailable": "O servidor não está disponível. Por favor, verifique o endereço.",
+      "specify": "Introduzir o endereço manualmente",
+      "user": "Utilizador"
+    },
+    "removeServer": "Remover servidor",
+    "search": {
+      "notAvailable": "A pesquisa não é possível neste dispositivo. Utilize a entrada manual.",
+      "nothingFound": "Não foi encontrado nenhum servidor evcc.",
+      "searching": "Procura de conexão ...",
+      "start": "Iniciar a pesquisa"
+    },
+    "select": "Selecionar",
+    "useDemo": "Utilizar uma instância de demonstração"
+  }
+}
