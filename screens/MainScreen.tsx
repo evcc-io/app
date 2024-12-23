@@ -6,7 +6,7 @@ import React, {
   useMemo,
 } from "react";
 import { WebView } from "react-native-webview";
-import { Linking, ActivityIndicator, StyleSheet, Animated } from "react-native";
+import { Linking, ActivityIndicator, StyleSheet, Animated, useColorScheme } from "react-native";
 import { Text, Layout, Spinner, Button } from "@ui-kitten/components";
 import { useAppContext } from "../components/AppContext";
 import { useTranslation } from "react-i18next";
@@ -16,6 +16,7 @@ function LoadingScreen() {
 }
 
 export default function MainScreen({ navigation }) {
+  const colorScheme = useColorScheme();
   const { t } = useTranslation();
   const { serverUrl, basicAuth } = useAppContext();
   const webViewRef = useRef(null);
@@ -148,6 +149,7 @@ export default function MainScreen({ navigation }) {
             onMessage={handleMessage}
             onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
             onFileDownload={onFileDownload}
+            injectedJavaScript={`window.localStorage.setItem('settings_theme', '${colorScheme}'); true;`}
           />
         </Animated.View>
         <Animated.View
