@@ -40,7 +40,6 @@ i18n.use(initReactI18next).init({
   lng: getLocales()[0].languageCode,
   fallbackLng: "en",
 });
-console.log(getLocales());
 
 function AppNavigator() {
   const { serverUrl } = useAppContext();
