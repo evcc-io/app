@@ -9,6 +9,7 @@
     "userInterfaceStyle": "automatic",
     "assetBundlePatterns": ["**/*"],
     "ios": {
+      "jsEngine": "jsc",
       "splash": {
         "image": "./assets/splash-light.png",
         "resizeMode": "cover",
@@ -36,6 +37,7 @@
       }
     },
     "android": {
+      "jsEngine": "hermes",
       "permissions": [
         "android.permission.ACCESS_NETWORK_STATE",
         "android.permission.ACCESS_WIFI_STATE",
@@ -58,7 +60,6 @@
     "locales": {
       "de": "./i18n/de.json"
     },
-    "jsEngine": "jsc",
     "plugins": [
       [
         "expo-build-properties",
@@ -68,7 +69,6 @@
           }
         }
       ],
-      "react-native-v8",
       [
         "expo-font",
         {
