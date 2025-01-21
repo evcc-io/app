@@ -1,0 +1,30 @@
+{
+  "main": {
+    "description": "Pretraživanje mreže u potrazi za evcc instalacijom.",
+    "title": "Postavi poslužitelj"
+  },
+  "servers": {
+    "changeServer": "Izmijeni poslužitelj",
+    "manually": {
+      "authenticationRequired": "Potrebna prijava",
+      "checkAdress": "Na poslužitelju nije pronađen evcc. Molim provjerite adresu.",
+      "checkAndSave": "Provjeri i spremi",
+      "enterUrl": "Unesite URL",
+      "missingOrWrongAuthentication": "Nepostojeća ili netočna prijava",
+      "password": "Lozinka",
+      "serverIncompatible": "Ova evcc instanca ne podržava aplikaciju. Ažurirajte svoju evcc instalaciju.",
+      "serverNotAvailable": "Poslužitelj nije dostupan. Molim provjerite adresu.",
+      "specify": "Ručno unesite adresu",
+      "user": "Korisnik"
+    },
+    "removeServer": "Ukloni poslužitelj",
+    "search": {
+      "notAvailable": "Pretraživanje nije moguće na ovom uređaju. Upotrijebite ručni unos.",
+      "nothingFound": "Nije pronađen evcc poslužitelj.",
+      "searching": "Traženje točke za povezivanje...",
+      "start": "Pokreni traženje"
+    },
+    "select": "Odaberi",
+    "useDemo": "Koristi demo verziju"
+  }
+}
