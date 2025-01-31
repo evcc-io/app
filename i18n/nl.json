@@ -1,1 +1,30 @@
-{}
+{
+  "main": {
+    "description": "Doorzoek jouw netwerk om jouw evcc installatie te vinden.",
+    "title": "Server instellen"
+  },
+  "servers": {
+    "changeServer": "Wijzig server",
+    "manually": {
+      "authenticationRequired": "Authenticatie vereist",
+      "checkAdress": "De server lijkt geen evcc server te zijn. Controleer het adres.",
+      "checkAndSave": "Controleren en opslaan",
+      "enterUrl": "URL invoeren",
+      "missingOrWrongAuthentication": "Ontbrekende of foutieve authenticatie",
+      "password": "Wachtwoord",
+      "serverIncompatible": "De evcc server is nog niet app-compatible. Update de installatie.",
+      "serverNotAvailable": "Server onbereikbaar. Controleer het adres.",
+      "specify": "Adres handmatig invoeren",
+      "user": "Gebruiker"
+    },
+    "removeServer": "Server verwijderen",
+    "search": {
+      "notAvailable": "De zoekfunctie is niet beschikbaar op dit apparaat. Gebruik de handmatige invoer.",
+      "nothingFound": "Er is geen evcc server gevonden.",
+      "searching": "Zoeken naar verbinding ...",
+      "start": "Zoeken starten"
+    },
+    "select": "Selecteren",
+    "useDemo": "Demo server gebruiken"
+  }
+}
