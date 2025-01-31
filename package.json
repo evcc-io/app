@@ -9,7 +9,10 @@
     "web": "expo start --web",
     "lint": "tsc --noEmit && eslint .",
     "format": "prettier --write .",
-    "translations": "ts-node ./scripts/load-translations.ts"
+    "translations": "ts-node ./scripts/load-translations.ts",
+    "eas:ios": "eas build -p ios",
+    "eas:android:github": "eas build --platform android --profile preview",
+    "eas:android:playstore": "eas build -p android"
   },
   "dependencies": {
     "@eva-design/eva": "^2.2.0",
