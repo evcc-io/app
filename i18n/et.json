@@ -1,0 +1,30 @@
+{
+  "main": {
+    "description": "Otsi oma kohtvõrgust elektrisõiduki sidekontrollerit.",
+    "title": "Seadista serverit"
+  },
+  "servers": {
+    "changeServer": "Vaheta serverit",
+    "manually": {
+      "authenticationRequired": "Autentimine on vajalik",
+      "checkAdress": "See server ei tundu olema elektrisõiduki sidekontroller. Palun kontrolli aadressi.",
+      "checkAndSave": "Kontrolli ja salvesta",
+      "enterUrl": "Sisesta võrguaadress",
+      "missingOrWrongAuthentication": "Autentimine on puudu või vigane",
+      "password": "Salasõna",
+      "serverIncompatible": "See elektrisõiduki sidekontroller ei ühildu veel rakendusega. Palun proovi kas tema tarkvara uuendamine aitaks.",
+      "serverNotAvailable": "Server pole leitav. Palun kontrolli aadressi.",
+      "specify": "Sisesta aadress käsitsi",
+      "user": "Kasutaja"
+    },
+    "removeServer": "Eemalda server",
+    "search": {
+      "notAvailable": "Selle seadmega otsing ei õnnestu. Proovi käsitsi sisestamist.",
+      "nothingFound": "Ühtegi elektrisõiduki sidekontrolleri serverit ei leidunud.",
+      "searching": "Otsi ühendust...",
+      "start": "Alusta otsingut"
+    },
+    "select": "Vali",
+    "useDemo": "Kasuta demo-vaadet"
+  }
+}
