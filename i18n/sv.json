@@ -17,7 +17,7 @@
       "specify": "Ange adress",
       "user": "Användare"
     },
-    "removeServer": "Ta bort servern",
+    "removeServer": "Ta bort server",
     "search": {
       "notAvailable": "Sökning är inte möjligt på denna enhet. Skriv in manuellt.",
       "nothingFound": "Ingen evcc-server hittades.",
