@@ -1,16 +1,16 @@
-# evcc Native App
+# evcc Companion App
 
 Native app wrapper for evcc UI based on [react-native](https://reactnative.dev/) and [expo.dev](https://expo.dev/). It uses [UI Kitten / Eva](https://akveo.github.io/react-native-ui-kitten/) as a design system. Native parts are written in TypeScript and kept to a minimum.
 
-## iOS Beta Testing
+## Download the App
 
-Join the beta program via TestFlight:
+- [Apple App Store](https://apps.apple.com/de/app/evcc-io/id6478510176)
+- [Google Play Store](https://play.google.com/store/apps/details?id=io.evcc.android)
 
-https://testflight.apple.com/join/8Y4elMpv
+## Beta Testing
 
-## Android Beta Testing
-
-Install the APK from the [releases](https://github.com/evcc-io/app/releases) page.
+- Apple Testflight https://testflight.apple.com/join/8Y4elMpv
+- Android: Download the APK from [GitHub Releases](https://github.com/evcc-io/app/releases)
 
 ## Features
 
@@ -28,7 +28,7 @@ Install the APK from the [releases](https://github.com/evcc-io/app/releases) pag
   - avoids missleading situations where the app is shown but not functional
 - Configured URL can be changed
   - in offline mode
-  - via additional top navigation entry "Server ändern"
+  - via additional top navigation entry "Change server"
 - Light and dark mode for native UI
   - based on system settings (not configurable)
 
