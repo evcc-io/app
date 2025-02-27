@@ -44,7 +44,7 @@ export default function ServerScreen({ navigation }) {
         // remove trailing dots
         const entry = {
           title: name,
-          url: `http://${host.replace(/\.$/, "")}:${port}${txt.path}`,
+          url: `http://${host.replace(/\.$/, "")}${port === 80 ? "" : `:${port}`}${txt.path}`,
         };
         setFound((prevFound) => [...prevFound, entry]);
       }
