@@ -110,6 +110,11 @@ export default function MainScreen({ navigation }) {
     setIsConnected(false);
   }, []);
 
+  const onHttpError = useCallback((event) => {
+    console.log("onHttpError", event);
+    setIsConnected(false);
+  }, []);
+
   const onTerminate = useCallback((event) => {
     console.log("onTerminate", event);
     setIsConnected(false);
@@ -121,12 +126,8 @@ export default function MainScreen({ navigation }) {
 
   const LoadingScreenMemoized = useMemo(() => <LoadingScreen />, []);
 
-  const basicAuthCredential = useMemo(() => {
-    const { required, username, password } = basicAuth;
-    if (required) {
-      return { username, password };
-    }
-  }, [basicAuth]);
+  const { required, username, password } = basicAuth;
+  const basicAuthCredential = required ? { username, password } : null;
 
   const LayoutMemoized = useMemo(
     () => (
@@ -143,6 +144,7 @@ export default function MainScreen({ navigation }) {
             setBuiltInZoomControls={false}
             applicationNameForUserAgent={"evcc/0.0.1"}
             onError={onError}
+            onHttpError={onHttpError}
             onLoad={onLoad}
             onContentProcessDidTerminate={onTerminate}
             onMessage={handleMessage}
