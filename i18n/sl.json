@@ -8,7 +8,7 @@
     "manually": {
       "authenticationRequired": "Zahteva se avtentikacija",
       "checkAdress": "Strežnik ni videti kot primerek evcc. Preverite naslov.",
-      "checkAndSave": "Preverite in shranite",
+      "checkAndSave": "Preveri in shrani",
       "enterUrl": "Vnesite URL",
       "missingOrWrongAuthentication": "Manjkajoča ali nepravilna avtentikacija",
       "password": "Geslo",
