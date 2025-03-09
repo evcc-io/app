@@ -1,0 +1,30 @@
+{
+  "main": {
+    "description": "Søg på netværket for at finde din evcc installation.",
+    "title": "Konfigurer serveren"
+  },
+  "servers": {
+    "changeServer": "Skift server",
+    "manually": {
+      "authenticationRequired": "Godkendelse påkrævet",
+      "checkAdress": "Serveren ser ikke ud til at være en evcc-instans. Tjek venligst adressen.",
+      "checkAndSave": "Bekræft og gem",
+      "enterUrl": "Indtast URL",
+      "missingOrWrongAuthentication": "Manglende eller forkert godkendelse",
+      "password": "Kodeord",
+      "serverIncompatible": "evcc-installeringen er endnu ikke app-kompatibel. Opdater din installation.",
+      "serverNotAvailable": "Server er ikke tilgængelig. Check venligst adressen.",
+      "specify": "Indtast adressen manuelt",
+      "user": "Bruger"
+    },
+    "removeServer": "Fjern server",
+    "search": {
+      "notAvailable": "Søgningen er ikke mulig på enheden. Brug manuel indtastning.",
+      "nothingFound": "Ingen evcc-server blev fundet.",
+      "searching": "Søg efter forbindelse ...",
+      "start": "Start søgning"
+    },
+    "select": "Vælg",
+    "useDemo": "Brug demo installation"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "main": {
+    "description": "Poiščite svojo mrežo, da najdete svojo namestitev EVCC.",
+    "title": "Nastavitev strežnika"
+  },
+  "servers": {
+    "changeServer": "Spremeni strežnik",
+    "manually": {
+      "authenticationRequired": "Zahteva se avtentikacija",
+      "checkAdress": "Strežnik ni videti kot primerek evcc. Preverite naslov.",
+      "checkAndSave": "Preverite in shranite",
+      "enterUrl": "Vnesite URL",
+      "missingOrWrongAuthentication": "Manjkajoča ali nepravilna avtentikacija",
+      "password": "Geslo",
+      "serverIncompatible": "Primer evcc še ni združljiv z aplikacijami. Posodobite namestitev.",
+      "serverNotAvailable": "Strežnik ni na voljo. Preverite naslov.",
+      "specify": "Ročno vnesite naslov",
+      "user": "Uporabnik"
+    },
+    "removeServer": "Odstranitev strežnika",
+    "search": {
+      "notAvailable": "Iskanje v tej napravi ni mogoče. Uporabite ročni vnos.",
+      "nothingFound": "Ni bil najden strežnik evcc.",
+      "searching": "Iskanje povezave ...",
+      "start": "Začni iskanje"
+    },
+    "select": "Izberite",
+    "useDemo": "Uporaba demo primerka"
+  }
+}

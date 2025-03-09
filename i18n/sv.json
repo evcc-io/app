@@ -1,0 +1,30 @@
+{
+  "main": {
+    "description": "Sök på nätverket för att hitta din evcc installation.",
+    "title": "Konfigurera servern"
+  },
+  "servers": {
+    "changeServer": "Byt server",
+    "manually": {
+      "authenticationRequired": "Registrering krävs",
+      "checkAdress": "Servern verkar inte vara en evcc-instans. Vänligen kolla adressen.",
+      "checkAndSave": "Kolla och spara",
+      "enterUrl": "Ange URL",
+      "missingOrWrongAuthentication": "Saknad eller inkorrekt registrering",
+      "password": "Lösenord",
+      "serverIncompatible": "Evcc-versionen är inte app-kompatibel. Uppgradera din installation.",
+      "serverNotAvailable": "Servern är inte tillgänglig. Vänligen kolla adressen.",
+      "specify": "Ange adress",
+      "user": "Användare"
+    },
+    "removeServer": "Ta bort server",
+    "search": {
+      "notAvailable": "Sökning är inte möjligt på denna enhet. Skriv in manuellt.",
+      "nothingFound": "Ingen evcc-server hittades.",
+      "searching": "Sök efter förbindelse...",
+      "start": "Starta sök"
+    },
+    "select": "Välj",
+    "useDemo": "Använd demo-installation"
+  }
+}

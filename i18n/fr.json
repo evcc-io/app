@@ -1,6 +1,6 @@
 {
   "main": {
-    "description": "Parcours ton réseau pour trouver ton installation evcc.",
+    "description": "Parcourir le réseau pour trouver ton installation evcc.",
     "title": "Configurer le serveur"
   },
   "servers": {
