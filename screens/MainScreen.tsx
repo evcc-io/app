@@ -6,7 +6,14 @@ import React, {
   useMemo,
 } from "react";
 import { WebView } from "react-native-webview";
-import { Linking, ActivityIndicator, StyleSheet, Animated, useColorScheme } from "react-native";
+import {
+  Linking,
+  ActivityIndicator,
+  StyleSheet,
+  Animated,
+  useColorScheme,
+  Platform,
+} from "react-native";
 import { Text, Layout, Spinner, Button } from "@ui-kitten/components";
 import { useAppContext } from "../components/AppContext";
 import { useTranslation } from "react-i18next";
@@ -16,7 +23,6 @@ function LoadingScreen() {
 }
 
 export default function MainScreen({ navigation }) {
-  const colorScheme = useColorScheme();
   const { t } = useTranslation();
   const { serverUrl, basicAuth } = useAppContext();
   const webViewRef = useRef(null);
@@ -130,12 +136,36 @@ export default function MainScreen({ navigation }) {
   const { required, username, password } = basicAuth;
   const basicAuthCredential = required ? { username, password } : null;
 
+  const colorScheme = useColorScheme();
+  const injectedJS = `
+    (function() {
+      const originalMatchMedia = window.matchMedia;
+      window.matchMedia = function(query) {
+        if (query === '(prefers-color-scheme: dark)') {
+          return {
+            matches: true,
+            media: query,
+            onchange: null,
+            addListener: function() {},
+            removeListener: function() {}
+          };
+        }
+        return originalMatchMedia(query);
+      };
+    })();
+  `;
+
   const LayoutMemoized = useMemo(
     () => (
       <Layout style={{ flex: 1 }}>
         <Animated.View style={{ flex: 1, opacity: contFade }}>
           <WebView
             basicAuthCredential={basicAuthCredential}
+            injectedJavaScriptBeforeContentLoaded={
+              Platform.OS === "android" && colorScheme === "dark"
+                ? injectedJS
+                : ""
+            }
             source={{ uri: serverUrl }}
             style={{ flex: 1 }}
             key={webViewKey}
@@ -151,7 +181,6 @@ export default function MainScreen({ navigation }) {
             onMessage={handleMessage}
             onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
             onFileDownload={onFileDownload}
-            injectedJavaScript={`window.localStorage.setItem('settings_theme', '${colorScheme}'); true;`}
           />
         </Animated.View>
         <Animated.View
