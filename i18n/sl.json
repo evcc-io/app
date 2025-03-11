@@ -1,30 +1,30 @@
 {
   "main": {
-    "description": "Poiščite svojo mrežo, da najdete svojo namestitev EVCC.",
+    "description": "Poiščite evcc strežnik na vaši mreži.",
     "title": "Nastavitev strežnika"
   },
   "servers": {
-    "changeServer": "Spremeni strežnik",
+    "changeServer": "Spremenite strežnik",
     "manually": {
-      "authenticationRequired": "Zahteva se avtentikacija",
-      "checkAdress": "Strežnik ni videti kot primerek evcc. Preverite naslov.",
-      "checkAndSave": "Preverite in shranite",
+      "authenticationRequired": "Potrebna je avtentikacija",
+      "checkAdress": "Na strežniku ni najdene evcc instance. Prosim, preverite naslov strežnika.",
+      "checkAndSave": "Preveri in shrani",
       "enterUrl": "Vnesite URL",
       "missingOrWrongAuthentication": "Manjkajoča ali nepravilna avtentikacija",
       "password": "Geslo",
-      "serverIncompatible": "Primer evcc še ni združljiv z aplikacijami. Posodobite namestitev.",
+      "serverIncompatible": "Instanca evcc še ni združljiva z aplikacijo. Prosim posodobite verzijo.",
       "serverNotAvailable": "Strežnik ni na voljo. Preverite naslov.",
-      "specify": "Ročno vnesite naslov",
+      "specify": "Ročni vnos naslova",
       "user": "Uporabnik"
     },
-    "removeServer": "Odstranitev strežnika",
+    "removeServer": "Odstranite strežnik",
     "search": {
-      "notAvailable": "Iskanje v tej napravi ni mogoče. Uporabite ročni vnos.",
-      "nothingFound": "Ni bil najden strežnik evcc.",
+      "notAvailable": "Iskanje na tej napravi ni mogoče. Uporabite ročni vnos.",
+      "nothingFound": "Najden ni bil noben strežnik z evcc.",
       "searching": "Iskanje povezave ...",
-      "start": "Začni iskanje"
+      "start": "Začnite iskanje"
     },
     "select": "Izberite",
-    "useDemo": "Uporaba demo primerka"
+    "useDemo": "Uporaba demo verzije"
   }
 }
