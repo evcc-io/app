@@ -2,3 +2,5 @@ node_modules/
 .expo/
 ios/
 android/
+!fastlane/metadata/android
+!fastlane/metadata/ios
