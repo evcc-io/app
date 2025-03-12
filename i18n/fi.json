@@ -7,12 +7,12 @@
     "changeServer": "Vaihda palvelinta",
     "manually": {
       "authenticationRequired": "Todennus vaaditaan",
-      "checkAdress": "Palvelin ei näytä olevan evcc-esiintymä. Tarkista osoite.",
+      "checkAdress": "Määritetty palvelin ei näytä olevan evcc-palvelin. Tarkista osoite.",
       "checkAndSave": "Tarkista ja tallenna",
       "enterUrl": "Anna URL-osoite",
       "missingOrWrongAuthentication": "Todennus puuttuu tai virheellinen",
       "password": "Salasana",
-      "serverIncompatible": "Evcc-versiosi ei ole vielä sovellusyhteensopiva. Päivitä asennuksesi.",
+      "serverIncompatible": "Evcc-palvelimen versiosi ei ole vielä sovellusyhteensopiva. Päivitä asennuksesi.",
       "serverNotAvailable": "Palvelin ei ole käytettävissä. Tarkista osoite.",
       "specify": "Anna osoite manuaalisesti",
       "user": "Käyttäjä"

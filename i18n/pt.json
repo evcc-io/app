@@ -1,19 +1,19 @@
 {
   "main": {
-    "description": "Procure na sua rede para encontrar a sua instalação evcc.",
+    "description": "Procure a rede para localizar a sua instalação evcc.",
     "title": "Configurar o servidor"
   },
   "servers": {
     "changeServer": "Substituir o servidor",
     "manually": {
       "authenticationRequired": "Autenticação necessária",
-      "checkAdress": "O servidor não parece ser uma instância do evcc. Por favor, verifique o endereço.",
+      "checkAdress": "O servidor não parece ser uma instalação do evcc. Por favor, verifique o endereço.",
       "checkAndSave": "Verificar e guardar",
-      "enterUrl": "Indicar URL",
-      "missingOrWrongAuthentication": "Autenticação inexistente ou incorrecta",
+      "enterUrl": "Inserir URL",
+      "missingOrWrongAuthentication": "Autenticação inexistente ou incorreta",
       "password": "Password",
-      "serverIncompatible": "A instância evcc ainda não é compatível com a aplicação. Actualize a sua instalação.",
-      "serverNotAvailable": "O servidor não está disponível. Por favor, verifique o endereço.",
+      "serverIncompatible": "A instalação evcc ainda não é compatível com a aplicação. Atualize a sua instalação.",
+      "serverNotAvailable": "Servidor não encontrado. Por favor, verifique o endereço.",
       "specify": "Introduzir o endereço manualmente",
       "user": "Utilizador"
     },
@@ -21,10 +21,10 @@
     "search": {
       "notAvailable": "A pesquisa não é possível neste dispositivo. Utilize a entrada manual.",
       "nothingFound": "Não foi encontrado nenhum servidor evcc.",
-      "searching": "Procura de conexão ...",
+      "searching": "A procurar ...",
       "start": "Iniciar a pesquisa"
     },
     "select": "Selecionar",
-    "useDemo": "Utilizar uma instância de demonstração"
+    "useDemo": "Utilizar uma instalação de demonstração"
   }
 }
