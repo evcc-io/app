@@ -1,0 +1,25 @@
+Elektroautoladen, wenn die Sonne scheint oder der Strom sauber und günstig ist. Mit dieser App kannst du auf deine lokale evcc Instanz im eigenen Heimnetz zugreifen.
+
+Funktionen der App:
+- Automatische Suche deines evcc Servers
+- Interaktion mit deiner evcc UI
+- Demo-Instanz zum Ausprobieren ist verfügbar
+- Light/Dark-Mode: Passt sich deinem Gerät an.
+
+Voraussetzung:
+Du musst evcc auf einem Gerät (Raspberry Pi, Windows, macOS, Linux Docker, ...) bei dir zu Hause installiert haben.
+
+Was ist evcc?
+evcc ist eine Open-Source-Software, die bei dir zu Hause läuft. Sie ist kompatibel mit vielen PV- und Batteriesystemen und steuert deine Wallbox - egal von welchem Hersteller. Hat dein Auto eine Online-Schnittstelle, kannst du auch smarte Steuerungen wie Ladepläne, Mindestladung und Ladelimits nutzen. Zudem werden dynamische Stromtarife, smarte Steckdosen, Balkonkraftwerke und kleine Hausakkus unterstützt.
+
+Unterstützte Wallboxen:
+ABB, ABL, Alfen, Alphatec, Amperfied, Audi, Bender, BMW, cFos, Compleo, CUBOS, Cupra, Dadapower, DaheimLaden, Delta, E.ON Drive, E3/DC, Easee, Ebee, echarge, EcoHarmony, Edgetech, Elli, EM2GO, Ensto, ESL, eSystems, Etrel, EVBox, Fronius, Garo, go-e, HardyBarth, Heidelberg, Hesotec, Homecharge, Innogy, INRO, Juice, KEBA, Kontron Solar, Kostal, KSE, LadeFoxx, LRT, Mennekes, my-PV, NRGKick, OBO Bettermann, OpenEVSE, openWB, Optec, Orbis, PC Electric, Peblar, Phoenix Contact, Porsche, Pracht, Pulsares, Pulsatrix, Qcells, Schneider, Schrack, SENEC, Siemens, Skoda, SMA, Smartfox, SolarEdge, Solax, Sonnen, Spelsberg, Stark in Strom, Sungrow, TechniSat, Tesla, Tigo, TinkerForge, Ubitricity, Vestel, Victron, Viridian EV, Volkswagen, Wallbe, wallbox, Walther Werke, Webasto, Weidmüller, Zaptec
+
+Unterstützte Steckdosen:
+AVM, Homematic IP, HomeWizard, myStrom, Shelly, Tasmota, TP-Link
+
+Unterstützte Wechselrichter und Batteriesysteme:
+A-Tronix, Acrel, Ads-tec, Alpha ESS, Ampere, Anker, APsystems, AVM, BGEtech, Bosswerk, Carlo Gavazzi, Deye, E3/DC, Eastron, Enphase, FENECON, FoxESS, Fronius, Ginlong, go-e, GoodWe, Growatt, Homematic IP, HomeWizard, Hoymiles, Huawei, IGEN Tech, Kostal, LG, Loxone, M-TEC, myStrom, OpenEMS, Powerfox, QCells, Qcells, RCT, SAJ, SAX, SENEC, Senergy, Shelly, Siemens, SMA, Smartfox, SofarSolar, Solaranzeige, SolarEdge, SolarMax, Solarwatt, Solax, Solinteng, Sonnen, St-ems, Steca, Sungrow, Sunsynk, Sunway, Tasmota, Tesla, TP-Link, VARTA, Victron, Wattsonic, Youless, ZCS Azzurro, Zendure
+
+Untersützte Fahrzeuge:
+Aiways, Audi, BMW, Citroën, Dacia, DS, Fiat, Ford, Hyundai, Jeep, Kia, Mercedes-Benz, MG, Mini, Nissan, NIU, Opel, Peugeot, Polestar, Renault, Seat, Skoda, Smart, Tesla, Volkswagen, Volvo, Zero Motorcycles
