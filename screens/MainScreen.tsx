@@ -10,6 +10,7 @@ import { Linking, ActivityIndicator, StyleSheet, Animated } from "react-native";
 import { Text, Layout, Spinner, Button } from "@ui-kitten/components";
 import { useAppContext } from "../components/AppContext";
 import { useTranslation } from "react-i18next";
+import { USER_AGENT } from "../utils/constants";
 
 function LoadingScreen() {
   return <ActivityIndicator size="large" />;
@@ -142,7 +143,7 @@ export default function MainScreen({ navigation }) {
             ref={webViewRef}
             overScrollMode="never"
             setBuiltInZoomControls={false}
-            applicationNameForUserAgent={"evcc/0.0.1"}
+            applicationNameForUserAgent={USER_AGENT}
             onError={onError}
             onHttpError={onHttpError}
             onLoad={onLoad}
