@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { t } from "i18next";
+import { USER_AGENT } from "./constants";
 
 export function cleanServerUrl(url) {
   let result = url.trim();
@@ -14,7 +15,10 @@ export function cleanServerUrl(url) {
 
 export async function verifyEvccServer(url, authOptions) {
   try {
-    options = { timeout: 10000 };
+    const options = {
+      timeout: 10000,
+      headers: { "User-Agent": USER_AGENT },
+    };
     if (authOptions) {
       const { username, password } = authOptions;
       options.auth = { username, password };
