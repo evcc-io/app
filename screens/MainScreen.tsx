@@ -46,8 +46,8 @@ export default function MainScreen({ navigation }) {
   }, [isConnected]);
 
   useEffect(() => {
-    const duration = 600;
-    const smallDelay = 1000;
+    const duration = 400;
+    const smallDelay = 500;
     const largeDelay = smallDelay + duration * 0.3;
     Animated.timing(contFade, {
       toValue: isConnected ? 1 : 0,
