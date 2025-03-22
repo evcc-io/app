@@ -178,7 +178,7 @@ export default function MainScreen({ navigation }) {
     ),
     [
       serverUrl,
-      basicAuth,
+      basicAuthCredential,
       webViewKey,
       contFade,
       loadFade,
