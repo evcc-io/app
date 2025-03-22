@@ -1,0 +1,13 @@
+# caddy run
+#
+# endpoint for basic auth app testing
+:7080 {
+	basic_auth {
+		# user: admin
+		# password: secret
+		admin $2a$14$6raEvbSOkbyTizzW36qguOAJUfMf1Jc2uUEVxue33xkhDdygvRhCC
+	}
+
+	# evcc running locally
+	reverse_proxy http://localhost:7070
+}

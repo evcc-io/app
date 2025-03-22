@@ -103,7 +103,6 @@ export default function MainScreen({ navigation }) {
 
   const onLoad = useCallback(() => {
     console.log("onLoad");
-    setIsConnected(true);
   }, []);
 
   const onError = useCallback((event) => {
@@ -179,6 +178,7 @@ export default function MainScreen({ navigation }) {
     ),
     [
       serverUrl,
+      basicAuth,
       webViewKey,
       contFade,
       loadFade,
