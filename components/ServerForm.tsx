@@ -39,11 +39,6 @@ export default function ServerForm({
       const finalUrl = await verifyEvccServer(cleanUrl, basicAuth);
       onChange(finalUrl, basicAuth);
     } catch (error) {
-      if (error.message == "Missing Authentication") {
-        setError(t("servers.manually.missingOrWrongAuthentication"));
-        setBasicAuthRequired(true);
-        return;
-      }
       setError(error.message);
     } finally {
       setInProgress(false);

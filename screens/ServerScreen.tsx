@@ -72,14 +72,7 @@ export default function ServerScreen({ navigation }) {
         const finalUrl = await verifyEvccServer(url, { required: false });
         updateServerUrl(finalUrl, { required: false });
       } catch (error) {
-        if (error.message == "Missing Authentication") {
-          navigation.navigate("ServerManual", {
-            url: url,
-            basicAuth: { required: true },
-          });
-        } else {
-          Alert.alert(error.message);
-        }
+        Alert.alert(error.message);
       }
     },
     [updateServerUrl],

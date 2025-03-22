@@ -67,6 +67,14 @@ npm run android
 npm run web
 ```
 
+You can test basic auth locally by with a [caddy server](https://caddyserver.com):
+
+```bash
+caddy run
+```
+
+It will open a server on http://localhost:7080 with `admin:secret` as basic auth credentials and forward requests to your local evcc instance 7070.
+
 ## Translation
 
 We use [Weblate](https://hosted.weblate.org/projects/evcc/app/) to manage our translations.
