@@ -1,12 +1,12 @@
 {
   "main": {
-    "description": "Procure a rede para localizar a sua instalação evcc.",
+    "description": "Procurar a rede para localizar a sua instalação evcc.",
     "title": "Configurar o servidor"
   },
   "servers": {
-    "changeServer": "Substituir o servidor",
+    "changeServer": "Mudar o servidor",
     "manually": {
-      "authenticationRequired": "Autenticação necessária",
+      "authenticationRequired": "Necessário Autenticação",
       "checkAdress": "O servidor não parece ser uma instalação do evcc. Por favor, verifique o endereço.",
       "checkAndSave": "Verificar e guardar",
       "enterUrl": "Inserir URL",
@@ -17,7 +17,7 @@
       "specify": "Introduzir o endereço manualmente",
       "user": "Utilizador"
     },
-    "removeServer": "Remover servidor",
+    "removeServer": "Apagar servidor",
     "search": {
       "notAvailable": "A pesquisa não é possível neste dispositivo. Utilize a entrada manual.",
       "nothingFound": "Não foi encontrado nenhum servidor evcc.",
@@ -25,6 +25,6 @@
       "start": "Iniciar a pesquisa"
     },
     "select": "Selecionar",
-    "useDemo": "Utilizar uma instalação de demonstração"
+    "useDemo": "Usar modo de demonstração"
   }
 }
