@@ -3,7 +3,7 @@
     "name": "evcc",
     "slug": "evcc",
     "description": "open source solar charging",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "default",
     "icon": "./assets/icon-dark.png",
     "userInterfaceStyle": "automatic",
@@ -42,7 +42,7 @@
       "config": {
         "usesNonExemptEncryption": false
       },
-      "buildNumber": "18"
+      "buildNumber": "20"
     },
     "android": {
       "jsEngine": "hermes",
@@ -56,7 +56,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#010322"
       },
-      "versionCode": 13
+      "versionCode": 15
     },
     "web": {
       "favicon": "./assets/favicon.png",
