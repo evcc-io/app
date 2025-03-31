@@ -7,7 +7,9 @@
     "orientation": "default",
     "icon": "./assets/icon-dark.png",
     "userInterfaceStyle": "automatic",
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "jsEngine": "jsc",
       "splash": {
@@ -23,19 +25,24 @@
       "supportsTablet": true,
       "bundleIdentifier": "io.evcc.ios",
       "infoPlist": {
-        "CFBundleLocalizations": ["de"],
+        "CFBundleLocalizations": [
+          "de"
+        ],
         "CFBundleDevelopmentRegion": "de",
         "CFBundleAllowMixedLocalizations": true,
         "NSLocalNetworkUsageDescription": "Die App benötigt Zugriff auf das lokale Netzwerk, um deine evcc Instanz zu finden.",
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": true
         },
-        "NSBonjourServices": ["_http._tcp.", "_https._tcp."]
+        "NSBonjourServices": [
+          "_http._tcp.",
+          "_https._tcp."
+        ]
       },
       "config": {
         "usesNonExemptEncryption": false
       },
-      "buildNumber": "17"
+      "buildNumber": "18"
     },
     "android": {
       "jsEngine": "hermes",
@@ -49,13 +56,15 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#010322"
       },
-      "versionCode": 12
+      "versionCode": 13
     },
     "web": {
       "favicon": "./assets/favicon.png",
       "build": {
         "babel": {
-          "include": ["@ui-kitten/components"]
+          "include": [
+            "@ui-kitten/components"
+          ]
         }
       }
     },
