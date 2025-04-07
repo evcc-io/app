@@ -4,8 +4,9 @@ Native app wrapper for evcc UI based on [react-native](https://reactnative.dev/)
 
 ## Download the App
 
-- [Apple App Store](https://apps.apple.com/de/app/evcc-io/id6478510176)
-- [Google Play Store](https://play.google.com/store/apps/details?id=io.evcc.android)
+[<img src="assets/badges/fdroid.png" width="240" alt="Get it on F-Droid">](https://f-droid.org/packages/io.evcc.android)
+[<img src="assets/badges/google-play.png" width="240" alt="Get it on Google Play">](https://play.google.com/store/apps/details?id=io.evcc.android)
+[<img src="assets/badges/apple-appstore.png" width="240" alt="Download on the App Store">](https://apps.apple.com/app/evcc-io/id6478510176)
 
 ## Beta Testing
 
