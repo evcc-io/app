@@ -75,6 +75,17 @@ caddy run
 
 It will open a server on http://localhost:7080 with `admin:secret` as basic auth credentials and forward requests to your local evcc instance 7070.
 
+## Build Android APK without EAS
+
+This is how F-Droid builds the APK:
+
+```bash
+npx expo prebuild --platform android --clean
+cd android/app
+sed -i -e '/signingConfig /d' build.gradle
+gradle assembleRelease
+```
+
 ## Translation
 
 We use [Weblate](https://hosted.weblate.org/projects/evcc/app/) to manage our translations.
