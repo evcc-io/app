@@ -12,7 +12,7 @@
       "jsEngine": "jsc",
       "supportsTablet": true,
       "icon": {
-        "light": "./assets/icon-light.png",
+        "light": "./assets/icon-dark.png",
         "dark": "./assets/icon-dark.png",
         "tinted": "./assets/icon-tinted.png"
       },
@@ -30,7 +30,7 @@
       "config": {
         "usesNonExemptEncryption": false
       },
-      "buildNumber": "23"
+      "buildNumber": "24"
     },
     "android": {
       "jsEngine": "hermes",
