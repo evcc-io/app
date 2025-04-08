@@ -10,17 +10,12 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "jsEngine": "jsc",
-      "splash": {
-        "image": "./assets/splash-light.png",
-        "resizeMode": "cover",
-        "backgroundColor": "#0FDE41",
-        "dark": {
-          "image": "./assets/splash-dark.png",
-          "resizeMode": "cover",
-          "backgroundColor": "#010322"
-        }
-      },
       "supportsTablet": true,
+      "icon": {
+        "light": "./assets/icon-light.png",
+        "dark": "./assets/icon-dark.png",
+        "tinted": "./assets/icon-tinted.png"
+      },
       "bundleIdentifier": "io.evcc.ios",
       "infoPlist": {
         "CFBundleLocalizations": ["de"],
@@ -63,12 +58,14 @@
       "de": "./i18n/de.json"
     },
     "plugins": [
-      ["./scripts/removeNDKBuildId"],
       [
         "expo-build-properties",
         {
           "android": {
-            "usesCleartextTraffic": true
+            "usesCleartextTraffic": true,
+            "ndk": {
+              "arguments": "APP_LDFLAGS=--build-id=none"
+            }
           }
         }
       ],
@@ -79,6 +76,18 @@
             "./assets/fonts/Montserrat-Bold.ttf",
             "./assets/fonts/Montserrat-Medium.ttf"
           ]
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon-light.png",
+          "backgroundColor": "#0FDE41",
+          "resizeMode": "contain",
+          "dark": {
+            "image": "./assets/splash-icon-dark.png",
+            "backgroundColor": "#010322"
+          }
         }
       ],
       "expo-localization"
