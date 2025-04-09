@@ -5,14 +5,14 @@
     "description": "open source solar charging",
     "version": "1.0.2",
     "orientation": "default",
-    "icon": "./assets/icon-dark.png",
+    "icon": "./assets/icon-light.png",
     "userInterfaceStyle": "automatic",
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "jsEngine": "jsc",
       "supportsTablet": true,
       "icon": {
-        "light": "./assets/icon-dark.png",
+        "light": "./assets/icon-light.png",
         "dark": "./assets/icon-dark.png",
         "tinted": "./assets/icon-tinted.png"
       },
