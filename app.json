@@ -58,14 +58,12 @@
       "de": "./i18n/de.json"
     },
     "plugins": [
+      ["./scripts/removeDKBuildId.ts"],
       [
         "expo-build-properties",
         {
           "android": {
-            "usesCleartextTraffic": true,
-            "ndk": {
-              "arguments": "APP_LDFLAGS=--build-id=none"
-            }
+            "usesCleartextTraffic": true
           }
         }
       ],
