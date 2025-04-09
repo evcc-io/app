@@ -1,8 +1,8 @@
-import { type ConfigPlugin } from "@expo/config-plugins";
-import { withAppBuildGradle } from "@expo/config-plugins/build/plugins/android-plugins.js";
-import  { type ExpoConfig } from "@expo/config-types/build/ExpoConfig.js";
+const {
+  withAppBuildGradle,
+} = require("@expo/config-plugins/build/plugins/android-plugins.js");
 
-const withNDKBuildId: ConfigPlugin = (config: ExpoConfig) => {
+const withNDKBuildId = (config) => {
   return withAppBuildGradle(config, (gradleConfig) => {
     if (typeof gradleConfig.modResults.contents === "string") {
       gradleConfig.modResults.contents =
@@ -20,4 +20,4 @@ const withNDKBuildId: ConfigPlugin = (config: ExpoConfig) => {
   });
 };
 
-export default withNDKBuildId;
+module.exports = withNDKBuildId;
