@@ -1,6 +1,6 @@
 import { type ConfigPlugin } from "@expo/config-plugins";
 import { withAppBuildGradle } from "@expo/config-plugins/build/plugins/android-plugins.js";
-import type { ExpoConfig } from "@expo/config-types";
+import  { type ExpoConfig } from "@expo/config-types/build/ExpoConfig.js";
 
 const withNDKBuildId: ConfigPlugin = (config: ExpoConfig) => {
   return withAppBuildGradle(config, (gradleConfig) => {
