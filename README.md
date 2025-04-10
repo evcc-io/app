@@ -83,7 +83,7 @@ This is how F-Droid builds the APK:
 npx expo prebuild --platform android --clean
 cd android/app
 sed -i -e '/signingConfig /d' build.gradle
-gradle assembleRelease
+./../gradlew assembleRelease
 ```
 
 ## Translation
