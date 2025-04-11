@@ -10,8 +10,8 @@ const withNDKBuildId = (config) => {
           "defaultConfig {",
           `defaultConfig {
             externalNativeBuild {
-                ndkBuild {
-                    arguments "-DCMAKE_SHARED_LINKER_FLAGS=-Wl,--build-id=none"
+                cmake {
+                    path "CMakeLists.txt"
                 }
             }
             `,
