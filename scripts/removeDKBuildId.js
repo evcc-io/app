@@ -11,9 +11,10 @@ const withNDKBuildId = (config) => {
           `defaultConfig {
             externalNativeBuild {
                 ndkBuild {
-                    arguments "APP_LDFLAGS=--build-id=none"
+                    arguments "-DCMAKE_SHARED_LINKER_FLAGS=-Wl,--build-id=none"
                 }
-            }`,
+            }
+            `,
         );
     }
     return gradleConfig;
