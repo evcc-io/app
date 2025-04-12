@@ -58,7 +58,6 @@
       "de": "./i18n/de.json"
     },
     "plugins": [
-      ["./scripts/removeDKBuildId.js"],
       [
         "expo-build-properties",
         {
