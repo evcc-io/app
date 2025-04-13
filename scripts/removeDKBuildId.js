@@ -7,14 +7,14 @@ const withNDKBuildId = (config) => {
     if (typeof gradleConfig.modResults.contents === "string") {
       gradleConfig.modResults.contents =
         gradleConfig.modResults.contents.replace(
-          "defaultConfig {",
-          `defaultConfig {
-            externalNativeBuild {
-                cmake {
-                    path "CMakeLists.txt"
-                }
-            }
-            `,
+          "android {",
+          `android {
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
+`,
         );
     }
     return gradleConfig;

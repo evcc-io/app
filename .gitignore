@@ -2,5 +2,6 @@ node_modules/
 .expo/
 ios/
 android/
+!android/app/CMakeLists.txt
 !fastlane/metadata/android
 !fastlane/metadata/ios
