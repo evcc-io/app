@@ -1,7 +1,6 @@
 const {
   withAppBuildGradle,
 } = require("@expo/config-plugins/build/plugins/android-plugins.js");
-const { log } = require("console");
 
 const withNDKBuildId = (config) => {
   return withAppBuildGradle(config, (gradleConfig) => {
