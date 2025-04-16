@@ -8,6 +8,8 @@ const withAddLinkOption = (config) => {
     async (config) => {
       const packages = ["react-native-screens", "expo-modules-core"];
       for (const pkg of packages) {
+        console.log("🗑 Script: Removing build ID from CMakeLists.txt for package ", pkg);
+
         const cmakeFilePath = path.join(
           config.modRequest.projectRoot,
           "node_modules",

@@ -4,6 +4,8 @@ const {
 
 const withNDKBuildId = (config) => {
   return withAppBuildGradle(config, (gradleConfig) => {
+    console.log("🗑 Script: Removing dependency metadata from build.gradle");
+
     if (typeof gradleConfig.modResults.contents === "string") {
       gradleConfig.modResults.contents =
         gradleConfig.modResults.contents.replace(
