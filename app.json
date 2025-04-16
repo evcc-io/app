@@ -3,7 +3,7 @@
     "name": "evcc",
     "slug": "evcc",
     "description": "open source solar charging",
-    "version": "1.0.2-beta7",
+    "version": "1.0.2",
     "orientation": "default",
     "icon": "./assets/icon-light.png",
     "userInterfaceStyle": "automatic",
