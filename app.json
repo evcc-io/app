@@ -58,7 +58,8 @@
       "de": "./i18n/de.json"
     },
     "plugins": [
-      ["./scripts/removeDKBuildId.js"],
+      ["./scripts/fdroid/removeDKBuildId.js"],
+      ["./scripts/fdroid/disableDependencyMetadata.js"],
       [
         "expo-build-properties",
         {

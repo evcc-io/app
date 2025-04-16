@@ -1,5 +1,6 @@
 // withAddLinkOption.js
 const { withDangerousMod } = require('@expo/config-plugins');
+const { log } = require('console');
 const fs = require('fs');
 const path = require('path');
 
