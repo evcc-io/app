@@ -1,1 +1,30 @@
-{}
+{
+  "main": {
+    "description": "Prohledejte vaši síť a najděte instalaci evcc.",
+    "title": "Nastavit server"
+  },
+  "servers": {
+    "changeServer": "Změnit server",
+    "manually": {
+      "authenticationRequired": "Vyžaduje se autentifikace",
+      "checkAdress": "Server se nezdá být instancí evcc. Zkontrolujte prosím adresu.",
+      "checkAndSave": "Zkontrolovat a uložit",
+      "enterUrl": "Zadejte URL",
+      "missingOrWrongAuthentication": "Chybějící nebo nesprávná autentifikace",
+      "password": "Heslo",
+      "serverIncompatible": "Instalace evcc ještě není kompatibilní s aplikací. Aktualizujte svou instalaci.",
+      "serverNotAvailable": "Server není k dispozici. Zkontrolujte prosím adresu.",
+      "specify": "Zadejte adresu ručně",
+      "user": "Uživatel"
+    },
+    "removeServer": "Odebrat server",
+    "search": {
+      "notAvailable": "Vyhledávání není na tomto zařízení možné. Použijte ruční zadání.",
+      "nothingFound": "Žádný server evcc nebyl nalezen.",
+      "searching": "Hledání připojení ...",
+      "start": "Spustit vyhledávání"
+    },
+    "select": "Vybrat",
+    "useDemo": "Použít ukázkovou instanci"
+  }
+}
