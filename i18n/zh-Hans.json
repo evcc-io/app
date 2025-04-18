@@ -1,1 +1,30 @@
-{}
+{
+  "main": {
+    "description": "在你的网络中搜索以找到你的 evcc 安装。",
+    "title": "设置服务器"
+  },
+  "servers": {
+    "changeServer": "更改服务器",
+    "manually": {
+      "authenticationRequired": "需要认证",
+      "checkAdress": "此服务器不是 evcc 实例。请检查地址。",
+      "checkAndSave": "检查并保存",
+      "enterUrl": "输入 URL",
+      "missingOrWrongAuthentication": "缺少或不正确的认证",
+      "password": "密码",
+      "serverIncompatible": "此 evcc 实例尚未兼容应用。请更新你的安装。",
+      "serverNotAvailable": "服务器不可达。请检查地址。",
+      "specify": "手动输入地址",
+      "user": "用户"
+    },
+    "removeServer": "移除服务器",
+    "search": {
+      "notAvailable": "此设备上无法搜索。请使用手动输入。",
+      "nothingFound": "未找到服务器。",
+      "searching": "搜索连接...",
+      "start": "开始搜索"
+    },
+    "select": "选择",
+    "useDemo": "使用演示实例"
+  }
+}
