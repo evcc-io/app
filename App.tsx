@@ -21,7 +21,7 @@ import { useFonts } from "expo-font";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import * as SplashScreen from "expo-splash-screen";
 import { decode, encode } from "base-64";
-import translations from './i18n';
+import translations from "./i18n";
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -41,13 +41,19 @@ i18n.use(initReactI18next).init({
   fallbackLng: "en",
 });
 
+const hideSplash = () => {
+  setTimeout(async () => {
+    await SplashScreen.hideAsync();
+  }, 500);
+};
+
 function AppNavigator() {
   const { serverUrl } = useAppContext();
 
   //updateServerUrl("");
 
   return (
-    <NavigationContainer>
+    <NavigationContainer onReady={hideSplash}>
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
@@ -90,13 +96,6 @@ export default function App() {
     "Montserrat-Bold": require("./assets/fonts/Montserrat-Bold.ttf"),
     "Montserrat-Medium": require("./assets/fonts/Montserrat-Medium.ttf"),
   });
-
-  // hide splash screen after 750ms
-  useEffect(() => {
-    setTimeout(async () => {
-      await SplashScreen.hideAsync();
-    }, 750);
-  }, []);
 
   const toggleTheme = () => {
     const nextTheme = theme === "light" ? "dark" : "light";

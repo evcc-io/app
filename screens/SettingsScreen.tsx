@@ -1,12 +1,12 @@
 import React from "react";
-import { Layout, Button } from "@ui-kitten/components";
-import { View } from "react-native";
+import { Layout, Button, Text } from "@ui-kitten/components";
+import { View, TouchableOpacity, Linking } from "react-native";
 import ServerForm from "../components/ServerForm";
 import { useAppContext } from "../components/AppContext";
 import Header from "../components/Header";
-
 import { BasicAuth } from "../interfaces/basicAuth";
 import { useTranslation } from "react-i18next";
+import { APP_VERSION, GITHUB_RELEASES_URL } from "../utils/constants";
 
 function navigateToMain(navigation) {
   navigation.navigate("Main");
@@ -31,6 +31,10 @@ function SettingsScreen({ navigation }) {
     [serverUrl, saveServer],
   );
 
+  const openGitHubReleases = () => {
+    Linking.openURL(GITHUB_RELEASES_URL);
+  };
+
   return (
     <Layout style={{ flex: 1, paddingBottom: 32 }}>
       <Header
@@ -49,6 +53,20 @@ function SettingsScreen({ navigation }) {
         >
           {t("servers.removeServer")}
         </Button>
+      </View>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "flex-end",
+          alignItems: "center",
+          paddingBottom: 8,
+        }}
+      >
+        <TouchableOpacity onPress={openGitHubReleases}>
+          <Text appearance="hint" category="c1">
+            {APP_VERSION}
+          </Text>
+        </TouchableOpacity>
       </View>
     </Layout>
   );

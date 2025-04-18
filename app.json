@@ -3,46 +3,34 @@
     "name": "evcc",
     "slug": "evcc",
     "description": "open source solar charging",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "default",
-    "icon": "./assets/icon-dark.png",
+    "icon": "./assets/icon-light.png",
     "userInterfaceStyle": "automatic",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "jsEngine": "jsc",
-      "splash": {
-        "image": "./assets/splash-light.png",
-        "resizeMode": "cover",
-        "backgroundColor": "#0FDE41",
-        "dark": {
-          "image": "./assets/splash-dark.png",
-          "resizeMode": "cover",
-          "backgroundColor": "#010322"
-        }
-      },
       "supportsTablet": true,
+      "icon": {
+        "light": "./assets/icon-light.png",
+        "dark": "./assets/icon-dark.png",
+        "tinted": "./assets/icon-tinted.png"
+      },
       "bundleIdentifier": "io.evcc.ios",
       "infoPlist": {
-        "CFBundleLocalizations": [
-          "de"
-        ],
+        "CFBundleLocalizations": ["de"],
         "CFBundleDevelopmentRegion": "de",
         "CFBundleAllowMixedLocalizations": true,
         "NSLocalNetworkUsageDescription": "Die App benötigt Zugriff auf das lokale Netzwerk, um deine evcc Instanz zu finden.",
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": true
         },
-        "NSBonjourServices": [
-          "_http._tcp.",
-          "_https._tcp."
-        ]
+        "NSBonjourServices": ["_http._tcp.", "_https._tcp."]
       },
       "config": {
         "usesNonExemptEncryption": false
       },
-      "buildNumber": "20"
+      "buildNumber": "27"
     },
     "android": {
       "jsEngine": "hermes",
@@ -56,15 +44,13 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#010322"
       },
-      "versionCode": 15
+      "versionCode": 27
     },
     "web": {
       "favicon": "./assets/favicon.png",
       "build": {
         "babel": {
-          "include": [
-            "@ui-kitten/components"
-          ]
+          "include": ["@ui-kitten/components"]
         }
       }
     },
@@ -72,6 +58,8 @@
       "de": "./i18n/de.json"
     },
     "plugins": [
+      ["./scripts/fdroid/removeDKBuildId.js"],
+      ["./scripts/fdroid/disableDependencyMetadata.js"],
       [
         "expo-build-properties",
         {
@@ -89,12 +77,25 @@
           ]
         }
       ],
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon-light.png",
+          "backgroundColor": "#0FDE41",
+          "resizeMode": "contain",
+          "dark": {
+            "image": "./assets/splash-icon-dark.png",
+            "backgroundColor": "#010322"
+          }
+        }
+      ],
       "expo-localization"
     ],
     "extra": {
       "eas": {
         "projectId": "b1b49826-1d85-42bf-997f-653600e16c51"
       }
-    }
+    },
+    "owner": "evcc-io"
   }
 }
