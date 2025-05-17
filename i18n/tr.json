@@ -1,0 +1,30 @@
+{
+  "main": {
+    "description": "Evcc'nizi bulmak için ağınızı arayın.",
+    "title": "Sunucu Kurulumu"
+  },
+  "servers": {
+    "changeServer": "Sunucu değiştir",
+    "manually": {
+      "authenticationRequired": "Doğrulama gerekli",
+      "checkAdress": "Sunucu bir evcc örneği gibi görünmüyor. Lütfen adresi kontrol edin.",
+      "checkAndSave": "Doğrula ve kaydet",
+      "enterUrl": "URL girin",
+      "missingOrWrongAuthentication": "Eksik veya yanlış kimlik doğrulaması",
+      "password": "Şifre",
+      "serverIncompatible": "evcc örneği henüz uygulamayla uyumlu değil. Kurulumunuzu güncelleyin.",
+      "serverNotAvailable": "Sunucu mevcut değil. Lütfen adressi kontrol edin.",
+      "specify": "Adresi manuel gir",
+      "user": "Kullanıcı"
+    },
+    "removeServer": "Sunucuyu sil",
+    "search": {
+      "notAvailable": "Bu cihazda arama mümkün değil. Manuel girin.",
+      "nothingFound": "Evcc sunucusu bulunamadı.",
+      "searching": "Aranıyor ...",
+      "start": "Aramaya başla"
+    },
+    "select": "Seç",
+    "useDemo": "Demo örnek kullan"
+  }
+}
