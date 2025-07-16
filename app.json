@@ -30,7 +30,7 @@
       "config": {
         "usesNonExemptEncryption": false
       },
-      "buildNumber": "27"
+      "buildNumber": "28"
     },
     "android": {
       "jsEngine": "hermes",
@@ -44,7 +44,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#010322"
       },
-      "versionCode": 27
+      "versionCode": 28
     },
     "web": {
       "favicon": "./assets/favicon.png",
