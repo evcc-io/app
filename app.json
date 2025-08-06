@@ -61,6 +61,12 @@
       ["./scripts/fdroid/removeDKBuildId.js"],
       ["./scripts/fdroid/disableDependencyMetadata.js"],
       [
+        "expo-camera",
+        {
+          "recordAudioAndroid": false
+        }
+      ],
+      [
         "expo-build-properties",
         {
           "android": {
