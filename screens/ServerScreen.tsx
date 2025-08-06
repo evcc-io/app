@@ -9,6 +9,7 @@ import ServerList from "../components/ServerList";
 import LoadingIndicator from "../components/LoadingIndicator";
 import { verifyEvccServer } from "../utils/server";
 import { useTranslation } from "react-i18next";
+import ScanQRCodeButton from "../components/ScanQRCodeButton";
 
 export default function ServerScreen({ navigation }) {
   const { t } = useTranslation();
@@ -118,6 +119,7 @@ export default function ServerScreen({ navigation }) {
           )}
         </Layout>
         <Layout style={{ paddingVertical: 16 }}>
+          <ScanQRCodeButton navigation={navigation} />
           <Button
             style={{ marginVertical: 8 }}
             appearance="outline"
