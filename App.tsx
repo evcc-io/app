@@ -22,6 +22,7 @@ import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import * as SplashScreen from "expo-splash-screen";
 import { decode, encode } from "base-64";
 import translations from "./i18n";
+import QRCodeCamera from "./screens/QRCodeCamera";
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -82,6 +83,7 @@ function AppNavigator() {
                 presentation: "modal",
               }}
             />
+            <Stack.Screen name="QRCodeCamera" component={QRCodeCamera} />
           </>
         )}
       </Stack.Navigator>
