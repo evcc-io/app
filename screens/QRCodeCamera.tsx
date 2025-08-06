@@ -1,5 +1,8 @@
+import { Button } from "@ui-kitten/components";
 import { CameraView } from "expo-camera";
-import {  Text, TouchableOpacity, View } from "react-native";
+import { useTranslation } from "react-i18next";
+import { Pressable, View } from "react-native";
+import { CloseIcon } from "../components/Header";
 
 export interface Http {
   url: string;
@@ -8,6 +11,7 @@ export interface Http {
 }
 
 export default function QRCodeCamera({ navigation }) {
+  const { t } = useTranslation();
   return (
     <View
       style={{
@@ -36,11 +40,25 @@ export default function QRCodeCamera({ navigation }) {
           }
         }}
       >
-        <View style={{}}>
-          <TouchableOpacity style={{}}>
-            <Text>Flip Camera</Text>
-          </TouchableOpacity>
-        </View>
+        <Pressable
+          onPress={() => navigation.navigate("Server")}
+          style={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+            paddingHorizontal: 16,
+            paddingVertical: 4,
+          }}
+        >
+          <CloseIcon />
+        </Pressable>
+        <Button
+          style={{ alignSelf: "center", top: "90%" }}
+          onPress={() => navigation.navigate("Server")}
+          appearance="filled"
+        >
+          {t("servers.manually.qrcode.back")}
+        </Button>
       </CameraView>
     </View>
   );
