@@ -4,23 +4,23 @@ Native app wrapper for evcc UI based on [react-native](https://reactnative.dev/)
 
 ## Download the App
 
-<p style="display:flex; gap: 1rem;">
-  <a href="https://apps.apple.com/app/evcc-io/id6478510176">
-    <img src="assets/badges/apple-appstore.svg" height="47" alt="Download on the App Store" />
+<div style="display:flex; gap: 1rem;">
+  <a href="https://apps.apple.com/app/evcc-io/id6478510176" style="display: block">
+    <img src="assets/badges/apple-appstore.svg" height="47" alt="Download on the App Store" style="display: block" />
   </a>
-  <a href="https://play.google.com/store/apps/details?id=io.evcc.android">
-    <img src="assets/badges/google-play.svg" height="47" alt="Get it on Google Play" />
+  <a href="https://play.google.com/store/apps/details?id=io.evcc.android" style="display: block">
+    <img src="assets/badges/google-play.svg" height="47" alt="Get it on Google Play" style="display: block" />
   </a>
-  <a href="https://f-droid.org/packages/io.evcc.android">
-    <img src="assets/badges/fdroid.svg" height="47" alt="Get it on F-Droid" />
+  <a href="https://f-droid.org/packages/io.evcc.android" style="display: block">
+    <img src="assets/badges/fdroid.svg" height="47" alt="Get it on F-Droid" style="display: block" />
   </a>
-  <a href="https://github.com/evcc-io/app/releases/latest">
-    <img src="assets/badges/github.svg" height="47" alt="Get APK from GitHub" />
+  <a href="https://github.com/evcc-io/app/releases/latest" style="display: block">
+    <img src="assets/badges/github.svg" height="47" alt="Get APK from GitHub" style="display: block" />
   </a>
-  <a href="https://apps.apple.com/app/evcc-io/id6478510176">
-    <img src="assets/badges/apple-macstore.svg" height="47" alt="Download on the Mac App Store" />
+  <a href="https://apps.apple.com/app/evcc-io/id6478510176" style="display: block">
+    <img src="assets/badges/apple-macstore.svg" height="47" alt="Download on the Mac App Store" style="display: block" />
   </a>
-</p>
+</div>
 
 ## Beta Testing
 
