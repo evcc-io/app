@@ -1,8 +1,7 @@
 import { Button, ButtonProps } from "@ui-kitten/components";
 import { useTranslation } from "react-i18next";
 import { useCameraPermissions } from "expo-camera";
-import { Linking, AppState } from "react-native";
-import { useEffect } from "react";
+import { Linking } from "react-native";
 
 export default function ScanQRCodeButton({ navigation }) {
   const { t } = useTranslation();
