@@ -7,7 +7,7 @@ const AppContext = createContext({
   serverUrl: "",
   basicAuth: { required: false } as BasicAuth,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  updateServerUrl: async (url: string, basicAuth: BasicAuth) => {},
+  updateServerUrl: async (_url: string, _basicAuth: BasicAuth) => {},
 });
 
 // Provider component

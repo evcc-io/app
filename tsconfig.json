@@ -1,4 +1,20 @@
 {
-  "compilerOptions": {},
-  "extends": "./node_modules/expo/tsconfig.base"
+  "extends": "./node_modules/expo/tsconfig.base",
+  "compilerOptions": {
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "composite": true,
+    "allowJs": true,
+    "baseUrl": ".",
+    "plugins": [
+      {
+        "name": "typescript-eslint-language-service"
+      }
+    ]
+  }
 }
