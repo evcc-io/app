@@ -5,18 +5,29 @@ import React, {
   useCallback,
   useMemo,
 } from "react";
-import { WebView } from "react-native-webview";
+import { WebView, WebViewMessageEvent } from "react-native-webview";
 import { Linking, ActivityIndicator, StyleSheet, Animated } from "react-native";
 import { Text, Layout, Spinner, Button } from "@ui-kitten/components";
 import { useAppContext } from "../components/AppContext";
 import { useTranslation } from "react-i18next";
 import { USER_AGENT } from "../utils/constants";
+import {
+  FileDownloadEvent,
+  ShouldStartLoadRequest,
+  WebViewErrorEvent,
+  WebViewHttpErrorEvent,
+  WebViewTerminatedEvent,
+} from "react-native-webview/lib/WebViewTypes";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "types";
 
 function LoadingScreen() {
   return <ActivityIndicator size="large" />;
 }
 
-export default function MainScreen({ navigation }) {
+export default function MainScreen({
+  navigation,
+}: NativeStackScreenProps<RootStackParamList, "Main">) {
   const { t } = useTranslation();
   const { serverUrl, basicAuth } = useAppContext();
   const webViewRef = useRef(null);
@@ -33,7 +44,7 @@ export default function MainScreen({ navigation }) {
 
   // Reconnect if connection is lost
   useEffect(() => {
-    let intervalId;
+    let intervalId: NodeJS.Timeout | undefined;
 
     if (!isConnected) {
       intervalId = setInterval(() => {
@@ -72,7 +83,7 @@ export default function MainScreen({ navigation }) {
   }, [isConnected]);
 
   const handleMessage = useCallback(
-    (event) => {
+    (event: WebViewMessageEvent) => {
       const data = JSON.parse(event.nativeEvent.data);
       console.log("message", data);
       switch (data.type) {
@@ -91,7 +102,7 @@ export default function MainScreen({ navigation }) {
   );
 
   const onShouldStartLoadWithRequest = useCallback(
-    (event) => {
+    (event: ShouldStartLoadRequest) => {
       if (!event.url.startsWith(serverUrl)) {
         Linking.openURL(event.url);
         return false;
@@ -105,29 +116,32 @@ export default function MainScreen({ navigation }) {
     console.log("onLoad");
   }, []);
 
-  const onError = useCallback((event) => {
+  const onError = useCallback((event: WebViewErrorEvent) => {
     console.log("onError", event);
     setIsConnected(false);
   }, []);
 
-  const onHttpError = useCallback((event) => {
+  const onHttpError = useCallback((event: WebViewHttpErrorEvent) => {
     console.log("onHttpError", event);
     setIsConnected(false);
   }, []);
 
-  const onTerminate = useCallback((event) => {
+  const onTerminate = useCallback((event: WebViewTerminatedEvent) => {
     console.log("onTerminate", event);
     setIsConnected(false);
   }, []);
 
-  const onFileDownload = ({ nativeEvent: { downloadUrl } }) => {
+  const onFileDownload = ({
+    nativeEvent: { downloadUrl },
+  }: FileDownloadEvent) => {
     if (downloadUrl) Linking.openURL(downloadUrl);
   };
 
   const LoadingScreenMemoized = useMemo(() => <LoadingScreen />, []);
 
   const { required, username, password } = basicAuth;
-  const basicAuthCredential = required ? { username, password } : null;
+  const basicAuthCredential =
+    required && username && password ? { username, password } : undefined;
 
   const LayoutMemoized = useMemo(
     () => (

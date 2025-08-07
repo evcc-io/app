@@ -9,8 +9,12 @@ import ServerList from "../components/ServerList";
 import LoadingIndicator from "../components/LoadingIndicator";
 import { verifyEvccServer } from "../utils/server";
 import { useTranslation } from "react-i18next";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "types";
 
-export default function ServerScreen({ navigation }) {
+export default function ServerScreen({
+  navigation,
+}: NativeStackScreenProps<RootStackParamList, "Server">) {
   const { t } = useTranslation();
   const [searching, setSearching] = useState(false);
   const [finished, setFinished] = useState(false);

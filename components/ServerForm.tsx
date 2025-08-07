@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Text, Button, Input, CheckBox } from "@ui-kitten/components";
 import { cleanServerUrl, verifyEvccServer } from "../utils/server";
 import LoadingIndicator from "../components/LoadingIndicator";
-import { BasicAuth } from "../interfaces/basicAuth";
 import { useTranslation } from "react-i18next";
+import { BasicAuth } from "types";
 
 interface ServerFormProps {
   url?: string;
@@ -39,14 +39,18 @@ export default function ServerForm({
       const finalUrl = await verifyEvccServer(cleanUrl, basicAuth);
       onChange(finalUrl, basicAuth);
     } catch (error) {
-      setError(error.message);
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError(String(error));
+      }
     } finally {
       setInProgress(false);
     }
   };
 
   useEffect(() => {
-    inputRef.current.focus();
+    inputRef.current?.focus();
   }, []);
 
   const setBasicAuthRequired = (value: boolean) =>
@@ -71,7 +75,7 @@ export default function ServerForm({
         autoCapitalize="none"
         onSubmitEditing={() =>
           basicAuth.required
-            ? usernameRef.current.focus()
+            ? usernameRef.current?.focus()
             : validateAndSaveURL()
         }
         returnKeyType={basicAuth.required ? "next" : "go"}
@@ -99,7 +103,7 @@ export default function ServerForm({
             autoCorrect={false}
             placeholder={t("servers.manually.user")}
             ref={usernameRef}
-            onSubmitEditing={() => passwordRef.current.focus()}
+            onSubmitEditing={() => passwordRef.current?.focus()}
           />
           <Input
             style={{ marginTop: 8, marginBottom: 16 }}
@@ -125,7 +129,7 @@ export default function ServerForm({
         appearance="filled"
         size="giant"
         disabled={url.length === 0}
-        accessoryLeft={inProgress ? LoadingIndicator : null}
+        accessoryLeft={inProgress ? LoadingIndicator : undefined}
         onPress={validateAndSaveURL}
       >
         {t("servers.manually.checkAndSave")}
