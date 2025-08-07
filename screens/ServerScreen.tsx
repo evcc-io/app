@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import Zeroconf from "react-native-zeroconf";
+import * as ServiceDiscovery from "@inthepocket/react-native-service-discovery";
 import { Layout, Text, Button } from "@ui-kitten/components";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Alert } from "react-native";
@@ -15,7 +15,7 @@ export default function ServerScreen({ navigation }) {
   const [searching, setSearching] = useState(false);
   const [finished, setFinished] = useState(false);
   const [scanNotPossible, setScanNotPossible] = useState(false);
-  const [found, setFound] = useState([]);
+  const [found, setFound] = useState<ServiceDiscovery.Service[]>([]);
   const { updateServerUrl } = useAppContext();
 
   const scanNetwork = useCallback(() => {
@@ -23,43 +23,37 @@ export default function ServerScreen({ navigation }) {
     setFinished(false);
     setFound([]);
 
-    let zeroconf = null;
+    const foundListener = ServiceDiscovery.addEventListener(
+      "serviceFound",
+      (service) => {
+        if (service.name === "evcc") {
+          setFound((prevFound) => [...prevFound, service]);
+        }
+      },
+    );
 
-    try {
-      if (zeroconf) {
-        zeroconf.stop();
-      }
-      zeroconf = new Zeroconf();
-      zeroconf.scan("http", "tcp", "local.");
-    } catch (e) {
-      console.log("error", e);
-      setSearching(false);
-      setScanNotPossible(true);
-    }
+    (async () => {
+      try {
+        await Promise.all([
+          ServiceDiscovery.startSearch("http"),
+          ServiceDiscovery.startSearch("https"),
+        ]);
 
-    zeroconf.on("resolved", ({ txt, name, host, port }) => {
-      console.log("resolved", name);
-      if (txt && name?.includes("evcc")) {
-        console.log("found evcc", name);
-        // remove trailing dots
-        const entry = {
-          title: name,
-          url: `http://${host.replace(/\.$/, "")}${port === 80 ? "" : `:${port}`}${txt.path}`,
-        };
-        setFound((prevFound) => [...prevFound, entry]);
+        setTimeout(() => {
+          ServiceDiscovery.stopSearch("http");
+          ServiceDiscovery.stopSearch("https");
+
+          foundListener.remove();
+
+          setSearching(false);
+          setFinished(true);
+        }, 60 * 1000);
+      } catch (e) {
+        console.log("error", e);
+        setSearching(false);
+        setScanNotPossible(true);
       }
-    });
-    zeroconf.on("error", (error) => {
-      setSearching(false);
-      zeroconf.stop();
-      console.log("error", error);
-    });
-    zeroconf.on("stop", () => {
-      setSearching(false);
-      setFinished(true);
-      zeroconf.removeDeviceListeners();
-      console.log("stop");
-    });
+    })();
   }, []);
 
   const selectDemoServer = useCallback(async () => {
