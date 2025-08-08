@@ -1,10 +1,11 @@
 import React from "react";
+import * as ServiceDiscovery from "@inthepocket/react-native-service-discovery";
 import { Button, List, ListItem } from "@ui-kitten/components";
 import { StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
 
 interface ServerListProps {
-  entries: Array<{ title: string; url: string }>;
+  entries: ServiceDiscovery.Service[];
   onSelect?: (url: string) => Promise<void>;
 }
 
@@ -24,16 +25,22 @@ export default function ServerList({
     </Button>
   );
 
-  const renderItem = ({ item }) => (
-    <ListItem
-      title={item.title}
-      description={item.url}
-      accessoryRight={() => renderItemAccessory(item.url)}
-    />
-  );
-
   return (
-    <List style={styles.container} data={entries} renderItem={renderItem} />
+    <List<ServiceDiscovery.Service>
+      style={styles.container}
+      data={entries}
+      renderItem={({ item }) => (
+        <ListItem
+          title={item.name}
+          description={item.hostName}
+          accessoryRight={() =>
+            renderItemAccessory(
+              `${item.type === "_http._tcp." ? "http" : "https"}://${item.hostName}:${item.port}`,
+            )
+          }
+        />
+      )}
+    />
   );
 }
 

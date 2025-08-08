@@ -16,9 +16,10 @@
   },
   "dependencies": {
     "@eva-design/eva": "^2.2.0",
-    "@expo/metro-runtime": "~4.0.1",
-    "@material-symbols/svg-400": "^0.29.3",
     "@expo/config-plugins": "^9.0.17",
+    "@expo/metro-runtime": "~4.0.1",
+    "@inthepocket/react-native-service-discovery": "^0.2.1",
+    "@material-symbols/svg-400": "^0.29.3",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-navigation/bottom-tabs": "^6.5.12",
     "@react-navigation/native": "^6.1.10",
@@ -49,7 +50,6 @@
     "react-native-svg": "15.8.0",
     "react-native-web": "~0.19.6",
     "react-native-webview": "^13.13.5",
-    "react-native-zeroconf": "^0.13.8",
     "typescript": "~5.3.3",
     "v8-android-jit": "^11.1000.4"
   },

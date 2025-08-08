@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import Zeroconf from "react-native-zeroconf";
+import * as ServiceDiscovery from "@inthepocket/react-native-service-discovery";
 import { Layout, Text, Button } from "@ui-kitten/components";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Alert } from "react-native";
@@ -15,51 +15,64 @@ export default function ServerScreen({ navigation }) {
   const [searching, setSearching] = useState(false);
   const [finished, setFinished] = useState(false);
   const [scanNotPossible, setScanNotPossible] = useState(false);
-  const [found, setFound] = useState([]);
+  const [found, setFound] = useState<Set<ServiceDiscovery.Service>>(new Set());
   const { updateServerUrl } = useAppContext();
 
   const scanNetwork = useCallback(() => {
     setSearching(true);
     setFinished(false);
-    setFound([]);
+    setFound(new Set());
 
-    let zeroconf = null;
+    const foundListener = ServiceDiscovery.addEventListener(
+      "serviceFound",
+      (service) => {
+        if (service.name === "evcc") {
+          console.log("Found service ", service);
+          setFound((found) => {
+            const newSet = new Set(found);
+            newSet.add(service);
+            return newSet;
+          });
+        }
+      },
+    );
 
-    try {
-      if (zeroconf) {
-        zeroconf.stop();
+    const lostListener = ServiceDiscovery.addEventListener(
+      "serviceLost",
+      (service) => {
+        if (service.name === "evcc") {
+          console.log("Lost service ", service);
+          setFound((found) => {
+            found.delete(service);
+            return found;
+          });
+        }
+      },
+    );
+
+    (async () => {
+      try {
+        await Promise.all([
+          ServiceDiscovery.startSearch("http"),
+          ServiceDiscovery.startSearch("https"),
+        ]);
+
+        setTimeout(() => {
+          ServiceDiscovery.stopSearch("http");
+          ServiceDiscovery.stopSearch("https");
+
+          foundListener.remove();
+          lostListener.remove();
+
+          setSearching(false);
+          setFinished(true);
+        }, 60 * 1000);
+      } catch (e) {
+        console.log("error", e);
+        setSearching(false);
+        setScanNotPossible(true);
       }
-      zeroconf = new Zeroconf();
-      zeroconf.scan("http", "tcp", "local.");
-    } catch (e) {
-      console.log("error", e);
-      setSearching(false);
-      setScanNotPossible(true);
-    }
-
-    zeroconf.on("resolved", ({ txt, name, host, port }) => {
-      console.log("resolved", name);
-      if (txt && name?.includes("evcc")) {
-        console.log("found evcc", name);
-        // remove trailing dots
-        const entry = {
-          title: name,
-          url: `http://${host.replace(/\.$/, "")}${port === 80 ? "" : `:${port}`}${txt.path}`,
-        };
-        setFound((prevFound) => [...prevFound, entry]);
-      }
-    });
-    zeroconf.on("error", (error) => {
-      setSearching(false);
-      zeroconf.stop();
-      console.log("error", error);
-    });
-    zeroconf.on("stop", () => {
-      setSearching(false);
-      setFinished(true);
-      zeroconf.removeDeviceListeners();
-      console.log("stop");
-    });
+    })();
   }, []);
 
   const selectDemoServer = useCallback(async () => {
@@ -109,12 +122,12 @@ export default function ServerScreen({ navigation }) {
               {t("servers.search.notAvailable")}
             </Text>
           ) : null}
-          {finished && found.length === 0 ? (
+          {finished && found.size === 0 ? (
             <Text style={{ marginVertical: 16 }} category="p1">
               {t("servers.search.nothingFound")}
             </Text>
           ) : (
-            <ServerList entries={found} onSelect={selectServer} />
+            <ServerList entries={Array.from(found)} onSelect={selectServer} />
           )}
         </Layout>
         <Layout style={{ paddingVertical: 16 }}>
