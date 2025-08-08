@@ -15,19 +15,37 @@ export default function ServerScreen({ navigation }) {
   const [searching, setSearching] = useState(false);
   const [finished, setFinished] = useState(false);
   const [scanNotPossible, setScanNotPossible] = useState(false);
-  const [found, setFound] = useState<ServiceDiscovery.Service[]>([]);
+  const [found, setFound] = useState<Set<ServiceDiscovery.Service>>(new Set());
   const { updateServerUrl } = useAppContext();
 
   const scanNetwork = useCallback(() => {
     setSearching(true);
     setFinished(false);
-    setFound([]);
+    setFound(new Set());
 
     const foundListener = ServiceDiscovery.addEventListener(
       "serviceFound",
       (service) => {
         if (service.name === "evcc") {
-          setFound((prevFound) => [...prevFound, service]);
+          console.log("Found service ", service);
+          setFound((found) => {
+            const newSet = new Set(found);
+            newSet.add(service);
+            return newSet;
+          });
+        }
+      },
+    );
+
+    const lostListener = ServiceDiscovery.addEventListener(
+      "serviceLost",
+      (service) => {
+        if (service.name === "evcc") {
+          console.log("Lost service ", service);
+          setFound((found) => {
+            found.delete(service);
+            return found;
+          });
         }
       },
     );
@@ -44,6 +62,7 @@ export default function ServerScreen({ navigation }) {
           ServiceDiscovery.stopSearch("https");
 
           foundListener.remove();
+          lostListener.remove();
 
           setSearching(false);
           setFinished(true);
@@ -103,12 +122,12 @@ export default function ServerScreen({ navigation }) {
               {t("servers.search.notAvailable")}
             </Text>
           ) : null}
-          {finished && found.length === 0 ? (
+          {finished && found.size === 0 ? (
             <Text style={{ marginVertical: 16 }} category="p1">
               {t("servers.search.nothingFound")}
             </Text>
           ) : (
-            <ServerList entries={found} onSelect={selectServer} />
+            <ServerList entries={Array.from(found)} onSelect={selectServer} />
           )}
         </Layout>
         <Layout style={{ paddingVertical: 16 }}>
