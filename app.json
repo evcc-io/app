@@ -64,7 +64,11 @@
         "expo-build-properties",
         {
           "android": {
-            "usesCleartextTraffic": true
+            "usesCleartextTraffic": true,
+            "newArchEnabled": true
+          },
+          "ios": {
+            "newArchEnabled": true
           }
         }
       ],
@@ -89,7 +93,9 @@
           }
         }
       ],
-      "expo-localization"
+      "expo-localization",
+      "expo-web-browser",
+      "react-native-edge-to-edge"
     ],
     "extra": {
       "eas": {
