@@ -20,6 +20,7 @@ Native app wrapper for evcc UI based on [react-native](https://reactnative.dev/)
 - Onboarding
   - find evcc instances in local network via mDNS
   - add instance manually via URL
+  - setup via QR code https://github.com/evcc-io/app/issues/72 (e.g. for public tunnel setup) 
   - try the app using the demo instance
 - Full screen evcc UI
   - use the app in a full screen web view
