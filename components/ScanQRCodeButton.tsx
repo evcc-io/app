@@ -32,9 +32,11 @@ export default function ScanQRCodeButton({ navigation }) {
     return qrCodeButton("scan", {
       onPress: async () => {
         if (!permission.granted) {
-          await requestPermission();
-        }
-        if (permission.granted) {
+          const result = await requestPermission();
+          if (result.granted) {
+            navigation.navigate("QRCodeCamera");
+          }
+        } else {
           navigation.navigate("QRCodeCamera");
         }
       },

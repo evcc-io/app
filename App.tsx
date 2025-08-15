@@ -83,7 +83,14 @@ function AppNavigator() {
                 presentation: "modal",
               }}
             />
-            <Stack.Screen name="QRCodeCamera" component={QRCodeCamera} />
+            <Stack.Screen
+              name="QRCodeCamera"
+              component={QRCodeCamera}
+              options={{
+                animation: "slide_from_bottom",
+                presentation: "modal",
+              }}
+            />
           </>
         )}
       </Stack.Navigator>

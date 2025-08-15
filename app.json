@@ -22,6 +22,7 @@
         "CFBundleDevelopmentRegion": "de",
         "CFBundleAllowMixedLocalizations": true,
         "NSLocalNetworkUsageDescription": "Die App benötigt Zugriff auf das lokale Netzwerk, um deine evcc Instanz zu finden.",
+        "NSCameraUsageDescription": "Die App benötigt Kamerazugriff zum Scannen von QR-Codes.",
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": true
         },
@@ -64,7 +65,7 @@
       [
         "expo-camera",
         {
-          "recordAudioAndroid": false
+          "cameraPermission": "Allow evcc to access your camera to scan QR codes"
         }
       ],
       [
