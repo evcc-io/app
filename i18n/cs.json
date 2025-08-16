@@ -12,6 +12,13 @@
       "enterUrl": "Zadejte URL",
       "missingOrWrongAuthentication": "Chybějící nebo nesprávná autentifikace",
       "password": "Heslo",
+      "qrcode": {
+        "invalid": "Neplatný EVCC QR kod.",
+        "permissionDenied": "Povolte přístup ke kameře v nastavení, abyste mohli naskenovat QR kod.",
+        "recognized": "QR kod detekován!",
+        "scan": "Naskenujte QR kod",
+        "scanning": "analyzování..."
+      },
       "serverIncompatible": "Instalace evcc ještě není kompatibilní s aplikací. Aktualizujte svou instalaci.",
       "serverNotAvailable": "Server není k dispozici. Zkontrolujte prosím adresu.",
       "specify": "Zadejte adresu ručně",
