@@ -12,6 +12,13 @@
       "enterUrl": "Sisesta võrguaadress",
       "missingOrWrongAuthentication": "Autentimine on puudu või vigane",
       "password": "Salasõna",
+      "qrcode": {
+        "invalid": "Pole korrektne evcc QR-kood.",
+        "permissionDenied": "QR-koodi skaneerimiseks luba seadistustest kaamera kasutamine.",
+        "recognized": "QR-kood on tuvastatud!",
+        "scan": "Skaneeri QR-koodi",
+        "scanning": "tuvastan..."
+      },
       "serverIncompatible": "See elektrisõiduki sidekontroller ei ühildu veel rakendusega. Palun proovi kas tema tarkvara uuendamine aitaks.",
       "serverNotAvailable": "Server pole leitav. Palun kontrolli aadressi.",
       "specify": "Sisesta aadress käsitsi",
