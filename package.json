@@ -52,7 +52,8 @@
     "react-native-zeroconf": "^0.13.8",
     "typescript": "~5.8.3",
     "v8-android-jit": "^11.1000.4",
-    "react-native-edge-to-edge": "1.6.0"
+    "react-native-edge-to-edge": "1.6.0",
+    "expo-linking": "~7.1.7"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
