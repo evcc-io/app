@@ -22,7 +22,6 @@
         "CFBundleDevelopmentRegion": "de",
         "CFBundleAllowMixedLocalizations": true,
         "NSLocalNetworkUsageDescription": "Die App benötigt Zugriff auf das lokale Netzwerk, um deine evcc Instanz zu finden.",
-        "NSCameraUsageDescription": "Die App benötigt Kamerazugriff zum Scannen von QR-Codes.",
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": true
         },
@@ -38,8 +37,7 @@
       "permissions": [
         "android.permission.ACCESS_NETWORK_STATE",
         "android.permission.ACCESS_WIFI_STATE",
-        "android.permission.CHANGE_WIFI_MULTICAST_STATE",
-        "android.permission.CAMERA"
+        "android.permission.CHANGE_WIFI_MULTICAST_STATE"
       ],
       "package": "io.evcc.android",
       "adaptiveIcon": {
@@ -62,12 +60,6 @@
     "plugins": [
       ["./scripts/fdroid/removeDKBuildId.js"],
       ["./scripts/fdroid/disableDependencyMetadata.js"],
-      [
-        "expo-camera",
-        {
-          "cameraPermission": "Allow evcc to access your camera to scan QR codes"
-        }
-      ],
       [
         "expo-build-properties",
         {
