@@ -15,14 +15,7 @@
       "serverIncompatible": "Die evcc Instanz ist noch nicht App-kompatibel. Aktualisiere deine Installation.",
       "serverNotAvailable": "Server nicht erreichbar. Bitte prüfe die Adresse.",
       "specify": "Adresse manuell eingeben",
-      "user": "Benutzer",
-      "qrcode": {
-        "scan": "QR-Code scannen",
-        "permissionDenied": "Aktiviere den Kamerazugriff in den Einstellungen, um einen QR-Code zu scannen.",
-        "recognized": "QR-Code erkannt!",
-        "invalid": "Kein gültiger evcc QR-Code.",
-        "scanning": "erkennen..."
-      }
+      "user": "Benutzer"
     },
     "removeServer": "Server entfernen",
     "search": {
