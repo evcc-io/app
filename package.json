@@ -25,6 +25,7 @@
     "@react-navigation/native-stack": "^6.9.18",
     "@react-navigation/stack": "^6.3.21",
     "@types/react": "~18.3.12",
+    "@types/react-native-zeroconf": "^0.13.1",
     "@ui-kitten/components": "^5.3.1",
     "@ui-kitten/eva-icons": "^5.3.1",
     "axios": "^1.8.4",

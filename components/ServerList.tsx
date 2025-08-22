@@ -2,6 +2,7 @@ import React from "react";
 import { Button, List, ListItem } from "@ui-kitten/components";
 import { StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
+import { Entry } from "screens/ServerScreen";
 
 interface ServerListProps {
   entries: Array<{ title: string; url: string }>;
@@ -24,7 +25,7 @@ export default function ServerList({
     </Button>
   );
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }: { item: Entry }) => (
     <ListItem
       title={item.title}
       description={item.url}
