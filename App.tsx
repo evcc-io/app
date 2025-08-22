@@ -20,8 +20,10 @@ import custom from "./themes.json";
 import { useFonts } from "expo-font";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import * as SplashScreen from "expo-splash-screen";
+import * as Linking from "expo-linking";
 import { decode, encode } from "base-64";
 import translations from "./i18n";
+import { linking } from "./utils/linking";
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -49,6 +51,10 @@ const hideSplash = () => {
 
 function AppNavigator() {
   const { serverUrl } = useAppContext();
+  const url = Linking.useLinkingURL();
+  if (url) {
+    linking(url);
+  }
 
   //updateServerUrl("");
 
