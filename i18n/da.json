@@ -12,6 +12,13 @@
       "enterUrl": "Indtast URL",
       "missingOrWrongAuthentication": "Manglende eller forkert godkendelse",
       "password": "Kodeord",
+      "qrcode": {
+        "invalid": "Det er ikke en gyldig evcc QR kode.",
+        "permissionDenied": "Aktivér kameraadgang for at scanne en QR-kode.",
+        "recognized": "QR code fundet!",
+        "scan": "Scan QR koden",
+        "scanning": "Scanner..."
+      },
       "serverIncompatible": "evcc-installeringen er endnu ikke app-kompatibel. Opdater din installation.",
       "serverNotAvailable": "Server er ikke tilgængelig. Check venligst adressen.",
       "specify": "Indtast adressen manuelt",

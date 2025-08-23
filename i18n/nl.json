@@ -12,6 +12,13 @@
       "enterUrl": "URL invoeren",
       "missingOrWrongAuthentication": "Ontbrekende of foutieve authenticatie",
       "password": "Wachtwoord",
+      "qrcode": {
+        "invalid": "Ongeldige evcc QR-code.",
+        "permissionDenied": "Schakel cameratoegang in de instellingen in om een QR-code te scannen.",
+        "recognized": "QR-code gedetecteerd!",
+        "scan": "Scan QR-code",
+        "scanning": "detecteren..."
+      },
       "serverIncompatible": "De evcc server is nog niet app-compatible. Update de installatie.",
       "serverNotAvailable": "Server onbereikbaar. Controleer het adres.",
       "specify": "Adres handmatig invoeren",

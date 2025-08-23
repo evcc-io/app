@@ -12,6 +12,13 @@
       "enterUrl": "Anna URL-osoite",
       "missingOrWrongAuthentication": "Todennus puuttuu tai virheellinen",
       "password": "Salasana",
+      "qrcode": {
+        "invalid": "Ei pätevä evcc-QR-koodi.",
+        "permissionDenied": "Salli kameran käyttö asetuksista lukeaksesi QR-koodin.",
+        "recognized": "QR-koodi tunnistettu!",
+        "scan": "Lue QR-koodi",
+        "scanning": "tunnistetaan..."
+      },
       "serverIncompatible": "Evcc-palvelimen versiosi ei ole vielä sovellusyhteensopiva. Päivitä asennuksesi.",
       "serverNotAvailable": "Palvelin ei ole käytettävissä. Tarkista osoite.",
       "specify": "Anna osoite manuaalisesti",
