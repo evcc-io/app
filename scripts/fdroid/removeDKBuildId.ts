@@ -1,14 +1,17 @@
-const { withDangerousMod } = require("@expo/config-plugins");
-const fs = require("fs");
-const path = require("path");
+import path from "path";
+import fs from "fs";
+import { withDangerousMod, type ConfigPlugin } from "@expo/config-plugins";
 
-const withAddLinkOption = (config) => {
+const withAddLinkOption: ConfigPlugin = (config) => {
   return withDangerousMod(config, [
     "android",
     async (config) => {
       const packages = ["react-native-screens", "expo-modules-core"];
       for (const pkg of packages) {
-        console.log("🗑 Script: Removing build ID from CMakeLists.txt for package ", pkg);
+        console.log(
+          "🗑 Script: Removing build ID from CMakeLists.txt for package ",
+          pkg,
+        );
 
         const cmakeFilePath = path.join(
           config.modRequest.projectRoot,

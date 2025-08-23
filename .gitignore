@@ -4,3 +4,4 @@ ios/
 android/
 !fastlane/metadata/android
 !fastlane/metadata/ios
+tsconfig.tsbuildinfo

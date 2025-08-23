@@ -1,8 +1,6 @@
-const {
-  withAppBuildGradle,
-} = require("@expo/config-plugins/build/plugins/android-plugins.js");
+import { withAppBuildGradle, type ConfigPlugin } from "@expo/config-plugins";
 
-const withNDKBuildId = (config) => {
+const withNDKBuildId: ConfigPlugin = (config) => {
   return withAppBuildGradle(config, (gradleConfig) => {
     console.log("🗑 Script: Removing dependency metadata from build.gradle");
 

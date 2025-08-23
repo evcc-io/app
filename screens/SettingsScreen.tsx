@@ -4,22 +4,21 @@ import { View, TouchableOpacity, Linking } from "react-native";
 import ServerForm from "../components/ServerForm";
 import { useAppContext } from "../components/AppContext";
 import Header from "../components/Header";
-import { BasicAuth } from "../interfaces/basicAuth";
 import { useTranslation } from "react-i18next";
 import { APP_VERSION, GITHUB_RELEASES_URL } from "../utils/constants";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList, BasicAuth } from "types";
 
-function navigateToMain(navigation) {
-  navigation.navigate("Main");
-}
-
-function SettingsScreen({ navigation }) {
+function SettingsScreen({
+  navigation,
+}: NativeStackScreenProps<RootStackParamList, "Settings">) {
   const { t } = useTranslation();
   const { serverUrl, basicAuth, updateServerUrl } = useAppContext();
 
   const saveServer = React.useCallback(
-    (url, basicAuth: BasicAuth) => {
+    (url: string, basicAuth: BasicAuth) => {
       updateServerUrl(url, basicAuth);
-      navigateToMain(navigation);
+      navigation.navigate("Main");
     },
     [navigation, updateServerUrl],
   );
@@ -40,7 +39,7 @@ function SettingsScreen({ navigation }) {
       <Header
         title={t("servers.changeServer")}
         showDone
-        onDone={() => navigateToMain(navigation)}
+        onDone={() => navigation.navigate("Main")}
       />
       <View style={{ paddingHorizontal: 16 }}>
         {serverForm}
