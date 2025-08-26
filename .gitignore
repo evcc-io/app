@@ -4,4 +4,5 @@ ios/
 android/
 !fastlane/metadata/android
 !fastlane/metadata/ios
+caddy*.*
 tsconfig.tsbuildinfo
