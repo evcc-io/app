@@ -6,6 +6,7 @@ export default ({ config }: ConfigContext) => ({
   expo: {
     name: "evcc",
     slug: "evcc",
+    scheme: "evcc",
     description: "open source solar charging",
     version: "1.0.4",
     orientation: "default",
