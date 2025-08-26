@@ -9,7 +9,7 @@ const withAddLinkOption: ConfigPlugin = (config) => {
       const packages = ["react-native-screens", "expo-modules-core"];
       for (const pkg of packages) {
         console.log(
-          "🗑 Script: Removing build ID from CMakeLists.txt for package ",
+          "🗑 Script: Removing build ID from CMakeLists.txt for package",
           pkg,
         );
 
