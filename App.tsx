@@ -24,6 +24,7 @@ import * as Linking from "expo-linking";
 import { decode, encode } from "base-64";
 import translations from "./i18n";
 import { linking } from "./utils/linking";
+import { RootStackParamList } from "types";
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -35,11 +36,11 @@ if (!global.atob) {
 
 SplashScreen.preventAutoHideAsync();
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 i18n.use(initReactI18next).init({
   resources: translations,
-  lng: getLocales()[0].languageCode,
+  lng: getLocales()[0].languageCode ?? undefined,
   fallbackLng: "en",
 });
 
@@ -96,7 +97,7 @@ function AppNavigator() {
 }
 
 export default function App() {
-  const colorScheme = Appearance.getColorScheme();
+  const colorScheme = Appearance.getColorScheme() ?? "light";
   const [theme, setTheme] = React.useState(colorScheme);
   const [fontsLoaded] = useFonts({
     "Montserrat-Bold": require("./assets/fonts/Montserrat-Bold.ttf"),
@@ -110,7 +111,7 @@ export default function App() {
 
   useEffect(() => {
     const subscription = Appearance.addChangeListener(({ colorScheme }) => {
-      setTheme(colorScheme);
+      setTheme(colorScheme ?? "light");
     });
 
     return () => subscription.remove();
