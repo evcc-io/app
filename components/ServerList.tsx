@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 interface ServerListProps {
   entries: ServiceDiscovery.Service[];
-  onSelect?: (url: string) => Promise<void>;
+  onSelect: (url: string) => Promise<void>;
 }
 
 export default function ServerList({
@@ -14,7 +14,7 @@ export default function ServerList({
   onSelect,
 }: ServerListProps): React.ReactElement {
   const { t } = useTranslation();
-  const renderItemAccessory = (url) => (
+  const renderItemAccessory = (url: string) => (
     <Button
       size="small"
       onPress={() => {

@@ -9,13 +9,18 @@ import ServerList from "../components/ServerList";
 import LoadingIndicator from "../components/LoadingIndicator";
 import { verifyEvccServer } from "../utils/server";
 import { useTranslation } from "react-i18next";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "types";
 
-export default function ServerScreen({ navigation }) {
+export default function ServerScreen({
+  navigation,
+}: NativeStackScreenProps<RootStackParamList, "Server">) {
   const { t } = useTranslation();
   const [searching, setSearching] = useState(false);
   const [finished, setFinished] = useState(false);
   const [scanNotPossible, setScanNotPossible] = useState(false);
   const [found, setFound] = useState<Set<ServiceDiscovery.Service>>(new Set());
+
   const { updateServerUrl } = useAppContext();
 
   const scanNetwork = useCallback(() => {
@@ -80,12 +85,12 @@ export default function ServerScreen({ navigation }) {
   }, []);
 
   const selectServer = useCallback(
-    async (url) => {
+    async (url: string) => {
       try {
         const finalUrl = await verifyEvccServer(url, { required: false });
         updateServerUrl(finalUrl, { required: false });
       } catch (error) {
-        Alert.alert(error.message);
+        Alert.alert((error as Error).message);
       }
     },
     [updateServerUrl],
@@ -111,7 +116,7 @@ export default function ServerScreen({ navigation }) {
             appearance="filled"
             size="giant"
             onPress={scanNetwork}
-            accessoryLeft={searching ? LoadingIndicator : null}
+            accessoryLeft={searching ? LoadingIndicator : undefined}
             disabled={scanNotPossible}
           >
             {t("servers.search.start")}

@@ -1,17 +1,23 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  PropsWithChildren,
+} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { BasicAuth } from "../interfaces/basicAuth";
+import { BasicAuth } from "types";
 
 // Create a context
 const AppContext = createContext({
   serverUrl: "",
   basicAuth: { required: false } as BasicAuth,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  updateServerUrl: async (url: string, basicAuth: BasicAuth) => {},
+  updateServerUrl: async (_url: string, _basicAuth: BasicAuth) => {},
 });
 
 // Provider component
-export const AppProvider = ({ children }) => {
+export const AppProvider = ({ children }: PropsWithChildren) => {
   const [serverUrl, setServerUrl] = useState("unknown");
   const [basicAuth, setBasicAuth] = useState({ required: false });
 
@@ -32,7 +38,7 @@ export const AppProvider = ({ children }) => {
     loadServerUrl();
   }, []);
 
-  const updateServerUrl = async (url, basicAuth: BasicAuth) => {
+  const updateServerUrl = async (url: string, basicAuth: BasicAuth) => {
     setBasicAuth(basicAuth);
     await AsyncStorage.setItem("basicAuth", JSON.stringify(basicAuth));
     setServerUrl(url);
