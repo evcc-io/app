@@ -1,4 +1,4 @@
-import { withAppBuildGradle, type ConfigPlugin } from "@expo/config-plugins";
+import { withAppBuildGradle, type ConfigPlugin } from "expo/config-plugins";
 
 const withNDKBuildId: ConfigPlugin = (config) => {
   return withAppBuildGradle(config, (gradleConfig) => {

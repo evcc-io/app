@@ -1,6 +1,6 @@
 import path from "path";
 import fs from "fs";
-import { withDangerousMod, type ConfigPlugin } from "@expo/config-plugins";
+import { withDangerousMod, type ConfigPlugin } from "expo/config-plugins";
 
 const withAddLinkOption: ConfigPlugin = (config) => {
   return withDangerousMod(config, [
