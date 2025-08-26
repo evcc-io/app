@@ -9,13 +9,22 @@ import ServerList from "../components/ServerList";
 import LoadingIndicator from "../components/LoadingIndicator";
 import { verifyEvccServer } from "../utils/server";
 import { useTranslation } from "react-i18next";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "types";
 
-export default function ServerScreen({ navigation }) {
+export interface Entry {
+  title: string;
+  url: string;
+}
+
+export default function ServerScreen({
+  navigation,
+}: NativeStackScreenProps<RootStackParamList, "Server">) {
   const { t } = useTranslation();
   const [searching, setSearching] = useState(false);
   const [finished, setFinished] = useState(false);
   const [scanNotPossible, setScanNotPossible] = useState(false);
-  const [found, setFound] = useState([]);
+  const [found, setFound] = useState<Entry[]>([]);
   const { updateServerUrl } = useAppContext();
 
   const scanNetwork = useCallback(() => {
@@ -23,11 +32,11 @@ export default function ServerScreen({ navigation }) {
     setFinished(false);
     setFound([]);
 
-    let zeroconf = null;
+    let zeroconf: Zeroconf | null = null;
 
     try {
       if (zeroconf) {
-        zeroconf.stop();
+        (zeroconf as Zeroconf).stop();
       }
       zeroconf = new Zeroconf();
       zeroconf.scan("http", "tcp", "local.");
@@ -37,27 +46,27 @@ export default function ServerScreen({ navigation }) {
       setScanNotPossible(true);
     }
 
-    zeroconf.on("resolved", ({ txt, name, host, port }) => {
+    zeroconf?.on("resolved", ({ txt, name, host, port }) => {
       console.log("resolved", name);
       if (txt && name?.includes("evcc")) {
         console.log("found evcc", name);
         // remove trailing dots
         const entry = {
           title: name,
-          url: `http://${host.replace(/\.$/, "")}${port === 80 ? "" : `:${port}`}${txt.path}`,
+          url: `http://${host.replace(/\.$/, "")}${port === 80 ? "" : `:${port}`}${txt["path"]}`,
         };
         setFound((prevFound) => [...prevFound, entry]);
       }
     });
-    zeroconf.on("error", (error) => {
+    zeroconf?.on("error", (error) => {
       setSearching(false);
-      zeroconf.stop();
+      zeroconf?.stop();
       console.log("error", error);
     });
-    zeroconf.on("stop", () => {
+    zeroconf?.on("stop", () => {
       setSearching(false);
       setFinished(true);
-      zeroconf.removeDeviceListeners();
+      zeroconf?.removeDeviceListeners();
       console.log("stop");
     });
   }, []);
@@ -67,12 +76,12 @@ export default function ServerScreen({ navigation }) {
   }, []);
 
   const selectServer = useCallback(
-    async (url) => {
+    async (url: string) => {
       try {
         const finalUrl = await verifyEvccServer(url, { required: false });
         updateServerUrl(finalUrl, { required: false });
       } catch (error) {
-        Alert.alert(error.message);
+        Alert.alert((error as Error).message);
       }
     },
     [updateServerUrl],
@@ -98,7 +107,7 @@ export default function ServerScreen({ navigation }) {
             appearance="filled"
             size="giant"
             onPress={scanNetwork}
-            accessoryLeft={searching ? LoadingIndicator : null}
+            accessoryLeft={searching ? LoadingIndicator : undefined}
             disabled={scanNotPossible}
           >
             {t("servers.search.start")}

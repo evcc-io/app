@@ -5,12 +5,13 @@ import ServerForm from "../components/ServerForm";
 import Header from "../components/Header";
 import { useAppContext } from "../components/AppContext";
 import { useTranslation } from "react-i18next";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "types";
 
-function navigateToServer(navigation) {
-  navigation.navigate("Server");
-}
-
-function ServerManualScreen({ route, navigation }) {
+function ServerManualScreen({
+  route,
+  navigation,
+}: NativeStackScreenProps<RootStackParamList, "ServerManual">) {
   let paramsUrl = "";
   let paramsBasicAuth = { required: false };
   if (route.params) {
@@ -31,7 +32,7 @@ function ServerManualScreen({ route, navigation }) {
       <Header
         title={t("servers.manually.enterUrl")}
         showDone
-        onDone={() => navigateToServer(navigation)}
+        onDone={() => navigation.navigate("Server")}
       />
     ),
     [navigation],

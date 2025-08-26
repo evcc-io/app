@@ -1,8 +1,9 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { t } from "i18next";
 import { USER_AGENT } from "./constants";
+import { BasicAuth } from "types";
 
-export function cleanServerUrl(url) {
+export function cleanServerUrl(url: string) {
   let result = url.trim();
   if (!result.startsWith("http://") && !result.startsWith("https://")) {
     result = `http://${result}`;
@@ -13,14 +14,16 @@ export function cleanServerUrl(url) {
   return result;
 }
 
-export async function verifyEvccServer(url, authOptions) {
-  const options = {
+export async function verifyEvccServer(url: string, authOptions: BasicAuth) {
+  const options: AxiosRequestConfig = {
     timeout: 10000,
     headers: { "User-Agent": USER_AGENT },
   };
   if (authOptions) {
     const { username, password } = authOptions;
-    options.auth = { username, password };
+    if (username && password) {
+      options.auth = { username, password };
+    }
   }
 
   let response;
@@ -28,7 +31,7 @@ export async function verifyEvccServer(url, authOptions) {
     response = await axios.get(url, options);
   } catch (error) {
     console.log(error);
-    if (error.response?.status === 401) {
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
       throw new Error(t("servers.manually.missingOrWrongAuthentication"));
     }
     throw new Error(t("servers.manually.serverNotAvailable"));

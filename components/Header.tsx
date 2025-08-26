@@ -1,9 +1,9 @@
 import React from "react";
-import { Text, Icon } from "@ui-kitten/components";
+import { Text, Icon, IconProps } from "@ui-kitten/components";
 import { View, Pressable } from "react-native";
 import { useTheme } from "@ui-kitten/components";
 
-export function CloseIcon(props) {
+export function CloseIcon(props: IconProps) {
   const theme = useTheme();
 
   return (
