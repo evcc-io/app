@@ -1,12 +1,13 @@
 import "tsx/cjs";
 import { AppJSONConfig, ConfigContext } from "expo/config";
+import { SCHEME } from "utils/constants";
 
 export default ({ config }: ConfigContext) => ({
   ...config,
   expo: {
     name: "evcc",
     slug: "evcc",
-    scheme: "evcc",
+    scheme: SCHEME,
     description: "open source solar charging",
     version: "1.0.4",
     orientation: "default",
