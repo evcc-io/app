@@ -75,35 +75,29 @@ function AppNavigator() {
       }}
     >
       <Stack.Navigator
+        initialRouteName={serverUrl ? "Main" : "Server"}
         screenOptions={{
           headerShown: false,
         }}
       >
-        {serverUrl ? (
-          <>
-            <Stack.Screen name="Main" component={MainScreen} />
-            <Stack.Screen
-              name="Settings"
-              component={SettingsScreen}
-              options={{
-                animation: "slide_from_bottom",
-                presentation: "modal",
-              }}
-            />
-          </>
-        ) : (
-          <>
-            <Stack.Screen name="Server" component={ServerScreen} />
-            <Stack.Screen
-              name="ServerManual"
-              component={ServerManualScreen}
-              options={{
-                animation: "slide_from_bottom",
-                presentation: "modal",
-              }}
-            />
-          </>
-        )}
+        <Stack.Screen name="Main" component={MainScreen} />
+        <Stack.Screen
+          name="Settings"
+          component={SettingsScreen}
+          options={{
+            animation: "slide_from_bottom",
+            presentation: "modal",
+          }}
+        />
+        <Stack.Screen name="Server" component={ServerScreen} />
+        <Stack.Screen
+          name="ServerManual"
+          component={ServerManualScreen}
+          options={{
+            animation: "slide_from_bottom",
+            presentation: "modal",
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

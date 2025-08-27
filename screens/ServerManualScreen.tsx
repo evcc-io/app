@@ -48,7 +48,13 @@ function ServerManualScreen({
       <Header
         title={t("servers.manually.enterUrl")}
         showDone
-        onDone={() => navigation.navigate("Server")}
+        onDone={() => {
+          if (navigation.canGoBack()) {
+            navigation.goBack();
+          } else {
+            navigation.navigate("Main");
+          }
+        }}
       />
     ),
     [navigation, t],
