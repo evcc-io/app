@@ -38,7 +38,7 @@ export default function ServerScreen({
         if (service.name === "evcc") {
           console.log("Found service ", service);
           setFound((found) => {
-            var serviceAlreadyInSet = false;
+            let serviceAlreadyInSet = false;
 
             found.forEach((item) => {
               if (!serviceAlreadyInSet) {
