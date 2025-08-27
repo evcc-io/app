@@ -20,7 +20,14 @@ Native app wrapper for evcc UI based on [react-native](https://reactnative.dev/)
 - Onboarding
   - find evcc instances in local network via mDNS
   - add instance manually via URL
-  - setup via QR code https://github.com/evcc-io/app/issues/72 (e.g. for public tunnel setup) 
+  - setup via QR code or clickable link (e.g. for public tunnel setup) \
+    Format: [evcc://ServerManual?url=https://evcc.local&required=true&username=admin&password=secret](evcc://ServerManual?url=https://evcc.local&required=true&username=admin&password=secret)
+    |Parameter|Meaning|
+    |---------|-------|
+    |url      |Under which url the evcc instance is served|
+    |required |Whether authentication via `username` and `password` should be used|
+    |username |The username|
+    |password |The password|
   - try the app using the demo instance
 - Full screen evcc UI
   - use the app in a full screen web view
