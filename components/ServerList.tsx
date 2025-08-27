@@ -14,16 +14,20 @@ export default function ServerList({
   onSelect,
 }: ServerListProps): React.ReactElement {
   const { t } = useTranslation();
-  const renderItemAccessory = (url: string) => (
-    <Button
-      size="small"
-      onPress={() => {
-        onSelect(url);
-      }}
-    >
-      {t("servers.select")}
-    </Button>
-  );
+  const renderItemAccessory = (item: ServiceDiscovery.Service) => {
+    const url = `${item.type === "_http._tcp." ? "http" : "https"}://${item.hostName.endsWith(".") ? item.hostName.slice(0, -1) : item.hostName}:${item.port}`;
+
+    return (
+      <Button
+        size="small"
+        onPress={() => {
+          onSelect(url);
+        }}
+      >
+        {t("servers.select")}
+      </Button>
+    );
+  };
 
   return (
     <List<ServiceDiscovery.Service>
@@ -33,11 +37,7 @@ export default function ServerList({
         <ListItem
           title={item.name}
           description={item.hostName}
-          accessoryRight={() =>
-            renderItemAccessory(
-              `${item.type === "_http._tcp." ? "http" : "https"}://${item.hostName}:${item.port}`,
-            )
-          }
+          accessoryRight={() => renderItemAccessory(item)}
         />
       )}
     />
