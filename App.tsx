@@ -23,6 +23,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { decode, encode } from "base-64";
 import translations from "./i18n";
 import { RootStackParamList } from "types";
+import { SCHEME } from "utils/constants";
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -56,7 +57,22 @@ function AppNavigator() {
   return (
     <NavigationContainer
       onReady={hideSplash}
-      linking={{ prefixes: ["evcc://"] }}
+      linking={{
+        prefixes: [SCHEME + "://"],
+        config: {
+          screens: {
+            ServerManual: {
+              path: "server",
+              parse: {
+                url: String,
+                username: String,
+                password: String,
+                required: (r) => r === "true",
+              },
+            },
+          },
+        },
+      }}
     >
       <Stack.Navigator
         screenOptions={{
