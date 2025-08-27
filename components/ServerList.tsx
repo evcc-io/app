@@ -25,6 +25,15 @@ export default function ServerList({
     return `${scheme}://${hostName}${port}`;
   };
 
+  const getHostname = (hostName: string) => {
+    for (const s of [".local.", ".fritz.box"]) {
+      if (hostName.endsWith(s)) {
+        return hostName.slice(0, -1 * s.length);
+      }
+    }
+    return hostName;
+  };
+
   const renderItemAccessory = (url: string) => {
     return (
       <Button
@@ -47,11 +56,7 @@ export default function ServerList({
 
         return (
           <ListItem
-            title={
-              item.hostName.endsWith(".local.")
-                ? item.hostName.slice(0, -7)
-                : item.hostName
-            }
+            title={getHostname(item.hostName)}
             description={url}
             accessoryRight={() => renderItemAccessory(url)}
           />
