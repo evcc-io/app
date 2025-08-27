@@ -144,11 +144,7 @@ export default function App() {
           </ApplicationProvider>
         </ThemeContext.Provider>
       </AppProvider>
-      <StatusBar
-        style={theme === "dark" ? "light" : "dark"}
-        backgroundColor={theme === "dark" ? "#010322" : "#f3f3f7"}
-        translucent={false}
-      />
+      <StatusBar style={theme === "dark" ? "light" : "dark"} />
     </>
   );
 }
