@@ -7,46 +7,42 @@ import { useAppContext } from "../components/AppContext";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { BasicAuth, RootStackParamList } from "types";
-import * as Linking from "expo-linking";
 
 function ServerManualScreen({
+  route,
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "ServerManual">) {
-  let url = "";
-  let basicAuth: BasicAuth = { required: false };
-
-  const linkingUrl = Linking.useLinkingURL();
-
-  if (linkingUrl) {
-    const { queryParams } = Linking.parse(linkingUrl);
-    console.log(queryParams);
-
-    if (queryParams) {
-      if (
-        typeof queryParams["url"] === "string" &&
-        typeof queryParams["username"] === "string" &&
-        typeof queryParams["password"] === "string"
-      ) {
-        url = queryParams["url"];
-        basicAuth = {
-          ...basicAuth,
-          username: queryParams["username"],
-          password: queryParams["password"],
-        };
-      }
-
-      if (typeof queryParams["required"] === "string") {
-        basicAuth = {
-          ...basicAuth,
-          required: queryParams["required"] === "true",
-        };
-      }
-    }
-  }
-
   const { t } = useTranslation();
   const { updateServerUrl } = useAppContext();
-  const memoizedUpdateServerUrl = React.useCallback(updateServerUrl, []);
+
+  const {
+    url: initialUrl = "",
+    username,
+    password,
+    required,
+  } = route.params || {};
+
+  const [url, setUrl] = React.useState(initialUrl);
+  const [basicAuth, setBasicAuth] = React.useState<BasicAuth>({
+    username,
+    password,
+    required: required ?? false,
+  });
+
+  React.useEffect(() => {
+    setUrl(initialUrl);
+    setBasicAuth({ username, password, required: required ?? false });
+  }, [initialUrl, username, password, required]);
+
+  const onChange = React.useCallback(
+    (nextUrl: string, nextBasicAuth: BasicAuth) => {
+      setUrl(nextUrl);
+      setBasicAuth(nextBasicAuth);
+      updateServerUrl(nextUrl, nextBasicAuth);
+    },
+    [updateServerUrl],
+  );
+
   const memoizedHeader = React.useMemo(
     () => (
       <Header
@@ -55,18 +51,14 @@ function ServerManualScreen({
         onDone={() => navigation.navigate("Server")}
       />
     ),
-    [navigation],
+    [navigation, t],
   );
 
   return (
     <Layout style={{ flex: 1 }}>
       {memoizedHeader}
       <View style={{ paddingHorizontal: 16 }}>
-        <ServerForm
-          url={url}
-          basicAuth={basicAuth}
-          onChange={memoizedUpdateServerUrl}
-        />
+        <ServerForm url={url} basicAuth={basicAuth} onChange={onChange} />
       </View>
     </Layout>
   );
