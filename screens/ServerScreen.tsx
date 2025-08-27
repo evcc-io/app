@@ -24,6 +24,10 @@ export default function ServerScreen({
   const { updateServerUrl } = useAppContext();
 
   const scanNetwork = useCallback(() => {
+    // for multiple clicks on button
+    ServiceDiscovery.stopSearch("http");
+    ServiceDiscovery.stopSearch("https");
+
     setSearching(true);
     setFinished(false);
     setFound(new Set());
