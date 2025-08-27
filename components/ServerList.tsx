@@ -14,9 +14,18 @@ export default function ServerList({
   onSelect,
 }: ServerListProps): React.ReactElement {
   const { t } = useTranslation();
-  const renderItemAccessory = (item: ServiceDiscovery.Service) => {
-    const url = `${item.type === "_http._tcp." ? "http" : "https"}://${item.hostName.endsWith(".") ? item.hostName.slice(0, -1) : item.hostName}:${item.port}`;
 
+  const createUrl = (item: ServiceDiscovery.Service) => {
+    const scheme = item.type === "_http._tcp." ? "http" : "https";
+    const hostName = item.hostName.endsWith(".")
+      ? item.hostName.slice(0, -1)
+      : item.hostName;
+    const port = item.port === 80 || item.port === 443 ? "" : `:${item.port}`;
+
+    return `${scheme}://${hostName}${port}`;
+  };
+
+  const renderItemAccessory = (url: string) => {
     return (
       <Button
         size="small"
@@ -33,13 +42,21 @@ export default function ServerList({
     <List<ServiceDiscovery.Service>
       style={styles.container}
       data={entries}
-      renderItem={({ item }) => (
-        <ListItem
-          title={item.name}
-          description={item.hostName}
-          accessoryRight={() => renderItemAccessory(item)}
-        />
-      )}
+      renderItem={({ item }) => {
+        const url = createUrl(item);
+
+        return (
+          <ListItem
+            title={
+              item.hostName.endsWith(".local.")
+                ? item.hostName.slice(0, -7)
+                : item.hostName
+            }
+            description={url}
+            accessoryRight={() => renderItemAccessory(url)}
+          />
+        );
+      }}
     />
   );
 }
