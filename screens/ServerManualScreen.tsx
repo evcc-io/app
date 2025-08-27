@@ -6,27 +6,47 @@ import Header from "../components/Header";
 import { useAppContext } from "../components/AppContext";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "types";
+import { BasicAuth, RootStackParamList } from "types";
+import * as Linking from "expo-linking";
 
 function ServerManualScreen({
-  route,
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "ServerManual">) {
-  let paramsUrl = "";
-  let paramsBasicAuth = { required: false };
-  if (route.params) {
-    if (route.params.url) {
-      paramsUrl = route.params.url;
-    }
-    if (route.params.basicAuth) {
-      paramsBasicAuth = route.params.basicAuth;
+  let url = "";
+  let basicAuth: BasicAuth = { required: false };
+
+  const linkingUrl = Linking.useLinkingURL();
+
+  if (linkingUrl) {
+    const { queryParams } = Linking.parse(linkingUrl);
+    console.log(queryParams);
+
+    if (queryParams) {
+      if (
+        typeof queryParams["url"] === "string" &&
+        typeof queryParams["username"] === "string" &&
+        typeof queryParams["password"] === "string"
+      ) {
+        url = queryParams["url"];
+        basicAuth = {
+          ...basicAuth,
+          username: queryParams["username"],
+          password: queryParams["password"],
+        };
+      }
+
+      if (typeof queryParams["required"] === "string") {
+        basicAuth = {
+          ...basicAuth,
+          required: queryParams["required"] === "true",
+        };
+      }
     }
   }
+
   const { t } = useTranslation();
   const { updateServerUrl } = useAppContext();
-
   const memoizedUpdateServerUrl = React.useCallback(updateServerUrl, []);
-
   const memoizedHeader = React.useMemo(
     () => (
       <Header
@@ -43,8 +63,8 @@ function ServerManualScreen({
       {memoizedHeader}
       <View style={{ paddingHorizontal: 16 }}>
         <ServerForm
-          url={paramsUrl}
-          basicAuth={paramsBasicAuth}
+          url={url}
+          basicAuth={basicAuth}
           onChange={memoizedUpdateServerUrl}
         />
       </View>

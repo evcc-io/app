@@ -20,10 +20,8 @@ import custom from "./themes.json";
 import { useFonts } from "expo-font";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import * as SplashScreen from "expo-splash-screen";
-import * as Linking from "expo-linking";
 import { decode, encode } from "base-64";
 import translations from "./i18n";
-import { linking } from "./utils/linking";
 import { RootStackParamList } from "types";
 
 if (!global.btoa) {
@@ -52,15 +50,14 @@ const hideSplash = () => {
 
 function AppNavigator() {
   const { serverUrl } = useAppContext();
-  const url = Linking.useLinkingURL();
-  if (url) {
-    linking(url);
-  }
 
   //updateServerUrl("");
 
   return (
-    <NavigationContainer onReady={hideSplash}>
+    <NavigationContainer
+      onReady={hideSplash}
+      linking={{ prefixes: ["evcc://"] }}
+    >
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
