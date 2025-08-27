@@ -50,7 +50,7 @@ export default function ServerScreen({
             });
 
             if (serviceAlreadyInSet) {
-              found;
+              return found;
             } else {
               const newSet = new Set(found);
               newSet.add(service);
