@@ -10,7 +10,7 @@ import LoadingIndicator from "../components/LoadingIndicator";
 import { verifyEvccServer } from "../utils/server";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "types";
+import { EvccInstance, RootStackParamList } from "types";
 
 export default function ServerScreen({
   navigation,
@@ -19,9 +19,21 @@ export default function ServerScreen({
   const [searching, setSearching] = useState(false);
   const [finished, setFinished] = useState(false);
   const [scanNotPossible, setScanNotPossible] = useState(false);
-  const [found, setFound] = useState<Set<ServiceDiscovery.Service>>(new Set());
+  const [found, setFound] = useState<EvccInstance[]>([]);
 
   const { updateServerUrl } = useAppContext();
+
+  const transformService = (
+    service: ServiceDiscovery.Service,
+  ): EvccInstance => ({
+    type: service.type,
+    hostName: service.hostName,
+    port: service.port,
+  });
+
+  const sameService = (a: EvccInstance, b: EvccInstance) => {
+    return a.type === b.type && a.hostName === b.hostName && a.port === b.port;
+  };
 
   const scanNetwork = useCallback(() => {
     // for multiple clicks on button
@@ -30,7 +42,7 @@ export default function ServerScreen({
 
     setSearching(true);
     setFinished(false);
-    setFound(new Set());
+    setFound([]);
 
     const foundListener = ServiceDiscovery.addEventListener(
       "serviceFound",
@@ -38,23 +50,10 @@ export default function ServerScreen({
         if (service.name === "evcc") {
           console.log("Found service ", service);
           setFound((found) => {
-            let serviceAlreadyInSet = false;
-
-            found.forEach((item) => {
-              if (!serviceAlreadyInSet) {
-                serviceAlreadyInSet =
-                  item.type === service.type &&
-                  item.hostName === service.hostName &&
-                  item.port === service.port;
-              }
-            });
-
-            if (serviceAlreadyInSet) {
-              return found;
+            if (!found.some((s) => sameService(service, s))) {
+              return [...found, transformService(service)];
             } else {
-              const newSet = new Set(found);
-              newSet.add(service);
-              return newSet;
+              return found;
             }
           });
         }
@@ -67,8 +66,7 @@ export default function ServerScreen({
         if (service.name === "evcc") {
           console.log("Lost service ", service);
           setFound((found) => {
-            found.delete(service);
-            return found;
+            return found.filter((s) => sameService(service, s));
           });
         }
       },
@@ -146,7 +144,7 @@ export default function ServerScreen({
               {t("servers.search.notAvailable")}
             </Text>
           ) : null}
-          {finished && found.size === 0 ? (
+          {finished && found.length === 0 ? (
             <Text style={{ marginVertical: 16 }} category="p1">
               {t("servers.search.nothingFound")}
             </Text>

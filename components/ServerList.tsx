@@ -1,11 +1,11 @@
 import React from "react";
-import * as ServiceDiscovery from "@inthepocket/react-native-service-discovery";
 import { Button, List, ListItem } from "@ui-kitten/components";
 import { StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
+import { EvccInstance } from "types";
 
 interface ServerListProps {
-  entries: ServiceDiscovery.Service[];
+  entries: EvccInstance[];
   onSelect: (url: string) => Promise<void>;
 }
 
@@ -15,7 +15,7 @@ export default function ServerList({
 }: ServerListProps): React.ReactElement {
   const { t } = useTranslation();
 
-  const createUrl = (item: ServiceDiscovery.Service) => {
+  const createUrl = (item: EvccInstance) => {
     const scheme = item.type === "_http._tcp." ? "http" : "https";
     const hostName = item.hostName.endsWith(".")
       ? item.hostName.slice(0, -1)
@@ -48,7 +48,7 @@ export default function ServerList({
   };
 
   return (
-    <List<ServiceDiscovery.Service>
+    <List<EvccInstance>
       style={styles.container}
       data={entries}
       renderItem={({ item }) => {

@@ -13,3 +13,9 @@ export type RootStackParamList = {
     basicAuth?: BasicAuth;
   };
 };
+
+export interface EvccInstance {
+  type: string;
+  hostName: string;
+  port: number;
+}
