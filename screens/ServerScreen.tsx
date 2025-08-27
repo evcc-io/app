@@ -38,9 +38,24 @@ export default function ServerScreen({
         if (service.name === "evcc") {
           console.log("Found service ", service);
           setFound((found) => {
-            const newSet = new Set(found);
-            newSet.add(service);
-            return newSet;
+            var serviceAlreadyInSet = false;
+
+            found.forEach((item) => {
+              if (!serviceAlreadyInSet) {
+                serviceAlreadyInSet =
+                  item.type === service.type &&
+                  item.hostName === service.hostName &&
+                  item.port === service.port;
+              }
+            });
+
+            if (serviceAlreadyInSet) {
+              found;
+            } else {
+              const newSet = new Set(found);
+              newSet.add(service);
+              return newSet;
+            }
           });
         }
       },
