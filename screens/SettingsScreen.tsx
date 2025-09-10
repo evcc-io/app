@@ -1,6 +1,7 @@
 import React from "react";
 import { Layout, Button, Text } from "@ui-kitten/components";
-import { View, TouchableOpacity, Linking } from "react-native";
+import { View, TouchableOpacity } from "react-native";
+import * as Linking from "expo-linking";
 import ServerForm from "../components/ServerForm";
 import { useAppContext } from "../components/AppContext";
 import Header from "../components/Header";

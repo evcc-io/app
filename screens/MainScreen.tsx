@@ -6,7 +6,8 @@ import React, {
   useMemo,
 } from "react";
 import { WebView, WebViewMessageEvent } from "react-native-webview";
-import { Linking, ActivityIndicator, StyleSheet, Animated } from "react-native";
+import { ActivityIndicator, StyleSheet, Animated } from "react-native";
+import * as Linking from "expo-linking";
 import { Text, Layout, Spinner, Button } from "@ui-kitten/components";
 import { useAppContext } from "../components/AppContext";
 import { useTranslation } from "react-i18next";
