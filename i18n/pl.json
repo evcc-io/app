@@ -1,6 +1,6 @@
 {
   "main": {
-    "description": "Wyszukaj instalację EVCC w sieci",
+    "description": "Wyszukaj instalację evcc w swojej sieci.",
     "title": "Ustaw serwer"
   },
   "servers": {
