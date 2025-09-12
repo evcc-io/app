@@ -2,10 +2,6 @@ import { Directory, File, Paths } from "expo-file-system";
 import * as Sharing from "expo-sharing";
 
 export async function shareFileFromUrl(url: string) {
-  if (!Sharing.isAvailableAsync()) {
-    return;
-  }
-
   try {
     const d = new Directory(Paths.cache, "file_downloads");
 
