@@ -67,7 +67,6 @@ function AppNavigator() {
                 url: String,
                 username: String,
                 password: String,
-                required: (r) => r === "true",
               },
             },
           },

@@ -15,24 +15,19 @@ function ServerManualScreen({
   const { t } = useTranslation();
   const { updateServerUrl } = useAppContext();
 
-  const {
-    url: initialUrl = "",
-    username,
-    password,
-    required,
-  } = route.params || {};
+  const { url: initialUrl = "", username, password } = route.params || {};
 
   const [url, setUrl] = React.useState(initialUrl);
   const [basicAuth, setBasicAuth] = React.useState<BasicAuth>({
     username,
     password,
-    required: required ?? false,
+    required: !!(username && password),
   });
 
   React.useEffect(() => {
     setUrl(initialUrl);
-    setBasicAuth({ username, password, required: required ?? false });
-  }, [initialUrl, username, password, required]);
+    setBasicAuth({ username, password, required: basicAuth.required });
+  }, [initialUrl, username, password]);
 
   const onChange = React.useCallback(
     (nextUrl: string, nextBasicAuth: BasicAuth) => {
