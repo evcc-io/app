@@ -18,11 +18,7 @@ export default ({ config }: ConfigContext) =>
       ios: {
         jsEngine: "jsc",
         supportsTablet: true,
-        icon: {
-          light: "./assets/icon-light.png",
-          dark: "./assets/icon-dark.png",
-          tinted: "./assets/icon-tinted.png",
-        },
+        icon: "./assets/icon-liquid.icon",
         bundleIdentifier: "io.evcc.ios",
         infoPlist: {
           CFBundleLocalizations: ["de"],
