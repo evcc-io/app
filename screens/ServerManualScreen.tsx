@@ -21,7 +21,7 @@ function ServerManualScreen({
   const [basicAuth, setBasicAuth] = React.useState<BasicAuth>({
     username,
     password,
-    required: !!(username && password),
+    required: !!username || !!password,
   });
 
   React.useEffect(() => {
