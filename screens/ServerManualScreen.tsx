@@ -29,11 +29,13 @@ function ServerManualScreen({
     setBasicAuth({ username, password, required: basicAuth.required });
   }, [initialUrl, username, password]);
 
-  const onChange = React.useCallback(
+  const serverSelected = React.useCallback(
     (nextUrl: string, nextBasicAuth: BasicAuth) => {
+      console.log("serverSelected");
       setUrl(nextUrl);
       setBasicAuth(nextBasicAuth);
       updateServerUrl(nextUrl, nextBasicAuth);
+      navigation.navigate("Main");
     },
     [updateServerUrl],
   );
@@ -59,7 +61,11 @@ function ServerManualScreen({
     <Layout style={{ flex: 1 }}>
       {memoizedHeader}
       <View style={{ paddingHorizontal: 16 }}>
-        <ServerForm url={url} basicAuth={basicAuth} onChange={onChange} />
+        <ServerForm
+          url={url}
+          basicAuth={basicAuth}
+          serverSelected={serverSelected}
+        />
       </View>
     </Layout>
   );

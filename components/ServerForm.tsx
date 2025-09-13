@@ -8,13 +8,13 @@ import { BasicAuth } from "types";
 interface ServerFormProps {
   url: string;
   basicAuth: BasicAuth;
-  onChange: (url: string, basicAuth: BasicAuth) => void;
+  serverSelected: (url: string, basicAuth: BasicAuth) => void;
 }
 
 export default function ServerForm({
   url,
   basicAuth,
-  onChange,
+  serverSelected,
 }: ServerFormProps) {
   const { t } = useTranslation();
   const [inProgress, setInProgress] = useState(false);
@@ -39,7 +39,7 @@ export default function ServerForm({
 
     try {
       const finalUrl = await verifyEvccServer(cleanUrl, internalAuth);
-      onChange(finalUrl, internalAuth);
+      serverSelected(finalUrl, internalAuth);
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
     } finally {
