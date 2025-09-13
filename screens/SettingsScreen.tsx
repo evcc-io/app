@@ -26,7 +26,11 @@ function SettingsScreen({
 
   const serverForm = React.useMemo(
     () => (
-      <ServerForm url={serverUrl} basicAuth={basicAuth} onChange={saveServer} />
+      <ServerForm
+        url={serverUrl}
+        basicAuth={basicAuth}
+        serverSelected={saveServer}
+      />
     ),
     [serverUrl, saveServer],
   );
