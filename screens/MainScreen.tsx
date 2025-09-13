@@ -20,6 +20,7 @@ import {
 } from "react-native-webview/lib/WebViewTypes";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types";
+import { shareFileFromUrl } from "utils/shareFile";
 
 function LoadingScreen() {
   return <ActivityIndicator size="large" />;
@@ -134,7 +135,7 @@ export default function MainScreen({
   const onFileDownload = ({
     nativeEvent: { downloadUrl },
   }: FileDownloadEvent) => {
-    if (downloadUrl) Linking.openURL(downloadUrl);
+    shareFileFromUrl(downloadUrl);
   };
 
   const LoadingScreenMemoized = useMemo(() => <LoadingScreen />, []);
