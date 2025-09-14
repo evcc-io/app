@@ -5,9 +5,8 @@ export interface BasicAuth {
 }
 
 export interface EvccInstance {
-  type: string;
-  hostName: string;
-  port: number;
+  title: string;
+  url: string;
 }
 
 export type RootStackParamList = {

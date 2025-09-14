@@ -23,16 +23,27 @@ export default function ServerScreen({
 
   const { updateServerUrl } = useAppContext();
 
-  const toEvccInstance = (
-    service: ServiceDiscovery.Service,
-  ): EvccInstance => ({
-    type: service.type,
-    hostName: service.hostName,
-    port: service.port,
-  });
+  const toEvccInstance = (service: ServiceDiscovery.Service): EvccInstance => {
+    let title = service.hostName;
+    for (const s of [".local.", ".fritz.box"]) {
+      if (title.endsWith(s)) {
+        title = title.slice(0, -1 * s.length);
+        break;
+      }
+    }
+
+    const scheme = service.type === "_http._tcp." ? "http" : "https";
+    const hostName = service.hostName.endsWith(".")
+      ? service.hostName.slice(0, -1)
+      : service.hostName;
+    const port =
+      service.port === 80 || service.port === 443 ? "" : `:${service.port}`;
+
+    return { title: title, url: `${scheme}://${hostName}${port}` };
+  };
 
   const sameInstance = (a: EvccInstance, b: EvccInstance) => {
-    return a.type === b.type && a.hostName === b.hostName && a.port === b.port;
+    return a.title === b.title && a.url === b.url;
   };
 
   const scanNetwork = useCallback(() => {
@@ -50,8 +61,9 @@ export default function ServerScreen({
         if (service.name === "evcc") {
           console.log("Found service ", service);
           setFound((found) => {
-            if (!found.some((s) => sameInstance(service, s))) {
-              return [...found, toEvccInstance(service)];
+            const evccInstance = toEvccInstance(service);
+            if (!found.some((s) => sameInstance(evccInstance, s))) {
+              return [...found, evccInstance];
             } else {
               return found;
             }
@@ -66,7 +78,9 @@ export default function ServerScreen({
         if (service.name === "evcc") {
           console.log("Lost service ", service);
           setFound((found) => {
-            return found.filter((s) => !sameInstance(service, s));
+            return found.filter(
+              (s) => !sameInstance(toEvccInstance(service), s),
+            );
           });
         }
       },
