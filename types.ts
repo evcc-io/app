@@ -10,6 +10,15 @@ export type RootStackParamList = {
   Server: undefined;
   ServerManual?: {
     url?: string;
-    basicAuth?: BasicAuth;
+    username?: string;
+    password?: string;
+    required?: boolean;
   };
 };
+
+declare global {
+  namespace ReactNavigation {
+    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+    interface RootParamList extends RootStackParamList {}
+  }
+}
