@@ -1,6 +1,7 @@
 import React from "react";
 import { Layout, Button, Text } from "@ui-kitten/components";
-import { View, TouchableOpacity, Linking } from "react-native";
+import { View, TouchableOpacity } from "react-native";
+import * as Linking from "expo-linking";
 import ServerForm from "../components/ServerForm";
 import { useAppContext } from "../components/AppContext";
 import Header from "../components/Header";
@@ -25,7 +26,11 @@ function SettingsScreen({
 
   const serverForm = React.useMemo(
     () => (
-      <ServerForm url={serverUrl} basicAuth={basicAuth} onChange={saveServer} />
+      <ServerForm
+        url={serverUrl}
+        basicAuth={basicAuth}
+        serverSelected={saveServer}
+      />
     ),
     [serverUrl, saveServer],
   );
@@ -39,7 +44,7 @@ function SettingsScreen({
       <Header
         title={t("servers.changeServer")}
         showDone
-        onDone={() => navigation.navigate("Main")}
+        onDone={() => navigation.goBack()}
       />
       <View style={{ paddingHorizontal: 16 }}>
         {serverForm}
@@ -48,7 +53,10 @@ function SettingsScreen({
           style={{ marginVertical: 16 }}
           appearance="ghost"
           status="danger"
-          onPress={() => updateServerUrl("", { required: false })}
+          onPress={() => {
+            updateServerUrl("", { required: false });
+            navigation.navigate("Server");
+          }}
         >
           {t("servers.removeServer")}
         </Button>

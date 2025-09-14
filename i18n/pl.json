@@ -1,1 +1,35 @@
-{}
+{
+  "main": {
+    "description": "Wyszukaj instalację evcc w swojej sieci.",
+    "title": "Ustaw serwer"
+  },
+  "servers": {
+    "changeServer": "Zmień serwer",
+    "manually": {
+      "authenticationRequired": "Uwierzytelnienie wymagane",
+      "checkAdress": "Wygląda na to że na serwerze evcc nie występuje. Proszę sprawdzić adres.",
+      "checkAndSave": "Sprawdź i zachowaj",
+      "enterUrl": "Wprowadź adres URL",
+      "missingOrWrongAuthentication": "Brak lub błędne uwierzytelnienie",
+      "password": "Hasło",
+      "qrcode": {
+        "recognized": "QR kod wykryty!",
+        "scan": "Zeskanuj QR kod",
+        "scanning": "wykrywanie..."
+      },
+      "serverIncompatible": "Instancja evcc nie jest jeszcze kompatybilna z aplikacją. Zaktualizuj instalację.",
+      "serverNotAvailable": "Serwer niedostępny. Proszę sprawdzić adres.",
+      "specify": "Wprowadź adres ręcznie",
+      "user": "Użytkownik"
+    },
+    "removeServer": "Usuń serwer",
+    "search": {
+      "notAvailable": "Wyszukiwanie nie jest możliwe na tym urządzeniu. Wprowadź ręcznie.",
+      "nothingFound": "Serwer evcc nie został wykryty.",
+      "searching": "Wyszukaj połączenie ...",
+      "start": "Rozpocznij wyszukiwanie"
+    },
+    "select": "Wybierz",
+    "useDemo": "Użyj instancji demonstracyjnej"
+  }
+}

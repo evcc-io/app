@@ -12,6 +12,13 @@
       "enterUrl": "Įveskite URL",
       "missingOrWrongAuthentication": "Nėra autentifikavimo arba jis neteisingas",
       "password": "Slaptažodis",
+      "qrcode": {
+        "invalid": "Tai nėra tinkamas evcc QR kodas.",
+        "permissionDenied": "Suteikite prieigą kamerai QR kodo nuskaitymui.",
+        "recognized": "QR kodas aptiktas!",
+        "scan": "Nuskaityti QR kodą",
+        "scanning": "Tikrinama…"
+      },
       "serverIncompatible": "Evcc egzempliorius dar nesuderinamas su programa. Atnaujinkite įdiegimą.",
       "serverNotAvailable": "Serveris nepasiekiamas. Patikrinkite adresą.",
       "specify": "Įveskite adresą",

@@ -4,18 +4,27 @@ export interface BasicAuth {
   password?: string;
 }
 
+export interface EvccInstance {
+  type: string;
+  hostName: string;
+  port: number;
+}
+
 export type RootStackParamList = {
   Main: undefined;
   Settings: undefined;
   Server: undefined;
   ServerManual?: {
     url?: string;
-    basicAuth?: BasicAuth;
+    username?: string;
+    password?: string;
+    required?: boolean;
   };
 };
 
-export interface EvccInstance {
-  type: string;
-  hostName: string;
-  port: number;
+declare global {
+  namespace ReactNavigation {
+    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+    interface RootParamList extends RootStackParamList {}
+  }
 }

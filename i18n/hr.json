@@ -4,9 +4,9 @@
     "title": "Postavi poslužitelj"
   },
   "servers": {
-    "changeServer": "Izmijeni poslužitelj",
+    "changeServer": "Promijeni poslužitelj",
     "manually": {
-      "authenticationRequired": "Potrebna prijava",
+      "authenticationRequired": "Potrebna je prijava",
       "checkAdress": "Na poslužitelju nije pronađen evcc. Molim provjerite adresu.",
       "checkAndSave": "Provjeri i spremi",
       "enterUrl": "Unesite URL",
