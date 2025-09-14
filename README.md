@@ -21,7 +21,7 @@ Native app wrapper for evcc UI based on [react-native](https://reactnative.dev/)
   - find evcc instances in local network via mDNS
   - add instance manually via URL
   - setup via QR code or clickable link (e.g. for public tunnel setup) \
-    Format: [evcc://ServerManual?url=https://evcc.local&username=admin&password=secret](evcc://ServerManual?url=https://evcc.local&username=admin&password=secret)
+    Format: [evcc://server?url=https://evcc.local&username=admin&password=secret](evcc://server?url=https://evcc.local&username=admin&password=secret)
     |Parameter|Meaning|
     |---------|-------|
     |url      |Under which url the evcc instance is served|
