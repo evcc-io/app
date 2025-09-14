@@ -23,7 +23,7 @@ export default function ServerScreen({
 
   const { updateServerUrl } = useAppContext();
 
-  const transformService = (
+  const toEvccInstance = (
     service: ServiceDiscovery.Service,
   ): EvccInstance => ({
     type: service.type,
@@ -31,7 +31,7 @@ export default function ServerScreen({
     port: service.port,
   });
 
-  const sameService = (a: EvccInstance, b: EvccInstance) => {
+  const sameInstance = (a: EvccInstance, b: EvccInstance) => {
     return a.type === b.type && a.hostName === b.hostName && a.port === b.port;
   };
 
@@ -50,8 +50,8 @@ export default function ServerScreen({
         if (service.name === "evcc") {
           console.log("Found service ", service);
           setFound((found) => {
-            if (!found.some((s) => sameService(service, s))) {
-              return [...found, transformService(service)];
+            if (!found.some((s) => sameInstance(service, s))) {
+              return [...found, toEvccInstance(service)];
             } else {
               return found;
             }
@@ -66,7 +66,7 @@ export default function ServerScreen({
         if (service.name === "evcc") {
           console.log("Lost service ", service);
           setFound((found) => {
-            return found.filter((s) => !sameService(service, s));
+            return found.filter((s) => !sameInstance(service, s));
           });
         }
       },
