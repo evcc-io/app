@@ -66,7 +66,7 @@ export default function ServerScreen({
         if (service.name === "evcc") {
           console.log("Lost service ", service);
           setFound((found) => {
-            return found.filter((s) => sameService(service, s));
+            return found.filter((s) => !sameService(service, s));
           });
         }
       },
