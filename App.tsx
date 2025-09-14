@@ -23,6 +23,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { decode, encode } from "base-64";
 import translations from "./i18n";
 import { RootStackParamList } from "types";
+import { SCHEME } from "utils/constants";
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -54,37 +55,48 @@ function AppNavigator() {
   //updateServerUrl("");
 
   return (
-    <NavigationContainer onReady={hideSplash}>
+    <NavigationContainer
+      onReady={hideSplash}
+      linking={{
+        prefixes: [SCHEME + "://"],
+        config: {
+          screens: {
+            ServerManual: {
+              path: "server",
+              parse: {
+                url: String,
+                username: String,
+                password: String,
+              },
+            },
+          },
+        },
+      }}
+    >
       <Stack.Navigator
+        initialRouteName={serverUrl ? "Main" : "Server"}
         screenOptions={{
           headerShown: false,
         }}
       >
-        {serverUrl ? (
-          <>
-            <Stack.Screen name="Main" component={MainScreen} />
-            <Stack.Screen
-              name="Settings"
-              component={SettingsScreen}
-              options={{
-                animation: "slide_from_bottom",
-                presentation: "modal",
-              }}
-            />
-          </>
-        ) : (
-          <>
-            <Stack.Screen name="Server" component={ServerScreen} />
-            <Stack.Screen
-              name="ServerManual"
-              component={ServerManualScreen}
-              options={{
-                animation: "slide_from_bottom",
-                presentation: "modal",
-              }}
-            />
-          </>
-        )}
+        <Stack.Screen name="Main" component={MainScreen} />
+        <Stack.Screen
+          name="Settings"
+          component={SettingsScreen}
+          options={{
+            animation: "slide_from_bottom",
+            presentation: "modal",
+          }}
+        />
+        <Stack.Screen name="Server" component={ServerScreen} />
+        <Stack.Screen
+          name="ServerManual"
+          component={ServerManualScreen}
+          options={{
+            animation: "slide_from_bottom",
+            presentation: "modal",
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

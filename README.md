@@ -4,11 +4,11 @@ Native app wrapper for evcc UI based on [react-native](https://reactnative.dev/)
 
 ## Download the App
 
-| Apple | Android |
-|:---|:---|
-| [<img src="assets/badges/apple-appstore.svg" height="47" alt="Download on the App Store" style="height:47px; width: auto;">](https://apps.apple.com/app/evcc-io/id6478510176) | [<img src="assets/badges/google-play.svg" height="47" alt="Get it on Google Play" style="height:47px; width: auto;">](https://play.google.com/store/apps/details?id=io.evcc.android) |
-| [<img src="assets/badges/apple-macstore.svg" height="47" alt="Download on the Mac App Store" style="height:47px; width: auto;">](https://apps.apple.com/app/evcc-io/id6478510176) | [<img src="assets/badges/fdroid.svg" height="47" alt="Get it on F-Droid" style="height:47px; width: auto;">](https://f-droid.org/packages/io.evcc.android) |
-| | [<img src="assets/badges/github.svg" height="47" alt="Get APK from GitHub" style="height:47px; width: auto;">](https://github.com/evcc-io/app/releases/latest) |
+| Apple                                                                                                                                                                             | Android                                                                                                                                                                              |
+| :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [<img src="assets/badges/apple-appstore.svg" height="47" alt="Download on the App Store" style="height:47px; width: auto;">](https://apps.apple.com/app/evcc-io/id6478510176)     | [<img src="assets/badges/google-play.svg" height="47" alt="Get it on Google Play" style="height:47px; width: auto;">](https://play.google.com/store/apps/details?id=io.evcc.android) |
+| [<img src="assets/badges/apple-macstore.svg" height="47" alt="Download on the Mac App Store" style="height:47px; width: auto;">](https://apps.apple.com/app/evcc-io/id6478510176) | [<img src="assets/badges/fdroid.svg" height="47" alt="Get it on F-Droid" style="height:47px; width: auto;">](https://f-droid.org/packages/io.evcc.android)                           |
+|                                                                                                                                                                                   | [<img src="assets/badges/github.svg" height="47" alt="Get APK from GitHub" style="height:47px; width: auto;">](https://github.com/evcc-io/app/releases/latest)                       |
 
 ## Beta Testing
 
@@ -20,7 +20,7 @@ Native app wrapper for evcc UI based on [react-native](https://reactnative.dev/)
 - Onboarding
   - find evcc instances in local network via mDNS
   - add instance manually via URL
-  - setup via QR code https://github.com/evcc-io/app/issues/72 (e.g. for public tunnel setup) 
+  - custom url scheme to improve setup (see [here](#url-scheme))
   - try the app using the demo instance
 - Full screen evcc UI
   - use the app in a full screen web view
@@ -39,6 +39,31 @@ Native app wrapper for evcc UI based on [react-native](https://reactnative.dev/)
 ## Screenshots
 
 ![iOS Screenshots](./ressources/evcc_app_ios_v1.png)
+
+## URL Scheme
+
+The evcc app registers a `evcc://` URL scheme on your device.
+This can be helpful to improve the setup process by providing the users with a link or QR code that prefills the server URL and basic auth credentials (optional).
+Especially helpful when dealing with longer URLs for public tunnels or related setups.
+
+The app supports the following URL scheme:
+
+**Format:**
+
+Opens the server entry field with prefilled values.
+All params are optional.
+
+```
+evcc://server?url=...&username=...&password=...
+```
+
+_Note: Ensure that query values are properly encoded._
+
+**Example:**
+
+![URL Scheme Example](https://api.qrserver.com/v1/create-qr-code/?color=000000&bgcolor=FFFFFF&data=evcc%3A%2F%2Fserver%3Furl%3Dhttps%3A%2F%2Fevcc.local%26username%3Dadmin%26password%3Dsecret&qzone=1&margin=0&size=150x150&ecc=L)
+
+[evcc://server?url=https://evcc.local&username=admin&password=secret](evcc://server?url=https://evcc.local&username=admin&password=secret)
 
 ## Known limitations
 
