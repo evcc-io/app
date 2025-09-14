@@ -9,7 +9,7 @@
     "web": "expo start --web",
     "lint": "tsc --noEmit && eslint .",
     "format": "prettier --write .",
-    "translations": "ts-node ./scripts/load-translations.mts",
+    "translations": "node ./scripts/load-translations.mts",
     "eas:ios": "eas build -p ios",
     "eas:android:github": "eas build --platform android --profile preview",
     "eas:android:playstore": "eas build -p android"
@@ -69,7 +69,6 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-native": "^4.1.0",
     "prettier": "^3.3.3",
-    "ts-node": "^10.9.2",
     "tsx": "^4.20.4"
   },
   "expo": {
