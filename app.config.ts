@@ -10,7 +10,7 @@ export default ({ config }: ConfigContext) =>
       slug: "evcc",
       scheme: SCHEME,
       description: "open source solar charging",
-      version: "1.0.4",
+      version: "1.1.0",
       orientation: "default",
       icon: "./assets/icon-light.png",
       userInterfaceStyle: "automatic",
@@ -34,7 +34,7 @@ export default ({ config }: ConfigContext) =>
         config: {
           usesNonExemptEncryption: false,
         },
-        buildNumber: "29",
+        buildNumber: "31",
       },
       android: {
         jsEngine: "hermes",
@@ -48,7 +48,7 @@ export default ({ config }: ConfigContext) =>
           foregroundImage: "./assets/adaptive-icon.png",
           backgroundColor: "#010322",
         },
-        versionCode: 29,
+        versionCode: 31,
       },
       web: {
         favicon: "./assets/favicon.png",
@@ -57,9 +57,6 @@ export default ({ config }: ConfigContext) =>
             include: ["@ui-kitten/components"],
           },
         },
-      },
-      locales: {
-        de: "./i18n/de.json",
       },
       plugins: [
         ["./scripts/fdroid/removeDKBuildId.ts"],
