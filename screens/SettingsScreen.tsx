@@ -19,7 +19,6 @@ function SettingsScreen({
   const saveServer = React.useCallback(
     (url: string, basicAuth: BasicAuth) => {
       updateServerUrl(url, basicAuth);
-      navigation.navigate("Main");
     },
     [navigation, updateServerUrl],
   );
@@ -54,8 +53,8 @@ function SettingsScreen({
           appearance="ghost"
           status="danger"
           onPress={() => {
+            navigation.goBack();
             updateServerUrl("", { required: false });
-            navigation.navigate("Server");
           }}
         >
           {t("servers.removeServer")}

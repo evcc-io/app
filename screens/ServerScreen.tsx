@@ -80,7 +80,6 @@ export default function ServerScreen({
       try {
         const finalUrl = await verifyEvccServer(url, { required: false });
         updateServerUrl(finalUrl, { required: false });
-        navigation.navigate("Main");
       } catch (error) {
         Alert.alert((error as Error).message);
       }
