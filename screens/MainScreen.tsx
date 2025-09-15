@@ -209,7 +209,7 @@ export default function MainScreen({
     ],
   );
 
-  if (!serverUrl || serverUrl === "unknown") {
+  if (!serverUrl) {
     return LoadingScreenMemoized;
   }
 
