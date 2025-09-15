@@ -57,6 +57,11 @@ function AppNavigator() {
     return null;
   }
 
+  const sheetOpts = {
+    animation: "slide_from_bottom" as const,
+    presentation: "modal" as const,
+  };
+
   return (
     <NavigationContainer
       onReady={hideSplash}
@@ -77,29 +82,34 @@ function AppNavigator() {
       }}
     >
       <Stack.Navigator
-        initialRouteName={serverUrl ? "Main" : "Server"}
         screenOptions={{
           headerShown: false,
         }}
       >
-        <Stack.Screen name="Main" component={MainScreen} />
-        <Stack.Screen
-          name="Settings"
-          component={SettingsScreen}
-          options={{
-            animation: "slide_from_bottom",
-            presentation: "modal",
-          }}
-        />
-        <Stack.Screen name="Server" component={ServerScreen} />
-        <Stack.Screen
-          name="ServerManual"
-          component={ServerManualScreen}
-          options={{
-            animation: "slide_from_bottom",
-            presentation: "modal",
-          }}
-        />
+        {serverUrl ? (
+          <>
+            <Stack.Screen name="Main" component={MainScreen} />
+            <Stack.Screen
+              name="Settings"
+              component={SettingsScreen}
+              options={sheetOpts}
+            />
+            <Stack.Screen
+              name="ServerManual"
+              component={ServerManualScreen}
+              options={sheetOpts}
+            />
+          </>
+        ) : (
+          <>
+            <Stack.Screen name="Server" component={ServerScreen} />
+            <Stack.Screen
+              name="ServerManual"
+              component={ServerManualScreen}
+              options={sheetOpts}
+            />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
