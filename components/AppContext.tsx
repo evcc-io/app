@@ -12,14 +12,16 @@ import { BasicAuth } from "types";
 const AppContext = createContext({
   serverUrl: "",
   basicAuth: { required: false } as BasicAuth,
+  isLoading: true,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   updateServerUrl: async (_url: string, _basicAuth: BasicAuth) => {},
 });
 
 // Provider component
 export const AppProvider = ({ children }: PropsWithChildren) => {
-  const [serverUrl, setServerUrl] = useState("unknown");
+  const [serverUrl, setServerUrl] = useState("");
   const [basicAuth, setBasicAuth] = useState({ required: false });
+  const [isLoading, setIsLoading] = useState(true);
 
   // Load the URL from AsyncStorage on startup
   useEffect(() => {
@@ -33,6 +35,8 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
       } else {
         setBasicAuth({ required: false });
       }
+
+      setIsLoading(false);
     };
 
     loadServerUrl();
@@ -46,7 +50,7 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
   };
 
   return (
-    <AppContext.Provider value={{ serverUrl, basicAuth, updateServerUrl }}>
+    <AppContext.Provider value={{ serverUrl, basicAuth, isLoading, updateServerUrl }}>
       {children}
     </AppContext.Provider>
   );
