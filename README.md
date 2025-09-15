@@ -68,7 +68,8 @@ _Note: Ensure that query values are properly encoded._
 ## Known limitations
 
 - No support for multiple instances [#3](https://github.com/evcc-io/app/issues/3)
-- mDNS discovery only supports HTTP [#1](https://github.com/evcc-io/app/issues/1)
+- Push Notifications [#16](https://github.com/evcc-io/app/issues/16)
+- Widgets [#49](https://github.com/evcc-io/app/issues/49)
 
 We'll work on these in a future release. Feel free to vote 👍 to help priorization and add new feature ideas.
 
