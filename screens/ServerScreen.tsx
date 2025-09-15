@@ -23,7 +23,7 @@ export default function ServerScreen({
 
   const { updateServerUrl } = useAppContext();
 
-  const toEvccInstance = (service: ServiceDiscovery.Service): EvccInstance => {
+  const getTitle = (service: ServiceDiscovery.Service) => {
     let title = service.hostName;
     for (const s of [".local.", ".fritz.box"]) {
       if (title.endsWith(s)) {
@@ -31,19 +31,25 @@ export default function ServerScreen({
         break;
       }
     }
+    return title;
+  };
 
+  const getUrl = (service: ServiceDiscovery.Service) => {
     const scheme = service.type === "_http._tcp." ? "http" : "https";
     const hostName = service.hostName.endsWith(".")
       ? service.hostName.slice(0, -1)
       : service.hostName;
     const port =
       service.port === 80 || service.port === 443 ? "" : `:${service.port}`;
+    return `${scheme}://${hostName}${port}`;
+  };
 
-    return { title: title, url: `${scheme}://${hostName}${port}` };
+  const toInstance = (service: ServiceDiscovery.Service): EvccInstance => {
+    return { title: getTitle(service), url: getUrl(service) };
   };
 
   const sameInstance = (a: EvccInstance, b: EvccInstance) => {
-    return a.title === b.title && a.url === b.url;
+    return a.url === b.url;
   };
 
   const scanNetwork = useCallback(() => {
@@ -57,13 +63,13 @@ export default function ServerScreen({
 
     const foundListener = ServiceDiscovery.addEventListener(
       "serviceFound",
-      (service) => {
+      (service: ServiceDiscovery.Service) => {
         if (service.name === "evcc") {
           console.log("Found service ", service);
           setFound((found) => {
-            const evccInstance = toEvccInstance(service);
-            if (!found.some((s) => sameInstance(evccInstance, s))) {
-              return [...found, evccInstance];
+            const instance = toInstance(service);
+            if (!found.some((f) => sameInstance(f, instance))) {
+              return [...found, instance];
             } else {
               return found;
             }
@@ -74,13 +80,12 @@ export default function ServerScreen({
 
     const lostListener = ServiceDiscovery.addEventListener(
       "serviceLost",
-      (service) => {
+      (service: ServiceDiscovery.Service) => {
         if (service.name === "evcc") {
           console.log("Lost service ", service);
           setFound((found) => {
-            return found.filter(
-              (s) => !sameInstance(toEvccInstance(service), s),
-            );
+            const instance = toInstance(service);
+            return found.filter((f) => !sameInstance(f, instance));
           });
         }
       },
