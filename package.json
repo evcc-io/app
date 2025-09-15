@@ -16,8 +16,8 @@
   },
   "dependencies": {
     "@eva-design/eva": "^2.2.0",
-    "@inthepocket/react-native-service-discovery": "^0.2.1",
     "@expo/metro-runtime": "~6.1.1",
+    "@inthepocket/react-native-service-discovery": "^0.2.2",
     "@material-symbols/svg-400": "^0.29.3",
     "@react-native-async-storage/async-storage": "2.2.0",
     "@react-navigation/bottom-tabs": "^6.5.12",
