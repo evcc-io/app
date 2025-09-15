@@ -50,9 +50,12 @@ const hideSplash = () => {
 };
 
 function AppNavigator() {
-  const { serverUrl } = useAppContext();
+  const { serverUrl, isLoading } = useAppContext();
 
-  //updateServerUrl("");
+  // Show splash/loading while determining initial route
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <NavigationContainer
