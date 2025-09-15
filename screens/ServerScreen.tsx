@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import Zeroconf from "react-native-zeroconf";
+import * as ServiceDiscovery from "@inthepocket/react-native-service-discovery";
 import { Layout, Text, Button } from "@ui-kitten/components";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Alert } from "react-native";
@@ -10,12 +10,7 @@ import LoadingIndicator from "../components/LoadingIndicator";
 import { verifyEvccServer } from "../utils/server";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "types";
-
-export interface Entry {
-  title: string;
-  url: string;
-}
+import { EvccInstance, RootStackParamList } from "types";
 
 export default function ServerScreen({
   navigation,
@@ -24,51 +19,101 @@ export default function ServerScreen({
   const [searching, setSearching] = useState(false);
   const [finished, setFinished] = useState(false);
   const [scanNotPossible, setScanNotPossible] = useState(false);
-  const [found, setFound] = useState<Entry[]>([]);
+  const [found, setFound] = useState<EvccInstance[]>([]);
+
   const { updateServerUrl } = useAppContext();
 
+  const getTitle = (service: ServiceDiscovery.Service) => {
+    let title = service.hostName;
+    for (const s of [".local.", ".fritz.box"]) {
+      if (title.endsWith(s)) {
+        title = title.slice(0, -1 * s.length);
+        break;
+      }
+    }
+    return title;
+  };
+
+  const getUrl = (service: ServiceDiscovery.Service) => {
+    const scheme = service.type === "_http._tcp." ? "http" : "https";
+    const hostName = service.hostName.endsWith(".")
+      ? service.hostName.slice(0, -1)
+      : service.hostName;
+    const port =
+      service.port === 80 || service.port === 443 ? "" : `:${service.port}`;
+    return `${scheme}://${hostName}${port}`;
+  };
+
+  const toInstance = (service: ServiceDiscovery.Service): EvccInstance => {
+    return { title: getTitle(service), url: getUrl(service) };
+  };
+
+  const sameInstance = (a: EvccInstance, b: EvccInstance) => {
+    return a.url === b.url;
+  };
+
   const scanNetwork = useCallback(() => {
+    // for multiple clicks on button
+    ServiceDiscovery.stopSearch("http");
+    ServiceDiscovery.stopSearch("https");
+
     setSearching(true);
     setFinished(false);
     setFound([]);
 
-    let zeroconf: Zeroconf | null = null;
+    const foundListener = ServiceDiscovery.addEventListener(
+      "serviceFound",
+      (service: ServiceDiscovery.Service) => {
+        if (service.name === "evcc") {
+          console.log("Found service ", service);
+          setFound((found) => {
+            const instance = toInstance(service);
+            if (!found.some((f) => sameInstance(f, instance))) {
+              return [...found, instance];
+            } else {
+              return found;
+            }
+          });
+        }
+      },
+    );
 
-    try {
-      if (zeroconf) {
-        (zeroconf as Zeroconf).stop();
-      }
-      zeroconf = new Zeroconf();
-      zeroconf.scan("http", "tcp", "local.");
-    } catch (e) {
-      console.log("error", e);
-      setSearching(false);
-      setScanNotPossible(true);
-    }
+    const lostListener = ServiceDiscovery.addEventListener(
+      "serviceLost",
+      (service: ServiceDiscovery.Service) => {
+        if (service.name === "evcc") {
+          console.log("Lost service ", service);
+          setFound((found) => {
+            const instance = toInstance(service);
+            return found.filter((f) => !sameInstance(f, instance));
+          });
+        }
+      },
+    );
 
-    zeroconf?.on("resolved", ({ txt, name, host, port }) => {
-      console.log("resolved", name);
-      if (txt && name?.includes("evcc")) {
-        console.log("found evcc", name);
-        // remove trailing dots
-        const entry = {
-          title: name,
-          url: `http://${host.replace(/\.$/, "")}${port === 80 ? "" : `:${port}`}${txt["path"]}`,
-        };
-        setFound((prevFound) => [...prevFound, entry]);
+    (async () => {
+      try {
+        await Promise.all([
+          ServiceDiscovery.startSearch("http"),
+          ServiceDiscovery.startSearch("https"),
+        ]);
+
+        setTimeout(() => {
+          ServiceDiscovery.stopSearch("http");
+          ServiceDiscovery.stopSearch("https");
+
+          foundListener.remove();
+          lostListener.remove();
+
+          setSearching(false);
+          setFinished(true);
+        }, 60 * 1000);
+      } catch (e) {
+        console.log("error", e);
+        setSearching(false);
+        setScanNotPossible(true);
       }
-    });
-    zeroconf?.on("error", (error) => {
-      setSearching(false);
-      zeroconf?.stop();
-      console.log("error", error);
-    });
-    zeroconf?.on("stop", () => {
-      setSearching(false);
-      setFinished(true);
-      zeroconf?.removeDeviceListeners();
-      console.log("stop");
-    });
+    })();
   }, []);
 
   const selectDemoServer = useCallback(async () => {
@@ -123,7 +168,7 @@ export default function ServerScreen({
               {t("servers.search.nothingFound")}
             </Text>
           ) : (
-            <ServerList entries={found} onSelect={selectServer} />
+            <ServerList entries={Array.from(found)} onSelect={selectServer} />
           )}
         </Layout>
         <Layout style={{ paddingVertical: 16 }}>

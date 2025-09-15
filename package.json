@@ -17,6 +17,7 @@
   "dependencies": {
     "@eva-design/eva": "^2.2.0",
     "@expo/metro-runtime": "~6.1.1",
+    "@inthepocket/react-native-service-discovery": "^0.2.2",
     "@material-symbols/svg-400": "^0.29.3",
     "@react-native-async-storage/async-storage": "2.2.0",
     "@react-navigation/bottom-tabs": "^6.5.12",
@@ -24,7 +25,6 @@
     "@react-navigation/native-stack": "^6.9.18",
     "@react-navigation/stack": "^6.3.21",
     "@types/react": "~19.1.10",
-    "@types/react-native-zeroconf": "^0.13.1",
     "@ui-kitten/components": "^5.3.1",
     "@ui-kitten/eva-icons": "^5.3.1",
     "axios": "^1.12.0",
@@ -53,7 +53,6 @@
     "react-native-svg": "15.12.1",
     "react-native-web": "^0.21.0",
     "react-native-webview": "13.15.0",
-    "react-native-zeroconf": "^0.13.8",
     "typescript": "~5.9.2",
     "v8-android-jit": "^11.1000.4"
   },

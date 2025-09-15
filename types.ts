@@ -4,6 +4,11 @@ export interface BasicAuth {
   password?: string;
 }
 
+export interface EvccInstance {
+  title: string;
+  url: string;
+}
+
 export type RootStackParamList = {
   Main: undefined;
   Settings: undefined;
