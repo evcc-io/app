@@ -22,6 +22,7 @@ import {
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types";
 import { shareFileFromUrl } from "utils/shareFile";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 function LoadingScreen() {
   return <ActivityIndicator size="large" />;
@@ -31,6 +32,7 @@ export default function MainScreen({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "Main">) {
   const { t } = useTranslation();
+  const insets = useSafeAreaInsets();
   const { serverUrl, basicAuth } = useAppContext();
   const webViewRef = useRef(null);
   const [isConnected, setIsConnected] = useState(false);
@@ -152,6 +154,12 @@ export default function MainScreen({
           <WebView
             basicAuthCredential={basicAuthCredential}
             source={{ uri: serverUrl }}
+            injectedJavaScript={`
+              document.documentElement.style.setProperty("--safe-area-inset-top", "${insets.top}px");
+              document.documentElement.style.setProperty("--safe-area-inset-bottom", "${insets.bottom}px");
+              document.documentElement.style.setProperty("--safe-area-inset-left", "${insets.left}px");
+              document.documentElement.style.setProperty("--safe-area-inset-right", "${insets.right}px");
+            `}
             style={{ flex: 1 }}
             key={webViewKey}
             bounces={false}
