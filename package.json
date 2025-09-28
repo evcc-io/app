@@ -64,9 +64,11 @@
     "@typescript-eslint/eslint-plugin": "^8.1.0",
     "@typescript-eslint/parser": "^8.1.0",
     "detox": "https://gitpkg.vercel.app/Maschga/Detox/detox?bea87fbf2bff19e837aa86e1d4b05b42c274b5fd",
+    "detox-cli": "^20.0.0",
     "eslint": "^9.9.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-native": "^4.1.0",
+    "jest": "^30.2.0",
     "prettier": "^3.3.3",
     "react-native-gesture-handler": "https://gitpkg.vercel.app/Maschga/react-native-gesture-handler/packages/react-native-gesture-handler?33912e044adaa13d19455f8e1bb454e450c83549",
     "tsx": "^4.20.4"
