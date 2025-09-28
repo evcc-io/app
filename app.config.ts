@@ -61,6 +61,7 @@ export default ({ config }: ConfigContext) =>
       plugins: [
         ["./scripts/fdroid/removeDKBuildId.ts"],
         ["./scripts/fdroid/disableDependencyMetadata.ts"],
+        ["./scripts/detox/configureDetox.ts"],
         [
           "expo-build-properties",
           {
