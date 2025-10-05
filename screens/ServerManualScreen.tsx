@@ -13,7 +13,7 @@ function ServerManualScreen({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "ServerManual">) {
   const { t } = useTranslation();
-  const { updateServerUrl } = useAppContext();
+  const { serverUrl, updateServerUrl } = useAppContext();
 
   const { url: initialUrl = "", username, password } = route.params || {};
 
@@ -30,14 +30,19 @@ function ServerManualScreen({
   }, [initialUrl, username, password]);
 
   const serverSelected = React.useCallback(
-    (nextUrl: string, nextBasicAuth: BasicAuth) => {
+    async (nextUrl: string, nextBasicAuth: BasicAuth) => {
       console.log("serverSelected");
       setUrl(nextUrl);
       setBasicAuth(nextBasicAuth);
-      updateServerUrl(nextUrl, nextBasicAuth);
-      navigation.navigate("Main");
+      await updateServerUrl(nextUrl, nextBasicAuth);
+
+      // After setting serverUrl, navigate to Main which will be available in the new stack
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Main" }],
+      });
     },
-    [updateServerUrl],
+    [updateServerUrl, navigation],
   );
 
   const memoizedHeader = React.useMemo(
@@ -49,12 +54,12 @@ function ServerManualScreen({
           if (navigation.canGoBack()) {
             navigation.goBack();
           } else {
-            navigation.navigate("Main");
+            navigation.navigate(serverUrl ? "Main" : "Server");
           }
         }}
       />
     ),
-    [navigation, t],
+    [navigation, serverUrl, t],
   );
 
   return (
