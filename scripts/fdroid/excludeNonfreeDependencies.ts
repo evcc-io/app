@@ -1,6 +1,6 @@
 import { withSettingsGradle, type ConfigPlugin } from "expo/config-plugins";
 
-const excludeNonfreeDependencies: ConfigPlugin = (config) => {
+const addExpoAutolinkingExclude: ConfigPlugin = (config) => {
   return withSettingsGradle(config, (gradleConfig) => {
     console.log(
       "🗑 Script: Excluding non free dependencies from the release build",
@@ -22,4 +22,4 @@ expoAutolinking.useExpoModules()
   });
 };
 
-module.exports = excludeNonfreeDependencies;
+module.exports = addExpoAutolinkingExclude;
