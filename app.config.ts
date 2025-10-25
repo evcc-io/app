@@ -10,7 +10,7 @@ export default ({ config }: ConfigContext) =>
       slug: "evcc",
       scheme: SCHEME,
       description: "open source solar charging",
-      version: "1.1.0",
+      version: "1.1.1",
       orientation: "default",
       icon: "./assets/icon-light.png",
       userInterfaceStyle: "automatic",
@@ -34,7 +34,7 @@ export default ({ config }: ConfigContext) =>
         config: {
           usesNonExemptEncryption: false,
         },
-        buildNumber: "31",
+        buildNumber: "34",
       },
       android: {
         jsEngine: "hermes",
@@ -48,7 +48,7 @@ export default ({ config }: ConfigContext) =>
           foregroundImage: "./assets/adaptive-icon.png",
           backgroundColor: "#010322",
         },
-        versionCode: 31,
+        versionCode: 34,
       },
       web: {
         favicon: "./assets/favicon.png",
