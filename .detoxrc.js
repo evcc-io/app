@@ -1,3 +1,7 @@
+const launchArgs = {
+  disableAnimations: true,
+};
+
 /** @type {Detox.DetoxConfig} */
 module.exports = {
   testRunner: {
@@ -11,6 +15,7 @@ module.exports = {
   },
   apps: {
     "ios.release": {
+      launchArgs,
       type: "ios.app",
       binaryPath:
         "ios/build/Build/Products/Release-iphonesimulator/YOUR_APP.app",
@@ -18,6 +23,7 @@ module.exports = {
         "xcodebuild -workspace ios/YOUR_APP.xcworkspace -scheme YOUR_APP -configuration Release -sdk iphonesimulator -derivedDataPath ios/build",
     },
     "android.release": {
+      launchArgs,
       type: "android.apk",
       binaryPath: "android/app/build/outputs/apk/release/app-release.apk",
       build: `cd android && "./gradlew" assembleRelease assembleAndroidTest -DtestBuildType=release`,
