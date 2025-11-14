@@ -8,21 +8,47 @@ import {
 import path from "path";
 import fs from "fs";
 
-const enableUnencryptedTraffic: ConfigPlugin = (config) => {
+export type SubdomainsType = string[] | "*";
+
+const enableUnencryptedTraffic: ConfigPlugin<{
+  subdomains: SubdomainsType;
+}> = (config, { subdomains }) => {
   return withNetworkSecurityConfigManifest(
-    withNetworkSecurityConfigFile(config),
+    withNetworkSecurityConfigFile(config, { subdomains }),
   );
 };
 
-const networkSecurityConfigContent = `<?xml version="1.0" encoding="utf-8"?>
-<network-security-config>
-    <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">10.0.2.2</domain>
-        <domain includeSubdomains="true">localhost</domain>
-    </domain-config>
-</network-security-config>`;
+function getTemplateConfigContent(subdomains: SubdomainsType) {
+  if (subdomains === "*") {
+    // allow all domains
+    return '<base-config cleartextTrafficPermitted="true" />';
+  }
+  return `<domain-config cleartextTrafficPermitted="true">
+    ${subdomains
+      .map(
+        (subdomain) =>
+          `<domain includeSubdomains="true">${subdomain}</domain>`,
+      )
+      .join("\n    ")}
+  </domain-config>`;
+}
 
-const withNetworkSecurityConfigFile: ConfigPlugin = (config) => {
+export function getTemplateFile(subdomains: SubdomainsType): string {
+  /**
+   * May not have new lines or spaces in the beginning.
+   * Otherwise build fails with:
+   * "AAPT: error: XML or text declaration not at start of entity"
+   */
+  return `<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+  ${getTemplateConfigContent(subdomains)}
+</network-security-config>
+`;
+}
+
+const withNetworkSecurityConfigFile: ConfigPlugin<{
+  subdomains: SubdomainsType;
+}> = (config, { subdomains }) => {
   return withDangerousMod(config, [
     "android",
     async (config) => {
@@ -35,7 +61,7 @@ const withNetworkSecurityConfigFile: ConfigPlugin = (config) => {
       fs.mkdirSync(folder, { recursive: true });
       fs.writeFileSync(
         path.join(folder, "network_security_config.xml"),
-        networkSecurityConfigContent,
+        getTemplateFile(subdomains),
         { encoding: "utf8" },
       );
       return config;

@@ -6,14 +6,30 @@ import {
 import patchAppGradle from "./src/patchBuildGradles/patchAppGradle";
 import patchProjectGradle from "./src/patchBuildGradles/patchProjectGradle";
 import addAndroidTest from "./src/addAndroidTest";
-import enableUnencryptedTraffic from "./src/enableUnencryptedTraffic";
+import enableUnencryptedTraffic, {
+  SubdomainsType,
+} from "./src/enableUnencryptedTraffic";
 
-const configureDetox: ConfigPlugin = (config) => {
+const configureDetox: ConfigPlugin<
+  {
+    /**
+     * Subdomains to add to the network security config.
+     * Pass `["10.0.3.2", "localhost"]` to use Genymotion emulators instead of Google emulators.
+     * Pass `*` to allow all domains.
+     *
+     * @default ["10.0.2.2", "localhost"] // (Google emulators)
+     */
+    subdomains?: SubdomainsType;
+  } | void
+> = (config, { subdomains } = {}) => {
   return withPlugins(config, [
     patchProjectGradle,
     patchAppGradle,
     addAndroidTest,
-    enableUnencryptedTraffic,
+    [
+      enableUnencryptedTraffic,
+      { subdomains: subdomains ?? ["10.0.2.2", "localhost"] },
+    ],
   ]);
 };
 
