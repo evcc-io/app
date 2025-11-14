@@ -19,6 +19,9 @@ function SettingsScreen({
   const saveServer = React.useCallback(
     (url: string, basicAuth: BasicAuth) => {
       updateServerUrl(url, basicAuth);
+      if (navigation.canGoBack()) {
+        navigation.goBack();
+      }
     },
     [navigation, updateServerUrl],
   );
@@ -31,7 +34,7 @@ function SettingsScreen({
         serverSelected={saveServer}
       />
     ),
-    [serverUrl, saveServer],
+    [serverUrl, basicAuth, saveServer],
   );
 
   const openGitHubReleases = () => {
