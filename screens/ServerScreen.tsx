@@ -181,6 +181,7 @@ export default function ServerScreen({
             {t("servers.manually.specify")}
           </Button>
           <Button
+            testID="useDemo"
             style={{ marginVertical: 8 }}
             appearance="ghost"
             status="basic"
