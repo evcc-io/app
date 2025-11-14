@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Text, Button, Input, CheckBox } from "@ui-kitten/components";
 import { cleanServerUrl, verifyEvccServer } from "../utils/server";
-import LoadingIndicator from "../components/LoadingIndicator";
+import LoadingIndicator from "./animations/LoadingIndicator";
 import { useTranslation } from "react-i18next";
 import { BasicAuth } from "types";
 

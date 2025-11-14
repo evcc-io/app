@@ -6,9 +6,9 @@ import React, {
   useMemo,
 } from "react";
 import { WebView, WebViewMessageEvent } from "react-native-webview";
-import { ActivityIndicator, StyleSheet, Animated } from "react-native";
+import { StyleSheet, Animated } from "react-native";
 import * as Linking from "expo-linking";
-import { Text, Layout, Spinner, Button } from "@ui-kitten/components";
+import { Text, Layout, Button } from "@ui-kitten/components";
 import { useAppContext } from "../components/AppContext";
 import { useTranslation } from "react-i18next";
 import { USER_AGENT } from "../utils/constants";
@@ -23,9 +23,11 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types";
 import { shareFileFromUrl } from "utils/shareFile";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Spinner from "components/animations/Spinner";
+import ActivityIndicator from "components/animations/ActivityIndicator";
 
 function LoadingScreen() {
-  return <ActivityIndicator size="large" />;
+  return <ActivityIndicator size="large" animating={false}/>;
 }
 
 export default function MainScreen({

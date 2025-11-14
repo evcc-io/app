@@ -6,7 +6,7 @@ import { Alert } from "react-native";
 
 import { useAppContext } from "../components/AppContext";
 import ServerList from "../components/ServerList";
-import LoadingIndicator from "../components/LoadingIndicator";
+import LoadingIndicator from "../components/animations/LoadingIndicator";
 import { verifyEvccServer } from "../utils/server";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
