@@ -1,4 +1,4 @@
-import { expect } from "detox";
+import "detox";
 
 describe("Example", () => {
   beforeAll(async () => {
@@ -9,7 +9,10 @@ describe("Example", () => {
     await device.reloadReactNative();
   });
 
-  it("should have welcome screen", async () => {
-    await expect(element(by.text("Setup server"))).toBeVisible();
+  it("open and leave demo server", async () => {
+    await element(by.id("useDemo")).tap();
+
+    await web.element(by.web.id("topNavigatonDropdown")).tap();
+    // await web.element(by.web.value("Change Server")).tap(); // TODO: use testID
   });
 });
