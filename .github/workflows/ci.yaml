@@ -131,10 +131,14 @@ jobs:
       - name: Run tests on emulator
         uses: reactivecircus/android-emulator-runner@v2.35.0
         with:
-          api-level: 36
+          api-level: 34
           target: google_apis
           arch: x86_64
-          profile: pixel_6
+          ram-size: 4096M
+          heap-size: 512M
+          cores: 4
+          emulator-boot-timeout: 900
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -accel on
           script: |
             npx detox build --configuration android.emu.release
             npx detox test --configuration android.emu.release --cleanup
