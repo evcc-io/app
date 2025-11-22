@@ -75,6 +75,12 @@ jobs:
           ruby-version: "3.2"
           bundler-cache: false
 
+      - name: Generate codegen
+        run: |
+          node node_modules/react-native/scripts/generate-codegen-artifacts.js \
+            --path . \
+            --outputPath ios/build/generated/ios
+
       - name: Install CocoaPods
         working-directory: ios
         run: pod install
@@ -83,9 +89,6 @@ jobs:
         run: |
           xcrun simctl boot "iPhone 16" || true
           xcrun simctl list devices | grep "iPhone 16"
-
-      - name: Clean build folder
-        run: rm -rf ios/build
 
       - name: Build
         run: npx detox build --configuration ios.sim.release
