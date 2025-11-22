@@ -154,6 +154,7 @@ export default function MainScreen({
       <Layout style={{ flex: 1 }}>
         <Animated.View style={{ flex: 1, opacity: contFade }}>
           <WebView
+            testID="mainWebView"
             basicAuthCredential={basicAuthCredential}
             source={{ uri: serverUrl }}
             injectedJavaScript={`
