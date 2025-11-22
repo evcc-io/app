@@ -5,10 +5,6 @@ describe("Example", () => {
     await device.launchApp();
   });
 
-  beforeEach(async () => {
-    await device.reloadReactNative();
-  });
-
   it("open and leave demo server", async () => {
     await element(by.id("useDemo")).tap();
 

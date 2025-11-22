@@ -6,3 +6,4 @@ android/
 !fastlane/metadata/ios
 caddy*.*
 tsconfig.tsbuildinfo
+.claude/

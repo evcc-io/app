@@ -18,9 +18,9 @@ module.exports = {
       launchArgs,
       type: "ios.app",
       binaryPath:
-        "ios/build/Build/Products/Release-iphonesimulator/YOUR_APP.app",
+        "ios/build/Build/Products/Release-iphonesimulator/evcc.app",
       build:
-        "xcodebuild -workspace ios/YOUR_APP.xcworkspace -scheme YOUR_APP -configuration Release -sdk iphonesimulator -derivedDataPath ios/build",
+        "xcodebuild -workspace ios/evcc.xcworkspace -scheme evcc -configuration Release -sdk iphonesimulator -derivedDataPath ios/build",
     },
     "android.release": {
       launchArgs,
@@ -33,7 +33,7 @@ module.exports = {
     simulator: {
       type: "ios.simulator",
       device: {
-        type: "iPhone 15",
+        type: "iPhone 16",
       },
     },
     attached: {

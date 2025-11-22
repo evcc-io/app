@@ -1,5 +1,8 @@
 name: CI
 
+permissions:
+  contents: read
+
 on:
   push:
     branches: [main]
@@ -11,14 +14,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6.0.0
       - name: Use Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6.0.0
         with:
-          node-version: "21"
+          node-version: "24"
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: npm ci
 
       - name: Run Linter
         run: npm run lint
