@@ -98,6 +98,13 @@ jobs:
       GRADLE_OPTS: -Xmx4g -XX:MaxMetaspaceSize=512m -Dorg.gradle.daemon=false
 
     steps:
+      - name: Free disk space
+        uses: jlumbroso/free-disk-space@v1.3.1
+        with:
+          android: false
+          tool-cache: true
+          large-packages: false # includes google-cloud-sdk and it's slow
+
       - name: Checkout
         uses: actions/checkout@v6.0.0
 
