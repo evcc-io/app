@@ -165,7 +165,10 @@ jobs:
           disable-animations: true
           script: echo "Generated AVD snapshot for caching."
 
-      - name: Build and test
+      - name: Build
+        run: npx detox build --configuration android.emu.release
+
+      - name: Test
         uses: reactivecircus/android-emulator-runner@v2.35.0
         with:
           api-level: ${{ matrix.api-level }}
@@ -174,9 +177,7 @@ jobs:
           arch: x86_64
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
           disable-animations: true
-          script: |
-            npx detox build --configuration android.emu.release
-            npx detox test --configuration android.emu.release --cleanup
+          script: npx detox test --configuration android.emu.release --cleanup
 
       - name: Upload artifacts on failure
         if: failure()
