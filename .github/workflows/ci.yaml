@@ -69,27 +69,6 @@ jobs:
       - name: Prebuild iOS
         run: npx expo prebuild --platform ios --clean
 
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1.268.0
-        with:
-          ruby-version: "3.2"
-          bundler-cache: false
-
-      - name: Generate codegen
-        run: |
-          node node_modules/react-native/scripts/generate-codegen-artifacts.js \
-            --path . \
-            --outputPath ios/build/generated/ios
-
-      - name: Install CocoaPods
-        working-directory: ios
-        run: pod install
-
-      - name: Boot simulator
-        run: |
-          xcrun simctl boot "iPhone 16" || true
-          xcrun simctl list devices | grep "iPhone 16"
-
       - name: Build
         run: npx detox build --configuration ios.sim.release
 
@@ -108,6 +87,9 @@ jobs:
     name: Android Detox
     runs-on: depot-ubuntu-24.04-8
     timeout-minutes: 45
+
+    env:
+      GRADLE_OPTS: -Xmx4g -XX:MaxMetaspaceSize=512m -Dorg.gradle.daemon=false
 
     steps:
       - name: Checkout
