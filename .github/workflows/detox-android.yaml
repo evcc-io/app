@@ -1,0 +1,67 @@
+name: Android Detox
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test
+    runs-on: depot-ubuntu-24.04-arm-8
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6.0.0
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      - name: Setup Java
+        uses: actions/setup-java@v5.0.0
+        with:
+          distribution: "temurin"
+          java-version: "17"
+          cache: "gradle"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Setup Expo
+        run: npx expo install
+
+      - name: Prebuild Android
+        run: npx expo prebuild --platform android --clean
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Run tests on emulator
+        uses: reactivecircus/android-emulator-runner@v2.35.0
+        with:
+          api-level: 36
+          target: google_apis
+          arch: arm64-v8a
+          profile: pixel_6
+          script: |
+            npx detox build --configuration android.emu.release
+            npx detox test --configuration android.emu.release --cleanup
+
+      - name: Upload artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v5.0.0
+        with:
+          name: detox-test-artifacts
+          path: e2e/artifacts/
+          retention-days: 7

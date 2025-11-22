@@ -12,7 +12,7 @@ permissions:
 jobs:
   test:
     name: Test
-    runs-on: depot-macos-15 # Use depot runner, fallback to: macos-15
+    runs-on: depot-macos-15
     timeout-minutes: 45
 
     steps:
