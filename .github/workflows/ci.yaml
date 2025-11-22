@@ -90,6 +90,9 @@ jobs:
     name: Android Detox
     runs-on: ubuntu-latest
     timeout-minutes: 45
+    strategy:
+      matrix:
+        api-level: [34]
 
     env:
       GRADLE_OPTS: -Xmx4g -XX:MaxMetaspaceSize=512m -Dorg.gradle.daemon=false
@@ -102,24 +105,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libpulse0
-
-      - name: Enable KVM
-        run: |
-          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
-          sudo udevadm control --reload-rules
-          sudo udevadm trigger --name-match=kvm
-
-      - name: Gradle cache
-        uses: gradle/actions/setup-gradle@v3
-        
-      - name: AVD cache
-        uses: actions/cache@v4
-        id: avd-cache
-        with:
-          path: |
-            ~/.android/avd/*
-            ~/.android/adb*
-          key: avd-${{ matrix.api-level }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v6.0.0
@@ -142,13 +127,44 @@ jobs:
           distribution: "temurin"
           java-version: "17"
 
-      - name: Build and test
-        uses: reactivecircus/android-emulator-runner@v2.35.0
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Gradle cache
+        uses: gradle/actions/setup-gradle@v3
+        
+      - name: AVD cache
+        uses: actions/cache@v4
+        id: avd-cache
         with:
-          api-level: 34
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-${{ matrix.api-level }}
+
+      - name: Create AVD and generate snapshot for caching
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          force-avd-creation: false
           target: google_apis
           arch: x86_64
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
+          disable-animations: true
+          script: echo "Generated AVD snapshot for caching."
+
+      - name: Build and test
+        uses: reactivecircus/android-emulator-runner@v2.35.0
+        with:
+          api-level: ${{ matrix.api-level }}
+          force-avd-creation: false
+          target: google_apis
+          arch: x86_64
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
           disable-animations: true
           script: |
             npx detox build --configuration android.emu.release
@@ -158,6 +174,6 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v5.0.0
         with:
-          name: android-detox-artifacts
+          name: android-detox-artifacts-api-level-${{ matrix.api-level }}
           path: e2e/artifacts/
           retention-days: 7
