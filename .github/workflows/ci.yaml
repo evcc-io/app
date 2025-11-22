@@ -103,7 +103,8 @@ jobs:
         with:
           android: false
           tool-cache: true
-          large-packages: false # includes google-cloud-sdk and it's slow
+          docker-images: false # is slow, saves 0B
+          large-packages: false # is slow
 
       - name: Checkout
         uses: actions/checkout@v6.0.0
