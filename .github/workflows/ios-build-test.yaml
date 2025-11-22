@@ -1,4 +1,4 @@
-name: iOS Build & Test
+name: iOS Detox
 
 on:
   push:
@@ -10,13 +10,13 @@ permissions:
   contents: read
 
 jobs:
-  build-ios:
-    name: Build iOS App
+  test:
+    name: Test
     runs-on: depot-macos-15 # Use depot runner, fallback to: macos-15
-    timeout-minutes: 30
+    timeout-minutes: 45
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v6.0.0
 
       - name: Setup Node.js
@@ -31,77 +31,34 @@ jobs:
       - name: Setup Expo
         run: npx expo install
 
-      - name: Prebuild iOS native project
+      - name: Prebuild iOS
         run: npx expo prebuild --platform ios --clean
 
-      - name: Setup Ruby for CocoaPods
+      - name: Setup Ruby
         uses: ruby/setup-ruby@v1.268.0
         with:
           ruby-version: "3.2"
           bundler-cache: false
 
-      - name: Install CocoaPods dependencies
+      - name: Install CocoaPods
         working-directory: ios
         run: pod install
 
-      - name: Build iOS app for Detox
-        run: |
-          xcodebuild -workspace ios/evcc.xcworkspace \
-            -scheme evcc \
-            -configuration Release \
-            -sdk iphonesimulator \
-            -destination 'platform=iOS Simulator,name=iPhone 16' \
-            -derivedDataPath ios/build \
-            build-for-testing
-
-      - name: Upload iOS app artifact
-        uses: actions/upload-artifact@v5.0.0
-        with:
-          name: ios-app
-          path: ios/build/Build/Products/Release-iphonesimulator/evcc.app
-          retention-days: 1
-
-  test-ios:
-    name: Run iOS E2E Tests
-    runs-on: depot-macos-15 # Use depot runner, fallback to: macos-15
-    needs: build-ios
-    timeout-minutes: 30
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6.0.0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6.0.0
-        with:
-          node-version: "24"
-          cache: "npm"
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Download iOS app artifact
-        uses: actions/download-artifact@v6.0.0
-        with:
-          name: ios-app
-          path: ios/build/Build/Products/Release-iphonesimulator/evcc.app
-
-      - name: Install Detox CLI
-        run: npm install -g detox-cli
-
-      - name: Prepare simulator
+      - name: Boot simulator
         run: |
           xcrun simctl boot "iPhone 16" || true
           xcrun simctl list devices | grep "iPhone 16"
 
-      - name: Run Detox tests
-        run: detox test --configuration ios.sim.release --cleanup
+      - name: Build
+        run: npx detox build --configuration ios.sim.release
 
-      - name: Upload test artifacts on failure
+      - name: Test
+        run: npx detox test --configuration ios.sim.release --cleanup
+
+      - name: Upload artifacts on failure
         if: failure()
         uses: actions/upload-artifact@v5.0.0
         with:
           name: detox-test-artifacts
-          path: |
-            e2e/artifacts/
+          path: e2e/artifacts/
           retention-days: 7
