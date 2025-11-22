@@ -20,13 +20,13 @@ module.exports = {
       binaryPath:
         "ios/build/Build/Products/Release-iphonesimulator/evcc.app",
       build:
-        "xcodebuild -workspace ios/evcc.xcworkspace -scheme evcc -configuration Release -sdk iphonesimulator -arch arm64 -derivedDataPath ios/build",
+        "xcodebuild -workspace ios/evcc.xcworkspace -scheme evcc -configuration Release -sdk iphonesimulator -derivedDataPath ios/build",
     },
     "android.release": {
       launchArgs,
       type: "android.apk",
       binaryPath: "android/app/build/outputs/apk/release/app-release.apk",
-      build: `cd android && "./gradlew" assembleRelease assembleAndroidTest -DtestBuildType=release`,
+      build: `cd android && "./gradlew" assembleRelease`,
     },
   },
   devices: {
