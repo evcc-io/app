@@ -99,13 +99,6 @@ jobs:
           node-version: "24"
           cache: "npm"
 
-      - name: Setup Java
-        uses: actions/setup-java@v5.0.0
-        with:
-          distribution: "temurin"
-          java-version: "17"
-          cache: "gradle"
-
       - name: Install dependencies
         run: npm ci
 
@@ -114,6 +107,12 @@ jobs:
 
       - name: Prebuild Android
         run: npx expo prebuild --platform android --clean
+
+      - name: Setup Java
+        uses: actions/setup-java@v5.0.0
+        with:
+          distribution: "temurin"
+          java-version: "17"
 
       - name: Enable KVM
         run: |
