@@ -106,7 +106,7 @@ jobs:
 
   android-detox:
     name: Android Detox
-    runs-on: depot-macos-15
+    runs-on: depot-ubuntu-24.04-8
     timeout-minutes: 45
 
     steps:
@@ -128,6 +128,12 @@ jobs:
       - name: Prebuild Android
         run: npx expo prebuild --platform android --clean
 
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
       - name: Setup Java
         uses: actions/setup-java@v5.0.0
         with:
@@ -139,7 +145,7 @@ jobs:
         with:
           api-level: 34
           target: google_apis
-          arch: arm64-v8a
+          arch: x86_64
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
           disable-animations: true
           script: |
