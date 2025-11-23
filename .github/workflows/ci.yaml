@@ -97,7 +97,7 @@ jobs:
     steps:
       - name: Debug
         run: |
-          ./Sdk/emulator/emulator -accel-check
+          ./usr/local/lib/android/sdk/emulator/emulator -accel-check
           sudo apt-get install cpu-checker
           egrep -c '(vmx|svm)' /proc/cpuinfo
           sudo kvm-ok
