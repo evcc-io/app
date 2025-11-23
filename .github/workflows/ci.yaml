@@ -88,13 +88,20 @@ jobs:
 
   android-detox:
     name: Android Detox
-    runs-on: 	depot-ubuntu-24.04-8
-    timeout-minutes: 45
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
     strategy:
       matrix:
         api-level: [34]
 
     steps:
+      - name: Free disk space
+        uses: jlumbroso/free-disk-space@v1.3.1
+        with:
+          android: false
+          tool-cache: true
+          large-packages: false
+
       - name: Checkout
         uses: actions/checkout@v6.0.0
 
@@ -142,12 +149,11 @@ jobs:
 
       - name: Create AVD cache
         if: steps.avd-cache.outputs.cache-hit != 'true'
-        uses: reactivecircus/android-emulator-runner@v2
+        uses: reactivecircus/android-emulator-runner@v2.35.0
         with:
           api-level: ${{ matrix.api-level }}
           disk-size: 1G
           heap-size: 1G
-          ram-size: 4096M
           force-avd-creation: false
           target: google_apis
           arch: x86_64
@@ -161,7 +167,6 @@ jobs:
           api-level: ${{ matrix.api-level }}
           disk-size: 1G
           heap-size: 1G
-          ram-size: 4096M
           force-avd-creation: false
           target: google_apis
           arch: x86_64
