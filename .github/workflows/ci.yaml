@@ -95,6 +95,14 @@ jobs:
         api-level: [34]
 
     steps:
+      - name: Debug
+        run: |
+          ./Sdk/emulator/emulator -accel-check
+          sudo apt-get install cpu-checker
+          egrep -c '(vmx|svm)' /proc/cpuinfo
+          sudo kvm-ok
+          sudo apt-get install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
+
       - name: Free disk space
         uses: jlumbroso/free-disk-space@v1.3.1
         with:
