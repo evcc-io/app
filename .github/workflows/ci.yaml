@@ -94,9 +94,6 @@ jobs:
       matrix:
         api-level: [34]
 
-    env:
-      GRADLE_OPTS: -Xmx4g -XX:MaxMetaspaceSize=512m -Dorg.gradle.daemon=false
-
     steps:
       - name: Free disk space
         uses: jlumbroso/free-disk-space@v1.3.1
