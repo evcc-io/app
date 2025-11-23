@@ -6,7 +6,7 @@ const increaseAllowedMemory: ConfigPlugin = (config) => {
       if (item.type === "property" && item.key === "org.gradle.jvmargs") {
         config.modResults[index] = {
           ...item,
-          value: item.value.replace("-Xmx2048m", "-Xmx2g"),
+          value: item.value.replace("-Xmx2048m", "-Xmx4g"),
         };
       }
     });
