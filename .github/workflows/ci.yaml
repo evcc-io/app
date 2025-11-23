@@ -95,21 +95,8 @@ jobs:
         api-level: [34]
 
     steps:
-      - name: Free disk space
-        uses: jlumbroso/free-disk-space@v1.3.1
-        with:
-          android: false
-          tool-cache: true
-          docker-images: false # is slow, saves 0B
-          large-packages: false # is slow
-
       - name: Checkout
         uses: actions/checkout@v6.0.0
-
-      - name: Install system dependencies for android emulator
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libpulse0
 
       - name: Setup Node.js
         uses: actions/setup-node@v6.0.0
