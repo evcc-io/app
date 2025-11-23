@@ -179,7 +179,7 @@ jobs:
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           script: npx detox test --configuration android.emu.release --cleanup
 
-      - name: Debug
+      - name: debug
         run: |
           /usr/local/lib/android/sdk/emulator/emulator -accel-check
           sudo apt-get install cpu-checker
