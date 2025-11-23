@@ -119,6 +119,9 @@ jobs:
           distribution: "temurin"
           java-version: "17"
 
+      - name: Setup Android SDK tools
+        uses: android-actions/setup-android@v3
+
       - name: Gradle cache
         uses: gradle/actions/setup-gradle@v5
 
