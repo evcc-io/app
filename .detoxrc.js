@@ -13,12 +13,28 @@ module.exports = {
       setupTimeout: 120000,
     },
   },
+  artifacts: {
+    rootDir: "./e2e/artifacts",
+    plugins: {
+      log: {
+        enabled: true,
+        keepOnlyFailedTestsArtifacts: true,
+      },
+      screenshot: {
+        enabled: true,
+        keepOnlyFailedTestsArtifacts: true,
+      },
+      video: {
+        enabled: true,
+        keepOnlyFailedTestsArtifacts: true,
+      },
+    },
+  },
   apps: {
     "ios.release": {
       launchArgs,
       type: "ios.app",
-      binaryPath:
-        "ios/build/Build/Products/Release-iphonesimulator/evcc.app",
+      binaryPath: "ios/build/Build/Products/Release-iphonesimulator/evcc.app",
       build:
         "xcodebuild -workspace ios/evcc.xcworkspace -scheme evcc -configuration Release -sdk iphonesimulator -derivedDataPath ios/build",
     },
