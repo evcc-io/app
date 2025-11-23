@@ -26,7 +26,7 @@ module.exports = {
       launchArgs,
       type: "android.apk",
       binaryPath: "android/app/build/outputs/apk/release/app-release.apk",
-      build: `cd android && "./gradlew" assembleRelease assembleAndroidTest -DtestBuildType=release --configure-on-demand --parallel --build-cache --no-daemon`,
+      build: `cd android && "./gradlew" assembleRelease assembleAndroidTest -DtestBuildType=release --parallel --build-cache --no-daemon`,
     },
   },
   devices: {
