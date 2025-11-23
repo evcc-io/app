@@ -166,14 +166,6 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           script: echo "Generated AVD snapshot for caching."
 
-      - name: Debug
-        run: |
-          /usr/local/lib/android/sdk/emulator/emulator -accel-check
-          sudo apt-get install cpu-checker
-          egrep -c '(vmx|svm)' /proc/cpuinfo
-          sudo kvm-ok
-          sudo apt-get install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
-
       - name: Test
         uses: reactivecircus/android-emulator-runner@v2.35.0
         with:
@@ -186,6 +178,14 @@ jobs:
           disable-animations: true
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           script: npx detox test --configuration android.emu.release --cleanup
+
+      - name: Debug
+        run: |
+          /usr/local/lib/android/sdk/emulator/emulator -accel-check
+          sudo apt-get install cpu-checker
+          egrep -c '(vmx|svm)' /proc/cpuinfo
+          sudo kvm-ok
+          sudo apt-get install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
 
       - name: Upload artifacts on failure
         if: failure()
