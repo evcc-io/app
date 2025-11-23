@@ -127,6 +127,27 @@ jobs:
       - name: Build
         run: npx detox build --configuration android.emu.release
 
+      - name: AVD cache
+        uses: actions/cache@v4
+        id: retrieve-avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-${{ matrix.api-level }}
+
+      - name: AVD snapshot
+        if: steps.retrieve-avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2.35.0
+        with:
+          api-level: ${{ matrix.api-level }}
+          force-avd-creation: false
+          target: google_apis
+          arch: x86_64
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          script: echo "Generated AVD snapshot for caching."
+
       - name: Test
         uses: reactivecircus/android-emulator-runner@v2.35.0
         with:
