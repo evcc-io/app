@@ -164,13 +164,15 @@ jobs:
           arch: x86_64
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          script: |
-            /usr/local/lib/android/sdk/emulator/emulator -accel-check
-            sudo apt-get install cpu-checker
-            egrep -c '(vmx|svm)' /proc/cpuinfo
-            sudo kvm-ok
-            sudo apt-get install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
-            echo "Generated AVD snapshot for caching."
+          script: echo "Generated AVD snapshot for caching."
+
+      - name: Debug
+        run: |
+          /usr/local/lib/android/sdk/emulator/emulator -accel-check
+          sudo apt-get install cpu-checker
+          egrep -c '(vmx|svm)' /proc/cpuinfo
+          sudo kvm-ok
+          sudo apt-get install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
 
       - name: Test
         uses: reactivecircus/android-emulator-runner@v2.35.0
