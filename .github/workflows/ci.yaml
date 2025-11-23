@@ -88,7 +88,7 @@ jobs:
 
   android-detox:
     name: Android Detox
-    runs-on: depot-ubuntu-24.04-arm-8
+    runs-on: 	ubuntu-latest-arm
     timeout-minutes: 45
     strategy:
       matrix:
@@ -118,9 +118,6 @@ jobs:
         with:
           distribution: "temurin"
           java-version: "17"
-
-      - name: Setup Android SDK tools
-        uses: android-actions/setup-android@v3
 
       - name: Gradle cache
         uses: gradle/actions/setup-gradle@v5
