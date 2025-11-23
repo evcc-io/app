@@ -144,21 +144,42 @@ jobs:
       - name: Build
         run: npx detox build --configuration android.emu.release
 
-      # - name: Test
-      #   uses: reactivecircus/android-emulator-runner@v2.35.0
-      #   with:
-      #     api-level: ${{ matrix.api-level }}
-      #     force-avd-creation: false
-      #     target: google_apis
-      #     arch: x86_64
-      #     emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
-      #     disable-animations: true
-      #     script: npx detox test --configuration android.emu.release --cleanup
+      - name: AVD cache
+        uses: actions/cache@v4
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-${{ matrix.api-level }}
 
-      # - name: Upload artifacts on failure
-      #   if: failure()
-      #   uses: actions/upload-artifact@v5.0.0
-      #   with:
-      #     name: android-detox-artifacts-api-level-${{ matrix.api-level }}
-      #     path: e2e/artifacts/
-      #     retention-days: 7
+      - name: Create AVD and generate snapshot
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          force-avd-creation: false
+          target: google_apis
+          arch: x86_64
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          script: echo "Generated AVD snapshot for caching."
+
+      - name: Test
+        uses: reactivecircus/android-emulator-runner@v2.35.0
+        with:
+          api-level: ${{ matrix.api-level }}
+          force-avd-creation: false
+          target: google_apis
+          arch: x86_64
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          script: npx detox test --configuration android.emu.release --cleanup
+
+      - name: Upload artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v5.0.0
+        with:
+          name: android-detox-artifacts-api-level-${{ matrix.api-level }}
+          path: e2e/artifacts/
+          retention-days: 7
