@@ -15,7 +15,7 @@ export async function waitForWebview() {
     try {
       await expect(app).toExist();
       return;
-    } catch (err) {
+    } catch {
       await new Promise((res) => setTimeout(res, 100));
     }
   }
