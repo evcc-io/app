@@ -77,6 +77,7 @@ jobs:
         with:
           key: xcode-cache-deriveddata-${{ github.workflow }}-${{ github.sha }}
           restore-keys: xcode-cache-deriveddata-${{ github.workflow }}-
+          deriveddata-directory: ios/build/DerivedData
 
       - name: Build
         run: npx detox build --configuration ios.sim.release
