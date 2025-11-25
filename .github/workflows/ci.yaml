@@ -156,6 +156,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Setup Expo
+        run: npx expo install
+
+      - name: Prebuild Android
+        run: npx expo prebuild --platform android --clean
+
       - name: Install system dependencies for android emulator
         run: |
           sudo apt-get update
