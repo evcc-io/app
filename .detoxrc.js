@@ -43,7 +43,7 @@ module.exports = {
       type: "ios.app",
       binaryPath: "ios/build/Build/Products/Release-iphonesimulator/evcc.app",
       build:
-        "xcodebuild -workspace ios/evcc.xcworkspace -scheme evcc -configuration Release -sdk iphonesimulator -derivedDataPath ios/build",
+        "xcodebuild -workspace ios/evcc.xcworkspace -scheme evcc -configuration Release -sdk iphonesimulator -derivedDataPath ios/build -quiet",
     },
     "android.release": {
       launchArgs,
