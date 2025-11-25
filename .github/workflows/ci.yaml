@@ -47,7 +47,7 @@ jobs:
 
   ios-detox:
     name: iOS Detox
-    runs-on: depot-macos-15
+    runs-on: macos-26
     timeout-minutes: 45
 
     steps:
