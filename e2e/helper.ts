@@ -14,6 +14,7 @@ export async function waitForWebview() {
   while (Date.now() - start < timeout) {
     try {
       await expect(app).toExist();
+      await new Promise((res) => setTimeout(res, 1000));
       return;
     } catch {
       await new Promise((res) => setTimeout(res, 100));
