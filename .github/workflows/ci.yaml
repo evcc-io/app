@@ -141,23 +141,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6.0.0
 
-      - name: Download apk
-        uses: actions/download-artifact@v6.0.0
-        with:
-          name: app-release.apk
-          path: android/app/build/outputs/apk/release
-
-      - name: Show downloaded files
-        run: |
-          echo "PWD: $PWD"
-          ls -la android/app/build/outputs/apk/release || true
-          echo "Find any apks:"
-          find . -type f -name "*.apk" -print || true
-          echo "Show sha256 sums for matching files:"
-          for f in $(find . -type f -name "*.apk"); do echo "--- $f ---"; sha256sum "$f" || true; done
-          echo "List top-level files:"
-          ls -la
-
       - name: Setup Node.js
         uses: actions/setup-node@v6.0.0
         with:
@@ -172,6 +155,12 @@ jobs:
 
       - name: Prebuild Android
         run: npx expo prebuild --platform android --clean
+
+      - name: Download apk
+        uses: actions/download-artifact@v6.0.0
+        with:
+          name: app-release.apk
+          path: android/app/build/outputs/apk/release
 
       - name: Install system dependencies for android emulator
         run: |
