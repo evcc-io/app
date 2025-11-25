@@ -12,6 +12,7 @@ module.exports = {
     jest: {
       setupTimeout: 120000,
     },
+    retries: 1,
   },
   artifacts: {
     rootDir: "./e2e/artifacts",
