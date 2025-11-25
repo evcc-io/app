@@ -2,7 +2,7 @@ import {
   SpinnerProps,
   Spinner as UIKittenSpinner,
 } from "@ui-kitten/components";
-import { disableAnimations } from "./launchArguments";
+import { disableAnimations } from "helper/launchArguments";
 
 export default function Spinner(props: SpinnerProps) {
   return <UIKittenSpinner {...props} animating={!disableAnimations()} />;

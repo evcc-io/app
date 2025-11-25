@@ -1,6 +1,6 @@
 import { ActivityIndicatorProps, View } from "react-native";
 import { ActivityIndicator as RNActivityIndicator } from "react-native";
-import { disableAnimations } from "./launchArguments";
+import { disableAnimations } from "helper/launchArguments";
 
 export default function ActivityIndicator(props?: ActivityIndicatorProps) {
   return (
