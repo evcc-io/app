@@ -72,6 +72,12 @@ jobs:
       - name: Install applesimutils
         run: brew tap wix/brew && brew install applesimutils
 
+      - name: Xcode Cache
+        uses: irgaly/xcode-cache@v1
+        with:
+          key: xcode-cache-deriveddata-${{ github.workflow }}-${{ github.sha }}
+          restore-keys: xcode-cache-deriveddata-${{ github.workflow }}-
+
       - name: Build
         run: npx detox build --configuration ios.sim.release
 
