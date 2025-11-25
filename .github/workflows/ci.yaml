@@ -121,11 +121,19 @@ jobs:
       - name: Build
         run: npx detox build --configuration android.emu.release
 
-      - name: Upload apk
+      - name: Upload app apk
         uses: actions/upload-artifact@v5.0.0
         with:
           name: app-release.apk
           path: android/app/build/outputs/apk/release/app-release.apk
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Upload detox apk
+        uses: actions/upload-artifact@v5.0.0
+        with:
+          name: app-release-androidTest.apk
+          path: android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk
           if-no-files-found: error
           retention-days: 7
 
@@ -156,11 +164,17 @@ jobs:
       - name: Prebuild Android
         run: npx expo prebuild --platform android --clean
 
-      - name: Download apk
+      - name: Download app apk
         uses: actions/download-artifact@v6.0.0
         with:
           name: app-release.apk
           path: android/app/build/outputs/apk/release
+
+      - name: Download detox apk
+        uses: actions/download-artifact@v6.0.0
+        with:
+          name: app-release-androidTest.apk
+          path: android/app/build/outputs/apk/androidTest/release
 
       - name: Install system dependencies for android emulator
         run: |
