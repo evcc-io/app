@@ -1,6 +1,5 @@
 const launchArgs = {
   disableAnimations: true,
-  detoxPrintBusyIdleResources: "YES",
 };
 
 /** @type {Detox.DetoxConfig} */
