@@ -83,7 +83,7 @@ jobs:
         run: npx detox build --configuration ios.sim.release
 
       - name: Test
-        run: npx detox test --configuration ios.sim.release --cleanup  --headless
+        run: npx detox test --configuration ios.sim.release --cleanup --headless
 
       - name: Upload artifacts on failure
         if: failure()
