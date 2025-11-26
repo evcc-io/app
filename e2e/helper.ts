@@ -7,7 +7,7 @@ import { expect } from "detox";
  * WebView element is actually available before the test continues.
  */
 export async function waitForWebview() {
-  const timeout = 5000; // two seconds
+  const timeout = 5000; // five seconds
   const app = web.element(by.web.id("topNavigatonDropdown"));
   const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
   const start = Date.now();
@@ -15,12 +15,11 @@ export async function waitForWebview() {
   while (Date.now() - start < timeout) {
     try {
       await expect(app).toExist();
-      await sleep(100);
       return;
     } catch {
       await sleep(100);
     }
   }
 
-  throw new Error(`WebView didn't load`);
+  throw new Error("WebView didn't load");
 }
