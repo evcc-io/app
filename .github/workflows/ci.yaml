@@ -54,17 +54,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6.0.0
 
-      - name: Show current Xcode version using xcodebuild
-        run: |
-          echo "Current Xcode version:"
-          xcodebuild -version
-
-      - name: List all available Xcode versions
-        run: |
-          echo "Listing all available Xcode versions:"
-          sudo xcode-select -p
-          sudo xcode-select --print-path
-          ls /Applications | grep Xcode
+      - name: Select Xcode version 26.0.1
+        shell: bash
+        run: sudo xcode-select -s /Applications/Xcode_26.0.app/Contents/Developer
 
       - name: Setup Node.js
         uses: actions/setup-node@v6.0.0
