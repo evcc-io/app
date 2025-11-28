@@ -82,6 +82,15 @@ jobs:
       - name: Install applesimutils
         run: brew tap wix/brew && brew install applesimutils
 
+      - name: Xcode info & runtimes
+        shell: bash
+        run: |
+          xcode-select -p
+          xcodebuild -version
+          xcodebuild -showsdks
+          xcrun simctl list runtimes
+          xcrun simctl list devices
+
       - name: Build
         run: npx detox build --configuration ios.sim.release
 
