@@ -60,10 +60,6 @@ jobs:
           sudo xcode-select -s /Applications/Xcode_26.0.app/Contents/Developer
           xcodebuild -version
 
-      - name: Boot device
-        shell: bash
-        run: xcrun simctl boot "iPhone 16"
-
       - name: Setup Node.js
         uses: actions/setup-node@v6.0.0
         with:
@@ -81,15 +77,6 @@ jobs:
 
       - name: Install applesimutils
         run: brew tap wix/brew && brew install applesimutils
-
-      - name: Xcode info & runtimes
-        shell: bash
-        run: |
-          xcode-select -p
-          xcodebuild -version
-          xcodebuild -showsdks
-          xcrun simctl list runtimes
-          xcrun simctl list devices
 
       - name: Build
         run: npx detox build --configuration ios.sim.release
