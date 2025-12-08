@@ -20,7 +20,7 @@
     "removeServer": "Ukloni poslužitelj",
     "search": {
       "notAvailable": "Pretraživanje nije moguće na ovom uređaju. Upotrijebite ručni unos.",
-      "nothingFound": "Nije pronađen evcc poslužitelj.",
+      "nothingFound": "Evcc poslužitelj nije pronađen.",
       "searching": "Traženje točke za povezivanje...",
       "start": "Pokreni traženje"
     },
