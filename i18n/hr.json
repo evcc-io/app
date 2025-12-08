@@ -7,13 +7,13 @@
     "changeServer": "Promijeni poslužitelj",
     "manually": {
       "authenticationRequired": "Potrebna je prijava",
-      "checkAdress": "Na poslužitelju nije pronađen evcc. Molim provjerite adresu.",
+      "checkAdress": "Na poslužitelju nije pronađen evcc. Provjerite adresu.",
       "checkAndSave": "Provjeri i spremi",
       "enterUrl": "Unesite URL",
       "missingOrWrongAuthentication": "Nepostojeća ili netočna prijava",
       "password": "Lozinka",
       "serverIncompatible": "Ova evcc instanca ne podržava aplikaciju. Ažurirajte svoju evcc instalaciju.",
-      "serverNotAvailable": "Poslužitelj nije dostupan. Molim provjerite adresu.",
+      "serverNotAvailable": "Poslužitelj nije dostupan. Provjerite adresu.",
       "specify": "Ručno unesite adresu",
       "user": "Korisnik"
     },
