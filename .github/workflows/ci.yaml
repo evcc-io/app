@@ -152,10 +152,6 @@ jobs:
     strategy:
       matrix:
         api-level: [34]
-    services:
-      evcc:
-        image: evcc/evcc:latest
-        options: --entrypoint "/usr/local/bin/evcc --demo"
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.0
@@ -197,6 +193,10 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
+      
+      - name: Setup evcc daemon
+        run: |
+          docker run -d --name evcc -v /home/user/evcc.yaml:/etc/evcc.yaml -v /home/user/.evcc:/root/.evcc -p 7070:7070 -p 5353:5353 evcc/evcc:latest --demo
 
       - name: Test
         uses: reactivecircus/android-emulator-runner@v2.35.0
