@@ -155,8 +155,7 @@ jobs:
     services:
       evcc:
         image: evcc/evcc:latest
-        ports:
-          - 7070:7070
+        options: --entrypoint "/usr/local/bin/evcc --demo"
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.0
