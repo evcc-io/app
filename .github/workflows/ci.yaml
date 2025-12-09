@@ -156,6 +156,8 @@ jobs:
       evcc:
         image: evcc/evcc:latest
         options: --health-cmd="curl --silent --fail http://localhost:7070 || exit 1"
+        ports:
+          - 7070:7070
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.0
