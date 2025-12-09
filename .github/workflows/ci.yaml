@@ -152,6 +152,9 @@ jobs:
     strategy:
       matrix:
         api-level: [34]
+    services:
+      evcc:
+        image: evcc/evcc:latest
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.0
