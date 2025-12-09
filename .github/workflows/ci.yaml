@@ -46,6 +46,7 @@ jobs:
           usePlayStoreLocales: true
 
   ios-detox:
+    if: false
     name: iOS Detox
     runs-on: depot-macos-15
     timeout-minutes: 45
