@@ -66,12 +66,14 @@ export default function ServerForm({
         }
         returnKeyType={internalAuth.required ? "next" : "go"}
         autoCorrect={false}
+        testID="serverFormUrl"
       />
 
       <CheckBox
         style={{ marginTop: 8, marginBottom: 16 }}
         checked={internalAuth.required}
         onChange={(v) => setInternalAuth({ ...internalAuth, required: v })}
+        testID="serverFormAuth"
       >
         {t("servers.manually.authenticationRequired")}
       </CheckBox>
@@ -94,6 +96,7 @@ export default function ServerForm({
             placeholder={t("servers.manually.user")}
             ref={usernameRef}
             onSubmitEditing={() => passwordRef.current?.focus()}
+            testID="serverFormAuthUser"
           />
           <Input
             style={{ marginTop: 8, marginBottom: 16 }}
@@ -112,6 +115,7 @@ export default function ServerForm({
             secureTextEntry
             ref={passwordRef}
             onSubmitEditing={validateAndSaveURL}
+            testID="serverFormAuthPassword"
           />
         </>
       )}
@@ -123,6 +127,7 @@ export default function ServerForm({
         disabled={internalUrl.length === 0}
         accessoryLeft={inProgress ? LoadingIndicator : undefined}
         onPress={validateAndSaveURL}
+        testID="serverFormCheckAndSave"
       >
         {t("servers.manually.checkAndSave")}
       </Button>
