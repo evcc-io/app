@@ -198,6 +198,14 @@ jobs:
         run: |
           docker run -d --name evcc -v /home/user/evcc.yaml:/etc/evcc.yaml -v /home/user/.evcc:/root/.evcc -p 7070:7070 -p 5353:5353 evcc/evcc:latest --demo
 
+      - name: Setup Caddy
+        run: |
+          curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+          curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list
+          sudo apt update
+          sudo apt install caddy
+          caddy run &
+
       - name: Test
         uses: reactivecircus/android-emulator-runner@v2.35.0
         with:
