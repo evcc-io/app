@@ -35,6 +35,9 @@ module.exports = {
         enabled: true,
         keepOnlyFailedTestsArtifacts: true,
       },
+      uiHierarchy: {
+        enabled: true,
+      },
     },
   },
   apps: {
