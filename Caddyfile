@@ -1,3 +1,7 @@
+{
+	admin off
+}
+
 # caddy run
 #
 # endpoint for basic auth app testing
