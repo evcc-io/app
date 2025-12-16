@@ -41,6 +41,7 @@ export default function ServerList({
           />
         );
       }}
+      testID="serverSearchList"
     />
   );
 }

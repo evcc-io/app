@@ -154,6 +154,7 @@ export default function ServerScreen({
             onPress={scanNetwork}
             accessoryLeft={searching ? LoadingIndicator : undefined}
             disabled={scanNotPossible}
+            testID="serverSearchButton"
           >
             {t("servers.search.start")}
           </Button>

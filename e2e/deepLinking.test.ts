@@ -6,11 +6,11 @@ describe("Deep Linking", () => {
   it("open server", async () => {
     await device.launchApp({
       newInstance: true,
-      url: "evcc://server?url=http://evcc.local",
+      url: "evcc://server?url=localhost:7070",
     });
 
     await expect(element(by.id("@serverFormUrl/input"))).toHaveText(
-      "http://evcc.local",
+      "localhost:7070",
     );
 
     await switchCheck(element(by.id("serverFormAuth")), false);
