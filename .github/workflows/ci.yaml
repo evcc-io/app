@@ -196,7 +196,10 @@ jobs:
       
       - name: Setup evcc daemon
         run: |
-          docker run -d --name evcc -v /home/user/evcc.yaml:/etc/evcc.yaml -v /home/user/.evcc:/root/.evcc -p 7070:7070 -p 5353:5353 evcc/evcc:latest --demo
+          curl -1sLf 'https://dl.evcc.io/public/evcc/stable/setup.deb.sh' | sudo -E bash
+          sudo apt update
+          sudo apt install -y evcc
+          sudo systemctl start evcc
 
       - name: Setup Caddy
         run: |
