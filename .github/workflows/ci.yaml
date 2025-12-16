@@ -200,6 +200,7 @@ jobs:
           sudo apt update
           sudo apt install -y evcc
           sudo systemctl start evcc
+          curl localhost:7070
 
       - name: Setup Caddy
         run: |
