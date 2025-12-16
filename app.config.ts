@@ -63,7 +63,7 @@ export default ({ config }: ConfigContext) =>
         ["./scripts/fdroid/disableDependencyMetadata.ts"],
         [
           "./scripts/detox/configureDetox.ts",
-          { subdomains: "*" }, // uncomment to debug app
+          // { subdomains: "*" }, // uncomment to debug app
         ],
         [
           "expo-build-properties",
