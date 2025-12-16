@@ -1,6 +1,6 @@
 import "detox";
 import { expect } from "detox";
-import { waitForWebview } from "./helper";
+import { switchCheck, waitForWebview } from "./helper";
 
 describe("Deep Linking", () => {
   it("open server", async () => {
@@ -9,12 +9,13 @@ describe("Deep Linking", () => {
       url: "evcc://server?url=http://evcc.local",
     });
 
-    await expect(element(by.id("serverFormUrl"))).toHaveText(
+    await expect(element(by.id("@serverFormUrl/input"))).toHaveText(
       "http://evcc.local",
     );
-    await expect(element(by.id("serverFormAuth"))).toHaveToggleValue(false);
-    await expect(element(by.id("serverFormAuthUser"))).toHaveText("");
-    await expect(element(by.id("serverFormAuthPassword"))).toHaveText("");
+
+    await switchCheck(element(by.id("serverFormAuth")), false);
+    await expect(element(by.id("@serverFormAuthUser/input"))).not.toExist();
+    await expect(element(by.id("@serverFormAuthPassword/input"))).not.toExist();
     await element(by.id("serverFormCheckAndSave")).tap();
 
     await waitForWebview();
@@ -26,12 +27,17 @@ describe("Deep Linking", () => {
       url: "evcc://server?url=https://localhost:7080&username=admin&password=secret",
     });
 
-    await expect(element(by.id("serverFormUrl"))).toHaveText(
-      "http://localhost:7080",
+    await expect(element(by.id("@serverFormUrl/input"))).toHaveText(
+      "https://localhost:7080",
     );
-    await expect(element(by.id("serverFormAuth"))).toHaveToggleValue(true);
-    await expect(element(by.id("serverFormAuthUser"))).toHaveText("admin");
-    await expect(element(by.id("serverFormAuthPassword"))).toHaveText("secret");
+
+    await switchCheck(element(by.id("serverFormAuth")), true);
+    await expect(element(by.id("@serverFormAuthUser/input"))).toHaveText(
+      "admin",
+    );
+    await expect(element(by.id("@serverFormAuthPassword/input"))).toHaveText(
+      "secret",
+    );
     await element(by.id("serverFormCheckAndSave")).tap();
 
     await waitForWebview();

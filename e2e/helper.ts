@@ -25,3 +25,14 @@ export async function waitForWebview(
 
   throw new Error(`WebView element with id ${webviewId} didn't load`);
 }
+
+/**
+ * TODO: remove
+ * See https://github.com/wix/Detox/issues/4884
+ */
+export async function switchCheck(
+  _element: Detox.NativeElement,
+  _value: boolean,
+) {
+  return;
+}
