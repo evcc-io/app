@@ -13,6 +13,7 @@ module.exports = {
       setupTimeout: 120000,
     },
     retries: 1,
+    bail: true,
   },
   artifacts: {
     rootDir: "./e2e/artifacts",
