@@ -15,13 +15,14 @@ export default function ServerList({
 }: ServerListProps): React.ReactElement {
   const { t } = useTranslation();
 
-  const renderItemAccessory = (url: string) => {
+  const renderItemAccessory = (index: number, url: string) => {
     return (
       <Button
         size="small"
         onPress={() => {
           onSelect(url);
         }}
+        testID={`serverSearchListItem${index}Button`}
       >
         {t("servers.select")}
       </Button>
@@ -32,12 +33,13 @@ export default function ServerList({
     <List<EvccInstance>
       style={styles.container}
       data={entries}
-      renderItem={({ item }) => {
+      renderItem={({ index, item }) => {
         return (
           <ListItem
             title={item.title}
             description={item.url}
-            accessoryRight={() => renderItemAccessory(item.url)}
+            accessoryRight={() => renderItemAccessory(index, item.url)}
+            testID={"serverSearchListItem" + index}
           />
         );
       }}

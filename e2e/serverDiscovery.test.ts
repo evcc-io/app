@@ -9,7 +9,11 @@ describe("server discovery (mdns)", () => {
 
   it("search", async () => {
     await element(by.id("serverSearchButton")).tap();
-    await expect(element(by.id("serverSearchList"))).toHaveText("");
+    await expect(element(by.id("serverSearchListItem0"))).toExist();
+
+    const button = element(by.id("serverSearchListItem0Button"));
+    await expect(button).toExist();
+    await button.tap();
 
     await waitForWebview();
   });
