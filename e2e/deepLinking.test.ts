@@ -1,6 +1,6 @@
 import "detox";
 import { expect } from "detox";
-import { switchCheck, waitForWebview } from "./helper";
+import { waitForWebview } from "./helper";
 
 describe("Deep Linking", () => {
   it("open server", async () => {
@@ -13,7 +13,7 @@ describe("Deep Linking", () => {
       "10.0.2.2:7070",
     );
 
-    await switchCheck(element(by.id("serverFormAuth")), false);
+    await expect(element(by.id("serverFormAuth"))).toHaveValue(0);
     await expect(element(by.id("@serverFormAuthUser/input"))).not.toExist();
     await expect(element(by.id("@serverFormAuthPassword/input"))).not.toExist();
     await element(by.id("serverFormCheckAndSave")).tap();
@@ -31,7 +31,7 @@ describe("Deep Linking", () => {
       "http://10.0.2.2:7080",
     );
 
-    await switchCheck(element(by.id("serverFormAuth")), true);
+    await expect(element(by.id("serverFormAuth"))).toHaveValue(1);
     await expect(element(by.id("@serverFormAuthUser/input"))).toHaveText(
       "admin",
     );
