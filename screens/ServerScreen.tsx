@@ -174,6 +174,7 @@ export default function ServerScreen({
         </Layout>
         <Layout style={{ paddingVertical: 16 }}>
           <Button
+            testID="manualEntry"
             style={{ marginVertical: 8 }}
             appearance="outline"
             status="primary"
