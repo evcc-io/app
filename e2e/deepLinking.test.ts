@@ -6,11 +6,11 @@ describe("Deep Linking", () => {
   it("open server", async () => {
     await device.launchApp({
       newInstance: true,
-      url: "evcc://server?url=localhost:7070",
+      url: "evcc://server?url=10.0.2.2:7070",
     });
 
     await expect(element(by.id("@serverFormUrl/input"))).toHaveText(
-      "localhost:7070",
+      "10.0.2.2:7070",
     );
 
     await switchCheck(element(by.id("serverFormAuth")), false);
@@ -24,11 +24,11 @@ describe("Deep Linking", () => {
   it("open server with basic auth", async () => {
     await device.launchApp({
       newInstance: true,
-      url: "evcc://server?url=https://localhost:7080&username=admin&password=secret",
+      url: "evcc://server?url=http://10.0.2.2:7080&username=admin&password=secret",
     });
 
     await expect(element(by.id("@serverFormUrl/input"))).toHaveText(
-      "https://localhost:7080",
+      "http://10.0.2.2:7080",
     );
 
     await switchCheck(element(by.id("serverFormAuth")), true);
