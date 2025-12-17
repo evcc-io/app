@@ -4,7 +4,7 @@ import { waitForWebview } from "./helper";
 
 describe("server discovery (mdns)", () => {
   beforeAll(async () => {
-    await device.launchApp();
+    await device.launchApp({ resetAppState: true });
   });
 
   it("search", async () => {

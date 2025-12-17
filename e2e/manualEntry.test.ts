@@ -4,10 +4,10 @@ import { waitForWebview } from "./helper";
 
 describe("Manual entry", () => {
   beforeAll(async () => {
-    await device.launchApp();
+    await device.launchApp({ resetAppState: true });
   });
 
-  it("without basic auth", async () => {
+  it("url only", async () => {
     await element(by.id("manualEntry")).tap();
 
     await element(by.id("@serverFormUrl/input")).typeText("10.0.2.2:7070");

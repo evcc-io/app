@@ -5,8 +5,8 @@ import { waitForWebview } from "./helper";
 describe("Deep Linking", () => {
   it("open server", async () => {
     await device.launchApp({
-      newInstance: true,
       url: "evcc://server?url=10.0.2.2:7070",
+      resetAppState: true,
     });
 
     await expect(element(by.id("@serverFormUrl/input"))).toHaveText(
@@ -23,8 +23,8 @@ describe("Deep Linking", () => {
 
   it("open server with basic auth", async () => {
     await device.launchApp({
-      newInstance: true,
       url: "evcc://server?url=http://10.0.2.2:7080&username=admin&password=secret",
+      resetAppState: true,
     });
 
     await expect(element(by.id("@serverFormUrl/input"))).toHaveText(

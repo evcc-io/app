@@ -3,7 +3,7 @@ import { waitForWebview } from "./helper";
 
 describe("Example", () => {
   beforeAll(async () => {
-    await device.launchApp();
+    await device.launchApp({ resetAppState: true });
   });
 
   it("open and leave demo server", async () => {
