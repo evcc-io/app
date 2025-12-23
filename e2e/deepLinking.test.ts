@@ -13,7 +13,7 @@ describe("Deep Linking", () => {
       "10.0.2.2:7070",
     );
 
-    await expect(element(by.id("serverFormAuth"))).toHaveValue("0");
+    await expect(element(by.id("serverFormAuth"))).toHaveToggleValue(false);
     await expect(element(by.id("@serverFormAuthUser/input"))).not.toExist();
     await expect(element(by.id("@serverFormAuthPassword/input"))).not.toExist();
     await element(by.id("serverFormCheckAndSave")).tap();
@@ -31,7 +31,7 @@ describe("Deep Linking", () => {
       "http://10.0.2.2:7080",
     );
 
-    await expect(element(by.id("serverFormAuth"))).toHaveValue("1");
+    await expect(element(by.id("serverFormAuth"))).toHaveToggleValue(true);
     await expect(element(by.id("@serverFormAuthUser/input"))).toHaveText(
       "admin",
     );
