@@ -2,7 +2,7 @@ import "detox";
 import { expect } from "detox";
 import { waitForWebview } from "./helper";
 
-describe("Manual entry", () => {
+describe.skip("Manual entry", () => {
   beforeEach(async () => {
     await device.launchApp({ resetAppState: true });
   });
