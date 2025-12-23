@@ -3,7 +3,7 @@ import { expect } from "detox";
 import { waitForWebview } from "./helper";
 
 describe("server discovery (mdns)", () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
     await device.launchApp({ resetAppState: true });
   });
 

@@ -3,7 +3,7 @@ import { expect } from "detox";
 import { waitForWebview } from "./helper";
 
 describe("Manual entry", () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
     await device.launchApp({ resetAppState: true });
   });
 

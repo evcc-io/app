@@ -2,7 +2,7 @@ import "detox";
 import { waitForWebview } from "./helper";
 
 describe("Example", () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
     await device.launchApp({ resetAppState: true });
   });
 
