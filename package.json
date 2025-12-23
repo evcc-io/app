@@ -12,7 +12,10 @@
     "translations": "node ./scripts/load-translations.mts",
     "eas:ios": "eas build -p ios",
     "eas:android:github": "eas build --platform android --profile preview",
-    "eas:android:playstore": "eas build -p android"
+    "eas:android:playstore": "eas build -p android",
+    "test:android:emulator": "npx detox build -c android.emu.release && npx detox test -c android.emu.release",
+    "test:android:attached": "npx detox build -c android.att.release && npx detox test -c android.att.release",
+    "test:ios": "npx detox build -c ios.sim.release && npx detox test -c ios.sim.release"
   },
   "dependencies": {
     "@eva-design/eva": "^2.2.0",

@@ -114,6 +114,59 @@ sed -i -e '/signingConfig /d' build.gradle
 ./../gradlew assembleRelease
 ```
 
+## Testing
+
+If you have never tested the app locally on your computer before, follow the instructions below and make sure that the app tests successfully. If you encounter any errors, feel free to create an issue.
+
+Once you have successfully tested the app, from now on it will be sufficient to simply execute the `npm run test:XXX` command.
+
+### Android app
+
+#### Emulator (slower):
+
+1. Ensure you have installed [Android Studio](https://developer.android.com/studio).
+2. Create a virtual device:
+   ```bash
+   avdmanager create avd -n test -k "system-images;android-36;google_apis_playstore;x86_64" -d "medium_phone"
+   ```
+3. Prebuild the app:
+   ```bash
+   npx expo prebuild --platform android
+   ```
+4. Build and test the app:
+   ```bash
+   npm run test:android:emulator
+   ```
+
+#### Attached device (faster):
+
+1. [Enable Developer options](https://developer.android.com/studio/debug/dev-options#enable) on your device.
+2. [Enable debugging](https://developer.android.com/studio/debug/dev-options#Enable-debugging) on your device and ensure you have connected your device to your computer.
+3. Prebuild the app:
+   ```bash
+   npx expo prebuild --platform android
+   ```
+4. Build and test the app:
+   ```bash
+   npm run test:android:emulator
+   ```
+
+### iOS app (only available on macOS)
+
+1. Install `applesimutils`
+   ```bash
+   brew tap wix/brew
+   brew install applesimutils
+   ```
+2. Prebuild the app:
+   ```bash
+   npx expo prebuild --platform ios
+   ```
+3. Build and test the app:
+   ```bash
+   npm run test:ios
+   ```
+
 ## Translation
 
 We use [Weblate](https://hosted.weblate.org/projects/evcc/app/) to manage our translations.
