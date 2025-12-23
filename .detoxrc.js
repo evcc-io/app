@@ -47,7 +47,7 @@ module.exports = {
       type: "ios.app",
       binaryPath: "ios/build/Build/Products/Release-iphonesimulator/evcc.app",
       build:
-        "xcodebuild -workspace ios/evcc.xcworkspace -scheme evcc -configuration Release -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 16e,OS=18.6' -derivedDataPath ios/build -quiet | xcbeautify --renderer github-actions",
+        "SIMULATOR_ID=$(xcrun simctl list devices available | grep 'iPhone 16e' | grep '18.6' | head -1 | sed -E 's/.*\\(([A-F0-9-]+)\\).*/\\1/') && xcodebuild -workspace ios/evcc.xcworkspace -scheme evcc -configuration Release -sdk iphonesimulator -destination \"id=$SIMULATOR_ID\" -derivedDataPath ios/build -quiet | xcbeautify --renderer github-actions",
     },
     "android.release": {
       launchArgs,
