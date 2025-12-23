@@ -90,7 +90,12 @@ jobs:
         run: npx detox build-framework-cache
 
       - name: Build
-        run: npx detox build --configuration ios.sim.release
+        run: |
+          npx detox build --configuration ios.sim.release
+          if [ ! -d "ios/build/Build/Products/Release-iphonesimulator/evcc.app" ]; then
+            echo "Error: App binary not found after build"
+            exit 1
+          fi
 
       - name: Test
         run: npx detox test --configuration ios.sim.release --cleanup --headless
