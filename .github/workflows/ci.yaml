@@ -46,7 +46,7 @@ jobs:
           usePlayStoreLocales: true
 
   ios-detox:
-    name: iOS Detox
+    name: "iOS Detox (build + test)"
     runs-on: macos-15
     timeout-minutes: 45
 
@@ -86,21 +86,7 @@ jobs:
         run: npx detox build-framework-cache
 
       - name: Build
-        run: |
-          npx detox build --configuration ios.sim.release
-          if [ ! -d "ios/build/Build/Products/Release-iphonesimulator/evcc.app" ]; then
-            echo "Error: App binary not found after build"
-            exit 1
-          fi
-
-      - name: Verify app bundle
-        run: |
-          ls -la ios/build/Build/Products/Release-iphonesimulator/evcc.app/
-          if [ -f "ios/build/Build/Products/Release-iphonesimulator/evcc.app/Info.plist" ]; then
-            /usr/libexec/PlistBuddy -c "Print CFBundleIdentifier" ios/build/Build/Products/Release-iphonesimulator/evcc.app/Info.plist
-          else
-            echo "Info.plist not found!"
-          fi
+        run: npx detox build --configuration ios.sim.release
 
       - name: Test
         run: npx detox test --configuration ios.sim.release --cleanup --headless
@@ -114,8 +100,7 @@ jobs:
           retention-days: 7
 
   android-build:
-    if: false
-    name: "Android: Build app"
+    name: "Android Detox (build)"
     runs-on: depot-ubuntu-24.04-8
     timeout-minutes: 10
     steps:
@@ -166,8 +151,7 @@ jobs:
           retention-days: 7
 
   android-test:
-    if: false
-    name: "Android: Test app with Detox"
+    name: "Android Detox (test)"
     runs-on: ubuntu-latest
     timeout-minutes: 20
     needs: android-build
