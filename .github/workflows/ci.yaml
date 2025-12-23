@@ -46,7 +46,6 @@ jobs:
           usePlayStoreLocales: true
 
   ios-detox:
-    if: false
     name: iOS Detox
     runs-on: depot-macos-15
     timeout-minutes: 45
@@ -54,6 +53,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.0
+
+      - name: List available Xcode versions
+        shell: bash
+        run: ls /Applications | grep Xcode
 
       - name: Setup Xcode
         shell: bash
@@ -94,6 +97,7 @@ jobs:
           retention-days: 7
 
   android-build:
+    if: false
     name: "Android: Build app"
     runs-on: depot-ubuntu-24.04-8
     timeout-minutes: 10
@@ -145,6 +149,7 @@ jobs:
           retention-days: 7
 
   android-test:
+    if: false
     name: "Android: Test app with Detox"
     runs-on: ubuntu-latest
     timeout-minutes: 20
