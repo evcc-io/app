@@ -82,9 +82,6 @@ jobs:
       - name: Install applesimutils
         run: brew tap wix/brew && brew install applesimutils
 
-      - name: Create iPhone 16e simulator with iOS 26
-        run: xcrun simctl create "evcc-test" "iPhone 16e" "iOS26"
-
       - name: Build Detox framework cache
         run: npx detox build-framework-cache
 
