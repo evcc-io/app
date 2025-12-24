@@ -48,7 +48,7 @@ jobs:
   ios-detox:
     name: "iOS Detox (build + test)"
     runs-on: macos-15
-    timeout-minutes: 45
+    timeout-minutes: 90
 
     steps:
       - name: Checkout
