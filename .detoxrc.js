@@ -1,13 +1,5 @@
-const basicLaunchArgs = {
+const launchArgs = {
   disableAnimations: true,
-};
-const iosLaunchArgs = {
-  ...basicLaunchArgs,
-  hostIp: "localhost",
-};
-const androidLaunchArgs = {
-  ...basicLaunchArgs,
-  hostIp: "10.0.2.2",
 };
 
 /** @type {Detox.DetoxConfig} */
@@ -51,14 +43,14 @@ module.exports = {
   },
   apps: {
     "ios.release": {
-      launchArgs: iosLaunchArgs,
+      launchArgs,
       type: "ios.app",
       binaryPath: "ios/build/Build/Products/Release-iphonesimulator/evcc.app",
       build:
         "xcodebuild -workspace ios/evcc.xcworkspace -scheme evcc -configuration Release -destination 'platform=iOS Simulator,name=iPhone 16e,OS=26.1' -derivedDataPath ios/build -quiet | xcbeautify --renderer github-actions",
     },
     "android.release": {
-      launchArgs: androidLaunchArgs,
+      launchArgs,
       type: "android.apk",
       binaryPath: "android/app/build/outputs/apk/release/app-release.apk",
       build: `cd android && "./gradlew" assembleRelease assembleAndroidTest -DtestBuildType=release --parallel --build-cache --no-daemon`,

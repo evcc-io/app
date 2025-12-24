@@ -25,3 +25,6 @@ export async function waitForWebview(
 
   throw new Error(`WebView element with id ${webviewId} didn't load`);
 }
+
+export const HOST_IP =
+  device.getPlatform() === "android" ? "10.0.2.2" : "localhost";
