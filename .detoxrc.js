@@ -24,11 +24,11 @@ module.exports = {
     plugins: {
       log: {
         enabled: true,
-        keepOnlyFailedTestsArtifacts: false,
+        keepOnlyFailedTestsArtifacts: true,
       },
       screenshot: {
         enabled: true,
-        keepOnlyFailedTestsArtifacts: false,
+        keepOnlyFailedTestsArtifacts: true,
         takeWhen: {
           testStart: true,
           testFailure: true,
@@ -38,7 +38,7 @@ module.exports = {
       },
       video: {
         enabled: true,
-        keepOnlyFailedTestsArtifacts: false,
+        keepOnlyFailedTestsArtifacts: true,
       },
       uiHierarchy: {
         enabled: true,
