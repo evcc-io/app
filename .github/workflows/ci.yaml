@@ -204,7 +204,12 @@ jobs:
       - name: Install system dependencies for android emulator
         run: |
           sudo apt-get update
-          sudo apt-get install -y libpulse0
+          sudo apt-get install -y libpulse0 adb
+
+      - name: Setup adb port forwarding
+        run: |
+          adb reverse tcp:7070 tcp:7070
+          adb reverse tcp:7080 tcp:7080
 
       - name: Enable KVM
         run: |
@@ -223,11 +228,6 @@ jobs:
         run: |
           curl -sS https://webi.sh/caddy | sh
           caddy run &
-
-      - name: Setup adb port forwarding
-        run: |
-          adb reverse tcp:7070 tcp:7070
-          adb reverse tcp:7080 tcp:7080
 
       - name: Test
         uses: reactivecircus/android-emulator-runner@v2.35.0
