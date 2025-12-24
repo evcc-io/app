@@ -62,10 +62,10 @@ module.exports = {
     "android.release": {
       launchArgs: {
         ...basicLaunchArgs,
-        detoxURLBlacklistRegex: createDetoxURLBlacklistRegex(
+        detoxURLBlacklistRegex: createDetoxURLBlacklistRegex([
           "demo.evcc.io",
           "10.0.2.2",
-        ),
+        ]),
       },
       reversePorts: [7070, 7080],
       type: "android.apk",
