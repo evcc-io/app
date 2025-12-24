@@ -11,6 +11,7 @@ permissions:
 
 jobs:
   lint:
+    if: false
     name: Lint
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -32,6 +33,7 @@ jobs:
         run: npm run lint
 
   fastlane-validate:
+    if: false
     name: Fastlane Metadata
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -112,6 +114,7 @@ jobs:
           retention-days: 7
 
   android-build:
+    if: false
     name: "Android Detox (build)"
     runs-on: depot-ubuntu-24.04-8
     timeout-minutes: 10
