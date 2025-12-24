@@ -1,6 +1,10 @@
-const launchArgs = {
+const basicLaunchArgs = {
   disableAnimations: true,
 };
+
+function createDetoxURLBlacklistRegex(patterns) {
+  return `\\("${patterns.map((s) => `.*${s}.*`).join('","')}"\\)`;
+}
 
 /** @type {Detox.DetoxConfig} */
 module.exports = {
@@ -43,14 +47,27 @@ module.exports = {
   },
   apps: {
     "ios.release": {
-      launchArgs,
+      launchArgs: {
+        ...basicLaunchArgs,
+        detoxURLBlacklistRegex: createDetoxURLBlacklistRegex([
+          "demo.evcc.io",
+          "localhost",
+        ]),
+      },
       type: "ios.app",
       binaryPath: "ios/build/Build/Products/Release-iphonesimulator/evcc.app",
       build:
         "xcodebuild -workspace ios/evcc.xcworkspace -scheme evcc -configuration Release -destination 'platform=iOS Simulator,name=iPhone 16e,OS=26.1' -derivedDataPath ios/build -quiet | xcbeautify --renderer github-actions",
     },
     "android.release": {
-      launchArgs,
+      launchArgs: {
+        ...basicLaunchArgs,
+        detoxURLBlacklistRegex: createDetoxURLBlacklistRegex(
+          "demo.evcc.io",
+          "10.0.2.2",
+        ),
+      },
+      reversePorts: [7070, 7080],
       type: "android.apk",
       binaryPath: "android/app/build/outputs/apk/release/app-release.apk",
       build: `cd android && "./gradlew" assembleRelease assembleAndroidTest -DtestBuildType=release --parallel --build-cache --no-daemon`,

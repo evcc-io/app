@@ -1,6 +1,6 @@
 import "detox";
 import { expect } from "detox";
-import { HOST_IP, waitForWebview } from "./helper";
+import { waitForWebview } from "./helper";
 
 describe("Manual entry", () => {
   beforeEach(async () => {
@@ -10,7 +10,7 @@ describe("Manual entry", () => {
   it("url only", async () => {
     await element(by.id("manualEntry")).tap();
 
-    await element(by.id("@serverFormUrl/input")).typeText(`${HOST_IP}:7070`);
+    await element(by.id("@serverFormUrl/input")).typeText("localhost:7070");
 
     await expect(element(by.id("@serverFormAuthUser/input"))).not.toExist();
     await expect(element(by.id("@serverFormAuthPassword/input"))).not.toExist();
@@ -23,7 +23,7 @@ describe("Manual entry", () => {
   it("with basic auth", async () => {
     await element(by.id("manualEntry")).tap();
 
-    await element(by.id("@serverFormUrl/input")).typeText(`${HOST_IP}:7080`);
+    await element(by.id("@serverFormUrl/input")).typeText("localhost:7080");
 
     await expect(element(by.id("@serverFormAuthUser/input"))).not.toExist();
     await expect(element(by.id("@serverFormAuthPassword/input"))).not.toExist();
