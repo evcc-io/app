@@ -167,12 +167,7 @@ Once you have successfully tested the app, from now on it will be sufficient to 
    ```bash
    npx expo prebuild --platform android
    ```
-4. Setup adb port forwarding so that the emulator can access the evcc and caddy services:
-   ```bash
-   adb reverse tcp:7070 tcp:7070
-   adb reverse tcp:7080 tcp:7080
-   ```
-5. Build and test the app:
+4. Build and test the app:
    ```bash
    npm run test:android:emulator
    ```

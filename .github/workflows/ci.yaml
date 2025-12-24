@@ -204,12 +204,7 @@ jobs:
       - name: Install system dependencies for android emulator
         run: |
           sudo apt-get update
-          sudo apt-get install -y libpulse0 adb
-
-      - name: Setup adb port forwarding
-        run: |
-          adb reverse tcp:7070 tcp:7070
-          adb reverse tcp:7080 tcp:7080
+          sudo apt-get install -y libpulse0
 
       - name: Enable KVM
         run: |
