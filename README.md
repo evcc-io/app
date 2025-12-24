@@ -138,9 +138,21 @@ Once you have successfully tested the app, from now on it will be sufficient to 
 
 #### 2. Install and start `evcc`:
 
-- [Setup guide for Linux](https://docs.evcc.io/docs/installation/linux)
-- [Setup guide for macOS](https://docs.evcc.io/docs/installation/macos)
-- [Setup guide for Windows](https://docs.evcc.io/docs/installation/windows)
+- Linux:
+  ```bash
+  curl -1sLf 'https://dl.evcc.io/public/evcc/stable/setup.deb.sh' | sudo -E bash
+  sudo apt update
+  sudo apt install -y evcc
+  sudo systemctl start evcc
+  ```
+- macOS:
+  ```bash
+  brew tap evcc-io/tap
+  brew update
+  brew install evcc
+  brew services start evcc
+  ```
+- Windows: [See instructions](https://docs.evcc.io/en/docs/installation/windows#installation)
 
 ### Testing Android app _(available on Linux, macOS and Windows)_
 
