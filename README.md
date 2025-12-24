@@ -116,11 +116,33 @@ sed -i -e '/signingConfig /d' build.gradle
 
 ## Testing
 
-If you have never tested the app locally on your computer before, follow the instructions below and make sure that the app tests successfully. If you encounter any errors, feel free to create an issue.
+If you have never tested the app locally on your computer before, follow the instructions below and make sure that `evcc` runs and the app tests successfully. If you encounter any errors, feel free to create an issue.
 
-Once you have successfully tested the app, from now on it will be sufficient to simply execute the `npm run test:XXX` command.
+Once you have successfully tested the app, from now on it will be sufficient to ensure `evcc` runs and simply execute the `npm run test:XXX` command.
 
-### Android app
+### Prerequisites:
+
+#### 1. Install and start `caddy`:
+
+- Linux & macOS:
+
+  ```bash
+  curl -sS https://webi.sh/caddy | sh
+  ```
+
+- Windows:
+
+  ```bash
+  curl.exe https://webi.ms/caddy | powershell
+  ```
+
+#### 2. Install and start `evcc`:
+
+- [Setup guide for Linux](https://docs.evcc.io/docs/installation/linux)
+- [Setup guide for macOS](https://docs.evcc.io/docs/installation/macos)
+- [Setup guide for Windows](https://docs.evcc.io/docs/installation/windows)
+
+### Testing Android app _(available on Linux, macOS and Windows)_
 
 #### Emulator (slower):
 
@@ -148,21 +170,24 @@ Once you have successfully tested the app, from now on it will be sufficient to 
    ```
 4. Build and test the app:
    ```bash
-   npm run test:android:emulator
+   npm run test:android:attached
    ```
 
-### iOS app (only available on macOS)
+### Testing iOS app _(only available on macOS)_
 
-1. Install `applesimutils`
+#### Emulator:
+
+1. [Set up Xcode and Watchman](https://docs.expo.dev/get-started/set-up-your-environment/?platform=ios&device=simulated&mode=development-build&buildEnv=local)
+2. Install `applesimutils`
    ```bash
    brew tap wix/brew
    brew install applesimutils
    ```
-2. Prebuild the app:
+3. Prebuild the app:
    ```bash
    npx expo prebuild --platform ios
    ```
-3. Build and test the app:
+4. Build and test the app:
    ```bash
    npm run test:ios
    ```

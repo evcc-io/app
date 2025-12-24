@@ -88,6 +88,18 @@ jobs:
       - name: Build
         run: npx detox build --configuration ios.sim.release
 
+      - name: Setup evcc daemon
+        run: |
+          brew tap evcc-io/tap
+          brew update
+          brew install evcc
+          brew services start evcc
+
+      - name: Setup Caddy
+        run: |
+          curl -sS https://webi.sh/caddy | sh
+          caddy run &
+
       - name: Test
         run: npx detox test --configuration ios.sim.release --cleanup --headless
 
@@ -209,10 +221,7 @@ jobs:
 
       - name: Setup Caddy
         run: |
-          curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
-          curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list
-          sudo apt update
-          sudo apt install caddy
+          curl -sS https://webi.sh/caddy | sh
           caddy run &
 
       - name: Test
