@@ -224,6 +224,11 @@ jobs:
           curl -sS https://webi.sh/caddy | sh
           caddy run &
 
+      - name: Setup adb port forwarding
+        run: |
+          adb reverse tcp:7070 tcp:7070
+          adb reverse tcp:7080 tcp:7080
+
       - name: Test
         uses: reactivecircus/android-emulator-runner@v2.35.0
         with:

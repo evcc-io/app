@@ -5,12 +5,12 @@ import { waitForWebview } from "./helper";
 describe("Deep Linking", () => {
   it("open server", async () => {
     await device.launchApp({
-      url: "evcc://server?url=10.0.2.2:7070",
+      url: "evcc://server?url=localhost:7070",
       resetAppState: true,
     });
 
     await expect(element(by.id("@serverFormUrl/input"))).toHaveText(
-      "10.0.2.2:7070",
+      "localhost:7070",
     );
 
     // TODO: see https://github.com/wix/Detox/issues/4884
@@ -24,12 +24,12 @@ describe("Deep Linking", () => {
 
   it("open server with basic auth", async () => {
     await device.launchApp({
-      url: "evcc://server?url=http://10.0.2.2:7080&username=admin&password=secret",
+      url: "evcc://server?url=http://localhost:7080&username=admin&password=secret",
       resetAppState: true,
     });
 
     await expect(element(by.id("@serverFormUrl/input"))).toHaveText(
-      "http://10.0.2.2:7080",
+      "http://localhost:7080",
     );
 
     // TODO: see https://github.com/wix/Detox/issues/4884
