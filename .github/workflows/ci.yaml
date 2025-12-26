@@ -54,6 +54,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6.0.0
 
+      - uses: irgaly/xcode-cache@v1
+        with:
+          key: xcode-cache-deriveddata-${{ github.workflow }}-${{ github.sha }}
+          restore-keys: xcode-cache-deriveddata-${{ github.workflow }}-
+
       - name: List available Xcode versions
         shell: bash
         run: ls /Applications | grep Xcode
@@ -101,7 +106,7 @@ jobs:
           caddy run &
 
       - name: Test
-        run: npx detox test --configuration ios.sim.release --cleanup --headless
+        run: npx detox test --configuration ios.sim.release --cleanup --headless --maxWorkers 3
 
       - name: Upload artifacts on failure
         if: failure()
@@ -235,7 +240,7 @@ jobs:
           arch: x86_64
           disable-animations: true
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          script: npx detox test --configuration android.emu.release --cleanup --headless
+          script: npx detox test --configuration android.emu.release --cleanup --headless --maxWorkers 3
 
       - name: Upload artifacts on failure
         if: failure()
