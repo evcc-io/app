@@ -46,8 +46,6 @@ module.exports = {
     "ios.release": {
       launchArgs: {
         ...basicLaunchArgs,
-        DTXEnableVerboseSyncSystem: "YES",
-        DTXEnableVerboseSyncResources: "YES",
         detoxURLBlacklistRegex: createDetoxURLBlacklistRegex([
           "demo.evcc.io",
           "localhost",
