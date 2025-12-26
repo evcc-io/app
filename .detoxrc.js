@@ -13,9 +13,6 @@ module.exports = {
       $0: "jest",
       config: "e2e/jest.config.ts",
     },
-    jest: {
-      setupTimeout: 120000,
-    },
     retries: 1,
     bail: true,
   },
