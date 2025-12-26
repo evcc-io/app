@@ -60,10 +60,6 @@ jobs:
           key: xcode-cache-deriveddata-${{ github.workflow }}-${{ github.sha }}
           restore-keys: xcode-cache-deriveddata-${{ github.workflow }}-
 
-      - name: List available Xcode versions
-        shell: bash
-        run: ls /Applications | grep Xcode
-
       - name: Setup Xcode
         shell: bash
         run: |
@@ -85,14 +81,19 @@ jobs:
       - name: Prebuild iOS
         run: npx expo prebuild --platform ios --clean
 
-      - name: Install applesimutils
-        run: brew tap wix/brew && brew install applesimutils
-
       - name: Build Detox framework cache
         run: npx detox build-framework-cache
 
       - name: Build
         run: npx detox build --configuration ios.sim.release
+
+      - name: Upload app
+        uses: actions/upload-artifact@v5.0.0
+        with:
+          name: evcc.app
+          path: ios/build/Build/Products/Release-iphonesimulator/evcc.app
+          if-no-files-found: error
+          retention-days: 7
 
   ios-detox:
     if: false
