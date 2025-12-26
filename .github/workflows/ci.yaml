@@ -106,7 +106,7 @@ jobs:
         run: npx detox test --configuration ios.sim.release --cleanup --headless
 
       - name: Upload artifacts on failure
-        if: true
+        if: failure()
         uses: actions/upload-artifact@v5.0.0
         with:
           name: ios-detox-artifacts
