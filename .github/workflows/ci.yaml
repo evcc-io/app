@@ -67,6 +67,11 @@ jobs:
           ls /Applications | grep Xcode
           xcrun simctl list
 
+      - name: Setup Xcode 26.0
+        run: |
+          sudo xcode-select -s /Applications/Xcode_26.0.app/Contents/Developer
+          xcodebuild -version
+
       - name: Setup Node.js
         uses: actions/setup-node@v6.0.0
         with:
