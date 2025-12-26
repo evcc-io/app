@@ -97,12 +97,35 @@ jobs:
       - name: Build
         run: npx detox build --configuration ios.sim.release
 
-      - name: Upload app
+      # - name: Upload app
+      #   uses: actions/upload-artifact@v5.0.0
+      #   with:
+      #     name: evcc.app
+      #     path: ios/build/Build/Products/Release-iphonesimulator/evcc.app
+      #     if-no-files-found: error
+      #     retention-days: 7
+
+      - name: Setup evcc daemon
+        run: |
+          brew tap evcc-io/tap
+          brew update
+          brew install evcc
+          brew services start evcc
+
+      - name: Setup Caddy
+        run: |
+          curl -sS https://webi.sh/caddy | sh
+          caddy run &
+
+      - name: Test
+        run: npx detox test --configuration ios.sim.release --cleanup --headless
+
+      - name: Upload artifacts on failure
+        if: failure()
         uses: actions/upload-artifact@v5.0.0
         with:
-          name: evcc.app
-          path: ios/build/Build/Products/Release-iphonesimulator/evcc.app
-          if-no-files-found: error
+          name: ios-detox-artifacts
+          path: e2e/artifacts/
           retention-days: 7
 
   ios-detox:
