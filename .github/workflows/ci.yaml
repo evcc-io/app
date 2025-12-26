@@ -47,10 +47,10 @@ jobs:
         with:
           usePlayStoreLocales: true
 
-  ios-build:
-    name: "iOS Detox (build)"
+  ios-detox:
+    name: "iOS Detox (build + test)"
     runs-on: depot-macos-15
-    timeout-minutes: 30
+    timeout-minutes: 60
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.0
@@ -103,14 +103,6 @@ jobs:
       - name: Build
         run: npx detox build --configuration ios.sim.release
 
-      # - name: Upload app
-      #   uses: actions/upload-artifact@v5.0.0
-      #   with:
-      #     name: evcc.app
-      #     path: ios/build/Build/Products/Release-iphonesimulator/evcc.app
-      #     if-no-files-found: error
-      #     retention-days: 7
-
       - name: Setup evcc daemon
         run: |
           brew tap evcc-io/tap
@@ -134,7 +126,7 @@ jobs:
           path: e2e/artifacts/
           retention-days: 7
 
-  ios-detox:
+  ios-detox2:
     if: false
     name: "iOS Detox (build + test)"
     runs-on: macos-15
