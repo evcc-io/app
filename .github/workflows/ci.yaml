@@ -53,27 +53,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6.0.0
 
-      - uses: actions/cache@v5
-        id: simulator-cache
-        with:
-          path: ~/Downloads
-          key: xcode-simulator-26
-
       - name: Setup Xcode 26.0
         run: |
           sudo xcode-select -s /Applications/Xcode_26.0.app/Contents/Developer
           xcodebuild -version
-
-      - name: Setup Xcode Simulator 26.0
-        run: |
-          set -e
-
-          # Check if DMG exists yet
-          if [ ${{ steps.simulator-cache.outputs.cache-hit != 'true' }} ]; then
-            sudo xcodebuild -downloadPlatform iOS -exportPath "~/Downloads"
-          else
-            sudo xcodebuild -importPlatform "~/Downloads/iOS_26.0_Simulator_Runtime.dmg"
-          fi
+          sudo xcodebuild -downloadPlatform iOS
 
       - name: Setup Node.js
         uses: actions/setup-node@v6.0.0
