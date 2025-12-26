@@ -60,6 +60,10 @@ jobs:
           key: xcode-cache-deriveddata-${{ github.workflow }}-${{ github.sha }}
           restore-keys: xcode-cache-deriveddata-${{ github.workflow }}-
 
+      - name: List available Xcode versions
+        shell: bash
+        run: ls /Applications | grep Xcode
+
       - name: Setup Xcode
         shell: bash
         run: |
