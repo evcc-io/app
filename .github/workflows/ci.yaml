@@ -71,9 +71,14 @@ jobs:
         run: |
           sudo xcode-select -s /Applications/Xcode_26.0.app/Contents/Developer
           xcodebuild -version
-          sudo gem install -v xcode-install
-          xcversion simulators
-          xcversion simulators --install='iOS 26.0 Simulator'
+
+      - name: Install Xcode Simulator
+        shell: bash
+        run: |
+          brew install aria2
+          brew tap robotsandpencils/made
+          brew install robotsandpencils/made/xcodes
+          sudo xcodes runtimes install --keep-archive --no-interactive "iOS 26.0"
 
       - name: Setup Node.js
         uses: actions/setup-node@v6.0.0
