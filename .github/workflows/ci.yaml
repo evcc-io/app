@@ -86,6 +86,9 @@ jobs:
       - name: Prebuild iOS
         run: npx expo prebuild --platform ios --clean
 
+      - name: Install applesimutils
+        run: brew tap wix/brew && brew install applesimutils
+
       - name: Build Detox framework cache
         run: npx detox build-framework-cache
 
