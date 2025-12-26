@@ -11,7 +11,6 @@ permissions:
 
 jobs:
   lint:
-    if: false
     name: Lint
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -33,7 +32,6 @@ jobs:
         run: npm run lint
 
   fastlane-validate:
-    if: false
     name: Fastlane Metadata
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -55,29 +53,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6.0.0
 
-      - uses: irgaly/xcode-cache@v1
-        with:
-          key: xcode-cache-deriveddata-${{ github.workflow }}-${{ github.sha }}
-          restore-keys: xcode-cache-deriveddata-${{ github.workflow }}-
-          deriveddata-directory: ios/build/DerivedData
-
-      - name: List available Xcode versions and simulators
-        shell: bash
-        run: |
-          ls /Applications | grep Xcode
-          xcrun simctl list
-
       - name: Setup Xcode 26.0
         run: |
           sudo xcode-select -s /Applications/Xcode_26.0.app/Contents/Developer
           xcodebuild -version
           sudo xcodebuild -downloadPlatform iOS
-
-      - name: List available Xcode versions and simulators (2)
-        shell: bash
-        run: |
-          ls /Applications | grep Xcode
-          xcrun simctl list
 
       - name: Setup Node.js
         uses: actions/setup-node@v6.0.0
@@ -127,80 +107,7 @@ jobs:
           path: e2e/artifacts/
           retention-days: 7
 
-  ios-detox2:
-    if: false
-    name: "iOS Detox (build + test)"
-    runs-on: macos-15
-    timeout-minutes: 90
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.0
-
-      - uses: irgaly/xcode-cache@v1
-        with:
-          key: xcode-cache-deriveddata-${{ github.workflow }}-${{ github.sha }}
-          restore-keys: xcode-cache-deriveddata-${{ github.workflow }}-
-
-      - name: List available Xcode versions
-        shell: bash
-        run: ls /Applications | grep Xcode
-
-      - name: Setup Xcode
-        shell: bash
-        run: |
-          sudo xcode-select -s /Applications/Xcode_26.0.app/Contents/Developer
-          xcodebuild -version
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6.0.0
-        with:
-          node-version: "24"
-          cache: "npm"
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Setup Expo
-        run: npx expo install
-
-      - name: Prebuild iOS
-        run: npx expo prebuild --platform ios --clean
-
-      - name: Install applesimutils
-        run: brew tap wix/brew && brew install applesimutils
-
-      - name: Build Detox framework cache
-        run: npx detox build-framework-cache
-
-      - name: Build
-        run: npx detox build --configuration ios.sim.release
-
-      - name: Setup evcc daemon
-        run: |
-          brew tap evcc-io/tap
-          brew update
-          brew install evcc
-          brew services start evcc
-
-      - name: Setup Caddy
-        run: |
-          curl -sS https://webi.sh/caddy | sh
-          caddy run &
-
-      - name: Test
-        run: npx detox test --configuration ios.sim.release --cleanup --headless
-
-      - name: Upload artifacts on failure
-        if: failure()
-        uses: actions/upload-artifact@v5.0.0
-        with:
-          name: ios-detox-artifacts
-          path: e2e/artifacts/
-          retention-days: 7
-
   android-build:
-    if: false
     name: "Android Detox (build)"
     runs-on: depot-ubuntu-24.04-8
     timeout-minutes: 10
