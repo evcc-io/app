@@ -97,7 +97,7 @@ jobs:
           caddy run &
 
       - name: Test
-        run: npx detox test --configuration ios.sim.release --cleanup --headless --maxWorkers 3
+        run: npx detox test --configuration ios.sim.release --cleanup --headless
 
       - name: Upload artifacts on failure
         if: failure()
