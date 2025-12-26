@@ -71,6 +71,8 @@ jobs:
         run: |
           sudo xcode-select -s /Applications/Xcode_26.0.app/Contents/Developer
           xcodebuild -version
+          sudo xcrun simctl create "iPhone 14" com.apple.CoreSimulator.SimDeviceType.iPhone-14 com.apple.CoreSimulator.SimRuntime.iOS-26-0
+          xcrun simctl list devices
 
       - name: Setup Node.js
         uses: actions/setup-node@v6.0.0
