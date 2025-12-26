@@ -71,7 +71,7 @@ jobs:
         run: |
           sudo xcode-select -s /Applications/Xcode_26.0.app/Contents/Developer
           xcodebuild -version
-          sudo gem install xcode-install
+          sudo gem install -v xcode-install
           xcversion simulators
           xcversion simulators --install='iOS 26.0 Simulator'
 
