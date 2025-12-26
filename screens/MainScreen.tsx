@@ -6,7 +6,7 @@ import React, {
   useMemo,
 } from "react";
 import { WebView, WebViewMessageEvent } from "react-native-webview";
-import { StyleSheet, Animated, View } from "react-native";
+import { StyleSheet, Animated } from "react-native";
 import * as Linking from "expo-linking";
 import { Text, Layout, Button } from "@ui-kitten/components";
 import { useAppContext } from "../components/AppContext";
@@ -25,10 +25,9 @@ import { shareFileFromUrl } from "utils/shareFile";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Spinner from "components/animations/Spinner";
 import ActivityIndicator from "components/animations/ActivityIndicator";
-import { encode as base64Encode } from "base-64"; // base-64 package (common in RN projects)
 
 function LoadingScreen() {
-  return <ActivityIndicator size="large" animating={true} />;
+  return <ActivityIndicator size="large" animating={false}/>;
 }
 
 export default function MainScreen({
@@ -37,7 +36,7 @@ export default function MainScreen({
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const { serverUrl, basicAuth } = useAppContext();
-  const webViewRef = useRef<WebView | null>(null);
+  const webViewRef = useRef(null);
   const [isConnected, setIsConnected] = useState(false);
   const [webViewKey, setWebViewKey] = useState(0);
 
@@ -91,29 +90,18 @@ export default function MainScreen({
 
   const handleMessage = useCallback(
     (event: WebViewMessageEvent) => {
-      try {
-        const data = JSON.parse(event.nativeEvent.data);
-        console.log("message from webview:", data);
-        switch (data.type) {
-          case "offline":
-            setIsConnected(false);
-            break;
-          case "online":
-            setIsConnected(true);
-            break;
-          case "settings":
-            openSettings();
-            break;
-          default:
-            // unknown message - just log
-            break;
-        }
-      } catch (err) {
-        console.log(
-          "Failed to parse message from webview:",
-          err,
-          event.nativeEvent.data,
-        );
+      const data = JSON.parse(event.nativeEvent.data);
+      console.log("message", data);
+      switch (data.type) {
+        case "offline":
+          setIsConnected(false);
+          break;
+        case "online":
+          setIsConnected(true);
+          break;
+        case "settings":
+          openSettings();
+          break;
       }
     },
     [openSettings],
@@ -122,9 +110,7 @@ export default function MainScreen({
   const onShouldStartLoadWithRequest = useCallback(
     (event: ShouldStartLoadRequest) => {
       if (!event.url.startsWith(serverUrl)) {
-        Linking.openURL(event.url).catch((e) =>
-          console.warn("Linking openURL failed", e),
-        );
+        Linking.openURL(event.url);
         return false;
       }
       return true;
@@ -133,23 +119,7 @@ export default function MainScreen({
   );
 
   const onLoad = useCallback(() => {
-    console.log("onLoad fired");
-  }, []);
-
-  const onLoadStart = useCallback(() => {
-    console.log("WebView onLoadStart");
-    // keep overlay until onLoadEnd unless your app posts 'online'
-    setIsConnected(false);
-  }, []);
-
-  const onLoadEnd = useCallback((event: any) => {
-    console.log("WebView onLoadEnd", event?.nativeEvent?.url);
-    // Mark connected when webview finished loading a page (may be initial navigation)
-    setIsConnected(true);
-  }, []);
-
-  const onLoadProgress = useCallback(({ nativeEvent }: any) => {
-    console.log("WebView progress:", nativeEvent?.progress);
+    console.log("onLoad");
   }, []);
 
   const onError = useCallback((event: WebViewErrorEvent) => {
@@ -179,78 +149,43 @@ export default function MainScreen({
   const basicAuthCredential =
     required && username && password ? { username, password } : undefined;
 
-  // Build headers for Basic Auth as fallback (more consistent across iOS/Android)
-  const headers = basicAuthCredential
-    ? {
-        Authorization:
-          "Basic " +
-          base64Encode(
-            `${basicAuthCredential.username}:${basicAuthCredential.password}`,
-          ),
-      }
-    : undefined;
-
   const LayoutMemoized = useMemo(
     () => (
       <Layout style={{ flex: 1 }}>
         <Animated.View style={{ flex: 1, opacity: contFade }}>
-          {/* Wrapper View with testID: auf iOS ist das zuverlässiger für Detox */}
-          <View
+          <WebView
             testID="mainWebView"
-            accessible
-            accessibilityLabel="mainWebView"
+            basicAuthCredential={basicAuthCredential}
+            source={{ uri: serverUrl }}
+            injectedJavaScript={`
+              document.documentElement.style.setProperty("--safe-area-inset-top", "${insets.top}px");
+              document.documentElement.style.setProperty("--safe-area-inset-bottom", "${insets.bottom}px");
+              document.documentElement.style.setProperty("--safe-area-inset-left", "${insets.left}px");
+              document.documentElement.style.setProperty("--safe-area-inset-right", "${insets.right}px");
+            `}
             style={{ flex: 1 }}
-          >
-            <WebView
-              /* keep testID if you also want it on Android, but wrapper ist primär */
-              // testID="mainWebView"
-              basicAuthCredential={basicAuthCredential}
-              source={{ uri: serverUrl, headers }}
-              injectedJavaScript={`
-                try {
-                  document.documentElement.style.setProperty("--safe-area-inset-top", "${insets.top}px");
-                  document.documentElement.style.setProperty("--safe-area-inset-bottom", "${insets.bottom}px");
-                  document.documentElement.style.setProperty("--safe-area-inset-left", "${insets.left}px");
-                  document.documentElement.style.setProperty("--safe-area-inset-right", "${insets.right}px");
-                } catch(e) {
-                  // ignore
-                }
-              `}
-              style={{ flex: 1 }}
-              key={webViewKey}
-              bounces={false}
-              ref={(r) => {
-                // keep ref usable in case native actions are required
-                // @ts-ignore
-                webViewRef.current = r;
-              }}
-              overScrollMode="never"
-              setBuiltInZoomControls={false}
-              applicationNameForUserAgent={USER_AGENT}
-              onError={onError}
-              onHttpError={onHttpError}
-              onLoad={onLoad}
-              onLoadStart={onLoadStart}
-              onLoadEnd={onLoadEnd}
-              onContentProcessDidTerminate={onTerminate}
-              onMessage={handleMessage}
-              onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
-              onFileDownload={onFileDownload}
-              onLoadProgress={onLoadProgress}
-              startInLoadingState={true}
-              renderLoading={() => <LoadingScreen />}
-            />
-          </View>
+            key={webViewKey}
+            bounces={false}
+            ref={webViewRef}
+            overScrollMode="never"
+            setBuiltInZoomControls={false}
+            applicationNameForUserAgent={USER_AGENT}
+            onError={onError}
+            onHttpError={onHttpError}
+            onLoad={onLoad}
+            onContentProcessDidTerminate={onTerminate}
+            onMessage={handleMessage}
+            onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
+            onFileDownload={onFileDownload}
+          />
         </Animated.View>
-
         <Animated.View
           style={{
             ...styles.overlay,
             opacity: loadFade,
             transform: [{ scale: loadScale }],
+            pointerEvents: isConnected ? "none" : "auto",
           }}
-          // Wenn nicht verbunden: overlay zeigt Lade-UI, aber erlaubt Touch-Events durch (box-none).
-          pointerEvents={isConnected ? "none" : "box-none"}
         >
           <Layout
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
@@ -278,15 +213,10 @@ export default function MainScreen({
       isConnected,
       onError,
       onLoad,
-      onLoadStart,
-      onLoadEnd,
       onTerminate,
       handleMessage,
       onShouldStartLoadWithRequest,
-      onLoadProgress,
       openSettings,
-      insets,
-      t,
     ],
   );
 
