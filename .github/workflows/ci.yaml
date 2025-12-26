@@ -103,7 +103,7 @@ jobs:
           caddy run &
 
       - name: Test
-        run: npx detox test --configuration ios.sim.release --cleanup --headless --loglevel trace --debug-synchronization 500
+        run: npx detox test --configuration ios.sim.release --cleanup --headless
 
       - name: Upload artifacts on failure
         if: true
@@ -112,10 +112,6 @@ jobs:
           name: ios-detox-artifacts
           path: e2e/artifacts/
           retention-days: 7
-
-      - name: debug
-        run: |
-          xcrun simctl spawn booted log stream --level debug --style compact --predicate "category=='SyncManager'"
 
   android-build:
     if: false
