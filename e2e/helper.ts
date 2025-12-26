@@ -9,7 +9,7 @@ import { expect } from "detox";
 export async function waitForWebview(
   webviewId: string = "topNavigatonDropdown",
 ) {
-  const timeout = 60000; // one minute
+  const timeout = 20000; // twenty seconds
   const app = web.element(by.web.id(webviewId));
   const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
   const start = Date.now();
