@@ -61,9 +61,11 @@ jobs:
           restore-keys: xcode-cache-deriveddata-${{ github.workflow }}-
           deriveddata-directory: ios/build/DerivedData
 
-      - name: List available Xcode versions
+      - name: List available Xcode versions and simulators
         shell: bash
-        run: ls /Applications | grep Xcode
+        run: |
+          ls /Applications | grep Xcode
+          xcrun simctl list
 
       - name: Setup Xcode
         shell: bash
