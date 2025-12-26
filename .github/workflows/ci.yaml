@@ -59,7 +59,7 @@ jobs:
         run: |
           sudo xcode-select -s /Applications/Xcode_26.0.app/Contents/Developer
           xcodebuild -version
-          xcodebuild -runFirstLaunch
+          sudo xcodebuild -downloadPlatform iOS -buildVersion 26.0
 
       - name: Setup Node.js
         uses: actions/setup-node@v6.0.0
