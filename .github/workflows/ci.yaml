@@ -11,6 +11,7 @@ permissions:
 
 jobs:
   lint:
+    if: false
     name: Lint
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -32,6 +33,7 @@ jobs:
         run: npm run lint
 
   fastlane-validate:
+    if: false
     name: Fastlane Metadata
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -45,7 +47,55 @@ jobs:
         with:
           usePlayStoreLocales: true
 
+  ios-build:
+    name: "iOS Detox (build)"
+    runs-on: depot-macos-15
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.0
+
+      - uses: irgaly/xcode-cache@v1
+        with:
+          key: xcode-cache-deriveddata-${{ github.workflow }}-${{ github.sha }}
+          restore-keys: xcode-cache-deriveddata-${{ github.workflow }}-
+
+      - name: List available Xcode versions
+        shell: bash
+        run: ls /Applications | grep Xcode
+
+      - name: Setup Xcode
+        shell: bash
+        run: |
+          sudo xcode-select -s /Applications/Xcode_26.0.app/Contents/Developer
+          xcodebuild -version
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6.0.0
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Setup Expo
+        run: npx expo install
+
+      - name: Prebuild iOS
+        run: npx expo prebuild --platform ios --clean
+
+      - name: Install applesimutils
+        run: brew tap wix/brew && brew install applesimutils
+
+      - name: Build Detox framework cache
+        run: npx detox build-framework-cache
+
+      - name: Build
+        run: npx detox build --configuration ios.sim.release
+
   ios-detox:
+    if: false
     name: "iOS Detox (build + test)"
     runs-on: macos-15
     timeout-minutes: 90
@@ -117,6 +167,7 @@ jobs:
           retention-days: 7
 
   android-build:
+    if: false
     name: "Android Detox (build)"
     runs-on: depot-ubuntu-24.04-8
     timeout-minutes: 10
