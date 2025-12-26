@@ -113,6 +113,7 @@ jobs:
       - name: Setup Caddy
         run: |
           curl -sS https://webi.sh/caddy | sh
+          source ~/.config/envman/PATH.env
           caddy run &
 
       - name: Test
