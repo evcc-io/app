@@ -16,14 +16,14 @@ describe("Keep server after reopening", () => {
     await device.launchApp({ resetAppState: true });
   });
 
-  it("demo server", async () => {
+  it("demo server (using demo.evcc.io)", async () => {
     await element(by.id("useDemo")).tap();
     await waitForWebview();
 
     await testKeepingServer();
   });
 
-  it("manual: url only", async () => {
+  it("manual: url only (using localhost)", async () => {
     await element(by.id("manualEntry")).tap();
     await element(by.id("@serverFormUrl/input")).typeText("localhost:7070");
     await element(by.id("serverFormCheckAndSave")).tap();
@@ -32,7 +32,16 @@ describe("Keep server after reopening", () => {
     await testKeepingServer();
   });
 
-  it("manual: with basic auth", async () => {
+  it("manual: url only (using evcc.local)", async () => {
+    await element(by.id("manualEntry")).tap();
+    await element(by.id("@serverFormUrl/input")).typeText("evcc.local:7070");
+    await element(by.id("serverFormCheckAndSave")).tap();
+    await waitForWebview();
+
+    await testKeepingServer();
+  });
+
+  it("manual: with basic auth (using localhost)", async () => {
     await element(by.id("manualEntry")).tap();
     await element(by.id("@serverFormUrl/input")).typeText("localhost:7080");
     await element(by.id("serverFormAuth")).tap();

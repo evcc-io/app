@@ -7,7 +7,7 @@ describe("Manual entry", () => {
     await device.launchApp({ resetAppState: true });
   });
 
-  it("url only", async () => {
+  it("url only (using localhost)", async () => {
     await element(by.id("manualEntry")).tap();
 
     const formUrl = element(by.id("@serverFormUrl/input"));
@@ -22,7 +22,22 @@ describe("Manual entry", () => {
     await waitForWebview();
   });
 
-  it("with basic auth", async () => {
+  it("url only (using evcc.local)", async () => {
+    await element(by.id("manualEntry")).tap();
+
+    const formUrl = element(by.id("@serverFormUrl/input"));
+    await formUrl.typeText("evcc.local:7070");
+
+    await expect(element(by.id("@serverFormAuthUser/input"))).not.toExist();
+    await expect(element(by.id("@serverFormAuthPassword/input"))).not.toExist();
+
+    await element(by.id("serverFormCheckAndSave")).tap();
+    await expect(formUrl).toHaveText("http://evcc.local:7070/");
+
+    await waitForWebview();
+  });
+
+  it("with basic auth (using localhost)", async () => {
     await element(by.id("manualEntry")).tap();
 
     const formUrl = element(by.id("@serverFormUrl/input"));
