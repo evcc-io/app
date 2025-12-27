@@ -1,6 +1,16 @@
 import "detox";
 import { waitForWebview } from "./helper";
 
+async function testKeepingServer() {
+  // bring from foreground to background to foreground
+  await device.launchApp();
+  await waitForWebview();
+
+  // close completely and open a new instance
+  await device.launchApp({ newInstance: true });
+  await waitForWebview();
+}
+
 describe("Keep server after reopening", () => {
   beforeEach(async () => {
     await device.launchApp({ resetAppState: true });
@@ -10,13 +20,7 @@ describe("Keep server after reopening", () => {
     await element(by.id("useDemo")).tap();
     await waitForWebview();
 
-    // bring from foreground to background to foreground
-    await device.launchApp();
-    await waitForWebview();
-
-    // close completely and open a new instance
-    await device.launchApp({ newInstance: true });
-    await waitForWebview();
+    await testKeepingServer();
   });
 
   it("manual: url only", async () => {
@@ -25,13 +29,7 @@ describe("Keep server after reopening", () => {
     await element(by.id("serverFormCheckAndSave")).tap();
     await waitForWebview();
 
-    // bring from foreground to background to foreground
-    await device.launchApp();
-    await waitForWebview();
-
-    // close completely and open a new instance
-    await device.launchApp({ newInstance: true });
-    await waitForWebview();
+    await testKeepingServer();
   });
 
   it("manual: with basic auth", async () => {
@@ -43,12 +41,6 @@ describe("Keep server after reopening", () => {
     await element(by.id("serverFormCheckAndSave")).tap();
     await waitForWebview();
 
-    // bring from foreground to background to foreground
-    await device.launchApp();
-    await waitForWebview();
-
-    // close completely and open a new instance
-    await device.launchApp({ newInstance: true });
-    await waitForWebview();
+    await testKeepingServer();
   });
 });
