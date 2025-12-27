@@ -213,6 +213,7 @@ jobs:
           curl -1sLf 'https://dl.evcc.io/public/evcc/stable/setup.deb.sh' | sudo -E bash
           sudo apt update
           sudo apt install -y evcc
+          sudo systemctl stop evcc
           sudo evcc --demo &
 
       - name: Setup Caddy
