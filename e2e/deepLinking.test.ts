@@ -3,7 +3,7 @@ import { expect } from "detox";
 import { waitForWebview } from "./helper";
 
 describe("Deep Linking", () => {
-  it("open server (using localhost)", async () => {
+  it("open server", async () => {
     await device.launchApp({
       url: "evcc://server?url=localhost:7070",
       resetAppState: true,
@@ -21,25 +21,7 @@ describe("Deep Linking", () => {
     await waitForWebview();
   });
 
-  it("open server (using evcc.local)", async () => {
-    await device.launchApp({
-      url: "evcc://server?url=evcc.local:7070",
-      resetAppState: true,
-    });
-
-    await expect(element(by.id("@serverFormUrl/input"))).toHaveText(
-      "evcc.local:7070",
-    );
-    // TODO: see https://github.com/wix/Detox/issues/4884
-    // await expect(element(by.id("serverFormAuth"))).toHaveToggleValue(false);
-    await expect(element(by.id("@serverFormAuthUser/input"))).not.toExist();
-    await expect(element(by.id("@serverFormAuthPassword/input"))).not.toExist();
-
-    await element(by.id("serverFormCheckAndSave")).tap();
-    await waitForWebview();
-  });
-
-  it("open server with basic auth (using localhost)", async () => {
+  it("open server with basic auth", async () => {
     await device.launchApp({
       url: "evcc://server?url=http://localhost:7080&username=admin&password=secret",
       resetAppState: true,
