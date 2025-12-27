@@ -114,6 +114,96 @@ sed -i -e '/signingConfig /d' build.gradle
 ./../gradlew assembleRelease
 ```
 
+## Testing
+
+If you have never tested the app locally on your computer before, follow the instructions below and make sure that `evcc` runs and the app tests successfully. If you encounter any errors, feel free to create an issue.
+
+Once you have successfully tested the app, from now on it will be sufficient to ensure `evcc` runs and simply execute the `npm run test:XXX` command.
+
+### Prerequisites:
+
+#### 1. Install and start `caddy`:
+
+- Linux & macOS:
+
+  ```bash
+  curl -sS https://webi.sh/caddy | sh
+  ```
+
+- Windows:
+
+  ```bash
+  curl.exe https://webi.ms/caddy | powershell
+  ```
+
+#### 2. Install and start `evcc`:
+
+- Linux:
+  ```bash
+  curl -1sLf 'https://dl.evcc.io/public/evcc/stable/setup.deb.sh' | sudo -E bash
+  sudo apt update
+  sudo apt install -y evcc
+  sudo systemctl start evcc
+  ```
+- macOS:
+  ```bash
+  brew tap evcc-io/tap
+  brew update
+  brew install evcc
+  brew services start evcc
+  ```
+- Windows: [See instructions](https://docs.evcc.io/en/docs/installation/windows#installation)
+
+### Testing Android app _(available on Linux, macOS and Windows)_
+
+#### Emulator (slower):
+
+1. Ensure you have installed [Android Studio](https://developer.android.com/studio).
+2. Create a virtual device:
+   ```bash
+   avdmanager create avd -n test -k "system-images;android-36;google_apis_playstore;x86_64" -d "medium_phone"
+   ```
+3. Prebuild the app:
+   ```bash
+   npx expo prebuild --platform android
+   ```
+4. Build and test the app:
+   ```bash
+   npm run test:android:emulator
+   ```
+
+#### Attached device (faster):
+
+1. [Enable Developer options](https://developer.android.com/studio/debug/dev-options#enable) on your device.
+2. [Enable debugging](https://developer.android.com/studio/debug/dev-options#Enable-debugging) on your device and ensure you have connected your device to your computer.
+3. Prebuild the app:
+   ```bash
+   npx expo prebuild --platform android
+   ```
+4. Build and test the app:
+   ```bash
+   npm run test:android:attached
+   ```
+
+### Testing iOS app _(only available on macOS)_
+
+#### Emulator:
+
+1. [Set up Xcode and Watchman](https://docs.expo.dev/get-started/set-up-your-environment/?platform=ios&device=simulated&mode=development-build&buildEnv=local)
+2. Install `applesimutils`
+   ```bash
+   brew tap wix/brew
+   brew install applesimutils
+   ```
+3. Prebuild the app:
+   ```bash
+   npx expo prebuild --platform ios
+   ```
+4. Build and test the app:
+   ```bash
+   npm run test:ios
+   ```
+
 ## Translation
 
 We use [Weblate](https://hosted.weblate.org/projects/evcc/app/) to manage our translations.
