@@ -10,12 +10,14 @@ describe("Manual entry", () => {
   it("url only", async () => {
     await element(by.id("manualEntry")).tap();
 
-    await element(by.id("@serverFormUrl/input")).typeText("localhost:7070");
+    const formUrl = element(by.id("@serverFormUrl/input"));
+    await formUrl.typeText("localhost:7070");
 
     await expect(element(by.id("@serverFormAuthUser/input"))).not.toExist();
     await expect(element(by.id("@serverFormAuthPassword/input"))).not.toExist();
 
     await element(by.id("serverFormCheckAndSave")).tap();
+    await expect(formUrl).toHaveText("http://localhost:7070/");
 
     await waitForWebview();
   });
@@ -23,7 +25,8 @@ describe("Manual entry", () => {
   it("with basic auth", async () => {
     await element(by.id("manualEntry")).tap();
 
-    await element(by.id("@serverFormUrl/input")).typeText("localhost:7080");
+    const formUrl = element(by.id("@serverFormUrl/input"));
+    await formUrl.typeText("localhost:7080");
 
     await expect(element(by.id("@serverFormAuthUser/input"))).not.toExist();
     await expect(element(by.id("@serverFormAuthPassword/input"))).not.toExist();
@@ -34,6 +37,7 @@ describe("Manual entry", () => {
     await element(by.id("@serverFormAuthPassword/input")).typeText("secret");
 
     await element(by.id("serverFormCheckAndSave")).tap();
+    await expect(formUrl).toHaveText("http://localhost:7080/");
 
     await waitForWebview();
   });
