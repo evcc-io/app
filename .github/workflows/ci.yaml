@@ -88,7 +88,7 @@ jobs:
           brew tap evcc-io/tap
           brew update
           brew install evcc
-          sudo evcc --demo &
+          sudo evcc --disable-auth &
 
       - name: Setup Caddy
         run: |
@@ -214,7 +214,7 @@ jobs:
           sudo apt update
           sudo apt install -y evcc
           sudo systemctl stop evcc
-          sudo evcc --demo &
+          sudo evcc --disable-auth &
 
       - name: Setup Caddy
         run: |
