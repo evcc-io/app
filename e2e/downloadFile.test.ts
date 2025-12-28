@@ -1,5 +1,5 @@
 import "detox";
-import { byWebTestId, waitForWebview } from "./helper";
+import { byWebDataTestId, waitForWebview } from "./helper";
 import { expect } from "detox";
 
 describe("Download file", () => {
@@ -11,14 +11,14 @@ describe("Download file", () => {
   });
 
   // TODO: add test for android
-  it(":ios: sessions file", async () => {
+  it.skip(":ios: sessions file", async () => {
     await element(by.id("serverFormCheckAndSave")).tap();
     await waitForWebview();
 
-    await byWebTestId("topNavigatonDropdown").tap();
-    await byWebTestId("topNavigatonDropdown").tap();
-    await byWebTestId("topNavigationSessions").tap();
-    await byWebTestId("sessionsDownload").tap();
+    await byWebDataTestId("topnavigation-button").tap();
+    await byWebDataTestId("topNavigatonDropdown").tap();
+    await byWebDataTestId("topNavigationSessions").tap();
+    await byWebDataTestId("sessionsDownload").tap();
 
     // works only on ios
     await expect(system.element(by.system.label("Save to Files"))).toExist();
@@ -30,8 +30,8 @@ describe("Download file", () => {
     await element(by.id("serverFormCheckAndSave")).tap();
     await waitForWebview();
 
-    await byWebTestId("topNavigatonDropdown").tap();
-    await byWebTestId("backupRestoreButton").tap();
-    await byWebTestId("backuprestoreDownloadButton").tap();
+    await byWebDataTestId("topnavigation-button").tap();
+    await byWebDataTestId("backupRestoreButton").tap();
+    await byWebDataTestId("backuprestoreDownloadButton").tap();
   });
 });

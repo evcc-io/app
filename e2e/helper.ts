@@ -7,10 +7,10 @@ import { expect } from "detox";
  * WebView element is actually available before the test continues.
  */
 export async function waitForWebview(
-  webviewId: string = "topNavigatonDropdown",
+  dataTestID: string = "topnavigation-button",
 ) {
   const timeout = 20000; // twenty seconds
-  const app = web.element(by.web.id(webviewId));
+  const app = byWebDataTestId(dataTestID);
   const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
   const start = Date.now();
 
@@ -23,9 +23,9 @@ export async function waitForWebview(
     }
   }
 
-  throw new Error(`WebView element with id ${webviewId} didn't load`);
+  throw new Error(`WebView element with data-testid ${dataTestID} didn't load`);
 }
 
-export function byWebTestId(testId: string) {
-  return web.element(by.web.cssSelector(`[data-testid=${testId}]`));
+export function byWebDataTestId(dataTestID: string) {
+  return web.element(by.web.cssSelector(`[data-testid=${dataTestID}]`));
 }
