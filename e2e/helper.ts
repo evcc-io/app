@@ -25,3 +25,7 @@ export async function waitForWebview(
 
   throw new Error(`WebView element with id ${webviewId} didn't load`);
 }
+
+export function byWebTestId(testId: string) {
+  return web.element(by.web.cssSelector(`[data-testid=${testId}]`));
+}
