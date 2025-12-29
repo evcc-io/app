@@ -16,22 +16,20 @@ describe("Download file", () => {
     await waitForWebview();
 
     await byWebDataTestId("topnavigation-button").tap();
-    await byWebDataTestId("topNavigatonDropdown").tap();
-    await byWebDataTestId("topNavigationSessions").tap();
-    await byWebDataTestId("sessionsDownload").tap();
+    await web.element(by.web.label("Charging Sessions")).tap();
+    await web.element(by.web.cssSelector("a[download]")).tap();
 
-    // works only on ios
     await expect(system.element(by.system.label("Save to Files"))).toExist();
   });
 
   // TODO: add test for android
-  // TODO: unskip and assert file download
+  // TODO: unskip and add assertion for file download
   it.skip("backup file", async () => {
     await element(by.id("serverFormCheckAndSave")).tap();
     await waitForWebview();
 
-    await byWebDataTestId("topnavigation-button").tap();
-    await byWebDataTestId("backupRestoreButton").tap();
-    await byWebDataTestId("backuprestoreDownloadButton").tap();
+    await web.element(by.web.label("Configuration")).tap();
+    await web.element(by.web.label("Backup & Restore")).tap();
+    await web.element(by.web.label("Download backup...")).tap();
   });
 });
