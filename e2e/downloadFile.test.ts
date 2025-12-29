@@ -11,7 +11,7 @@ describe("Download file", () => {
   });
 
   // TODO: add test for android
-  it.skip(":ios: sessions file", async () => {
+  it(":ios: sessions file", async () => {
     await element(by.id("serverFormCheckAndSave")).tap();
     await waitForWebview();
 
