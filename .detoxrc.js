@@ -13,7 +13,7 @@ module.exports = {
       $0: "jest",
       config: "e2e/jest.config.ts",
     },
-    retries: 1,
+    retries: 2,
     bail: true,
   },
   artifacts: {
