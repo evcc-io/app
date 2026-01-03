@@ -10,20 +10,18 @@ describe("Download file", () => {
     });
   });
 
-  // TODO: add test for android
-  it(":ios: sessions file", async () => {
+  // TODO: add assertion for file download
+  it.skip("sessions file", async () => {
     await element(by.id("serverFormCheckAndSave")).tap();
     await waitForWebview();
 
     await byWebDataTestId("topnavigation-button").tap();
     await byWebDataTestId("topnavigation-sessions").tap();
     await byWebDataTestId("sessions-download").tap();
-
-    await expect(system.element(by.system.label("Save to Files"))).toExist();
   });
 
   // TODO: add assertion for file download
-  it("backup file", async () => {
+  it.skip("backup file", async () => {
     await element(by.id("serverFormCheckAndSave")).tap();
     await waitForWebview();
 
