@@ -13,7 +13,6 @@ module.exports = {
       $0: "jest",
       config: "e2e/jest.config.ts",
     },
-    retries: 2,
     bail: true,
   },
   artifacts: {
@@ -21,11 +20,11 @@ module.exports = {
     plugins: {
       log: {
         enabled: true,
-        keepOnlyFailedTestsArtifacts: false,
+        keepOnlyFailedTestsArtifacts: true,
       },
       screenshot: {
         enabled: true,
-        keepOnlyFailedTestsArtifacts: false,
+        keepOnlyFailedTestsArtifacts: true,
         takeWhen: {
           testStart: true,
           testFailure: true,
@@ -35,7 +34,7 @@ module.exports = {
       },
       video: {
         enabled: true,
-        keepOnlyFailedTestsArtifacts: false,
+        keepOnlyFailedTestsArtifacts: true,
       },
       uiHierarchy: {
         enabled: true,
