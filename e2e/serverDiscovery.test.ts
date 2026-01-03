@@ -1,5 +1,4 @@
 import "detox";
-import { expect } from "detox";
 import { waitForWebview } from "./helper";
 
 describe("server discovery (mdns)", () => {
@@ -12,7 +11,9 @@ describe("server discovery (mdns)", () => {
       await element(by.id("serverSearchButton")).tap();
     }
 
-    await expect(element(by.id("serverSearchListItem0"))).toExist();
+    await waitFor(element(by.id("serverSearchListItem0")))
+      .toExist()
+      .withTimeout(5000);
     await element(by.id("serverSearchListItem0Button")).tap();
 
     await waitForWebview();
