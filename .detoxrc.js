@@ -45,7 +45,6 @@ module.exports = {
     "ios.release": {
       launchArgs: {
         ...basicLaunchArgs,
-        DTXDisableMainRunLoopSync: true,
         detoxURLBlacklistRegex: createDetoxURLBlacklistRegex([
           "demo.evcc.io",
           "localhost",
