@@ -6,12 +6,13 @@ import { expect } from "detox";
  * This method compensates for that timing issue by ensuring the inner
  * WebView element is actually available before the test continues.
  */
-export async function waitForWebview(
-  dataTestID: string = "topnavigation-button",
-) {
-  const timeout = 20000; // twenty seconds
+export async function waitForWebview() {
+  const dataTestID = "topnavigation-button";
   const app = byWebDataTestId(dataTestID);
+
+  const timeout = 20000; // twenty seconds
   const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
+
   const start = Date.now();
 
   while (Date.now() - start < timeout) {

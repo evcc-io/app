@@ -10,30 +10,33 @@ describe("Roundtrip", () => {
     });
   });
 
-  // TODO: add id topnavigation-app
+  // TODO: wait for next evcc release
   it.skip("change server", async () => {
     await element(by.id("serverFormCheckAndSave")).tap();
     await waitForWebview();
 
+    await byWebDataTestId("topnavigation-button").tap();
     await byWebDataTestId("topnavigation-app").tap();
 
     const url = element(by.id("@serverFormUrl/input"));
     await expect(url).toHaveText("localhost:7070");
     await url.typeText("demo.evcc.io");
-
     await element(by.id("serverFormCheckAndSave")).tap();
+
     await waitForWebview();
+    await expect(byWebDataTestId("header")).toHaveText("Demo Mode");
   });
 
-  // TODO: add id topnavigation-app
+  // TODO: wait for next evcc release
   it.skip("remove server", async () => {
     await element(by.id("serverFormCheckAndSave")).tap();
     await waitForWebview();
 
+    await byWebDataTestId("topnavigation-button").tap();
     await byWebDataTestId("topnavigation-app").tap();
+
     await element(by.id("setingsScreenRemoveServer")).tap();
 
-    await element(by.id("serverFormCheckAndSave")).tap();
-    await waitForWebview();
+    await expect(element(by.id("serverScreenTitle"))).toExist();
   });
 });

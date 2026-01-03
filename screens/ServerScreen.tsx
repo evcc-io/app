@@ -140,7 +140,11 @@ export default function ServerScreen({
     <Layout style={{ flex: 1, paddingHorizontal: 16 }}>
       <SafeAreaView style={{ flex: 1 }}>
         <Layout style={{ flex: 1 }}>
-          <Text style={{ marginVertical: 32 }} category="h2">
+          <Text
+            testID="serverScreenTitle"
+            style={{ marginVertical: 32 }}
+            category="h2"
+          >
             {t("main.title")}
           </Text>
           <Text style={{ marginBottom: 32 }} category="p1">
