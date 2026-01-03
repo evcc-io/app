@@ -1,6 +1,5 @@
 import "detox";
 import { byWebDataTestId, waitForWebview } from "./helper";
-import { expect } from "detox";
 
 describe("Download file", () => {
   beforeEach(async () => {
