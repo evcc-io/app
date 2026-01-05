@@ -34,7 +34,7 @@ export default ({ config }: ConfigContext) =>
         config: {
           usesNonExemptEncryption: false,
         },
-        buildNumber: "34",
+        buildNumber: "35",
       },
       android: {
         jsEngine: "hermes",
@@ -48,7 +48,7 @@ export default ({ config }: ConfigContext) =>
           foregroundImage: "./assets/adaptive-icon.png",
           backgroundColor: "#010322",
         },
-        versionCode: 34,
+        versionCode: 35,
       },
       web: {
         favicon: "./assets/favicon.png",
