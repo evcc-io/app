@@ -7,3 +7,5 @@ android/
 caddy*.*
 tsconfig.tsbuildinfo
 .claude/
+e2e/artifacts
+evcc*.*

@@ -52,6 +52,7 @@ function SettingsScreen({
         {serverForm}
 
         <Button
+          testID="setingsScreenRemoveServer"
           style={{ marginVertical: 16 }}
           appearance="ghost"
           status="danger"
