@@ -6,7 +6,7 @@ import { Alert } from "react-native";
 
 import { useAppContext } from "../components/AppContext";
 import ServerList from "../components/ServerList";
-import LoadingIndicator from "../components/LoadingIndicator";
+import LoadingIndicator from "../components/animations/LoadingIndicator";
 import { verifyEvccServer } from "../utils/server";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -140,7 +140,11 @@ export default function ServerScreen({
     <Layout style={{ flex: 1, paddingHorizontal: 16 }}>
       <SafeAreaView style={{ flex: 1 }}>
         <Layout style={{ flex: 1 }}>
-          <Text style={{ marginVertical: 32 }} category="h2">
+          <Text
+            testID="serverScreenTitle"
+            style={{ marginVertical: 32 }}
+            category="h2"
+          >
             {t("main.title")}
           </Text>
           <Text style={{ marginBottom: 32 }} category="p1">
@@ -154,6 +158,7 @@ export default function ServerScreen({
             onPress={scanNetwork}
             accessoryLeft={searching ? LoadingIndicator : undefined}
             disabled={scanNotPossible}
+            testID="serverSearchButton"
           >
             {t("servers.search.start")}
           </Button>
@@ -173,6 +178,7 @@ export default function ServerScreen({
         </Layout>
         <Layout style={{ paddingVertical: 16 }}>
           <Button
+            testID="manualEntry"
             style={{ marginVertical: 8 }}
             appearance="outline"
             status="primary"
@@ -181,6 +187,7 @@ export default function ServerScreen({
             {t("servers.manually.specify")}
           </Button>
           <Button
+            testID="useDemo"
             style={{ marginVertical: 8 }}
             appearance="ghost"
             status="basic"
