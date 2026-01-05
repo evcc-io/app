@@ -1,1 +1,1 @@
-jest.retryTimes(2, { retryImmediately: true });
+jest.retryTimes(2);
