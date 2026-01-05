@@ -122,37 +122,29 @@ Once you have successfully tested the app, from now on it will be sufficient to 
 
 ### Prerequisites:
 
-#### 1. Install and start `caddy`:
+#### 1. Install and start `evcc`:
 
-- Linux & macOS:
+See general [installation instructions](https://docs.evcc.io/docs/installation).
 
-  ```bash
-  curl -sS https://webi.sh/caddy | sh
-  ```
+Start evcc in demo mode:
 
-- Windows:
+```bash
+evcc --demo
+```
 
-  ```bash
-  curl.exe https://webi.ms/caddy | powershell
-  ```
+This will run evcc on port 7070.
 
-#### 2. Install and start `evcc`:
+#### 2. Install and start `caddy`:
 
-- Linux:
-  ```bash
-  curl -1sLf 'https://dl.evcc.io/public/evcc/stable/setup.deb.sh' | sudo -E bash
-  sudo apt update
-  sudo apt install -y evcc
-  sudo systemctl start evcc
-  ```
-- macOS:
-  ```bash
-  brew tap evcc-io/tap
-  brew update
-  brew install evcc
-  brew services start evcc
-  ```
-- Windows: [See instructions](https://docs.evcc.io/en/docs/installation/windows#installation)
+See [installation instructions](https://caddyserver.com/docs/install).
+
+Start caddy:
+
+```bash
+caddy run
+```
+
+This will run caddy on port 7080.
 
 ### Testing Android app _(available on Linux, macOS and Windows)_
 
@@ -160,9 +152,19 @@ Once you have successfully tested the app, from now on it will be sufficient to 
 
 1. Ensure you have installed [Android Studio](https://developer.android.com/studio).
 2. Create a virtual device:
+
+   **ARM 64 systems (Apple Silicon Macs)**
+
+   ```bash
+   avdmanager create avd -n test -k "system-images;android-36;google_apis_playstore;arm64-v8a" -d "medium_phone"
+   ```
+
+   **x86_64 systems (Linux, Windows, Intel Macs and other):**
+
    ```bash
    avdmanager create avd -n test -k "system-images;android-36;google_apis_playstore;x86_64" -d "medium_phone"
    ```
+
 3. Prebuild the app:
    ```bash
    npx expo prebuild --platform android
