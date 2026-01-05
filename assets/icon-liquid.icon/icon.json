@@ -7,27 +7,22 @@
   },
   "groups" : [
     {
-      "blend-mode" : "normal",
       "blur-material" : 0.5,
       "hidden" : false,
       "layers" : [
         {
+          "blend-mode" : "normal",
           "fill" : {
-            "solid" : "display-p3:0.39990,0.86279,0.35303,1.00000"
-          },
-          "image-name" : "icon-oben.svg",
-          "name" : "icon-oben",
-          "opacity" : 0.95
-        },
-        {
-          "fill" : {
-            "solid" : "display-p3:0.39990,0.86279,0.35303,1.00000"
+            "linear-gradient" : [
+              "display-p3:0.40124,0.85836,0.34935,1.00000",
+              "display-p3:0.40124,0.85836,0.34935,0.89608"
+            ]
           },
           "glass" : true,
           "hidden" : false,
-          "image-name" : "icon-unten.svg",
-          "name" : "icon-unten",
-          "opacity" : 0.8
+          "image-name" : "icon-trans.svg",
+          "name" : "icon-trans",
+          "opacity" : 1
         }
       ],
       "lighting" : "individual",
