@@ -100,9 +100,8 @@ export default ({ config }: ConfigContext) =>
       ],
       extra: {
         eas: {
-          projectId: "b1b49826-1d85-42bf-997f-653600e16c51",
+          projectId: "770575d4-8e22-4f9d-8bbf-d1806c5814b9",
         },
       },
-      owner: "evcc-io",
     },
   }) satisfies AppJSONConfig;

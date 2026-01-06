@@ -6,7 +6,7 @@ import Header from "../components/Header";
 import { useAppContext } from "../components/AppContext";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { BasicAuth, RootStackParamList } from "types";
+import { BasicAuth, ProxyHeader, RootStackParamList } from "types";
 
 function ServerManualScreen({
   route,
@@ -15,7 +15,13 @@ function ServerManualScreen({
   const { t } = useTranslation();
   const { serverUrl, updateServerUrl } = useAppContext();
 
-  const { url: initialUrl = "", username, password } = route.params || {};
+  const {
+    url: initialUrl = "",
+    username,
+    password,
+    headerName,
+    headerValue,
+  } = route.params || {};
 
   const [url, setUrl] = React.useState(initialUrl);
   const [basicAuth, setBasicAuth] = React.useState<BasicAuth>({
@@ -24,17 +30,29 @@ function ServerManualScreen({
     required: !!username || !!password,
   });
 
+  const [proxyHeader, setProxyHeader] = React.useState<ProxyHeader>({
+    headerName,
+    headerValue,
+    required: !!headerName || !!headerValue,
+  });
+
   React.useEffect(() => {
     setUrl(initialUrl);
     setBasicAuth({ username, password, required: basicAuth.required });
+    setProxyHeader({ headerName, headerValue, required: proxyHeader.required });
   }, [initialUrl, username, password]);
 
   const serverSelected = React.useCallback(
-    async (nextUrl: string, nextBasicAuth: BasicAuth) => {
+    async (
+      nextUrl: string,
+      nextBasicAuth: BasicAuth,
+      nextProxyHeader: ProxyHeader,
+    ) => {
       console.log("serverSelected");
       setUrl(nextUrl);
       setBasicAuth(nextBasicAuth);
-      await updateServerUrl(nextUrl, nextBasicAuth);
+      setProxyHeader(nextProxyHeader);
+      await updateServerUrl(nextUrl, nextBasicAuth, proxyHeader);
 
       // After setting serverUrl, navigate to Main which will be available in the new stack
       navigation.reset({
@@ -69,6 +87,7 @@ function ServerManualScreen({
         <ServerForm
           url={url}
           basicAuth={basicAuth}
+          proxyHeader={proxyHeader}
           serverSelected={serverSelected}
         />
       </View>

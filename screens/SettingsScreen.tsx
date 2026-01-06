@@ -8,17 +8,18 @@ import Header from "../components/Header";
 import { useTranslation } from "react-i18next";
 import { APP_VERSION, GITHUB_RELEASES_URL } from "../utils/constants";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList, BasicAuth } from "types";
+import { RootStackParamList, BasicAuth, ProxyHeader } from "types";
 
 function SettingsScreen({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "Settings">) {
   const { t } = useTranslation();
-  const { serverUrl, basicAuth, updateServerUrl } = useAppContext();
+  const { serverUrl, basicAuth, proxyHeader, updateServerUrl } =
+    useAppContext();
 
   const saveServer = React.useCallback(
-    (url: string, basicAuth: BasicAuth) => {
-      updateServerUrl(url, basicAuth);
+    (url: string, basicAuth: BasicAuth, proxyHeader: ProxyHeader) => {
+      updateServerUrl(url, basicAuth, proxyHeader);
       if (navigation.canGoBack()) {
         navigation.goBack();
       }
@@ -31,6 +32,7 @@ function SettingsScreen({
       <ServerForm
         url={serverUrl}
         basicAuth={basicAuth}
+        proxyHeader={proxyHeader}
         serverSelected={saveServer}
       />
     ),
@@ -58,7 +60,7 @@ function SettingsScreen({
           status="danger"
           onPress={() => {
             navigation.goBack();
-            updateServerUrl("", { required: false });
+            updateServerUrl("", { required: false }, { required: false });
           }}
         >
           {t("servers.removeServer")}

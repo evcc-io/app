@@ -1,17 +1,49 @@
+### caddy run
+
 {
 	admin off
 }
 
-# caddy run
-#
-# endpoint for basic auth app testing
+# basic auth
 :7080 {
-	basic_auth {
-		# user: admin
-		# password: secret
-		admin $2a$14$6raEvbSOkbyTizzW36qguOAJUfMf1Jc2uUEVxue33xkhDdygvRhCC
-	}
+	route {
+		basic_auth {
+			# user: admin
+			# password: secret
+			admin $2a$14$6raEvbSOkbyTizzW36qguOAJUfMf1Jc2uUEVxue33xkhDdygvRhCC
+		}
 
-	# evcc running locally
-	reverse_proxy http://localhost:7070
+		# evcc running locally
+		reverse_proxy http://localhost:7070
+	}
+}
+
+# reverse proxy header
+:7090 {
+	route {
+		@authorized {
+			header X-App-Token super-secret-value
+		}
+		# evcc running locally
+		reverse_proxy @authorized http://localhost:7070
+		respond "Forbidden: Invalid or missing token" 403
+	}
+}
+
+# basic auth and reverse proxy header
+:8000 {
+	route {
+		basic_auth {
+			# user: admin
+			# password: secret
+			admin $2a$14$6raEvbSOkbyTizzW36qguOAJUfMf1Jc2uUEVxue33xkhDdygvRhCC
+		}
+
+		@authorized {
+			header X-App-Token super-secret-value
+		}
+		# evcc running locally
+		reverse_proxy @authorized http://localhost:7070
+		respond "Forbidden: Invalid or missing token" 403
+	}
 }

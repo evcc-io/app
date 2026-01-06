@@ -6,16 +6,23 @@
   "servers": {
     "changeServer": "Change server",
     "manually": {
-      "authenticationRequired": "Authentication required",
+      "basicAuth": {
+        "required": "Authentication required",
+        "password": "Password",
+        "user": "User"
+      },
+      "proxyHeader": {
+        "required": "Proxy-Header required",
+        "headerName": "Header-Name",
+        "headerValue": "Header-Value"
+      },
+      "enterUrl": "Enter URL",
       "checkAdress": "The server does not appear to be an evcc instance. Please check the address.",
       "checkAndSave": "Check and save",
-      "enterUrl": "Enter URL",
       "missingOrWrongAuthentication": "Missing or incorrect authentication",
-      "password": "Password",
       "serverIncompatible": "The evcc instance is not yet app-compatible. Update your installation.",
       "serverNotAvailable": "Server not available. Please check the address.",
-      "specify": "Enter address manually",
-      "user": "User"
+      "specify": "Enter address manually"
     },
     "removeServer": "Remove server",
     "search": {
