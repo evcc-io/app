@@ -63,7 +63,7 @@ module.exports = {
           "10.0.2.2",
         ]),
       },
-      reversePorts: [7070, 7080],
+      reversePorts: [7070, 7080, 7090, 8000], // ports used in Caddyfile
       type: "android.apk",
       binaryPath: "android/app/build/outputs/apk/release/app-release.apk",
       build: `cd android && "./gradlew" assembleRelease assembleAndroidTest -DtestBuildType=release --parallel --build-cache --no-daemon`,

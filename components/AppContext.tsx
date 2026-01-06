@@ -6,21 +6,29 @@ import React, {
   PropsWithChildren,
 } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { BasicAuth } from "types";
+import { BasicAuth, ProxyHeader } from "types";
 
 // Create a context
 const AppContext = createContext({
   serverUrl: "",
   basicAuth: { required: false } as BasicAuth,
+  proxyHeader: { required: false } as ProxyHeader,
   isLoading: true,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  updateServerUrl: async (_url: string, _basicAuth: BasicAuth) => {},
+  updateServerUrl: async (
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _url: string,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _basicAuth: BasicAuth,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _proxyHeader: ProxyHeader,
+  ) => {},
 });
 
 // Provider component
 export const AppProvider = ({ children }: PropsWithChildren) => {
   const [serverUrl, setServerUrl] = useState("");
   const [basicAuth, setBasicAuth] = useState({ required: false });
+  const [proxyHeader, setProxyHeader] = useState({ required: false });
   const [isLoading, setIsLoading] = useState(true);
 
   // Load the URL from AsyncStorage on startup
@@ -36,13 +44,26 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
         setBasicAuth({ required: false });
       }
 
+      const proxyHeaderJson = await AsyncStorage.getItem("proxyHeader");
+      if (proxyHeaderJson) {
+        setProxyHeader(JSON.parse(proxyHeaderJson));
+      } else {
+        setProxyHeader({ required: false });
+      }
+
       setIsLoading(false);
     };
 
     loadServerUrl();
   }, []);
 
-  const updateServerUrl = async (url: string, basicAuth: BasicAuth) => {
+  const updateServerUrl = async (
+    url: string,
+    basicAuth: BasicAuth,
+    proxyHeader: ProxyHeader,
+  ) => {
+    setProxyHeader(proxyHeader);
+    await AsyncStorage.setItem("proxyHeader", JSON.stringify(proxyHeader));
     setBasicAuth(basicAuth);
     await AsyncStorage.setItem("basicAuth", JSON.stringify(basicAuth));
     setServerUrl(url);
@@ -50,7 +71,9 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
   };
 
   return (
-    <AppContext.Provider value={{ serverUrl, basicAuth, isLoading, updateServerUrl }}>
+    <AppContext.Provider
+      value={{ serverUrl, basicAuth, proxyHeader, isLoading, updateServerUrl }}
+    >
       {children}
     </AppContext.Provider>
   );

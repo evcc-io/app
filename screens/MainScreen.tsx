@@ -27,7 +27,7 @@ import Spinner from "components/animations/Spinner";
 import ActivityIndicator from "components/animations/ActivityIndicator";
 
 function LoadingScreen() {
-  return <ActivityIndicator size="large" animating={false}/>;
+  return <ActivityIndicator size="large" animating={false} />;
 }
 
 export default function MainScreen({
@@ -35,7 +35,7 @@ export default function MainScreen({
 }: NativeStackScreenProps<RootStackParamList, "Main">) {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
-  const { serverUrl, basicAuth } = useAppContext();
+  const { serverUrl, basicAuth, proxyHeader } = useAppContext();
   const webViewRef = useRef(null);
   const [isConnected, setIsConnected] = useState(false);
   const [webViewKey, setWebViewKey] = useState(0);
@@ -145,9 +145,15 @@ export default function MainScreen({
 
   const LoadingScreenMemoized = useMemo(() => <LoadingScreen />, []);
 
-  const { required, username, password } = basicAuth;
+  const { required: baRequired, username, password } = basicAuth;
   const basicAuthCredential =
-    required && username && password ? { username, password } : undefined;
+    baRequired && username && password ? { username, password } : undefined;
+
+  const { required: phRequired, headerName, headerValue } = proxyHeader;
+  const proxyHeaderCredential =
+    phRequired && headerName && headerValue
+      ? { [headerName]: headerValue }
+      : undefined;
 
   const LayoutMemoized = useMemo(
     () => (
@@ -156,7 +162,7 @@ export default function MainScreen({
           <WebView
             testID="mainWebView"
             basicAuthCredential={basicAuthCredential}
-            source={{ uri: serverUrl }}
+            source={{ uri: serverUrl, headers: proxyHeaderCredential }}
             injectedJavaScript={`
               document.documentElement.style.setProperty("--safe-area-inset-top", "${insets.top}px");
               document.documentElement.style.setProperty("--safe-area-inset-bottom", "${insets.bottom}px");
@@ -192,6 +198,8 @@ export default function MainScreen({
           >
             <Text style={{ marginVertical: 32 }} category="p1">
               {t("servers.search.searching")}
+              {/* {JSON.stringify(basicAuthCredential)} */}
+              {JSON.stringify(proxyHeaderCredential)}
             </Text>
             <Spinner size="large" />
           </Layout>
@@ -206,6 +214,7 @@ export default function MainScreen({
     [
       serverUrl,
       basicAuthCredential,
+      proxyHeaderCredential,
       webViewKey,
       contFade,
       loadFade,

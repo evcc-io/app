@@ -14,6 +14,8 @@ describe("Manual entry", () => {
 
     await expect(element(by.id("@serverFormAuthUser/input"))).not.toExist();
     await expect(element(by.id("@serverFormAuthPassword/input"))).not.toExist();
+    await expect(element(by.id("@serverFormAuthUser/input"))).not.toExist();
+    await expect(element(by.id("@serverFormAuthPassword/input"))).not.toExist();
 
     await element(by.id("serverFormCheckAndSave")).tap();
 
@@ -27,11 +29,58 @@ describe("Manual entry", () => {
 
     await expect(element(by.id("@serverFormAuthUser/input"))).not.toExist();
     await expect(element(by.id("@serverFormAuthPassword/input"))).not.toExist();
+    await expect(element(by.id("@serverFormAuthUser/input"))).not.toExist();
+    await expect(element(by.id("@serverFormAuthPassword/input"))).not.toExist();
 
     await element(by.id("serverFormAuth")).tap();
-
     await element(by.id("@serverFormAuthUser/input")).typeText("admin");
     await element(by.id("@serverFormAuthPassword/input")).typeText("secret");
+
+    await element(by.id("serverFormCheckAndSave")).tap();
+
+    await waitForWebview();
+  });
+
+  it("with proxy header", async () => {
+    await element(by.id("manualEntry")).tap();
+
+    await element(by.id("@serverFormUrl/input")).typeText("localhost:7090");
+
+    await expect(element(by.id("@serverFormAuthUser/input"))).not.toExist();
+    await expect(element(by.id("@serverFormAuthPassword/input"))).not.toExist();
+    await expect(element(by.id("@serverFormAuthUser/input"))).not.toExist();
+    await expect(element(by.id("@serverFormAuthPassword/input"))).not.toExist();
+
+    await element(by.id("serverFormHeader")).tap();
+    await element(by.id("@serverFormHeaderName/input")).typeText("X-App-Token");
+    await element(by.id("@serverFormHeaderValue/input")).typeText(
+      "super-secret-value",
+    );
+
+    await element(by.id("serverFormCheckAndSave")).tap();
+
+    await waitForWebview();
+  });
+
+  it("with basic auth and proxy header", async () => {
+    await element(by.id("manualEntry")).tap();
+
+    await element(by.id("@serverFormUrl/input")).typeText("localhost:8000");
+
+    await expect(element(by.id("@serverFormAuthUser/input"))).not.toExist();
+    await expect(element(by.id("@serverFormAuthPassword/input"))).not.toExist();
+    await expect(element(by.id("@serverFormAuthUser/input"))).not.toExist();
+    await expect(element(by.id("@serverFormAuthPassword/input"))).not.toExist();
+
+    await element(by.id("serverFormAuth")).tap();
+    await element(by.id("@serverFormAuthUser/input")).typeText("admin");
+    await element(by.id("@serverFormAuthPassword/input")).typeText("secret");
+
+    await element(by.id("serverFormHeader")).tap();
+    await element(by.id("@serverFormHeaderName/input")).typeText("X-App-Token");
+    await element(by.id("@serverFormHeaderValue/input")).typeText(
+      "super-secret-value",
+    );
 
     await element(by.id("serverFormCheckAndSave")).tap();
 

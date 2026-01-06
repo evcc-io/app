@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { t } from "i18next";
 import { USER_AGENT } from "./constants";
-import { BasicAuth } from "types";
+import { BasicAuth, ProxyHeader } from "types";
 
 export function cleanServerUrl(url: string) {
   let result = url.trim();
@@ -14,7 +14,11 @@ export function cleanServerUrl(url: string) {
   return result;
 }
 
-export async function verifyEvccServer(url: string, authOptions: BasicAuth) {
+export async function verifyEvccServer(
+  url: string,
+  authOptions: BasicAuth,
+  proxyHeaderOptions: ProxyHeader,
+) {
   const options: AxiosRequestConfig = {
     timeout: 10000,
     headers: { "User-Agent": USER_AGENT },
@@ -23,6 +27,13 @@ export async function verifyEvccServer(url: string, authOptions: BasicAuth) {
     const { username, password } = authOptions;
     if (username && password) {
       options.auth = { username, password };
+    }
+  }
+  if (proxyHeaderOptions) {
+    const { headerName, headerValue } = proxyHeaderOptions;
+    if (headerName && headerValue) {
+      options.headers = options.headers || {};
+      options.headers[headerName] = headerValue;
     }
   }
 

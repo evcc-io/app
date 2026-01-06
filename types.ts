@@ -4,6 +4,12 @@ export interface BasicAuth {
   password?: string;
 }
 
+export interface ProxyHeader {
+  required: boolean;
+  headerName?: string;
+  headerValue?: string;
+}
+
 export interface EvccInstance {
   title: string;
   url: string;
@@ -18,6 +24,8 @@ export type RootStackParamList = {
     username?: string;
     password?: string;
     required?: boolean;
+    headerName?: string;
+    headerValue?: string;
   };
 };
 

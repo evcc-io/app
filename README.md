@@ -54,16 +54,16 @@ Opens the server entry field with prefilled values.
 All params are optional.
 
 ```
-evcc://server?url=...&username=...&password=...
+evcc://server?url=...&username=...&password=...&headerName=...&HeaderValue=...
 ```
 
 _Note: Ensure that query values are properly encoded._
 
 **Example:**
 
-![URL Scheme Example](https://api.qrserver.com/v1/create-qr-code/?color=000000&bgcolor=FFFFFF&data=evcc%3A%2F%2Fserver%3Furl%3Dhttps%3A%2F%2Fevcc.local%26username%3Dadmin%26password%3Dsecret&qzone=1&margin=0&size=150x150&ecc=L)
+![URL Scheme Example](https://api.qrserver.com/v1/create-qr-code/?color=000000&bgcolor=FFFFFF&data=evcc%3A%2F%2Fserver%3Furl=https%3A%2F%2Fevcc.local&username=admin&password=secret&headerName=X-App-Token&HeaderValue=super-secret-value&qzone=1&margin=0&size=150x150&ecc=L)
 
-[evcc://server?url=https://evcc.local&username=admin&password=secret](evcc://server?url=https://evcc.local&username=admin&password=secret)
+[evcc://server?url=https://evcc.local&username=admin&password=secret&headerName=X-App-Token&HeaderValue=super-secret-value](evcc://server?url=https://evcc.local&username=admin&password=secret&headerName=X-App-Token&HeaderValue=super-secret-value)
 
 ## Known limitations
 
