@@ -14,10 +14,12 @@ const AppContext = createContext({
   basicAuth: { required: false } as BasicAuth,
   proxyHeader: { required: false } as ProxyHeader,
   isLoading: true,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   updateServerUrl: async (
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _url: string,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _basicAuth: BasicAuth,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _proxyHeader: ProxyHeader,
   ) => {},
 });
