@@ -17,6 +17,14 @@
       "specify": "Unesite adresu ručno",
       "user": "korisnik"
     },
-    "removeServer": "Ukloni server"
+    "removeServer": "Ukloni server",
+    "search": {
+      "notAvailable": "Pretraga nije moguća na ovom uređaju. Koristite ručni unos.",
+      "nothingFound": "Nije pronađen nijedan evcc server.",
+      "searching": "Traženje veze...",
+      "start": "Pokreni pretragu"
+    },
+    "select": "Odaberi",
+    "useDemo": "Koristite demo instancu"
   }
 }
