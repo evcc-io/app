@@ -1,1 +1,30 @@
-{}
+{
+  "main": {
+    "description": "Pretražite svoju mrežu da pronađete svoju evcc instalaciju.",
+    "title": "Postavite server"
+  },
+  "servers": {
+    "changeServer": "Promijeni server",
+    "manually": {
+      "authenticationRequired": "Potrebna je autentifikacija",
+      "checkAdress": "Čini se da server nije evcc instanca. Molimo provjerite adresu.",
+      "checkAndSave": "Provjeri i sačuvaj",
+      "enterUrl": "Unesite URL",
+      "missingOrWrongAuthentication": "Izostavljena ili netačna autentifikacija",
+      "password": "Lozinka",
+      "serverIncompatible": "Instanca evcc-a još nije kompatibilna s aplikacijom. Ažurirajte svoju instalaciju.",
+      "serverNotAvailable": "Server nije dostupan. Molimo provjerite adresu.",
+      "specify": "Unesite adresu ručno",
+      "user": "korisnik"
+    },
+    "removeServer": "Ukloni server",
+    "search": {
+      "notAvailable": "Pretraga nije moguća na ovom uređaju. Koristite ručni unos.",
+      "nothingFound": "Nije pronađen nijedan evcc server.",
+      "searching": "Traženje veze...",
+      "start": "Pokreni pretragu"
+    },
+    "select": "Odaberi",
+    "useDemo": "Koristite demo instancu"
+  }
+}

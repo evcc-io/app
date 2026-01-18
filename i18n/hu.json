@@ -1,1 +1,30 @@
-{}
+{
+  "main": {
+    "description": "Keresse meg hálózatán az evcc telepítését.",
+    "title": "Szerver beállítása"
+  },
+  "servers": {
+    "changeServer": "Szerver váltás",
+    "manually": {
+      "authenticationRequired": "Hitelesítés szükséges",
+      "checkAdress": "A szerver nem tűnik evcc példánynak. Kérjük, ellenőrizze a címet.",
+      "checkAndSave": "Ellenőrizze és mentse el",
+      "enterUrl": "URL beírása",
+      "missingOrWrongAuthentication": "Hiányzó vagy helytelen hitelesítés",
+      "password": "Jelszó",
+      "serverIncompatible": "Az evcc példány még nem kompatibilis az alkalmazással. Frissítse a telepítést.",
+      "serverNotAvailable": "A szerver nem elérhető. Kérjük, ellenőrizze a címet.",
+      "specify": "Cím kézi beírása",
+      "user": "Felhasználó"
+    },
+    "removeServer": "Szerver eltávolítása",
+    "search": {
+      "notAvailable": "A keresés ezen az eszközön nem lehetséges. Használja a kézi bevitelt.",
+      "nothingFound": "Nem található evcc szerver.",
+      "searching": "Kapcsolat keresése ...",
+      "start": "Keresés indítása"
+    },
+    "select": "Válasszon",
+    "useDemo": "Demo példa használata"
+  }
+}
