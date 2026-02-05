@@ -1,6 +1,6 @@
 {
   "main": {
-    "description": "Hae lähiverkosta löytääksesi evcc-asennuksesi.",
+    "description": "Hae lähiverkosta evcc-asennuksesi.",
     "title": "Asenna palvelin"
   },
   "servers": {
