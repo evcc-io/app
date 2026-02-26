@@ -8,6 +8,7 @@ import React, {
 import { WebView, WebViewMessageEvent } from "react-native-webview";
 import { StyleSheet, Animated } from "react-native";
 import * as Linking from "expo-linking";
+import * as Haptics from "expo-haptics";
 import { Text, Layout, Button } from "@ui-kitten/components";
 import { useAppContext } from "../components/AppContext";
 import { useTranslation } from "react-i18next";
@@ -102,6 +103,12 @@ export default function MainScreen({
         case "settings":
           openSettings();
           break;
+        case "vibrate": {
+          const { Light, Medium, Heavy } = Haptics.ImpactFeedbackStyle;
+          const d = Array.isArray(data.pattern) ? data.pattern[0] : data.pattern;
+          Haptics.impactAsync(d <= 50 ? Light : d <= 100 ? Medium : Heavy);
+          break;
+        }
       }
     },
     [openSettings],
@@ -162,6 +169,15 @@ export default function MainScreen({
               document.documentElement.style.setProperty("--safe-area-inset-bottom", "${insets.bottom}px");
               document.documentElement.style.setProperty("--safe-area-inset-left", "${insets.left}px");
               document.documentElement.style.setProperty("--safe-area-inset-right", "${insets.right}px");
+              if (!navigator.vibrate) {
+                navigator.vibrate = function(pattern) {
+                  if (pattern === 0 || (Array.isArray(pattern) && pattern.length === 0)) {
+                    return true;
+                  }
+                  window.ReactNativeWebView.postMessage(JSON.stringify({ type: "vibrate", pattern: pattern }));
+                  return true;
+                };
+              }
             `}
             style={{ flex: 1 }}
             key={webViewKey}
