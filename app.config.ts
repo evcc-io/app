@@ -16,7 +16,7 @@ export default ({ config }: ConfigContext) =>
       userInterfaceStyle: "automatic",
       assetBundlePatterns: ["**/*"],
       ios: {
-        jsEngine: "jsc",
+        jsEngine: "hermes",
         supportsTablet: true,
         icon: "./assets/icon-liquid.icon",
         bundleIdentifier: "io.evcc.ios",
@@ -95,6 +95,7 @@ export default ({ config }: ConfigContext) =>
           },
         ],
         "expo-localization",
+        "expo-sharing",
         "expo-web-browser",
         "react-native-edge-to-edge",
       ],

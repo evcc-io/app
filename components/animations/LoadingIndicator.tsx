@@ -1,11 +1,11 @@
-import { View } from "react-native";
-import { SpinnerProps } from "@ui-kitten/components";
+import { ImageProps, ImageStyle, StyleSheet, View } from "react-native";
 import Spinner from "./Spinner";
 
-export default function LoadingIndicator(props?: SpinnerProps) {
+export default function LoadingIndicator(props: Partial<ImageProps> = {}) {
+  const color = (StyleSheet.flatten(props.style) as ImageStyle)?.tintColor;
   return (
     <View style={{ justifyContent: "center", alignItems: "center" }}>
-      <Spinner {...props} />
+      <Spinner size="small" status="control" style={color ? { borderColor: color } : undefined} />
     </View>
   );
 }
