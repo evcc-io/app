@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import * as eva from "@eva-design/eva";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
-import { Appearance } from "react-native";
+import { useColorScheme } from "react-native";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import { getLocales } from "expo-localization";
@@ -15,7 +15,6 @@ import ServerManualScreen from "./screens/ServerManualScreen";
 import MainScreen from "./screens/MainScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import { AppProvider, useAppContext } from "./components/AppContext";
-import { ThemeContext } from "./components/ThemeContext";
 import custom from "./themes.json";
 import { useFonts } from "expo-font";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
@@ -116,25 +115,12 @@ function AppNavigator() {
 }
 
 export default function App() {
-  const colorScheme = Appearance.getColorScheme() ?? "light";
-  const [theme, setTheme] = React.useState(colorScheme);
+  const colorScheme = useColorScheme();
+  const theme: "light" | "dark" = colorScheme === "dark" ? "dark" : "light";
   const [fontsLoaded] = useFonts({
     "Montserrat-Bold": require("./assets/fonts/Montserrat-Bold.ttf"),
     "Montserrat-Medium": require("./assets/fonts/Montserrat-Medium.ttf"),
   });
-
-  const toggleTheme = () => {
-    const nextTheme = theme === "light" ? "dark" : "light";
-    setTheme(nextTheme);
-  };
-
-  useEffect(() => {
-    const subscription = Appearance.addChangeListener(({ colorScheme }) => {
-      setTheme(colorScheme ?? "light");
-    });
-
-    return () => subscription.remove();
-  }, []);
 
   const mergedTheme = { ...eva[theme], ...custom[theme] };
 
@@ -146,17 +132,15 @@ export default function App() {
     <>
       <IconRegistry icons={EvaIconsPack} />
       <AppProvider>
-        <ThemeContext.Provider value={{ theme, toggleTheme }}>
-          <ApplicationProvider
+        <ApplicationProvider
             {...eva}
             theme={mergedTheme}
             customMapping={{ ...eva.mapping, ...mapping }}
           >
             <AppNavigator />
           </ApplicationProvider>
-        </ThemeContext.Provider>
       </AppProvider>
-      <StatusBar style={theme === "dark" ? "light" : "dark"} />
+      <StatusBar style="auto" />
     </>
   );
 }
