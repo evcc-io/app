@@ -5,8 +5,8 @@ import React, {
   useEffect,
   PropsWithChildren,
 } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { BasicAuth } from "types";
+import { BasicAuth, Connection } from "types";
+import { loadConnections } from "utils/storage";
 
 // Create a context
 const AppContext = createContext({
@@ -14,7 +14,7 @@ const AppContext = createContext({
   basicAuth: { required: false } as BasicAuth,
   isLoading: true,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  updateServerUrl: async (_url: string, _basicAuth: BasicAuth) => {},
+  updateServerUrl: async (_connection: Connection) => {},
 });
 
 // Provider component
@@ -25,32 +25,23 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
 
   // Load the URL from AsyncStorage on startup
   useEffect(() => {
-    const loadServerUrl = async () => {
-      const url = await AsyncStorage.getItem("serverUrl");
-      setServerUrl(url || "");
-
-      const basicAuthJson = await AsyncStorage.getItem("basicAuth");
-      if (basicAuthJson) {
-        setBasicAuth(JSON.parse(basicAuthJson));
-      } else {
-        setBasicAuth({ required: false });
-      }
-
+    (async () => {
+      const connection = (await loadConnections())[0];
+      setServerUrl(connection.url);
+      setBasicAuth(connection.basicAuth);
       setIsLoading(false);
-    };
-
-    loadServerUrl();
+    })();
   }, []);
 
-  const updateServerUrl = async (url: string, basicAuth: BasicAuth) => {
-    setBasicAuth(basicAuth);
-    await AsyncStorage.setItem("basicAuth", JSON.stringify(basicAuth));
-    setServerUrl(url);
-    await AsyncStorage.setItem("serverUrl", url);
+  const updateServerUrl = async (connection: Connection) => {
+    setServerUrl(connection.url);
+    setBasicAuth(connection.basicAuth);
   };
 
   return (
-    <AppContext.Provider value={{ serverUrl, basicAuth, isLoading, updateServerUrl }}>
+    <AppContext.Provider
+      value={{ serverUrl, basicAuth, isLoading, updateServerUrl }}
+    >
       {children}
     </AppContext.Provider>
   );

@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { t } from "i18next";
 import { USER_AGENT } from "./constants";
-import { BasicAuth } from "types";
+import { Connection } from "types";
 
 export function cleanServerUrl(url: string) {
   let result = url.trim();
@@ -14,13 +14,13 @@ export function cleanServerUrl(url: string) {
   return result;
 }
 
-export async function verifyEvccServer(url: string, authOptions: BasicAuth) {
+export async function verifyEvccServer(connection: Connection) {
   const options: AxiosRequestConfig = {
     timeout: 10000,
     headers: { "User-Agent": USER_AGENT },
   };
-  if (authOptions) {
-    const { username, password } = authOptions;
+  if (connection.basicAuth) {
+    const { username, password } = connection.basicAuth;
     if (username && password) {
       options.auth = { username, password };
     }
@@ -28,7 +28,7 @@ export async function verifyEvccServer(url: string, authOptions: BasicAuth) {
 
   let response;
   try {
-    response = await axios.get(url, options);
+    response = await axios.get(connection.url, options);
   } catch (error) {
     console.log(error);
     if (axios.isAxiosError(error) && error.response?.status === 401) {
