@@ -123,8 +123,11 @@ export default function ServerScreen({
   const selectServer = useCallback(
     async (url: string) => {
       try {
-        const finalUrl = await verifyEvccServer(url, { required: false });
-        updateServerUrl(finalUrl, { required: false });
+        const finalUrl = await verifyEvccServer({
+          url,
+          basicAuth: { required: false },
+        });
+        updateServerUrl({ url: finalUrl, basicAuth: { required: false } });
       } catch (error) {
         Alert.alert((error as Error).message);
       }
