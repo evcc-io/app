@@ -6,7 +6,7 @@ import Header from "../components/Header";
 import { useAppContext } from "../components/AppContext";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { BasicAuth, RootStackParamList } from "types";
+import { BasicAuth, Connection, RootStackParamList } from "types";
 
 function ServerManualScreen({
   route,
@@ -30,11 +30,11 @@ function ServerManualScreen({
   }, [initialUrl, username, password]);
 
   const serverSelected = React.useCallback(
-    async (nextUrl: string, nextBasicAuth: BasicAuth) => {
+    async (connection: Connection) => {
       console.log("serverSelected");
-      setUrl(nextUrl);
-      setBasicAuth(nextBasicAuth);
-      await updateServerUrl(nextUrl, nextBasicAuth);
+      setUrl(connection.url);
+      setBasicAuth(connection.basicAuth);
+      await updateServerUrl(connection);
 
       // After setting serverUrl, navigate to Main which will be available in the new stack
       navigation.reset({

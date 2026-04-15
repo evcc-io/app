@@ -3,12 +3,12 @@ import { Text, Button, Input, CheckBox } from "@ui-kitten/components";
 import { cleanServerUrl, verifyEvccServer } from "../utils/server";
 import LoadingIndicator from "./animations/LoadingIndicator";
 import { useTranslation } from "react-i18next";
-import { BasicAuth } from "types";
+import { BasicAuth, Connection } from "types";
 
 interface ServerFormProps {
   url: string;
   basicAuth: BasicAuth;
-  serverSelected: (url: string, basicAuth: BasicAuth) => void;
+  serverSelected: (connection: Connection) => void;
 }
 
 export default function ServerForm({
@@ -38,8 +38,14 @@ export default function ServerForm({
     setInProgress(true);
 
     try {
-      const finalUrl = await verifyEvccServer(cleanUrl, internalAuth);
-      serverSelected(finalUrl, internalAuth);
+      const finalUrl = await verifyEvccServer({
+        url: cleanUrl,
+        basicAuth: internalAuth,
+      });
+      serverSelected({
+        url: finalUrl,
+        basicAuth: internalAuth,
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
     } finally {

@@ -1,3 +1,8 @@
+export interface Connection {
+  url: string;
+  basicAuth: BasicAuth;
+}
+
 export interface BasicAuth {
   required: boolean;
   username?: string;
