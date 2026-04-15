@@ -8,7 +8,7 @@ import Header from "../components/Header";
 import { useTranslation } from "react-i18next";
 import { APP_VERSION, GITHUB_RELEASES_URL } from "../utils/constants";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList, BasicAuth } from "types";
+import { RootStackParamList, Connection } from "types";
 
 function SettingsScreen({
   navigation,
@@ -17,8 +17,8 @@ function SettingsScreen({
   const { serverUrl, basicAuth, updateServerUrl } = useAppContext();
 
   const saveServer = React.useCallback(
-    (url: string, basicAuth: BasicAuth) => {
-      updateServerUrl(url, basicAuth);
+    (connection: Connection) => {
+      updateServerUrl(connection);
       if (navigation.canGoBack()) {
         navigation.goBack();
       }
@@ -58,7 +58,7 @@ function SettingsScreen({
           status="danger"
           onPress={() => {
             navigation.goBack();
-            updateServerUrl("", { required: false });
+            updateServerUrl({ url: "", basicAuth: { required: false } });
           }}
         >
           {t("servers.removeServer")}
