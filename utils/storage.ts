@@ -40,9 +40,8 @@ export async function loadConnections(): Promise<Connection[]> {
     await migrateStorage();
   }
 
-  const connections =
-    (await AsyncStorage.getItem(StorageKeys.CONNECTIONS)) || "";
-  return JSON.parse(connections);
+  const connectionsJson = await AsyncStorage.getItem(StorageKeys.CONNECTIONS);
+  return connectionsJson ? JSON.parse(connectionsJson) : [];
 }
 
 async function storeConnections(connections: Connection[]) {
@@ -70,6 +69,6 @@ export async function addOrUpdateConnection(
 
 export async function deleteConnection(index: number) {
   const connections = await loadConnections();
-  delete connections[index];
+  connections.splice(index, 1);
   await storeConnections(connections);
 }
