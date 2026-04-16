@@ -52,17 +52,20 @@ async function storeConnections(connections: Connection[]) {
   );
 }
 
-export async function addConnection(connection: Connection): Promise<number> {
+export async function addOrUpdateConnection(
+  index: number,
+  connection: Connection,
+) {
   const connections = await loadConnections();
-  connections.push(connection);
-  await storeConnections(connections);
-  return connections.length - 1;
-}
+  if (index < connections.length) {
+    connections[index] = connection;
+  } else {
+    connections.push(connection);
+    index = connections.length - 1;
+  }
 
-export async function updateConnection(connection: Connection, index: number) {
-  const connections = await loadConnections();
-  connections[index] = connection;
   await storeConnections(connections);
+  return index;
 }
 
 export async function deleteConnection(index: number) {
