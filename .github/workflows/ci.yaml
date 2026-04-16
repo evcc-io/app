@@ -56,7 +56,9 @@ jobs:
 
       - name: Setup Xcode 26.0
         run: |
+          sudo xcode-select -s /Applications/Xcode_26.0.app/Contents/Developer
           xcodebuild -version
+          sudo xcodebuild -runFirstLaunch
           xcrun simctl list runtimes
 
           if ! xcrun simctl list runtimes | grep -q "iOS"; then
