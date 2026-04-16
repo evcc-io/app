@@ -6,7 +6,7 @@ import React, {
   PropsWithChildren,
 } from "react";
 import { BasicAuth, Connection } from "types";
-import { loadConnections } from "utils/storage";
+import { addOrUpdateConnection, loadConnections } from "utils/storage";
 
 // Create a context
 const AppContext = createContext({
@@ -36,6 +36,7 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
   const updateServerUrl = async (connection: Connection) => {
     setServerUrl(connection.url);
     setBasicAuth(connection.basicAuth);
+    addOrUpdateConnection(0, connection);
   };
 
   return (
