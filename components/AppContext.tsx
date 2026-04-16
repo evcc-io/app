@@ -26,9 +26,14 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
   // Load the URL from AsyncStorage on startup
   useEffect(() => {
     (async () => {
-      const connection = (await loadConnections())[0];
-      setServerUrl(connection.url);
-      setBasicAuth(connection.basicAuth);
+      const connection = await loadConnections();
+      if (connection.length == 1) {
+        setServerUrl(connection[0].url);
+        setBasicAuth(connection[0].basicAuth);
+      } else {
+        setServerUrl("");
+        setBasicAuth({ required: false });
+      }
       setIsLoading(false);
     })();
   }, []);
