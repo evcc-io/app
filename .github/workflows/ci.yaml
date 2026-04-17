@@ -50,7 +50,6 @@ jobs:
     name: "iOS Detox (build + test)"
     runs-on: depot-macos-15
     timeout-minutes: 30
-    if: github.event_name == 'workflow_dispatch'
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.0
@@ -60,21 +59,10 @@ jobs:
           sudo xcode-select -s /Applications/Xcode_26.0.app/Contents/Developer
           xcodebuild -version
           sudo xcodebuild -runFirstLaunch
+          xcrun simctl list runtimes
 
-          max_attempts=3
-          attempt=1
-          success=false
-
-          while [ $attempt -le $max_attempts ]; do
-            echo "Attempt $attempt of $max_attempts..."
-            sudo xcodebuild -downloadPlatform iOS && success=true && break
-            attempt=$((attempt + 1))
-            sleep 3
-          done
-
-          if [ "$success" = false ]; then
-            echo "Failed to download iOS Simulator after $max_attempts attempts."
-            exit 1
+          if ! xcrun simctl list runtimes | grep -q "iOS"; then
+            sudo xcodebuild -downloadPlatform iOS
           fi
 
       - name: Setup Node.js
@@ -129,7 +117,6 @@ jobs:
     name: "Android Detox (build)"
     runs-on: depot-ubuntu-24.04-32
     timeout-minutes: 10
-    if: github.event_name == 'workflow_dispatch'
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.0
