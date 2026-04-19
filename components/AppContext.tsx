@@ -1,3 +1,5 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { migrateFromLegacySingleConnectionStorage } from "helper/launchArguments";
 import React, {
   createContext,
   useContext,
@@ -6,7 +8,11 @@ import React, {
   PropsWithChildren,
 } from "react";
 import { BasicAuth, Connection } from "types";
-import { addOrUpdateConnection, loadConnections } from "utils/storage";
+import {
+  addOrUpdateConnection,
+  loadConnections,
+  StorageKeys,
+} from "utils/storage";
 
 // Create a context
 const AppContext = createContext({
@@ -26,6 +32,21 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
   // Load the URL from AsyncStorage on startup
   useEffect(() => {
     (async () => {
+      // needed for e2e migration test
+      if (migrateFromLegacySingleConnectionStorage()) {
+        await AsyncStorage.multiSet([
+          [StorageKeys.SERVER_URL, "http://localhost:7080"],
+          [
+            StorageKeys.BASIC_AUTH,
+            JSON.stringify({
+              username: "admin",
+              password: "secret",
+              required: true,
+            } satisfies BasicAuth),
+          ],
+        ]);
+      }
+
       const connection = await loadConnections();
       if (connection.length == 1) {
         setServerUrl(connection[0].url);
