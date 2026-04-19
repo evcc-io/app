@@ -7,7 +7,6 @@ import React, {
 } from "react";
 import { WebView, WebViewMessageEvent } from "react-native-webview";
 import { StyleSheet, Animated } from "react-native";
-import * as Linking from "expo-linking";
 import * as Haptics from "expo-haptics";
 import { Text, Layout, Button } from "@ui-kitten/components";
 import { useAppContext } from "../components/AppContext";
@@ -15,7 +14,6 @@ import { useTranslation } from "react-i18next";
 import { USER_AGENT } from "../utils/constants";
 import {
   FileDownloadEvent,
-  ShouldStartLoadRequest,
   WebViewErrorEvent,
   WebViewHttpErrorEvent,
   WebViewTerminatedEvent,
@@ -114,17 +112,6 @@ export default function MainScreen({
     [openSettings],
   );
 
-  const onShouldStartLoadWithRequest = useCallback(
-    (event: ShouldStartLoadRequest) => {
-      if (!event.url.startsWith(serverUrl)) {
-        Linking.openURL(event.url);
-        return false;
-      }
-      return true;
-    },
-    [serverUrl],
-  );
-
   const onLoad = useCallback(() => {
     console.log("onLoad");
   }, []);
@@ -191,7 +178,6 @@ export default function MainScreen({
             onLoad={onLoad}
             onContentProcessDidTerminate={onTerminate}
             onMessage={handleMessage}
-            onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
             onFileDownload={onFileDownload}
           />
         </Animated.View>
@@ -231,7 +217,6 @@ export default function MainScreen({
       onLoad,
       onTerminate,
       handleMessage,
-      onShouldStartLoadWithRequest,
       openSettings,
     ],
   );
