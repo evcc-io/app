@@ -41,7 +41,7 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
   const updateServerUrl = async (connection: Connection) => {
     setServerUrl(connection.url);
     setBasicAuth(connection.basicAuth);
-    addOrUpdateConnection(0, connection);
+    await addOrUpdateConnection(0, connection);
   };
 
   return (
