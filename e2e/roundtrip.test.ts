@@ -11,7 +11,7 @@ describe("Roundtrip", () => {
   });
 
   // TODO: wait for next evcc release
-  it.skip("change server", async () => {
+  it("change server", async () => {
     await element(by.id("serverFormCheckAndSave")).tap();
     await waitForWebview();
 
@@ -28,7 +28,7 @@ describe("Roundtrip", () => {
   });
 
   // TODO: wait for next evcc release
-  it.skip("remove server", async () => {
+  it("remove server", async () => {
     await element(by.id("serverFormCheckAndSave")).tap();
     await waitForWebview();
 
