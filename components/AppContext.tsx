@@ -10,6 +10,7 @@ import React, {
 import { BasicAuth, Connection } from "types";
 import {
   addOrUpdateConnection,
+  deleteConnection,
   loadConnections,
   StorageKeys,
 } from "utils/storage";
@@ -20,7 +21,8 @@ const AppContext = createContext({
   basicAuth: { required: false } as BasicAuth,
   isLoading: true,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  updateServerUrl: async (_connection: Connection) => {},
+  updateConnection: async (_connection: Connection) => {},
+  removeConnection: async (_index: number) => {},
 });
 
 // Provider component
@@ -59,15 +61,27 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
     })();
   }, []);
 
-  const updateServerUrl = async (connection: Connection) => {
+  const updateConnection = async (connection: Connection) => {
     setServerUrl(connection.url);
     setBasicAuth(connection.basicAuth);
     await addOrUpdateConnection(0, connection);
   };
 
+  const removeConnection = async (index: number) => {
+    setServerUrl("");
+    setBasicAuth({ required: false });
+    await deleteConnection(index);
+  };
+
   return (
     <AppContext.Provider
-      value={{ serverUrl, basicAuth, isLoading, updateServerUrl }}
+      value={{
+        serverUrl,
+        basicAuth,
+        isLoading,
+        updateConnection,
+        removeConnection,
+      }}
     >
       {children}
     </AppContext.Provider>
