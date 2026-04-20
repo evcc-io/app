@@ -6,14 +6,12 @@ import { useTranslation } from "react-i18next";
 import { BasicAuth, Connection } from "types";
 
 interface ServerFormProps {
-  url: string;
-  basicAuth: BasicAuth;
+  connection: Connection | undefined;
   serverSelected: (connection: Connection) => void;
 }
 
 export default function ServerForm({
-  url,
-  basicAuth,
+  connection,
   serverSelected,
 }: ServerFormProps) {
   const { t } = useTranslation();
@@ -23,16 +21,28 @@ export default function ServerForm({
   const usernameRef = useRef<Input | null>(null);
   const passwordRef = useRef<Input | null>(null);
 
-  const [internalUrl, setInternalUrl] = useState(url);
-  const [internalAuth, setInternalAuth] = useState(basicAuth);
+  const [internalConnection, setInternalConnection] = useState<
+    Connection | undefined
+  >(connection);
+  React.useEffect(() => setInternalConnection(connection), [connection]);
 
-  React.useEffect(() => setInternalUrl(url), [url]);
-  React.useEffect(() => setInternalAuth(basicAuth), [basicAuth]);
+  const setInternalUrl = (url: string) => {
+    setInternalConnection({
+      url,
+      basicAuth: internalConnection?.basicAuth || {},
+    });
+  };
+  const setInternalAuth = (basicAuth: BasicAuth) => {
+    setInternalConnection({
+      url: internalConnection?.url || "",
+      basicAuth,
+    });
+  };
 
   const validateAndSaveURL = async () => {
     if (inProgress) return;
 
-    const cleanUrl = cleanServerUrl(internalUrl);
+    const cleanUrl = cleanServerUrl(internalConnection?.url || "");
     setInternalUrl(cleanUrl);
     setError("");
     setInProgress(true);
@@ -40,11 +50,11 @@ export default function ServerForm({
     try {
       const finalUrl = await verifyEvccServer({
         url: cleanUrl,
-        basicAuth: internalAuth,
+        basicAuth: internalConnection?.basicAuth || {},
       });
       serverSelected({
         url: finalUrl,
-        basicAuth: internalAuth,
+        basicAuth: internalConnection?.basicAuth || {},
       });
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
@@ -58,7 +68,7 @@ export default function ServerForm({
       <Input
         style={{ marginBottom: 16 }}
         placeholder="http://evcc.local:7070/"
-        value={internalUrl}
+        value={internalConnection?.url}
         size="large"
         status={error ? "danger" : "basic"}
         onChangeText={setInternalUrl}
@@ -66,34 +76,36 @@ export default function ServerForm({
         keyboardType="url"
         autoCapitalize="none"
         onSubmitEditing={() =>
-          internalAuth.required
+          internalConnection?.basicAuth.required
             ? usernameRef.current?.focus()
             : validateAndSaveURL()
         }
-        returnKeyType={internalAuth.required ? "next" : "go"}
+        returnKeyType={internalConnection?.basicAuth.required ? "next" : "go"}
         autoCorrect={false}
         testID="serverFormUrl"
       />
 
       <CheckBox
         style={{ marginTop: 8, marginBottom: 16 }}
-        checked={internalAuth.required}
-        onChange={(v) => setInternalAuth({ ...internalAuth, required: v })}
+        checked={internalConnection?.basicAuth.required}
+        onChange={(v) =>
+          setInternalAuth({ ...internalConnection?.basicAuth, required: v })
+        }
         testID="serverFormAuth"
       >
         {t("servers.manually.authenticationRequired")}
       </CheckBox>
 
-      {internalAuth.required && (
+      {internalConnection?.basicAuth.required && (
         <>
           <Input
             style={{ marginTop: 8, marginBottom: 16 }}
             size="large"
             status="basic"
             onChangeText={(v) =>
-              setInternalAuth({ ...internalAuth, username: v })
+              setInternalAuth({ ...internalConnection?.basicAuth, username: v })
             }
-            value={internalAuth.username}
+            value={internalConnection?.basicAuth.username}
             inputMode="text"
             keyboardType="default"
             autoCapitalize="none"
@@ -109,9 +121,9 @@ export default function ServerForm({
             size="large"
             status="basic"
             onChangeText={(v) =>
-              setInternalAuth({ ...internalAuth, password: v })
+              setInternalAuth({ ...internalConnection?.basicAuth, password: v })
             }
-            value={internalAuth.password}
+            value={internalConnection?.basicAuth.password}
             inputMode="text"
             keyboardType="default"
             autoCapitalize="none"
@@ -130,7 +142,7 @@ export default function ServerForm({
         style={{ marginTop: 16, marginBottom: 16 }}
         appearance="filled"
         size="giant"
-        disabled={internalUrl.length === 0}
+        disabled={internalConnection?.url.length === 0}
         accessoryLeft={inProgress ? LoadingIndicator : undefined}
         onPress={validateAndSaveURL}
         testID="serverFormCheckAndSave"

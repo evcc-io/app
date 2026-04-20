@@ -49,7 +49,7 @@ const hideSplash = () => {
 };
 
 function AppNavigator() {
-  const { serverUrl, isLoading } = useAppContext();
+  const { activeConnection, isLoading } = useAppContext();
 
   // Show splash/loading while determining initial route
   if (isLoading) {
@@ -85,7 +85,7 @@ function AppNavigator() {
           headerShown: false,
         }}
       >
-        {serverUrl ? (
+        {activeConnection?.url ? (
           <>
             <Stack.Screen name="Main" component={MainScreen} />
             <Stack.Screen

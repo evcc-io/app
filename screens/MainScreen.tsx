@@ -28,7 +28,7 @@ import Spinner from "components/animations/Spinner";
 import ActivityIndicator from "components/animations/ActivityIndicator";
 
 function LoadingScreen() {
-  return <ActivityIndicator size="large" animating={false}/>;
+  return <ActivityIndicator size="large" animating={false} />;
 }
 
 export default function MainScreen({
@@ -36,7 +36,7 @@ export default function MainScreen({
 }: NativeStackScreenProps<RootStackParamList, "Main">) {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
-  const { serverUrl, basicAuth } = useAppContext();
+  const { activeConnection } = useAppContext();
   const webViewRef = useRef(null);
   const [isConnected, setIsConnected] = useState(false);
   const [webViewKey, setWebViewKey] = useState(0);
@@ -105,7 +105,9 @@ export default function MainScreen({
           break;
         case "vibrate": {
           const { Light, Medium, Heavy } = Haptics.ImpactFeedbackStyle;
-          const d = Array.isArray(data.pattern) ? data.pattern[0] : data.pattern;
+          const d = Array.isArray(data.pattern)
+            ? data.pattern[0]
+            : data.pattern;
           Haptics.impactAsync(d <= 50 ? Light : d <= 100 ? Medium : Heavy);
           break;
         }
@@ -116,13 +118,13 @@ export default function MainScreen({
 
   const onShouldStartLoadWithRequest = useCallback(
     (event: ShouldStartLoadRequest) => {
-      if (!event.url.startsWith(serverUrl)) {
+      if (!event.url.startsWith(activeConnection?.url || "")) {
         Linking.openURL(event.url);
         return false;
       }
       return true;
     },
-    [serverUrl],
+    [activeConnection?.url],
   );
 
   const onLoad = useCallback(() => {
@@ -152,7 +154,7 @@ export default function MainScreen({
 
   const LoadingScreenMemoized = useMemo(() => <LoadingScreen />, []);
 
-  const { required, username, password } = basicAuth;
+  const { required, username, password } = activeConnection?.basicAuth || {};
   const basicAuthCredential =
     required && username && password ? { username, password } : undefined;
 
@@ -163,7 +165,7 @@ export default function MainScreen({
           <WebView
             testID="mainWebView"
             basicAuthCredential={basicAuthCredential}
-            source={{ uri: serverUrl }}
+            source={{ uri: activeConnection?.url || "" }}
             injectedJavaScript={`
               document.documentElement.style.setProperty("--safe-area-inset-top", "${insets.top}px");
               document.documentElement.style.setProperty("--safe-area-inset-bottom", "${insets.bottom}px");
@@ -220,7 +222,7 @@ export default function MainScreen({
       </Layout>
     ),
     [
-      serverUrl,
+      activeConnection?.url,
       basicAuthCredential,
       webViewKey,
       contFade,
@@ -236,11 +238,11 @@ export default function MainScreen({
     ],
   );
 
-  if (!serverUrl) {
+  if (!activeConnection?.url) {
     return LoadingScreenMemoized;
   }
 
-  console.log("serverUrl", { serverUrl, isConnected });
+  console.log("serverUrl", activeConnection.url, isConnected);
 
   return LayoutMemoized;
 }

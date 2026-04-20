@@ -14,7 +14,7 @@ function SettingsScreen({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "Settings">) {
   const { t } = useTranslation();
-  const { serverUrl, basicAuth, updateConnection, removeConnection } =
+  const { activeConnection, updateConnection, removeConnection } =
     useAppContext();
 
   const saveServer = React.useCallback(
@@ -29,13 +29,9 @@ function SettingsScreen({
 
   const serverForm = React.useMemo(
     () => (
-      <ServerForm
-        url={serverUrl}
-        basicAuth={basicAuth}
-        serverSelected={saveServer}
-      />
+      <ServerForm connection={activeConnection} serverSelected={saveServer} />
     ),
-    [serverUrl, basicAuth, saveServer],
+    [activeConnection, saveServer],
   );
 
   const openGitHubReleases = () => {

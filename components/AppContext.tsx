@@ -17,8 +17,7 @@ import {
 
 // Create a context
 const AppContext = createContext({
-  serverUrl: "",
-  basicAuth: { required: false } as BasicAuth,
+  activeConnection: undefined as Connection | undefined,
   isLoading: true,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   updateConnection: async (_connection: Connection) => {},
@@ -28,8 +27,9 @@ const AppContext = createContext({
 
 // Provider component
 export const AppProvider = ({ children }: PropsWithChildren) => {
-  const [serverUrl, setServerUrl] = useState("");
-  const [basicAuth, setBasicAuth] = useState({ required: false });
+  const [activeConnection, setActiveConnection] = useState<
+    Connection | undefined
+  >();
   const [isLoading, setIsLoading] = useState(true);
 
   // Load the URL from AsyncStorage on startup
@@ -50,35 +50,28 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
         ]);
       }
 
-      const connection = await loadConnections();
-      if (connection.length == 1) {
-        setServerUrl(connection[0].url);
-        setBasicAuth(connection[0].basicAuth);
-      } else {
-        setServerUrl("");
-        setBasicAuth({ required: false });
+      const connections = await loadConnections();
+      if (connections.length == 1) {
+        setActiveConnection(connections[0]);
       }
       setIsLoading(false);
     })();
   }, []);
 
   const updateConnection = async (connection: Connection) => {
-    setServerUrl(connection.url);
-    setBasicAuth(connection.basicAuth);
+    setActiveConnection(connection);
     await addOrUpdateConnection(0, connection);
   };
 
   const removeConnection = async (index: number) => {
-    setServerUrl("");
-    setBasicAuth({ required: false });
+    setActiveConnection(undefined);
     await deleteConnection(index);
   };
 
   return (
     <AppContext.Provider
       value={{
-        serverUrl,
-        basicAuth,
+        activeConnection,
         isLoading,
         updateConnection,
         removeConnection,
