@@ -22,6 +22,7 @@ const AppContext = createContext({
   isLoading: true,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   updateConnection: async (_connection: Connection) => {},
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   removeConnection: async (_index: number) => {},
 });
 
