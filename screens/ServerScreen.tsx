@@ -125,9 +125,9 @@ export default function ServerScreen({
       try {
         const finalUrl = await verifyEvccServer({
           url,
-          basicAuth: { required: false },
+          basicAuth: {},
         });
-        updateConnection({ url: finalUrl, basicAuth: { required: false } });
+        updateConnection({ url: finalUrl, basicAuth: {} });
       } catch (error) {
         Alert.alert((error as Error).message);
       }

@@ -52,28 +52,22 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
         ]);
       }
 
-      const connection = await loadConnections();
-      if (connection.length == 1) {
-        setServerUrl(connection[0].url);
-        setBasicAuth(connection[0].basicAuth);
-      } else {
-        setServerUrl("");
-        setBasicAuth({ required: false });
+      const connections = await loadConnections();
+      if (connections.length == 1) {
+        setActiveConnection(connections[0]);
       }
       setIsLoading(false);
     })();
   }, []);
 
   const updateConnection = async (connection: Connection) => {
-    setServerUrl(connection.url);
-    setBasicAuth(connection.basicAuth);
+    setActiveConnection(connection);
     await addOrUpdateConnection(0, connection);
     setStoredConnections(await loadConnections());
   };
 
   const removeConnection = async (index: number) => {
-    setServerUrl("");
-    setBasicAuth({ required: false });
+    setActiveConnection(undefined);
     await deleteConnection(index);
     setStoredConnections(await loadConnections());
   };

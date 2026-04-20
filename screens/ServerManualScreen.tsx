@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Layout } from "@ui-kitten/components";
 import { View } from "react-native";
 import ServerForm from "../components/ServerForm";
@@ -6,34 +6,40 @@ import Header from "../components/Header";
 import { useAppContext } from "../components/AppContext";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { BasicAuth, Connection, RootStackParamList } from "types";
+import { Connection, RootStackParamList } from "types";
 
 function ServerManualScreen({
   route,
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "ServerManual">) {
   const { t } = useTranslation();
-  const { serverUrl, updateConnection } = useAppContext();
+  const { activeConnection, updateConnection } = useAppContext();
 
   const { url: initialUrl = "", username, password } = route.params || {};
-
-  const [url, setUrl] = React.useState(initialUrl);
-  const [basicAuth, setBasicAuth] = React.useState<BasicAuth>({
-    username,
-    password,
-    required: !!username || !!password,
+  const [connection, setConnection] = useState<Connection>({
+    url: initialUrl,
+    basicAuth: {
+      username,
+      password,
+      required: !!username || !!password,
+    },
   });
 
   React.useEffect(() => {
-    setUrl(initialUrl);
-    setBasicAuth({ username, password, required: basicAuth.required });
+    setConnection({
+      url: initialUrl,
+      basicAuth: {
+        username,
+        password,
+        required: connection.basicAuth.required,
+      },
+    });
   }, [initialUrl, username, password]);
 
   const serverSelected = React.useCallback(
     async (connection: Connection) => {
       console.log("serverSelected");
-      setUrl(connection.url);
-      setBasicAuth(connection.basicAuth);
+      setConnection(connection);
       await updateConnection(connection);
 
       // After setting serverUrl, navigate to Main which will be available in the new stack
@@ -54,12 +60,12 @@ function ServerManualScreen({
           if (navigation.canGoBack()) {
             navigation.goBack();
           } else {
-            navigation.navigate(serverUrl ? "Main" : "Server");
+            navigation.navigate(activeConnection?.url ? "Main" : "Server");
           }
         }}
       />
     ),
-    [navigation, serverUrl, t],
+    [navigation, activeConnection?.url, t],
   );
 
   return (
@@ -67,8 +73,7 @@ function ServerManualScreen({
       {memoizedHeader}
       <View style={{ paddingHorizontal: 16 }}>
         <ServerForm
-          url={url}
-          basicAuth={basicAuth}
+          connection={connection}
           serverSelected={serverSelected}
         />
       </View>

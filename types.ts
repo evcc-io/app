@@ -4,7 +4,7 @@ export interface Connection {
 }
 
 export interface BasicAuth {
-  required: boolean;
+  required?: boolean;
   username?: string;
   password?: string;
 }
