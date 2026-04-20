@@ -73,7 +73,7 @@ function ServerManualScreen({
       {memoizedHeader}
       <View style={{ paddingHorizontal: 16 }}>
         <ServerForm
-          connection={activeConnection}
+          connection={connection}
           serverSelected={serverSelected}
         />
       </View>
