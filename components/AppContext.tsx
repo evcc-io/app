@@ -17,8 +17,8 @@ import {
 
 // Create a context
 const AppContext = createContext({
-  serverUrl: "",
-  basicAuth: { required: false } as BasicAuth,
+  storedConnections: [] as Connection[],
+  activeConnection: undefined as Connection | undefined,
   isLoading: true,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   updateConnection: async (_connection: Connection) => {},
@@ -28,8 +28,10 @@ const AppContext = createContext({
 
 // Provider component
 export const AppProvider = ({ children }: PropsWithChildren) => {
-  const [serverUrl, setServerUrl] = useState("");
-  const [basicAuth, setBasicAuth] = useState({ required: false });
+  const [storedConnections, setStoredConnections] = useState<Connection[]>([]);
+  const [activeConnection, setActiveConnection] = useState<
+    Connection | undefined
+  >();
   const [isLoading, setIsLoading] = useState(true);
 
   // Load the URL from AsyncStorage on startup
@@ -66,19 +68,21 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
     setServerUrl(connection.url);
     setBasicAuth(connection.basicAuth);
     await addOrUpdateConnection(0, connection);
+    setStoredConnections(await loadConnections());
   };
 
   const removeConnection = async (index: number) => {
     setServerUrl("");
     setBasicAuth({ required: false });
     await deleteConnection(index);
+    setStoredConnections(await loadConnections());
   };
 
   return (
     <AppContext.Provider
       value={{
-        serverUrl,
-        basicAuth,
+        storedConnections,
+        activeConnection,
         isLoading,
         updateConnection,
         removeConnection,

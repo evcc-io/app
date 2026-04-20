@@ -4,6 +4,9 @@
     "title": "Setup server"
   },
   "servers": {
+    "stored": {
+      "title": "Stored connections"
+    },
     "changeServer": "Change server",
     "manually": {
       "authenticationRequired": "Authentication required",

@@ -154,30 +154,40 @@ export default function ServerScreen({
             {t("main.description")}
           </Text>
 
-          <Button
-            style={{ marginTop: 8, marginBottom: 32 }}
-            appearance="filled"
-            size="giant"
-            onPress={scanNetwork}
-            accessoryLeft={searching ? LoadingIndicator : undefined}
-            disabled={scanNotPossible}
-            testID="serverSearchButton"
-          >
-            {t("servers.search.start")}
-          </Button>
-
-          {scanNotPossible ? (
-            <Text style={{ marginVertical: 16 }} category="p1">
-              {t("servers.search.notAvailable")}
+          <Layout>
+            <Button
+              style={{ marginTop: 8, marginBottom: 32 }}
+              appearance="filled"
+              size="giant"
+              onPress={scanNetwork}
+              accessoryLeft={searching ? LoadingIndicator : undefined}
+              disabled={scanNotPossible}
+              testID="serverSearchButton"
+            >
+              {t("servers.search.start")}
+            </Button>
+            {scanNotPossible ? (
+              <Text style={{ marginVertical: 16 }} category="p1">
+                {t("servers.search.notAvailable")}
+              </Text>
+            ) : null}
+            {finished && found.length === 0 ? (
+              <Text style={{ marginVertical: 16 }} category="p1">
+                {t("servers.search.nothingFound")}
+              </Text>
+            ) : (
+              <ServerList entries={Array.from(found)} onSelect={selectServer} />
+            )}
+          </Layout>
+          <Layout>
+            <Text
+              testID="serverScreenTitle"
+              style={{ marginVertical: 32 }}
+              category="h2"
+            >
+              {t("servers.stored.title")}
             </Text>
-          ) : null}
-          {finished && found.length === 0 ? (
-            <Text style={{ marginVertical: 16 }} category="p1">
-              {t("servers.search.nothingFound")}
-            </Text>
-          ) : (
-            <ServerList entries={Array.from(found)} onSelect={selectServer} />
-          )}
+          </Layout>
         </Layout>
         <Layout style={{ paddingVertical: 16 }}>
           <Button
