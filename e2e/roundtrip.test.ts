@@ -10,25 +10,26 @@ describe("Roundtrip", () => {
     });
   });
 
-  // TODO: wait for next evcc release
-  it.skip("change server", async () => {
+  it("change server", async () => {
     await element(by.id("serverFormCheckAndSave")).tap();
-    await waitForWebview();
 
+    await waitForWebview();
+    await expect(byWebDataTestId("header")).toHaveText("");
     await byWebDataTestId("topnavigation-button").tap();
     await byWebDataTestId("topnavigation-app").tap();
 
     const url = element(by.id("@serverFormUrl/input"));
-    await expect(url).toHaveText("localhost:7070");
+    await expect(url).toHaveText("http://localhost:7070/");
+    
+    await url.clearText();
     await url.typeText("demo.evcc.io");
     await element(by.id("serverFormCheckAndSave")).tap();
 
     await waitForWebview();
-    await expect(byWebDataTestId("header")).toHaveText("Demo Mode");
+    await expect(byWebDataTestId("header")).toHaveText("DEMO MODE");
   });
 
-  // TODO: wait for next evcc release
-  it.skip("remove server", async () => {
+  it("remove server", async () => {
     await element(by.id("serverFormCheckAndSave")).tap();
     await waitForWebview();
 
