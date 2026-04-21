@@ -28,7 +28,7 @@ import Spinner from "components/animations/Spinner";
 import ActivityIndicator from "components/animations/ActivityIndicator";
 
 function LoadingScreen() {
-  return <ActivityIndicator size="large" animating={false}/>;
+  return <ActivityIndicator size="large" animating={false} />;
 }
 
 export default function MainScreen({
@@ -105,7 +105,9 @@ export default function MainScreen({
           break;
         case "vibrate": {
           const { Light, Medium, Heavy } = Haptics.ImpactFeedbackStyle;
-          const d = Array.isArray(data.pattern) ? data.pattern[0] : data.pattern;
+          const d = Array.isArray(data.pattern)
+            ? data.pattern[0]
+            : data.pattern;
           Haptics.impactAsync(d <= 50 ? Light : d <= 100 ? Medium : Heavy);
           break;
         }
@@ -116,7 +118,10 @@ export default function MainScreen({
 
   const onShouldStartLoadWithRequest = useCallback(
     (event: ShouldStartLoadRequest) => {
-      if (!event.url.startsWith(serverUrl)) {
+      const cleanServerHost = new URL(serverUrl).host;
+      const cleanEventHost = new URL(event.url).host;
+
+      if (!cleanEventHost.startsWith(cleanServerHost)) {
         Linking.openURL(event.url);
         return false;
       }
@@ -229,9 +234,9 @@ export default function MainScreen({
       isConnected,
       onError,
       onLoad,
+      onShouldStartLoadWithRequest,
       onTerminate,
       handleMessage,
-      onShouldStartLoadWithRequest,
       openSettings,
     ],
   );
