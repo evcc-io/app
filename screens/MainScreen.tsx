@@ -231,6 +231,7 @@ export default function MainScreen({
       isConnected,
       onError,
       onLoad,
+      onShouldStartLoadWithRequest,
       onTerminate,
       handleMessage,
       openSettings,
