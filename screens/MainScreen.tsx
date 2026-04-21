@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import { WebView, WebViewMessageEvent } from "react-native-webview";
 import { StyleSheet, Animated } from "react-native";
+import * as Linking from "expo-linking";
 import * as Haptics from "expo-haptics";
 import { Text, Layout, Button } from "@ui-kitten/components";
 import { useAppContext } from "../components/AppContext";
@@ -14,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import { USER_AGENT } from "../utils/constants";
 import {
   FileDownloadEvent,
+  ShouldStartLoadRequest,
   WebViewErrorEvent,
   WebViewHttpErrorEvent,
   WebViewTerminatedEvent,
@@ -26,7 +28,7 @@ import Spinner from "components/animations/Spinner";
 import ActivityIndicator from "components/animations/ActivityIndicator";
 
 function LoadingScreen() {
-  return <ActivityIndicator size="large" animating={false}/>;
+  return <ActivityIndicator size="large" animating={false} />;
 }
 
 export default function MainScreen({
@@ -103,13 +105,26 @@ export default function MainScreen({
           break;
         case "vibrate": {
           const { Light, Medium, Heavy } = Haptics.ImpactFeedbackStyle;
-          const d = Array.isArray(data.pattern) ? data.pattern[0] : data.pattern;
+          const d = Array.isArray(data.pattern)
+            ? data.pattern[0]
+            : data.pattern;
           Haptics.impactAsync(d <= 50 ? Light : d <= 100 ? Medium : Heavy);
           break;
         }
       }
     },
     [openSettings],
+  );
+
+  const onShouldStartLoadWithRequest = useCallback(
+    (event: ShouldStartLoadRequest) => {
+      if (!event.url.startsWith(serverUrl)) {
+        Linking.openURL(event.url);
+        return false;
+      }
+      return true;
+    },
+    [serverUrl],
   );
 
   const onLoad = useCallback(() => {
@@ -178,6 +193,7 @@ export default function MainScreen({
             onLoad={onLoad}
             onContentProcessDidTerminate={onTerminate}
             onMessage={handleMessage}
+            onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
             onFileDownload={onFileDownload}
           />
         </Animated.View>
