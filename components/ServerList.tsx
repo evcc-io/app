@@ -2,10 +2,10 @@ import React from "react";
 import { Button, List, ListItem } from "@ui-kitten/components";
 import { StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
-import { EvccInstance } from "types";
+import { Connection } from "types";
 
 interface ServerListProps {
-  entries: EvccInstance[];
+  entries: Connection[];
   onSelect: (url: string) => Promise<void>;
 }
 
@@ -30,7 +30,7 @@ export default function ServerList({
   };
 
   return (
-    <List<EvccInstance>
+    <List<Connection>
       style={styles.container}
       data={entries}
       renderItem={({ index, item }) => {

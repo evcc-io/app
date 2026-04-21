@@ -29,7 +29,7 @@ export default function ServerForm({
   const setInternalUrl = (url: string) => {
     setInternalConnection({
       url,
-      basicAuth: internalConnection?.basicAuth || {},
+      basicAuth: internalConnection?.basicAuth,
     });
   };
   const setInternalAuth = (basicAuth: BasicAuth) => {
@@ -50,11 +50,11 @@ export default function ServerForm({
     try {
       const finalUrl = await verifyEvccServer({
         url: cleanUrl,
-        basicAuth: internalConnection?.basicAuth || {},
+        basicAuth: internalConnection?.basicAuth,
       });
       serverSelected({
         url: finalUrl,
-        basicAuth: internalConnection?.basicAuth || {},
+        basicAuth: internalConnection?.basicAuth,
       });
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
@@ -76,18 +76,18 @@ export default function ServerForm({
         keyboardType="url"
         autoCapitalize="none"
         onSubmitEditing={() =>
-          internalConnection?.basicAuth.required
+          internalConnection?.basicAuth?.required
             ? usernameRef.current?.focus()
             : validateAndSaveURL()
         }
-        returnKeyType={internalConnection?.basicAuth.required ? "next" : "go"}
+        returnKeyType={internalConnection?.basicAuth?.required ? "next" : "go"}
         autoCorrect={false}
         testID="serverFormUrl"
       />
 
       <CheckBox
         style={{ marginTop: 8, marginBottom: 16 }}
-        checked={internalConnection?.basicAuth.required}
+        checked={internalConnection?.basicAuth?.required}
         onChange={(v) =>
           setInternalAuth({ ...internalConnection?.basicAuth, required: v })
         }
@@ -96,7 +96,7 @@ export default function ServerForm({
         {t("servers.manually.authenticationRequired")}
       </CheckBox>
 
-      {internalConnection?.basicAuth.required && (
+      {internalConnection?.basicAuth?.required && (
         <>
           <Input
             style={{ marginTop: 8, marginBottom: 16 }}

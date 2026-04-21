@@ -1,17 +1,13 @@
 export interface Connection {
+  title?: string;
   url: string;
-  basicAuth: BasicAuth;
+  basicAuth?: BasicAuth;
 }
 
 export interface BasicAuth {
   required?: boolean;
   username?: string;
   password?: string;
-}
-
-export interface EvccInstance {
-  title: string;
-  url: string;
 }
 
 export type RootStackParamList = {

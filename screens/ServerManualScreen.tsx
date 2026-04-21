@@ -31,7 +31,7 @@ function ServerManualScreen({
       basicAuth: {
         username,
         password,
-        required: connection.basicAuth.required,
+        required: connection.basicAuth?.required,
       },
     });
   }, [initialUrl, username, password]);

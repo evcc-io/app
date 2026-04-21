@@ -1,6 +1,13 @@
 import React, { useState, useCallback } from "react";
 import * as ServiceDiscovery from "@inthepocket/react-native-service-discovery";
-import { Layout, Text, Button } from "@ui-kitten/components";
+import {
+  Layout,
+  Text,
+  Button,
+  Divider,
+  List,
+  ListItem,
+} from "@ui-kitten/components";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Alert } from "react-native";
 
@@ -10,7 +17,7 @@ import LoadingIndicator from "../components/animations/LoadingIndicator";
 import { verifyEvccServer } from "../utils/server";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { EvccInstance, RootStackParamList } from "types";
+import { Connection, RootStackParamList } from "types";
 
 export default function ServerScreen({
   navigation,
@@ -19,7 +26,7 @@ export default function ServerScreen({
   const [searching, setSearching] = useState(false);
   const [finished, setFinished] = useState(false);
   const [scanNotPossible, setScanNotPossible] = useState(false);
-  const [found, setFound] = useState<EvccInstance[]>([]);
+  const [found, setFound] = useState<Connection[]>([]);
 
   const { updateConnection } = useAppContext();
 
@@ -44,11 +51,11 @@ export default function ServerScreen({
     return `${scheme}://${hostName}${port}`;
   };
 
-  const toInstance = (service: ServiceDiscovery.Service): EvccInstance => {
+  const toInstance = (service: ServiceDiscovery.Service): Connection => {
     return { title: getTitle(service), url: getUrl(service) };
   };
 
-  const sameInstance = (a: EvccInstance, b: EvccInstance) => {
+  const sameInstance = (a: Connection, b: Connection) => {
     return a.url === b.url;
   };
 
@@ -125,9 +132,8 @@ export default function ServerScreen({
       try {
         const finalUrl = await verifyEvccServer({
           url,
-          basicAuth: {},
         });
-        updateConnection({ url: finalUrl, basicAuth: {} });
+        updateConnection({ url: finalUrl });
       } catch (error) {
         Alert.alert((error as Error).message);
       }
@@ -179,6 +185,7 @@ export default function ServerScreen({
               <ServerList entries={Array.from(found)} onSelect={selectServer} />
             )}
           </Layout>
+          <Divider style={{ backgroundColor: "white" }} />
           <Layout>
             <Text
               testID="serverScreenTitle"
@@ -187,6 +194,26 @@ export default function ServerScreen({
             >
               {t("servers.stored.title")}
             </Text>
+            <Text style={{ marginBottom: 32 }} category="p1">
+              {t("servers.stored.description")}
+            </Text>
+            <List
+              data={
+                [
+                  { url: "test", basicAuth: { required: false } },
+                ] satisfies Connection[]
+              }
+              renderItem={({ index, item }) => {
+                return (
+                  <ListItem
+                    title={`Connection #${index + 1}`}
+                    description={item.url}
+                    accessoryRight={() => <Button size="small"> Click </Button>}
+                    testID={"serverSearchListItem" + index}
+                  />
+                );
+              }}
+            ></List>
           </Layout>
         </Layout>
         <Layout style={{ paddingVertical: 16 }}>
