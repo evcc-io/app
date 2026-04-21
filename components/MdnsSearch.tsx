@@ -112,7 +112,7 @@ export default function MdnsSearch({
   }, []);
 
   return (
-    <Layout>
+    <>
       <Button
         style={{ marginTop: 8, marginBottom: 32 }}
         appearance="filled"
@@ -136,6 +136,6 @@ export default function MdnsSearch({
       ) : (
         <ServerList entries={Array.from(found)} onSelect={selectServer} />
       )}
-    </Layout>
+    </>
   );
 }
