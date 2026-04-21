@@ -1,8 +1,9 @@
 import React from "react";
-import { Button, List, ListItem } from "@ui-kitten/components";
+import { Button, Icon, List, ListItem, useTheme } from "@ui-kitten/components";
 import { StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
 import { Connection } from "types";
+import { getTitle } from "utils/utils";
 
 interface ServerListProps {
   entries: Connection[];
@@ -14,18 +15,39 @@ export default function ServerList({
   onSelect,
 }: ServerListProps): React.ReactElement {
   const { t } = useTranslation();
+  const theme = useTheme();
 
   const renderItemAccessory = (index: number, url: string) => {
     return (
-      <Button
-        size="small"
-        onPress={() => {
-          onSelect(url);
-        }}
-        testID={`serverSearchListItem${index}Button`}
-      >
-        {t("servers.select")}
-      </Button>
+      <>
+        <Button
+          size="small"
+          appearance="ghost"
+          onPress={() => {
+            // onSelect(url);
+          }}
+          accessoryLeft={(props) => {
+            return (
+              <Icon
+                {...props}
+                fill={theme["text-primary-color"]}
+                name="edit-outline"
+                style={{ width: 32, height: 32 }}
+              />
+            );
+          }}
+          testID={`serverSearchListItem${index}Button`}
+        />
+        <Button
+          size="small"
+          onPress={() => {
+            onSelect(url);
+          }}
+          testID={`serverSearchListItem${index}Button`}
+        >
+          {t("servers.select")}
+        </Button>
+      </>
     );
   };
 
@@ -36,7 +58,7 @@ export default function ServerList({
       renderItem={({ index, item }) => {
         return (
           <ListItem
-            title={item.title}
+            title={item.title || getTitle(item.url)}
             description={item.url}
             accessoryRight={() => renderItemAccessory(index, item.url)}
             testID={"serverSearchListItem" + index}
@@ -50,7 +72,7 @@ export default function ServerList({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 0,
     backgroundColor: "transparent",
   },
 });

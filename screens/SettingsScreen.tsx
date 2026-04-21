@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Button, Text } from "@ui-kitten/components";
+import { Button, Text, Icon, useTheme } from "@ui-kitten/components";
 import { View, TouchableOpacity } from "react-native";
 import * as Linking from "expo-linking";
 import ServerForm from "../components/ServerForm";
@@ -9,12 +9,14 @@ import { useTranslation } from "react-i18next";
 import { APP_VERSION, GITHUB_RELEASES_URL } from "../utils/constants";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList, Connection } from "types";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 function SettingsScreen({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "Settings">) {
   const { t } = useTranslation();
-  const { activeConnection, updateConnection, removeConnection } =
+  const theme = useTheme();
+  const { activeConnection, updateConnection, closeConnection } =
     useAppContext();
 
   const saveServer = React.useCallback(
@@ -39,7 +41,7 @@ function SettingsScreen({
   };
 
   return (
-    <Layout style={{ flex: 1, paddingBottom: 32 }}>
+    <SafeAreaView style={{ flex: 1, paddingBottom: 32 }}>
       <Header
         title={t("servers.changeServer")}
         showDone
@@ -47,15 +49,23 @@ function SettingsScreen({
       />
       <View style={{ paddingHorizontal: 16 }}>
         {serverForm}
-
         <Button
-          testID="setingsScreenRemoveServer"
+          testID="setingsScreenCloseServer"
           style={{ marginVertical: 16 }}
           appearance="ghost"
-          status="danger"
+          status="primary"
+          accessoryLeft={(props) => {
+            return (
+              <Icon
+                {...props}
+                fill={theme["text-primary-color"]}
+                name="arrow-circle-left-outline"
+                style={{ width: 32, height: 32 }}
+              />
+            );
+          }}
           onPress={() => {
-            navigation.goBack();
-            removeConnection(0);
+            closeConnection();
           }}
         >
           {t("servers.removeServer")}
@@ -75,7 +85,7 @@ function SettingsScreen({
           </Text>
         </TouchableOpacity>
       </View>
-    </Layout>
+    </SafeAreaView>
   );
 }
 

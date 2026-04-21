@@ -1,9 +1,17 @@
 {
   "main": {
     "description": "Durchsuche dein Netzwerk, um deine evcc Installation zu finden.",
-    "title": "Server einrichten"
+    "title": "Server suchen"
   },
   "servers": {
+    "stored": {
+      "title": "Server öffnen",
+      "descriptionOpen": "Wähle eine evcc Installation aus.",
+      "descriptionAdd": "Füge eine neue evcc Installation hinzu."
+    },
+    "add": {
+      "title": "Server hinzufügen"
+    },
     "changeServer": "Server ändern",
     "manually": {
       "authenticationRequired": "Anmeldung erforderlich",
@@ -17,7 +25,7 @@
       "specify": "Adresse manuell eingeben",
       "user": "Benutzer"
     },
-    "removeServer": "Server entfernen",
+    "closeServer": "Server entfernen",
     "search": {
       "notAvailable": "Die Suche ist auf diesem Gerät nicht möglich. Nutze die manuelle Eingabe.",
       "nothingFound": "Es wurde kein evcc Server gefunden.",
@@ -25,6 +33,7 @@
       "start": "Suche starten"
     },
     "select": "Auswählen",
-    "useDemo": "Demoinstanz verwenden"
+    "useDemo": "Demoinstanz verwenden",
+    "gotoSearchTab": "Nach Servern suchen"
   }
 }

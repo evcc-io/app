@@ -5,29 +5,22 @@ import { t } from "i18next";
 import LoadingIndicator from "./animations/LoadingIndicator";
 import ServerList from "./ServerList";
 import * as ServiceDiscovery from "@inthepocket/react-native-service-discovery";
+import { StyleProp, ViewStyle } from "react-native";
+import { getTitle } from "utils/utils";
 
 interface MdnsSearchProps {
+  style?: StyleProp<ViewStyle>;
   selectServer: (url: string) => Promise<void>;
 }
 
 export default function MdnsSearch({
+  style,
   selectServer,
 }: MdnsSearchProps): React.ReactElement {
   const [searching, setSearching] = useState(false);
   const [finished, setFinished] = useState(false);
   const [scanNotPossible, setScanNotPossible] = useState(false);
   const [found, setFound] = useState<Connection[]>([]);
-
-  const getTitle = (service: ServiceDiscovery.Service) => {
-    let title = service.hostName;
-    for (const s of [".local.", ".fritz.box"]) {
-      if (title.endsWith(s)) {
-        title = title.slice(0, -1 * s.length);
-        break;
-      }
-    }
-    return title;
-  };
 
   const getUrl = (service: ServiceDiscovery.Service) => {
     const scheme = service.type === "_http._tcp." ? "http" : "https";
@@ -40,7 +33,7 @@ export default function MdnsSearch({
   };
 
   const toInstance = (service: ServiceDiscovery.Service): Connection => {
-    return { title: getTitle(service), url: getUrl(service) };
+    return { title: getTitle(service.hostName), url: getUrl(service) };
   };
 
   const sameInstance = (a: Connection, b: Connection) => {
@@ -112,7 +105,18 @@ export default function MdnsSearch({
   }, []);
 
   return (
-    <>
+    <Layout style={{ flex: 1, ...style }}>
+      <Text
+        testID="serverScreenTitle"
+        style={{ marginVertical: 32 }}
+        category="h2"
+      >
+        {t("main.title")}
+      </Text>
+      <Text style={{ marginBottom: 32 }} category="p1">
+        {t("main.description")}
+      </Text>
+
       <Button
         style={{ marginTop: 8, marginBottom: 32 }}
         appearance="filled"
@@ -136,6 +140,6 @@ export default function MdnsSearch({
       ) : (
         <ServerList entries={Array.from(found)} onSelect={selectServer} />
       )}
-    </>
+    </Layout>
   );
 }

@@ -22,6 +22,7 @@ const AppContext = createContext({
   isLoading: true,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   updateConnection: async (_connection: Connection) => {},
+  closeConnection: async () => {},
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   removeConnection: async (_index: number) => {},
 });
@@ -53,9 +54,11 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
       }
 
       const connections = await loadConnections();
+
       if (connections.length == 1) {
         setActiveConnection(connections[0]);
       }
+      setStoredConnections(connections);
       setIsLoading(false);
     })();
   }, []);
@@ -63,6 +66,11 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
   const updateConnection = async (connection: Connection) => {
     setActiveConnection(connection);
     await addOrUpdateConnection(0, connection);
+    setStoredConnections(await loadConnections());
+  };
+
+  const closeConnection = async () => {
+    setActiveConnection(undefined);
     setStoredConnections(await loadConnections());
   };
 
@@ -79,6 +87,7 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
         activeConnection,
         isLoading,
         updateConnection,
+        closeConnection,
         removeConnection,
       }}
     >
