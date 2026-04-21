@@ -118,10 +118,10 @@ export default function MainScreen({
 
   const onShouldStartLoadWithRequest = useCallback(
     (event: ShouldStartLoadRequest) => {
-      const cleanServerUrl = new URL(serverUrl).host;
-      const cleanEventUrl = new URL(event.url).host;
+      const cleanServerHost = new URL(serverUrl).host;
+      const cleanEventHost = new URL(event.url).host;
 
-      if (!cleanEventUrl.startsWith(cleanServerUrl)) {
+      if (!cleanEventHost.startsWith(cleanServerHost)) {
         Linking.openURL(event.url);
         return false;
       }
