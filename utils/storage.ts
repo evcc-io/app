@@ -20,10 +20,7 @@ async function loadLegacyStorage(): Promise<Connection> {
 
 async function migrateStorage() {
   const connection = await loadLegacyStorage();
-  await AsyncStorage.setItem(
-    StorageKeys.CONNECTIONS,
-    JSON.stringify([connection]),
-  );
+  await storeConnections([connection]);
   await AsyncStorage.multiRemove([
     StorageKeys.SERVER_URL,
     StorageKeys.BASIC_AUTH,
@@ -32,11 +29,7 @@ async function migrateStorage() {
 
 export async function loadConnections(): Promise<Connection[]> {
   const keys = await AsyncStorage.getAllKeys();
-
-  if (
-    keys.includes(StorageKeys.SERVER_URL) ||
-    keys.includes(StorageKeys.BASIC_AUTH)
-  ) {
+  if (keys.includes(StorageKeys.SERVER_URL)) {
     await migrateStorage();
   }
 

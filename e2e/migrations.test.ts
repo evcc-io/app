@@ -6,7 +6,7 @@ describe("Migrations", () => {
     await device.launchApp({
       resetAppState: true,
       launchArgs: {
-        migrateFromLegacySingleConnectionStorage: true,
+        testLegacyServerConfig: true,
       },
     });
 

@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { migrateFromLegacySingleConnectionStorage } from "helper/launchArguments";
+import { testLegacyServerConfig } from "helper/launchArguments";
 import React, {
   createContext,
   useContext,
@@ -36,7 +36,7 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     (async () => {
       // needed for e2e migration test
-      if (migrateFromLegacySingleConnectionStorage()) {
+      if (testLegacyServerConfig()) {
         await AsyncStorage.multiSet([
           [StorageKeys.SERVER_URL, "http://localhost:7080"],
           [
