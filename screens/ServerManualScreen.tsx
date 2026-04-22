@@ -6,17 +6,17 @@ import Header from "../components/Header";
 import { useAppContext } from "../components/AppContext";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Connection, RootStackParamList } from "types";
+import { Server, RootStackParamList } from "types";
 
 function ServerManualScreen({
   route,
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "ServerManual">) {
   const { t } = useTranslation();
-  const { activeConnection, updateConnection } = useAppContext();
+  const { activeServer, updateServer } = useAppContext();
 
   const { url: initialUrl = "", username, password } = route.params || {};
-  const [connection, setConnection] = useState<Connection>({
+  const [server, setServer] = useState<Server>({
     url: initialUrl,
     basicAuth: {
       username,
@@ -26,21 +26,21 @@ function ServerManualScreen({
   });
 
   React.useEffect(() => {
-    setConnection({
+    setServer({
       url: initialUrl,
       basicAuth: {
         username,
         password,
-        required: connection.basicAuth.required,
+        required: server.basicAuth.required,
       },
     });
   }, [initialUrl, username, password]);
 
   const serverSelected = React.useCallback(
-    async (connection: Connection) => {
+    async (server: Server) => {
       console.log("serverSelected");
-      setConnection(connection);
-      await updateConnection(connection);
+      setServer(server);
+      await updateServer(server);
 
       // After setting serverUrl, navigate to Main which will be available in the new stack
       navigation.reset({
@@ -48,7 +48,7 @@ function ServerManualScreen({
         routes: [{ name: "Main" }],
       });
     },
-    [updateConnection, navigation],
+    [updateServer, navigation],
   );
 
   const memoizedHeader = React.useMemo(
@@ -60,22 +60,19 @@ function ServerManualScreen({
           if (navigation.canGoBack()) {
             navigation.goBack();
           } else {
-            navigation.navigate(activeConnection?.url ? "Main" : "Server");
+            navigation.navigate(activeServer?.url ? "Main" : "Server");
           }
         }}
       />
     ),
-    [navigation, activeConnection?.url, t],
+    [navigation, activeServer?.url, t],
   );
 
   return (
     <Layout style={{ flex: 1 }}>
       {memoizedHeader}
       <View style={{ paddingHorizontal: 16 }}>
-        <ServerForm
-          connection={connection}
-          serverSelected={serverSelected}
-        />
+        <ServerForm server={server} serverSelected={serverSelected} />
       </View>
     </Layout>
   );

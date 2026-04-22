@@ -7,29 +7,27 @@ import React, {
   useEffect,
   PropsWithChildren,
 } from "react";
-import { BasicAuth, Connection } from "types";
+import { BasicAuth, Server } from "types";
 import {
-  addOrUpdateConnection,
-  deleteConnection,
-  loadConnections,
+  addOrUpdateServer,
+  deleteServers,
+  loadServers,
   StorageKeys,
 } from "utils/storage";
 
 // Create a context
 const AppContext = createContext({
-  activeConnection: undefined as Connection | undefined,
+  activeServer: undefined as Server | undefined,
   isLoading: true,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  updateConnection: async (_connection: Connection) => {},
+  updateServer: async (_server: Server) => {},
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  removeConnection: async (_index: number) => {},
+  removeServer: async (_index: number) => {},
 });
 
 // Provider component
 export const AppProvider = ({ children }: PropsWithChildren) => {
-  const [activeConnection, setActiveConnection] = useState<
-    Connection | undefined
-  >();
+  const [activeServer, setActiveServer] = useState<Server | undefined>();
   const [isLoading, setIsLoading] = useState(true);
 
   // Load the URL from AsyncStorage on startup
@@ -50,31 +48,31 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
         ]);
       }
 
-      const connections = await loadConnections();
-      if (connections.length == 1) {
-        setActiveConnection(connections[0]);
+      const servers = await loadServers();
+      if (servers.length == 1) {
+        setActiveServer(servers[0]);
       }
       setIsLoading(false);
     })();
   }, []);
 
-  const updateConnection = async (connection: Connection) => {
-    setActiveConnection(connection);
-    await addOrUpdateConnection(0, connection);
+  const updateServer = async (server: Server) => {
+    setActiveServer(server);
+    await addOrUpdateServer(0, server);
   };
 
-  const removeConnection = async (index: number) => {
-    setActiveConnection(undefined);
-    await deleteConnection(index);
+  const removeServer = async (index: number) => {
+    setActiveServer(undefined);
+    await deleteServers(index);
   };
 
   return (
     <AppContext.Provider
       value={{
-        activeConnection,
+        activeServer,
         isLoading,
-        updateConnection,
-        removeConnection,
+        updateServer,
+        removeServer: removeServer,
       }}
     >
       {children}

@@ -36,7 +36,7 @@ export default function MainScreen({
 }: NativeStackScreenProps<RootStackParamList, "Main">) {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
-  const { activeConnection } = useAppContext();
+  const { activeServer } = useAppContext();
   const webViewRef = useRef(null);
   const [isConnected, setIsConnected] = useState(false);
   const [webViewKey, setWebViewKey] = useState(0);
@@ -118,13 +118,13 @@ export default function MainScreen({
 
   const onShouldStartLoadWithRequest = useCallback(
     (event: ShouldStartLoadRequest) => {
-      if (!event.url.startsWith(activeConnection?.url || "")) {
+      if (!event.url.startsWith(activeServer?.url || "")) {
         Linking.openURL(event.url);
         return false;
       }
       return true;
     },
-    [activeConnection?.url],
+    [activeServer?.url],
   );
 
   const onLoad = useCallback(() => {
@@ -154,7 +154,7 @@ export default function MainScreen({
 
   const LoadingScreenMemoized = useMemo(() => <LoadingScreen />, []);
 
-  const { required, username, password } = activeConnection?.basicAuth || {};
+  const { required, username, password } = activeServer?.basicAuth || {};
   const basicAuthCredential =
     required && username && password ? { username, password } : undefined;
 
@@ -165,7 +165,7 @@ export default function MainScreen({
           <WebView
             testID="mainWebView"
             basicAuthCredential={basicAuthCredential}
-            source={{ uri: activeConnection?.url || "" }}
+            source={{ uri: activeServer?.url || "" }}
             injectedJavaScript={`
               document.documentElement.style.setProperty("--safe-area-inset-top", "${insets.top}px");
               document.documentElement.style.setProperty("--safe-area-inset-bottom", "${insets.bottom}px");
@@ -222,7 +222,7 @@ export default function MainScreen({
       </Layout>
     ),
     [
-      activeConnection?.url,
+      activeServer?.url,
       basicAuthCredential,
       webViewKey,
       contFade,
@@ -238,11 +238,11 @@ export default function MainScreen({
     ],
   );
 
-  if (!activeConnection?.url) {
+  if (!activeServer?.url) {
     return LoadingScreenMemoized;
   }
 
-  console.log("serverUrl", activeConnection.url, isConnected);
+  console.log("serverUrl", activeServer.url, isConnected);
 
   return LayoutMemoized;
 }

@@ -21,7 +21,7 @@ export default function ServerScreen({
   const [scanNotPossible, setScanNotPossible] = useState(false);
   const [found, setFound] = useState<EvccInstance[]>([]);
 
-  const { updateConnection } = useAppContext();
+  const { updateServer } = useAppContext();
 
   const getTitle = (service: ServiceDiscovery.Service) => {
     let title = service.hostName;
@@ -127,12 +127,12 @@ export default function ServerScreen({
           url,
           basicAuth: {},
         });
-        updateConnection({ url: finalUrl, basicAuth: {} });
+        updateServer({ url: finalUrl, basicAuth: {} });
       } catch (error) {
         Alert.alert((error as Error).message);
       }
     },
-    [updateConnection],
+    [updateServer],
   );
 
   const manualEntry = useCallback(() => {

@@ -1,4 +1,4 @@
-export interface Connection {
+export interface Server {
   url: string;
   basicAuth: BasicAuth;
 }
