@@ -8,33 +8,27 @@ import Header from "../components/Header";
 import { useTranslation } from "react-i18next";
 import { APP_VERSION, GITHUB_RELEASES_URL } from "../utils/constants";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList, BasicAuth } from "types";
+import { RootStackParamList, Server } from "types";
 
 function SettingsScreen({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "Settings">) {
   const { t } = useTranslation();
-  const { serverUrl, basicAuth, updateServerUrl } = useAppContext();
+  const { activeServer, updateServer, removeServer } = useAppContext();
 
   const saveServer = React.useCallback(
-    (url: string, basicAuth: BasicAuth) => {
-      updateServerUrl(url, basicAuth);
+    (server: Server) => {
+      updateServer(server);
       if (navigation.canGoBack()) {
         navigation.goBack();
       }
     },
-    [navigation, updateServerUrl],
+    [navigation, updateServer],
   );
 
   const serverForm = React.useMemo(
-    () => (
-      <ServerForm
-        url={serverUrl}
-        basicAuth={basicAuth}
-        serverSelected={saveServer}
-      />
-    ),
-    [serverUrl, basicAuth, saveServer],
+    () => <ServerForm server={activeServer} serverSelected={saveServer} />,
+    [activeServer, saveServer],
   );
 
   const openGitHubReleases = () => {
@@ -58,7 +52,7 @@ function SettingsScreen({
           status="danger"
           onPress={() => {
             navigation.goBack();
-            updateServerUrl("", { required: false });
+            removeServer(0);
           }}
         >
           {t("servers.removeServer")}

@@ -49,7 +49,7 @@ const hideSplash = () => {
 };
 
 function AppNavigator() {
-  const { serverUrl, isLoading } = useAppContext();
+  const { activeServer, isLoading } = useAppContext();
 
   // Show splash/loading while determining initial route
   if (isLoading) {
@@ -85,7 +85,7 @@ function AppNavigator() {
           headerShown: false,
         }}
       >
-        {serverUrl ? (
+        {activeServer?.url ? (
           <>
             <Stack.Screen name="Main" component={MainScreen} />
             <Stack.Screen
@@ -133,12 +133,12 @@ export default function App() {
       <IconRegistry icons={EvaIconsPack} />
       <AppProvider>
         <ApplicationProvider
-            {...eva}
-            theme={mergedTheme}
-            customMapping={{ ...eva.mapping, ...mapping }}
-          >
-            <AppNavigator />
-          </ApplicationProvider>
+          {...eva}
+          theme={mergedTheme}
+          customMapping={{ ...eva.mapping, ...mapping }}
+        >
+          <AppNavigator />
+        </ApplicationProvider>
       </AppProvider>
       <StatusBar style="auto" />
     </>

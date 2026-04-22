@@ -21,7 +21,7 @@ export default function ServerScreen({
   const [scanNotPossible, setScanNotPossible] = useState(false);
   const [found, setFound] = useState<EvccInstance[]>([]);
 
-  const { updateServerUrl } = useAppContext();
+  const { updateServer } = useAppContext();
 
   const getTitle = (service: ServiceDiscovery.Service) => {
     let title = service.hostName;
@@ -123,13 +123,16 @@ export default function ServerScreen({
   const selectServer = useCallback(
     async (url: string) => {
       try {
-        const finalUrl = await verifyEvccServer(url, { required: false });
-        updateServerUrl(finalUrl, { required: false });
+        const finalUrl = await verifyEvccServer({
+          url,
+          basicAuth: {},
+        });
+        updateServer({ url: finalUrl, basicAuth: {} });
       } catch (error) {
         Alert.alert((error as Error).message);
       }
     },
-    [updateServerUrl],
+    [updateServer],
   );
 
   const manualEntry = useCallback(() => {

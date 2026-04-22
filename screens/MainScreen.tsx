@@ -36,7 +36,7 @@ export default function MainScreen({
 }: NativeStackScreenProps<RootStackParamList, "Main">) {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
-  const { serverUrl, basicAuth } = useAppContext();
+  const { activeServer } = useAppContext();
   const webViewRef = useRef(null);
   const [isConnected, setIsConnected] = useState(false);
   const [webViewKey, setWebViewKey] = useState(0);
@@ -118,16 +118,16 @@ export default function MainScreen({
 
   const onShouldStartLoadWithRequest = useCallback(
     (event: ShouldStartLoadRequest) => {
-      const cleanServerHost = new URL(serverUrl).host;
+      const cleanActiveServerHost = new URL(activeServer?.url || "").host;
       const cleanEventHost = new URL(event.url).host;
 
-      if (!cleanEventHost.startsWith(cleanServerHost)) {
+      if (!cleanEventHost.startsWith(cleanActiveServerHost)) {
         Linking.openURL(event.url);
         return false;
       }
       return true;
     },
-    [serverUrl],
+    [activeServer?.url],
   );
 
   const onLoad = useCallback(() => {
@@ -157,7 +157,7 @@ export default function MainScreen({
 
   const LoadingScreenMemoized = useMemo(() => <LoadingScreen />, []);
 
-  const { required, username, password } = basicAuth;
+  const { required, username, password } = activeServer?.basicAuth || {};
   const basicAuthCredential =
     required && username && password ? { username, password } : undefined;
 
@@ -168,7 +168,7 @@ export default function MainScreen({
           <WebView
             testID="mainWebView"
             basicAuthCredential={basicAuthCredential}
-            source={{ uri: serverUrl }}
+            source={{ uri: activeServer?.url || "" }}
             injectedJavaScript={`
               document.documentElement.style.setProperty("--safe-area-inset-top", "${insets.top}px");
               document.documentElement.style.setProperty("--safe-area-inset-bottom", "${insets.bottom}px");
@@ -225,7 +225,7 @@ export default function MainScreen({
       </Layout>
     ),
     [
-      serverUrl,
+      activeServer?.url,
       basicAuthCredential,
       webViewKey,
       contFade,
@@ -241,11 +241,11 @@ export default function MainScreen({
     ],
   );
 
-  if (!serverUrl) {
+  if (!activeServer?.url) {
     return LoadingScreenMemoized;
   }
 
-  console.log("serverUrl", { serverUrl, isConnected });
+  console.log("serverUrl", activeServer.url, isConnected);
 
   return LayoutMemoized;
 }
