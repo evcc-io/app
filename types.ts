@@ -1,5 +1,10 @@
+export interface Server {
+  url: string;
+  basicAuth: BasicAuth;
+}
+
 export interface BasicAuth {
-  required: boolean;
+  required?: boolean;
   username?: string;
   password?: string;
 }

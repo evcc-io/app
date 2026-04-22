@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Layout } from "@ui-kitten/components";
 import { View } from "react-native";
 import ServerForm from "../components/ServerForm";
@@ -6,35 +6,41 @@ import Header from "../components/Header";
 import { useAppContext } from "../components/AppContext";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { BasicAuth, RootStackParamList } from "types";
+import { Server, RootStackParamList } from "types";
 
 function ServerManualScreen({
   route,
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "ServerManual">) {
   const { t } = useTranslation();
-  const { serverUrl, updateServerUrl } = useAppContext();
+  const { activeServer, updateServer } = useAppContext();
 
   const { url: initialUrl = "", username, password } = route.params || {};
-
-  const [url, setUrl] = React.useState(initialUrl);
-  const [basicAuth, setBasicAuth] = React.useState<BasicAuth>({
-    username,
-    password,
-    required: !!username || !!password,
+  const [server, setServer] = useState<Server>({
+    url: initialUrl,
+    basicAuth: {
+      username,
+      password,
+      required: !!username || !!password,
+    },
   });
 
   React.useEffect(() => {
-    setUrl(initialUrl);
-    setBasicAuth({ username, password, required: basicAuth.required });
+    setServer({
+      url: initialUrl,
+      basicAuth: {
+        username,
+        password,
+        required: server.basicAuth.required,
+      },
+    });
   }, [initialUrl, username, password]);
 
   const serverSelected = React.useCallback(
-    async (nextUrl: string, nextBasicAuth: BasicAuth) => {
+    async (server: Server) => {
       console.log("serverSelected");
-      setUrl(nextUrl);
-      setBasicAuth(nextBasicAuth);
-      await updateServerUrl(nextUrl, nextBasicAuth);
+      setServer(server);
+      await updateServer(server);
 
       // After setting serverUrl, navigate to Main which will be available in the new stack
       navigation.reset({
@@ -42,7 +48,7 @@ function ServerManualScreen({
         routes: [{ name: "Main" }],
       });
     },
-    [updateServerUrl, navigation],
+    [updateServer, navigation],
   );
 
   const memoizedHeader = React.useMemo(
@@ -54,23 +60,19 @@ function ServerManualScreen({
           if (navigation.canGoBack()) {
             navigation.goBack();
           } else {
-            navigation.navigate(serverUrl ? "Main" : "Server");
+            navigation.navigate(activeServer?.url ? "Main" : "Server");
           }
         }}
       />
     ),
-    [navigation, serverUrl, t],
+    [navigation, activeServer?.url, t],
   );
 
   return (
     <Layout style={{ flex: 1 }}>
       {memoizedHeader}
       <View style={{ paddingHorizontal: 16 }}>
-        <ServerForm
-          url={url}
-          basicAuth={basicAuth}
-          serverSelected={serverSelected}
-        />
+        <ServerForm server={server} serverSelected={serverSelected} />
       </View>
     </Layout>
   );
