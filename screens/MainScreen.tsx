@@ -118,7 +118,10 @@ export default function MainScreen({
 
   const onShouldStartLoadWithRequest = useCallback(
     (event: ShouldStartLoadRequest) => {
-      if (!event.url.startsWith(activeConnection?.url || "")) {
+      const cleanActiveConnectionHost = new URL(activeConnection?.url || "").host;
+      const cleanEventHost = new URL(event.url).host;
+
+      if (!cleanEventHost.startsWith(cleanActiveConnectionHost)) {
         Linking.openURL(event.url);
         return false;
       }
@@ -231,9 +234,9 @@ export default function MainScreen({
       isConnected,
       onError,
       onLoad,
+      onShouldStartLoadWithRequest,
       onTerminate,
       handleMessage,
-      onShouldStartLoadWithRequest,
       openSettings,
     ],
   );
