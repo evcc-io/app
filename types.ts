@@ -12,8 +12,12 @@ export interface BasicAuth {
 
 export type RootStackParamList = {
   Main: undefined;
-  Settings: undefined;
+  Settings?: {
+    server?: Server;
+    serverIndex: number;
+  };
   Server: undefined;
+  ChangeServer: undefined;
   ServerManual?: {
     url?: string;
     username?: string;

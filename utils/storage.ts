@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BasicAuth, type Server } from "types";
-import getTitle from "./utils";
+import { getTitle } from "./utils";
 
 export enum StorageKeys {
   SERVER_URL = "serverurl", // legacy
@@ -44,21 +44,22 @@ async function storeServers(servers: Server[]) {
   await AsyncStorage.setItem(StorageKeys.SERVERS, JSON.stringify(servers));
 }
 
-export async function addOrUpdateServer(index: number, server: Server) {
+export async function addServer(server: Server) {
   const servers = await loadServers();
-  if (index < servers.length) {
-    servers[index] = server;
-  } else {
-    servers.push(server);
-    index = servers.length - 1;
-  }
+  servers.push(server);
+  await storeServers(servers);
+}
 
+export async function updateServer(server: Server, index: number) {
+  const servers = await loadServers();
+  servers[index] = server;
   await storeServers(servers);
   return index;
 }
 
-export async function deleteServers(index: number) {
+export async function removeServers(index: number): Promise<Server> {
   const servers = await loadServers();
-  servers.splice(index, 1);
+  const server = servers.splice(index, 1);
   await storeServers(servers);
+  return server[0];
 }

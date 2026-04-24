@@ -46,7 +46,7 @@ export default function MainScreen({
   const loadScale = useRef(new Animated.Value(isConnected ? 1.2 : 1)).current;
 
   const openSettings = useCallback(() => {
-    navigation.navigate("Settings");
+    navigation.navigate("ChangeServer");
   }, [navigation]);
 
   // Reconnect if connection is lost

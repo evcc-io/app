@@ -18,22 +18,32 @@ export default function ServerForm({
   const [inProgress, setInProgress] = useState(false);
   const [error, setError] = useState("");
 
+  const urlRef = useRef<Input | null>(null);
   const usernameRef = useRef<Input | null>(null);
   const passwordRef = useRef<Input | null>(null);
 
-  const [internalServer, setInternalServer] = useState<
-    Server | undefined
-  >(server);
+  const [internalServer, setInternalServer] = useState<Server | undefined>(
+    server,
+  );
   React.useEffect(() => setInternalServer(server), [server]);
 
+  const setInternalTitle = (title: string) => {
+    setInternalServer({
+      title,
+      url: internalServer?.url || "",
+      basicAuth: internalServer?.basicAuth || {},
+    });
+  };
   const setInternalUrl = (url: string) => {
     setInternalServer({
+      title: internalServer?.title,
       url,
       basicAuth: internalServer?.basicAuth || {},
     });
   };
   const setInternalAuth = (basicAuth: BasicAuth) => {
     setInternalServer({
+      title: internalServer?.title,
       url: internalServer?.url || "",
       basicAuth,
     });
@@ -67,6 +77,22 @@ export default function ServerForm({
     <>
       <Input
         style={{ marginBottom: 16 }}
+        placeholder={t("servers.manually.title")}
+        value={internalServer?.title}
+        size="large"
+        status="basic"
+        onChangeText={setInternalTitle}
+        inputMode="text"
+        keyboardType="default"
+        autoCapitalize="none"
+        onSubmitEditing={() => urlRef.current?.focus()}
+        returnKeyType={"next"}
+        autoCorrect={false}
+        testID="serverFormTitle"
+      />
+
+      <Input
+        style={{ marginBottom: 16 }}
         placeholder="http://evcc.local:7070/"
         value={internalServer?.url}
         size="large"
@@ -80,6 +106,7 @@ export default function ServerForm({
             ? usernameRef.current?.focus()
             : validateAndSaveURL()
         }
+        ref={urlRef}
         returnKeyType={internalServer?.basicAuth.required ? "next" : "go"}
         autoCorrect={false}
         testID="serverFormUrl"

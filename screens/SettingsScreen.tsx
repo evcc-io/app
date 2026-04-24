@@ -9,16 +9,21 @@ import { useTranslation } from "react-i18next";
 import { APP_VERSION, GITHUB_RELEASES_URL } from "../utils/constants";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList, Server } from "types";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 function SettingsScreen({
+  route,
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "Settings">) {
   const { t } = useTranslation();
-  const { activeServer, updateServer, removeServer } = useAppContext();
+  const { updateServer, removeServer } = useAppContext();
+  const { server, serverIndex } = route.params || {};
 
   const saveServer = React.useCallback(
     (server: Server) => {
-      updateServer(server);
+      if (serverIndex) {
+        updateServer(server, serverIndex);
+      }
       if (navigation.canGoBack()) {
         navigation.goBack();
       }
@@ -27,8 +32,8 @@ function SettingsScreen({
   );
 
   const serverForm = React.useMemo(
-    () => <ServerForm server={activeServer} serverSelected={saveServer} />,
-    [activeServer, saveServer],
+    () => <ServerForm server={server} serverSelected={saveServer} />,
+    [server, saveServer],
   );
 
   const openGitHubReleases = () => {
@@ -37,41 +42,45 @@ function SettingsScreen({
 
   return (
     <Layout style={{ flex: 1, paddingBottom: 32 }}>
-      <Header
-        title={t("servers.changeServer")}
-        showDone
-        onDone={() => navigation.goBack()}
-      />
-      <View style={{ paddingHorizontal: 16 }}>
-        {serverForm}
+      <SafeAreaView style={{ flex: 1 }}>
+        <Header
+          title={t("servers.changeServer")}
+          showDone
+          onDone={() => navigation.goBack()}
+        />
+        <View style={{ paddingHorizontal: 16 }}>
+          {serverForm}
 
-        <Button
-          testID="setingsScreenRemoveServer"
-          style={{ marginVertical: 16 }}
-          appearance="ghost"
-          status="danger"
-          onPress={() => {
-            navigation.goBack();
-            removeServer(0);
+          <Button
+            testID="setingsScreenRemoveServer"
+            style={{ marginVertical: 16 }}
+            appearance="ghost"
+            status="danger"
+            onPress={async () => {
+              navigation.goBack();
+              if (serverIndex !== undefined) {
+                await removeServer(serverIndex);
+              }
+            }}
+          >
+            {t("servers.removeServer")}
+          </Button>
+        </View>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "flex-end",
+            alignItems: "center",
+            paddingBottom: 8,
           }}
         >
-          {t("servers.removeServer")}
-        </Button>
-      </View>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "flex-end",
-          alignItems: "center",
-          paddingBottom: 8,
-        }}
-      >
-        <TouchableOpacity onPress={openGitHubReleases}>
-          <Text appearance="hint" category="c1">
-            {APP_VERSION}
-          </Text>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity onPress={openGitHubReleases}>
+            <Text appearance="hint" category="c1">
+              {APP_VERSION}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
     </Layout>
   );
 }

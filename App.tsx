@@ -13,7 +13,6 @@ import mapping from "./style.json";
 import ServerScreen from "./screens/ServerScreen";
 import ServerManualScreen from "./screens/ServerManualScreen";
 import MainScreen from "./screens/MainScreen";
-import SettingsScreen from "./screens/SettingsScreen";
 import { AppProvider, useAppContext } from "./components/AppContext";
 import custom from "./themes.json";
 import { useFonts } from "expo-font";
@@ -23,6 +22,8 @@ import { decode, encode } from "base-64";
 import translations from "./i18n";
 import { RootStackParamList } from "types";
 import { SCHEME } from "utils/constants";
+import ChangeServerScreen from "screens/ChangeServerScreen";
+import SettingsScreen from "screens/SettingsScreen";
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -61,6 +62,9 @@ function AppNavigator() {
     presentation: "modal" as const,
   };
 
+  console.log("activeServer", activeServer);
+  
+
   return (
     <NavigationContainer
       onReady={hideSplash}
@@ -88,11 +92,8 @@ function AppNavigator() {
         {activeServer?.url ? (
           <>
             <Stack.Screen name="Main" component={MainScreen} />
-            <Stack.Screen
-              name="Settings"
-              component={SettingsScreen}
-              options={sheetOpts}
-            />
+            <Stack.Screen name="ChangeServer" component={ChangeServerScreen} />
+            <Stack.Screen name="Settings" component={SettingsScreen} />
             <Stack.Screen
               name="ServerManual"
               component={ServerManualScreen}

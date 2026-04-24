@@ -7,21 +7,27 @@ import { useAppContext } from "../components/AppContext";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Server, RootStackParamList } from "types";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 function ServerManualScreen({
   route,
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "ServerManual">) {
   const { t } = useTranslation();
-  const { activeServer, updateServer } = useAppContext();
+  const { activeServer, updateServer, addServer } = useAppContext();
 
-  const { url: initialUrl = "", username, password } = route.params || {};
+  const {
+    url: initialUrl = "",
+    username,
+    password,
+    required,
+  } = route.params || {};
   const [server, setServer] = useState<Server>({
     url: initialUrl,
     basicAuth: {
       username,
       password,
-      required: !!username || !!password,
+      required: !!username || !!password || required,
     },
   });
 
@@ -40,13 +46,8 @@ function ServerManualScreen({
     async (server: Server) => {
       console.log("serverSelected");
       setServer(server);
-      await updateServer(server);
-
-      // After setting serverUrl, navigate to Main which will be available in the new stack
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "Main" }],
-      });
+      await addServer(server);
+      navigation.navigate("ChangeServer");
     },
     [updateServer, navigation],
   );
@@ -70,10 +71,12 @@ function ServerManualScreen({
 
   return (
     <Layout style={{ flex: 1 }}>
-      {memoizedHeader}
-      <View style={{ paddingHorizontal: 16 }}>
-        <ServerForm server={server} serverSelected={serverSelected} />
-      </View>
+      <SafeAreaView style={{ flex: 1 }}>
+        {memoizedHeader}
+        <View style={{ paddingHorizontal: 16 }}>
+          <ServerForm server={server} serverSelected={serverSelected} />
+        </View>
+      </SafeAreaView>
     </Layout>
   );
 }

@@ -6,7 +6,7 @@ import { Server } from "types";
 
 interface ServerListProps {
   entries: Server[];
-  onSelect: (url: string) => Promise<void>;
+  onSelect: (server: Server) => Promise<void>;
 }
 
 export default function ServerList({
@@ -15,12 +15,12 @@ export default function ServerList({
 }: ServerListProps): React.ReactElement {
   const { t } = useTranslation();
 
-  const renderItemAccessory = (index: number, url: string) => {
+  const renderItemAccessory = (index: number, server: Server) => {
     return (
       <Button
         size="small"
         onPress={() => {
-          onSelect(url);
+          onSelect(server);
         }}
         testID={`serverSearchListItem${index}Button`}
       >
@@ -38,7 +38,7 @@ export default function ServerList({
           <ListItem
             title={item.title}
             description={item.url}
-            accessoryRight={() => renderItemAccessory(index, item.url)}
+            accessoryRight={() => renderItemAccessory(index, item)}
             testID={"serverSearchListItem" + index}
           />
         );
