@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BasicAuth, type Server } from "types";
+import getTitle from "./utils";
 
 export enum StorageKeys {
   SERVER_URL = "serverurl", // legacy
@@ -15,7 +16,9 @@ async function loadLegacyStorage(): Promise<Server> {
     ? (JSON.parse(basicAuthJson) as BasicAuth)
     : { required: false };
 
-  return { url, basicAuth };
+  const title = await getTitle({ url, basicAuth });
+
+  return { url, basicAuth, title };
 }
 
 async function migrateStorage() {
