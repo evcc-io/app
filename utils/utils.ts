@@ -8,7 +8,7 @@ export default async function getTitle(server: Server): Promise<string> {
     const resp = await fetch(
       `${url.protocol}//${host}/api/state?jq=.siteTitle`,
     );
-    const siteTitle = await resp.text();
+    const siteTitle = await resp.json();
     if (siteTitle) return siteTitle;
   } catch {}
 
