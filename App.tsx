@@ -50,7 +50,7 @@ const hideSplash = () => {
 };
 
 function AppNavigator() {
-  const { activeServer, isLoading } = useAppContext();
+  const { activeServer, isLoading, servers } = useAppContext();
 
   // Show splash/loading while determining initial route
   if (isLoading) {
@@ -63,7 +63,7 @@ function AppNavigator() {
   };
 
   console.log("activeServer", activeServer);
-  
+  console.log("servers", servers);
 
   return (
     <NavigationContainer
@@ -89,9 +89,11 @@ function AppNavigator() {
           headerShown: false,
         }}
       >
-        {activeServer?.url ? (
+        {activeServer?.url || servers.length > 0 ? (
           <>
-            <Stack.Screen name="Main" component={MainScreen} />
+            {activeServer?.url && (
+              <Stack.Screen name="Main" component={MainScreen} />
+            )}
             <Stack.Screen name="ChangeServer" component={ChangeServerScreen} />
             <Stack.Screen name="Settings" component={SettingsScreen} />
             <Stack.Screen

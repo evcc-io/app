@@ -8,13 +8,15 @@ import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Server, RootStackParamList } from "types";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { getTitle } from "utils/utils";
 
 function ServerManualScreen({
   route,
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "ServerManual">) {
   const { t } = useTranslation();
-  const { activeServer, updateServer, addServer } = useAppContext();
+  const { activeServer, setActiveServer, updateServer, addServer } =
+    useAppContext();
 
   const {
     url: initialUrl = "",
@@ -45,9 +47,17 @@ function ServerManualScreen({
   const serverSelected = useCallback(
     async (server: Server) => {
       console.log("serverSelected");
+      server.title = server.title ? server.title : await getTitle(server);
       setServer(server);
+
+      if (serverSelected.length === 0) {
+        navigation.navigate("Main");
+      } else {
+        navigation.goBack();
+      }
+
+      await setActiveServer(server);
       await addServer(server);
-      navigation.navigate("ChangeServer");
     },
     [updateServer, navigation],
   );

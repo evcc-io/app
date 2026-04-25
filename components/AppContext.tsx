@@ -9,11 +9,13 @@ import React, {
 } from "react";
 import { BasicAuth, Server } from "types";
 import {
+  storeActiveServer,
   addServer as storageAddServer,
   updateServer as storageUpdateServer,
-  removeServers as storageRemoveServers,
+  removeServer as storageRemoveServer,
   loadServers,
   StorageKeys,
+  loadActiveServer,
 } from "utils/storage";
 import { sameServer } from "utils/utils";
 
@@ -21,7 +23,7 @@ import { sameServer } from "utils/utils";
 const AppContext = createContext({
   activeServer: undefined as Server | undefined,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setActiveServer: (_server?: Server) => {},
+  setActiveServer: async (_server?: Server) => {},
   servers: [] as Server[],
   isLoading: true,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -34,7 +36,7 @@ const AppContext = createContext({
 
 // Provider component
 export const AppProvider = ({ children }: PropsWithChildren) => {
-  const [activeServer, setActiveServer] = useState<Server | undefined>();
+  const [activeServer, setActiveServerState] = useState<Server | undefined>();
   const [servers, setServers] = useState<Server[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -56,14 +58,16 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
         ]);
       }
 
-      const servers = await loadServers();
-      setServers(servers);
-      if (servers.length == 1) {
-        setActiveServer(servers[0]);
-      }
+      await setActiveServer(await loadActiveServer());
+      setServers(await loadServers());
       setIsLoading(false);
     })();
   }, []);
+
+  const setActiveServer = async (server?: Server) => {
+    setActiveServerState(server);
+    await storeActiveServer(server);
+  };
 
   const addServer = async (server: Server) => {
     await storageAddServer(server);
@@ -76,12 +80,12 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
   };
 
   const removeServer = async (index: number) => {
-    const removedServer = await storageRemoveServers(index);
+    const removedServer = await storageRemoveServer(index);
     const servers = await loadServers();
     setServers(servers);
 
-    if (sameServer(activeServer, removedServer) || servers.length === 0) {
-      setActiveServer(undefined);
+    if (sameServer(activeServer, removedServer)) {
+      await setActiveServer(undefined);
     }
   };
 
@@ -94,7 +98,7 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
         isLoading,
         addServer,
         updateServer,
-        removeServer: removeServer,
+        removeServer,
       }}
     >
       {children}

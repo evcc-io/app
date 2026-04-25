@@ -16,7 +16,7 @@ function SettingsScreen({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "Settings">) {
   const { t } = useTranslation();
-  const { updateServer, removeServer } = useAppContext();
+  const { updateServer, removeServer, servers } = useAppContext();
   const { server, serverIndex } = route.params || {};
 
   const saveServer = React.useCallback(
@@ -46,7 +46,11 @@ function SettingsScreen({
         <Header
           title={t("servers.changeServer")}
           showDone
-          onDone={() => navigation.goBack()}
+          onDone={() => {
+            if (navigation.canGoBack()) {
+              navigation.goBack();
+            }
+          }}
         />
         <View style={{ paddingHorizontal: 16 }}>
           {serverForm}
@@ -57,9 +61,12 @@ function SettingsScreen({
             appearance="ghost"
             status="danger"
             onPress={async () => {
-              navigation.goBack();
               if (serverIndex !== undefined) {
                 await removeServer(serverIndex);
+
+                if (servers.length > 0 && navigation.canGoBack()) {
+                  navigation.goBack();
+                }
               }
             }}
           >

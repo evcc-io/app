@@ -113,7 +113,9 @@ export default function ServerScreen({
   }, []);
 
   const selectDemoServer = useCallback(async () => {
-    await selectServer({ url: "https://demo.evcc.io/", basicAuth: {} });
+    const server = { url: "https://demo.evcc.io/", basicAuth: {} } as Server;
+    server.title = await getTitle(server);
+    await selectServer(server);
   }, []);
 
   const selectServer = useCallback(

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import {
   Layout,
   List,
@@ -14,7 +14,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList, Server } from "types";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
-import { StyleSheet, View } from "react-native";
+import { Animated, StyleSheet, View } from "react-native";
 import { sameServer } from "utils/utils";
 import Header from "components/Header";
 
@@ -25,6 +25,34 @@ export default function ChangeServerScreen({
   const theme = useTheme();
   const { activeServer, servers, setActiveServer } = useAppContext();
 
+  const [textStatus, setTextStatus] = useState("warning");
+
+  const shakeAnim = useRef(new Animated.Value(0)).current;
+  const startShake = () => {
+    Animated.sequence([
+      Animated.timing(shakeAnim, {
+        toValue: 10,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.timing(shakeAnim, {
+        toValue: -10,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.timing(shakeAnim, {
+        toValue: 10,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.timing(shakeAnim, {
+        toValue: 0,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  };
+
   return (
     <Layout style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
@@ -32,10 +60,27 @@ export default function ChangeServerScreen({
           title={t("servers.switchServer.title")}
           showDone
           onDone={() => {
-            navigation.navigate("Main");
+            if (activeServer !== undefined) {
+              navigation.navigate("Main");
+            } else {
+              setTextStatus("danger");
+              startShake();
+            }
           }}
         />
-        <View style={{ flex: 1, paddingHorizontal: 16, marginBottom: 16 }}>
+        <View style={{ flex: 1, paddingHorizontal: 16 }}>
+          {activeServer === undefined && (
+            <Animated.View
+              style={{
+                transform: [{ translateX: shakeAnim }],
+              }}
+            >
+              <Text style={{ marginBottom: 32 }} status={textStatus}>
+                Kein Server ausgewählt. Tippe auf einen Server, um auf ihn zu
+                wechseln.
+              </Text>
+            </Animated.View>
+          )}
           <List<Server>
             style={styles.container}
             data={servers}
@@ -54,7 +99,7 @@ export default function ChangeServerScreen({
                     {item.title && (
                       <Text
                         style={{
-                          marginLeft: 8,
+                          marginRight: 8,
                         }}
                       >
                         {item.title}
@@ -69,7 +114,7 @@ export default function ChangeServerScreen({
                           borderRadius: 100,
                         }}
                       >
-                        aktuell
+                        {t("servers.switchServer.current")}
                       </Text>
                     )}
                   </Layout>
@@ -107,7 +152,7 @@ export default function ChangeServerScreen({
                   <Button
                     onPress={() =>
                       navigation.navigate("Settings", {
-                        server: activeServer,
+                        server: item,
                         serverIndex: index,
                       })
                     }

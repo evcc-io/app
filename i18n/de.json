@@ -7,7 +7,8 @@
     "changeServer": "Server ändern",
     "switchServer": {
       "title": "Server wechseln",
-      "addServer": "Server hinzufügen"
+      "addServer": "Server hinzufügen",
+      "current": "aktuell"
     },
     "manually": {
       "authenticationRequired": "Anmeldung erforderlich",
