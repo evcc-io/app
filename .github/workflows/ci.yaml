@@ -97,10 +97,15 @@ jobs:
           sudo evcc --disable-auth &
 
       - name: Setup Caddy
+        env:
+          CADDY_VERSION: 2.11.2
+          CADDY_SHA256: 7ab765777e953574d5713a69cab3f5a2f643a5c1cc264d4239a60ff845b465d8
         run: |
-          curl -sS https://webi.sh/caddy | sh
-          source ~/.config/envman/PATH.env
-          caddy run &
+          curl -fsSL -o caddy.tar.gz "https://github.com/caddyserver/caddy/releases/download/v${CADDY_VERSION}/caddy_${CADDY_VERSION}_mac_arm64.tar.gz"
+          echo "${CADDY_SHA256}  caddy.tar.gz" | shasum -a 256 -c -
+          tar -xzf caddy.tar.gz caddy
+          chmod +x caddy
+          ./caddy run &
 
       - name: Test
         run: npx detox test --configuration ios.sim.release --cleanup --headless
@@ -223,9 +228,15 @@ jobs:
           sudo evcc --disable-auth --database /var/lib/evcc/evcc.db &
 
       - name: Setup Caddy
+        env:
+          CADDY_VERSION: 2.11.2
+          CADDY_SHA256: 94391dfefe1f278ac8f387ab86162f0e88d87ff97df367f360e51e3cda3df56f
         run: |
-          curl -sS https://webi.sh/caddy | sh
-          caddy run &
+          curl -fsSL -o caddy.tar.gz "https://github.com/caddyserver/caddy/releases/download/v${CADDY_VERSION}/caddy_${CADDY_VERSION}_linux_amd64.tar.gz"
+          echo "${CADDY_SHA256}  caddy.tar.gz" | sha256sum -c -
+          tar -xzf caddy.tar.gz caddy
+          chmod +x caddy
+          ./caddy run &
 
       - name: Test
         uses: reactivecircus/android-emulator-runner@e89f39f1abbbd05b1113a29cf4db69e7540cae5a # v2.37.0
