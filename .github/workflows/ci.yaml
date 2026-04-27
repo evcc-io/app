@@ -112,7 +112,7 @@ jobs:
 
       - name: Upload artifacts on failure
         if: failure()
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: ios-detox-artifacts
           path: e2e/artifacts/
@@ -154,7 +154,7 @@ jobs:
         run: npx detox build --configuration android.emu.release
 
       - name: Upload app apk
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: app-release.apk
           path: android/app/build/outputs/apk/release/app-release.apk
@@ -162,7 +162,7 @@ jobs:
           retention-days: 7
 
       - name: Upload detox apk
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: app-release-androidTest.apk
           path: android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk
@@ -253,7 +253,7 @@ jobs:
 
       - name: Upload artifacts on failure
         if: failure()
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: android-detox-artifacts-api-level-${{ matrix.api-level }}
           path: e2e/artifacts/
