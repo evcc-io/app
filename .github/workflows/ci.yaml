@@ -18,10 +18,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.0
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version: "24"
           cache: "npm"
@@ -39,10 +39,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.0
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Validate
-        uses: ashutoshgngwr/validate-fastlane-supply-metadata@v2.1.0
+        uses: ashutoshgngwr/validate-fastlane-supply-metadata@c8857fdbbd3e00f9a5cbe8604bcecfa95ce8fef8 # v2.1.0
         with:
           usePlayStoreLocales: true
 
@@ -52,7 +52,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.0
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Setup Xcode 26.0
         run: |
@@ -66,7 +66,7 @@ jobs:
           fi
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version: "24"
           cache: "npm"
@@ -107,7 +107,7 @@ jobs:
 
       - name: Upload artifacts on failure
         if: failure()
-        uses: actions/upload-artifact@v5.0.0
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
           name: ios-detox-artifacts
           path: e2e/artifacts/
@@ -119,10 +119,10 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.0
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version: "24"
           cache: "npm"
@@ -137,19 +137,19 @@ jobs:
         run: npx expo prebuild --platform android --clean
 
       - name: Setup Java
-        uses: actions/setup-java@v5.0.0
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
         with:
           distribution: "temurin"
           java-version: "17"
 
       - name: Gradle cache
-        uses: gradle/actions/setup-gradle@v5
+        uses: gradle/actions/setup-gradle@0723195856401067f7a2779048b490ace7a47d7c # v5
 
       - name: Build
         run: npx detox build --configuration android.emu.release
 
       - name: Upload app apk
-        uses: actions/upload-artifact@v5.0.0
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
           name: app-release.apk
           path: android/app/build/outputs/apk/release/app-release.apk
@@ -157,7 +157,7 @@ jobs:
           retention-days: 7
 
       - name: Upload detox apk
-        uses: actions/upload-artifact@v5.0.0
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
           name: app-release-androidTest.apk
           path: android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk
@@ -174,10 +174,10 @@ jobs:
         api-level: [34]
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.0
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version: "24"
           cache: "npm"
@@ -192,13 +192,13 @@ jobs:
         run: npx expo prebuild --platform android --clean
 
       - name: Download app apk
-        uses: actions/download-artifact@v6.0.0
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
         with:
           name: app-release.apk
           path: android/app/build/outputs/apk/release
 
       - name: Download detox apk
-        uses: actions/download-artifact@v6.0.0
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
         with:
           name: app-release-androidTest.apk
           path: android/app/build/outputs/apk/androidTest/release
@@ -228,7 +228,7 @@ jobs:
           caddy run &
 
       - name: Test
-        uses: reactivecircus/android-emulator-runner@v2.35.0
+        uses: reactivecircus/android-emulator-runner@e89f39f1abbbd05b1113a29cf4db69e7540cae5a # v2.37.0
         with:
           api-level: ${{ matrix.api-level }}
           disk-size: 1G
@@ -242,7 +242,7 @@ jobs:
 
       - name: Upload artifacts on failure
         if: failure()
-        uses: actions/upload-artifact@v5.0.0
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
           name: android-detox-artifacts-api-level-${{ matrix.api-level }}
           path: e2e/artifacts/
