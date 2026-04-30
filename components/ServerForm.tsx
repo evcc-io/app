@@ -63,6 +63,7 @@ export default function ServerForm({
         basicAuth: internalServer?.basicAuth || {},
       });
       serverSelected({
+        title: internalServer?.title,
         url: finalUrl,
         basicAuth: internalServer?.basicAuth || {},
       });

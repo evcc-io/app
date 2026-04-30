@@ -21,7 +21,7 @@ function SettingsScreen({
 
   const saveServer = React.useCallback(
     (server: Server) => {
-      if (serverIndex) {
+      if (serverIndex !== undefined) {
         updateServer(server, serverIndex);
       }
       if (navigation.canGoBack()) {
