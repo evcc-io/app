@@ -8,7 +8,8 @@
     "switchServer": {
       "title": "Server wechseln",
       "addServer": "Server hinzufügen",
-      "current": "aktuell"
+      "current": "aktuell",
+      "noServerSelected": "Kein Server ausgewählt. Tippe auf einen Server, um auf ihn zu wechseln."
     },
     "manually": {
       "authenticationRequired": "Anmeldung erforderlich",
@@ -21,7 +22,8 @@
       "serverNotAvailable": "Server nicht erreichbar. Bitte prüfe die Adresse.",
       "specify": "Adresse manuell eingeben",
       "user": "Benutzer",
-      "title": "Titel"
+      "title": "Titel",
+      "serverExistsAlready": "Dieser Server existiert bereits."
     },
     "removeServer": "Server entfernen",
     "search": {

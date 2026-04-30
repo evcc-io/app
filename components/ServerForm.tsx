@@ -77,7 +77,7 @@ export default function ServerForm({
         sameServer(server, s),
       ).length;
       if (sameServerCount > (mode === "create" ? 0 : 1)) {
-        throw Error("Dieser Server existiert bereits.");
+        throw Error(t("servers.manually.serverExistsAlready"));
       }
 
       serverSelected(server);

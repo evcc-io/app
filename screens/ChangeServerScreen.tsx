@@ -54,7 +54,7 @@ export default function ChangeServerScreen({
           {activeServer === undefined && (
             <ShakyText
               ref={shakyText}
-              text="Kein Server ausgewählt. Tippe auf einen Server, um auf ihn zu wechseln."
+              text={t("servers.switchServer.noServerSelected")}
             />
           )}
           <ScrollView style={{ flex: 1 }}>

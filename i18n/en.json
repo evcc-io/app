@@ -5,6 +5,12 @@
   },
   "servers": {
     "changeServer": "Change server",
+    "switchServer": {
+      "title": "Switch server",
+      "addServer": "Add server",
+      "current": "current",
+      "noServerSelected": "No server selected. Tap a server to switch to it."
+    },
     "manually": {
       "authenticationRequired": "Authentication required",
       "checkAdress": "The server does not appear to be an evcc instance. Please check the address.",
@@ -15,7 +21,9 @@
       "serverIncompatible": "The evcc instance is not yet app-compatible. Update your installation.",
       "serverNotAvailable": "Server not available. Please check the address.",
       "specify": "Enter address manually",
-      "user": "User"
+      "user": "User",
+      "title": "Title",
+      "serverExistsAlready": "This server already exists."
     },
     "removeServer": "Remove server",
     "search": {
