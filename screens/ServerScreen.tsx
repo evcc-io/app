@@ -7,11 +7,10 @@ import { Alert } from "react-native";
 import { useAppContext } from "../components/AppContext";
 import ServerList from "../components/ServerList";
 import LoadingIndicator from "../components/animations/LoadingIndicator";
-import { verifyEvccServer } from "../utils/server";
+import { fetchOrGetTitle, sameServer, verifyEvccServer } from "../utils/server";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList, Server } from "types";
-import getTitle from "utils/utils";
 
 export default function ServerScreen({
   navigation,
@@ -34,22 +33,11 @@ export default function ServerScreen({
     return `${scheme}://${hostName}${port}`;
   };
 
-  const toServer = async (
-    service: ServiceDiscovery.Service,
-  ): Promise<Server> => {
-    const server = {
+  const toServer = (service: ServiceDiscovery.Service): Server => {
+    return {
       url: getUrl(service),
       basicAuth: {},
     };
-
-    return {
-      ...server,
-      title: await getTitle(server),
-    };
-  };
-
-  const sameInstance = (a: Server, b: Server) => {
-    return a.url === b.url;
   };
 
   const scanNetwork = useCallback(() => {
@@ -66,10 +54,12 @@ export default function ServerScreen({
       async (service: ServiceDiscovery.Service) => {
         if (service.name === "evcc") {
           console.log("Found service ", service);
-          const instance = await toServer(service);
+          const server = toServer(service);
+          server.title = await fetchOrGetTitle(server);
+
           setFound((found) => {
-            if (!found.some((f) => sameInstance(f, instance))) {
-              return [...found, instance];
+            if (!found.some((f) => sameServer(f, server))) {
+              return [...found, server];
             } else {
               return found;
             }
@@ -83,9 +73,10 @@ export default function ServerScreen({
       async (service: ServiceDiscovery.Service) => {
         if (service.name === "evcc") {
           console.log("Lost service ", service);
-          const instance = await toServer(service);
+          const server = toServer(service);
+
           setFound((found) => {
-            return found.filter((f) => !sameInstance(f, instance));
+            return found.filter((f) => !sameServer(f, server));
           });
         }
       },
