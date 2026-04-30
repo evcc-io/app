@@ -1,22 +1,24 @@
 import React, { useRef, useState } from "react";
-import {
-  Layout,
-  List,
-  ListItem,
-  Text,
-  Button,
-  Icon,
-  useTheme,
-  TextProps,
-} from "@ui-kitten/components";
+import { Layout, Text, useTheme } from "@ui-kitten/components";
+import IconHomeFill from "@material-symbols/svg-400/rounded/home-fill.svg";
+import IconHome from "@material-symbols/svg-400/rounded/home.svg";
+import IconEdit from "@material-symbols/svg-400/rounded/edit.svg";
+import IconAdd from "@material-symbols/svg-400/rounded/add.svg";
 import { useAppContext } from "../components/AppContext";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList, Server } from "types";
+import { RootStackParamList } from "types";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
-import { Animated, StyleSheet, View } from "react-native";
-import Header from "components/Header";
+import {
+  Animated,
+  ScrollView,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import { sameServer } from "utils/server";
+import Header from "components/Header";
+import ServerEntry, { SERVER_ENTRY_MIN_HEIGHT } from "components/ServerEntry";
 
 export default function ChangeServerScreen({
   navigation,
@@ -24,6 +26,14 @@ export default function ChangeServerScreen({
   const { t } = useTranslation();
   const theme = useTheme();
   const { activeServer, servers, setActiveServer } = useAppContext();
+  const { width } = useWindowDimensions();
+  const numColumns = width >= 600 ? 2 : 1;
+  const cellWidth = `${100 / numColumns}%` as const;
+  const cellStyle = {
+    width: cellWidth,
+    paddingHorizontal: 8,
+    paddingBottom: 20,
+  };
 
   const [textStatus, setTextStatus] = useState("warning");
 
@@ -81,126 +91,83 @@ export default function ChangeServerScreen({
               </Text>
             </Animated.View>
           )}
-          <List<Server>
-            style={styles.container}
-            data={servers}
-            renderItem={({ item, index }) => (
-              <ListItem
-                title={(props: TextProps) => (
-                  <Layout
-                    style={[
-                      props.style,
-                      {
-                        flexDirection: "row",
-                        backgroundColor: "transparent",
-                      },
-                    ]}
+          <ScrollView style={{ flex: 1 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                flexWrap: "wrap",
+                marginHorizontal: -8,
+              }}
+            >
+              {servers.map((server, index) => {
+                const isActive = sameServer(server, activeServer);
+                const accentColor = isActive
+                  ? theme["text-primary-color"]
+                  : theme["text-basic-color"];
+                const StatusIcon = isActive ? IconHomeFill : IconHome;
+                return (
+                  <View
+                    key={server.url ?? `server-${index}`}
+                    style={cellStyle}
                   >
-                    {item.title && (
-                      <Text
-                        style={{
-                          marginRight: 8,
-                        }}
-                      >
-                        {item.title}
-                      </Text>
-                    )}
-                    {sameServer(item, activeServer) && (
-                      <Text
-                        style={{
-                          paddingHorizontal: 5,
-                          textTransform: "lowercase",
-                          backgroundColor: theme["text-primary-color"],
-                          borderRadius: 100,
-                        }}
-                      >
-                        {t("servers.switchServer.current")}
-                      </Text>
-                    )}
-                  </Layout>
-                )}
-                description={item.url}
-                style={{
-                  borderColor: sameServer(item, activeServer)
-                    ? theme["text-primary-color"]
-                    : theme["text-basic-color"],
-                  borderWidth: 2,
-                  borderRadius: 16,
-                  marginBottom: 20,
-                }}
-                onPress={async () => {
-                  await setActiveServer(item);
-                  navigation.navigate("Main");
-                }}
-                accessoryLeft={() =>
-                  sameServer(item, activeServer) ? (
-                    <Icon
-                      name="checkmark-circle-2-outline"
-                      height={30}
-                      width={30}
-                      fill={theme["text-primary-color"]}
-                      style={{ paddingRight: 50 }}
+                    <ServerEntry
+                      title={server.title}
+                      url={server.url}
+                      active={isActive}
+                      leftIcon={
+                        <StatusIcon
+                          width={28}
+                          height={28}
+                          fill={accentColor}
+                        />
+                      }
+                      rightIcon={
+                        <IconEdit width={28} height={28} fill={accentColor} />
+                      }
+                      onPress={async () => {
+                        await setActiveServer(server);
+                        navigation.navigate("Main");
+                      }}
+                      onRightPress={() =>
+                        navigation.navigate("Settings", {
+                          server,
+                          serverIndex: index,
+                        })
+                      }
                     />
-                  ) : (
-                    <Icon
-                      name="hard-drive-outline"
-                      height={30}
-                      width={30}
-                      fill={theme["text-basic-color"]}
-                      style={{ paddingRight: 50 }}
-                    />
-                  )
-                }
-                accessoryRight={() => (
-                  <Button
-                    onPress={() =>
-                      navigation.navigate("Settings", {
-                        server: item,
-                        serverIndex: index,
-                      })
-                    }
-                    accessoryRight={() => (
-                      <Icon name="edit-outline" height={20} width={20} />
-                    )}
+                  </View>
+                );
+              })}
+              <View style={cellStyle}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("ServerManual")}
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderColor: theme["color-basic-500"],
+                    borderWidth: 1,
+                    borderStyle: "dashed",
+                    borderRadius: 16,
+                    minHeight: SERVER_ENTRY_MIN_HEIGHT,
+                    paddingHorizontal: 16,
+                  }}
+                >
+                  <IconAdd
+                    width={28}
+                    height={28}
+                    fill={theme["text-basic-color"]}
+                    style={{ marginRight: 8 }}
                   />
-                )}
-              />
-            )}
-            ListFooterComponent={
-              <ListItem
-                title={() => (
-                  <Text style={{ color: theme["text-primary-color"] }}>
+                  <Text style={{ color: theme["text-basic-color"] }}>
                     {t("servers.switchServer.addServer")}
                   </Text>
-                )}
-                onPress={() => navigation.navigate("ServerManual")}
-                style={{
-                  borderColor: theme["text-primary-color"],
-                  borderWidth: 2,
-                  borderRadius: 16,
-                  borderStyle: "dashed",
-                }}
-                accessoryLeft={() => (
-                  <Icon
-                    name="plus-outline"
-                    height={30}
-                    width={30}
-                    fill={theme["text-primary-color"]}
-                    style={{ paddingRight: 50 }}
-                  />
-                )}
-              />
-            }
-          />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </ScrollView>
         </View>
       </SafeAreaView>
     </Layout>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "transparent",
-  },
-});

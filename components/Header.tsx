@@ -1,18 +1,15 @@
 import React from "react";
-import { Text, Icon, IconProps } from "@ui-kitten/components";
+import { Text, useTheme } from "@ui-kitten/components";
 import { View, Pressable } from "react-native";
-import { useTheme } from "@ui-kitten/components";
+import IconClose from "@material-symbols/svg-400/rounded/close.svg";
 
-export function CloseIcon(props: IconProps) {
+export function CloseIcon() {
   const theme = useTheme();
-
   return (
-    <Icon
-      name="close-outline"
-      height={32}
+    <IconClose
       width={32}
+      height={32}
       fill={theme["text-basic-color"]}
-      {...props}
     />
   );
 }

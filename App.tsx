@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import * as eva from "@eva-design/eva";
-import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
+import { ApplicationProvider } from "@ui-kitten/components";
 import { useColorScheme } from "react-native";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
@@ -16,7 +16,6 @@ import MainScreen from "./screens/MainScreen";
 import { AppProvider, useAppContext } from "./components/AppContext";
 import custom from "./themes.json";
 import { useFonts } from "expo-font";
-import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import * as SplashScreen from "expo-splash-screen";
 import { decode, encode } from "base-64";
 import translations from "./i18n";
@@ -133,7 +132,6 @@ export default function App() {
 
   return (
     <>
-      <IconRegistry icons={EvaIconsPack} />
       <AppProvider>
         <ApplicationProvider
           {...eva}
