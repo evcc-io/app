@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { Layout } from "@ui-kitten/components";
 import { View } from "react-native";
 import ServerForm from "../components/ServerForm";
@@ -25,7 +25,7 @@ function ServerManualScreen({
     },
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     setServer({
       url: initialUrl,
       basicAuth: {
@@ -36,7 +36,7 @@ function ServerManualScreen({
     });
   }, [initialUrl, username, password]);
 
-  const serverSelected = React.useCallback(
+  const serverSelected = useCallback(
     async (server: Server) => {
       console.log("serverSelected");
       setServer(server);
@@ -51,7 +51,7 @@ function ServerManualScreen({
     [updateServer, navigation],
   );
 
-  const memoizedHeader = React.useMemo(
+  const memoizedHeader = useMemo(
     () => (
       <Header
         title={t("servers.manually.enterUrl")}
@@ -78,4 +78,4 @@ function ServerManualScreen({
   );
 }
 
-export default React.memo(ServerManualScreen);
+export default memo(ServerManualScreen);
