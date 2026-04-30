@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Layout, Text, useTheme } from "@ui-kitten/components";
 import IconHomeFill from "@material-symbols/svg-400/rounded/home-fill.svg";
 import IconHome from "@material-symbols/svg-400/rounded/home.svg";
@@ -10,7 +10,6 @@ import { RootStackParamList } from "types";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import {
-  Animated,
   ScrollView,
   TouchableOpacity,
   useWindowDimensions,
@@ -19,6 +18,7 @@ import {
 import { sameServer } from "utils/server";
 import Header from "components/Header";
 import ServerEntry, { SERVER_ENTRY_MIN_HEIGHT } from "components/ServerEntry";
+import ShakyText, { ShakyTextHandle } from "components/ShakyText";
 
 export default function ChangeServerScreen({
   navigation,
@@ -34,34 +34,7 @@ export default function ChangeServerScreen({
     paddingHorizontal: 8,
     paddingBottom: 20,
   };
-
-  const [textStatus, setTextStatus] = useState("warning");
-
-  const shakeAnim = useRef(new Animated.Value(0)).current;
-  const startShake = () => {
-    Animated.sequence([
-      Animated.timing(shakeAnim, {
-        toValue: 10,
-        duration: 100,
-        useNativeDriver: true,
-      }),
-      Animated.timing(shakeAnim, {
-        toValue: -10,
-        duration: 100,
-        useNativeDriver: true,
-      }),
-      Animated.timing(shakeAnim, {
-        toValue: 10,
-        duration: 100,
-        useNativeDriver: true,
-      }),
-      Animated.timing(shakeAnim, {
-        toValue: 0,
-        duration: 100,
-        useNativeDriver: true,
-      }),
-    ]).start();
-  };
+  const shakyText = useRef<ShakyTextHandle>(null);
 
   return (
     <Layout style={{ flex: 1 }}>
@@ -73,23 +46,16 @@ export default function ChangeServerScreen({
             if (activeServer !== undefined) {
               navigation.navigate("Main");
             } else {
-              setTextStatus("danger");
-              startShake();
+              shakyText.current?.shake();
             }
           }}
         />
         <View style={{ flex: 1, paddingHorizontal: 16 }}>
           {activeServer === undefined && (
-            <Animated.View
-              style={{
-                transform: [{ translateX: shakeAnim }],
-              }}
-            >
-              <Text style={{ marginBottom: 32 }} status={textStatus}>
-                Kein Server ausgewählt. Tippe auf einen Server, um auf ihn zu
-                wechseln.
-              </Text>
-            </Animated.View>
+            <ShakyText
+              ref={shakyText}
+              text="Kein Server ausgewählt. Tippe auf einen Server, um auf ihn zu wechseln."
+            />
           )}
           <ScrollView style={{ flex: 1 }}>
             <View
@@ -106,20 +72,13 @@ export default function ChangeServerScreen({
                   : theme["text-basic-color"];
                 const StatusIcon = isActive ? IconHomeFill : IconHome;
                 return (
-                  <View
-                    key={server.url ?? `server-${index}`}
-                    style={cellStyle}
-                  >
+                  <View key={server.url ?? `server-${index}`} style={cellStyle}>
                     <ServerEntry
                       title={server.title}
                       url={server.url}
                       active={isActive}
                       leftIcon={
-                        <StatusIcon
-                          width={28}
-                          height={28}
-                          fill={accentColor}
-                        />
+                        <StatusIcon width={28} height={28} fill={accentColor} />
                       }
                       rightIcon={
                         <IconEdit width={28} height={28} fill={accentColor} />

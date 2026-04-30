@@ -1,20 +1,24 @@
 import React, { useRef, useState } from "react";
 import { Text, Button, Input, CheckBox } from "@ui-kitten/components";
-import { cleanServerUrl, verifyEvccServer } from "../utils/server";
+import { cleanServerUrl, sameServer, verifyEvccServer } from "../utils/server";
 import LoadingIndicator from "./animations/LoadingIndicator";
 import { useTranslation } from "react-i18next";
 import { BasicAuth, Server } from "types";
+import { useAppContext } from "./AppContext";
 
 interface ServerFormProps {
   server: Server | undefined;
   serverSelected: (server: Server) => void;
+  mode: "create" | "update";
 }
 
 export default function ServerForm({
   server,
   serverSelected,
+  mode,
 }: ServerFormProps) {
   const { t } = useTranslation();
+  const { servers } = useAppContext();
   const [inProgress, setInProgress] = useState(false);
   const [error, setError] = useState("");
 
@@ -62,11 +66,21 @@ export default function ServerForm({
         url: cleanUrl,
         basicAuth: internalServer?.basicAuth || {},
       });
-      serverSelected({
+
+      const server = {
         title: internalServer?.title,
         url: finalUrl,
         basicAuth: internalServer?.basicAuth || {},
-      });
+      };
+
+      const sameServerCount = servers.filter((s) =>
+        sameServer(server, s),
+      ).length;
+      if (sameServerCount > (mode === "create" ? 0 : 1)) {
+        throw Error("Dieser Server existiert bereits.");
+      }
+
+      serverSelected(server);
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
     } finally {
@@ -179,7 +193,7 @@ export default function ServerForm({
       </Button>
 
       {error ? (
-        <Text style={{ marginTop: 16 }} category="p1">
+        <Text style={{ marginTop: 16 }} category="p1" status="danger">
           {error}
         </Text>
       ) : null}

@@ -82,7 +82,11 @@ function ServerManualScreen({
       <SafeAreaView style={{ flex: 1 }}>
         {memoizedHeader}
         <View style={{ paddingHorizontal: 16 }}>
-          <ServerForm server={server} serverSelected={serverSelected} />
+          <ServerForm
+            mode="create"
+            server={server}
+            serverSelected={serverSelected}
+          />
         </View>
       </SafeAreaView>
     </Layout>

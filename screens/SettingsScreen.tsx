@@ -32,7 +32,9 @@ function SettingsScreen({
   );
 
   const serverForm = React.useMemo(
-    () => <ServerForm server={server} serverSelected={saveServer} />,
+    () => (
+      <ServerForm mode="update" server={server} serverSelected={saveServer} />
+    ),
     [server, saveServer],
   );
 
