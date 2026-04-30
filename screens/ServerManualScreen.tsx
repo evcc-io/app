@@ -8,7 +8,6 @@ import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Server, RootStackParamList } from "types";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { getTitle } from "utils/utils";
 
 function ServerManualScreen({
   route,
@@ -47,7 +46,6 @@ function ServerManualScreen({
   const serverSelected = useCallback(
     async (server: Server) => {
       console.log("serverSelected");
-      server.title = server.title ? server.title : await getTitle(server);
       setServer(server);
 
       if (serverSelected.length === 0) {

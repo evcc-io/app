@@ -15,8 +15,8 @@ import { RootStackParamList, Server } from "types";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import { Animated, StyleSheet, View } from "react-native";
-import { sameServer } from "utils/utils";
 import Header from "components/Header";
+import { sameServer } from "utils/server";
 
 export default function ChangeServerScreen({
   navigation,
@@ -128,7 +128,10 @@ export default function ChangeServerScreen({
                   borderRadius: 16,
                   marginBottom: 20,
                 }}
-                onPress={() => setActiveServer(item)}
+                onPress={async () => {
+                  await setActiveServer(item);
+                  navigation.navigate("Main");
+                }}
                 accessoryLeft={() =>
                   sameServer(item, activeServer) ? (
                     <Icon

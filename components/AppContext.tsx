@@ -8,6 +8,7 @@ import React, {
   PropsWithChildren,
 } from "react";
 import { BasicAuth, Server } from "types";
+import { sameServer } from "utils/server";
 import {
   storeActiveServer,
   addServer as storageAddServer,
@@ -17,7 +18,6 @@ import {
   StorageKeys,
   loadActiveServer,
 } from "utils/storage";
-import { sameServer } from "utils/utils";
 
 // Create a context
 const AppContext = createContext({

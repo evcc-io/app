@@ -120,7 +120,7 @@ export default function ServerScreen({
       try {
         const finalUrl = await verifyEvccServer(server);
         await addServer({ ...server, url: finalUrl });
-        setActiveServer(server);
+        await setActiveServer(server);
       } catch (error) {
         Alert.alert((error as Error).message);
       }
