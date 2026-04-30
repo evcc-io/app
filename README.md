@@ -65,12 +65,6 @@ _Note: Ensure that query values are properly encoded._
 
 [evcc://server?url=https://evcc.local&username=admin&password=secret](evcc://server?url=https://evcc.local&username=admin&password=secret)
 
-## Known limitations
-
-- No support for multiple instances [#3](https://github.com/evcc-io/app/issues/3)
-
-We'll work on these in a future release. Feel free to vote 👍 to help priorization and add new feature ideas.
-
 ## Development
 
 Ensure that you've Node.js and NPM installed. Then install the dependencies:
