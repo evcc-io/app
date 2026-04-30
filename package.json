@@ -69,7 +69,7 @@
     "detox-cli": "^20.46.3",
     "eslint": "^10.0.2",
     "eslint-plugin-react": "^7.33.2",
-    "eslint-plugin-react-native": "^4.1.0",
+    "eslint-plugin-react-native": "^5.0.0",
     "jest": "~30.3.0",
     "prettier": "^3.7.4",
     "react-native-launch-arguments": "^4.1.1",
