@@ -10,32 +10,56 @@ describe("Roundtrip", () => {
     });
   });
 
-  it.skip("change server", async () => {
+  it("two servers: add and switch", async () => {
     await element(by.id("serverFormCheckAndSave")).tap();
+
+    await device.launchApp({
+      url: "evcc://server?url=http://demo.evcc.io",
+    });
+    await element(by.id("serverFormCheckAndSave")).tap();
+
+    await expect(element(by.id("server0"))).toExist();
+    await element(by.id("server0")).tap();
 
     await waitForWebview();
     await expect(byWebDataTestId("header")).toHaveText("");
-    await byWebDataTestId("topnavigation-button").tap();
-    await byWebDataTestId("topnavigation-app").tap();
 
-    const url = element(by.id("@serverFormUrl/input"));
-    await expect(url).toHaveText("http://localhost:7070/");
-
-    await url.clearText();
-    await url.typeText("demo.evcc.io");
-    await element(by.id("serverFormCheckAndSave")).tap();
+    await byWebDataTestId("tab-more").tap();
+    await byWebDataTestId("tab-more-app").tap();
+    await element(by.id("server1")).tap();
 
     await waitForWebview();
     await expect(byWebDataTestId("header")).toHaveText("DEMO MODE");
   });
 
-  it.skip("remove server", async () => {
+  it("change server url", async () => {
+    await element(by.id("serverFormCheckAndSave")).tap();
+
+    await waitForWebview();
+    await expect(byWebDataTestId("header")).toHaveText("");
+    await byWebDataTestId("tab-more").tap();
+    await byWebDataTestId("tab-more-app").tap();
+
+    await element(by.id("editServer0Icon")).tap();
+
+    const url = element(by.id("@serverFormUrl/input"));
+    await url.clearText();
+    await url.typeText("demo.evcc.io");
+    await element(by.id("serverFormCheckAndSave")).tap();
+    await element(by.id("server0")).tap();
+
+    await waitForWebview();
+    await expect(byWebDataTestId("header")).toHaveText("DEMO MODE");
+  });
+
+  it("add and remove server", async () => {
     await element(by.id("serverFormCheckAndSave")).tap();
     await waitForWebview();
 
-    await byWebDataTestId("topnavigation-button").tap();
-    await byWebDataTestId("topnavigation-app").tap();
+    await byWebDataTestId("tab-more").tap();
+    await byWebDataTestId("tab-more-app").tap();
 
+    await element(by.id("editServer0Icon")).tap();
     await element(by.id("setingsScreenRemoveServer")).tap();
 
     await expect(element(by.id("serverScreenTitle"))).toExist();

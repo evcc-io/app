@@ -56,7 +56,7 @@ Opens the server entry field with prefilled values.
 All params are optional.
 
 ```
-evcc://server?url=...&username=...&password=...
+evcc://server?url=...&title=...&username=...&password=...
 ```
 
 _Note: Ensure that query values are properly encoded._

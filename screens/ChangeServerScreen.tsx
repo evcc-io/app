@@ -72,7 +72,11 @@ export default function ChangeServerScreen({
                   : theme["text-basic-color"];
                 const StatusIcon = isActive ? IconHomeFill : IconHome;
                 return (
-                  <View key={server.url ?? `server-${index}`} style={cellStyle}>
+                  <View
+                    key={server.url ?? `server-${index}`}
+                    style={cellStyle}
+                    testID={`server${index}`}
+                  >
                     <ServerEntry
                       title={server.title}
                       url={server.url}
@@ -81,7 +85,12 @@ export default function ChangeServerScreen({
                         <StatusIcon width={28} height={28} fill={accentColor} />
                       }
                       rightIcon={
-                        <IconEdit width={28} height={28} fill={accentColor} />
+                        <IconEdit
+                          testID={`editServer${index}Icon`}
+                          width={28}
+                          height={28}
+                          fill={accentColor}
+                        />
                       }
                       onPress={async () => {
                         await setActiveServer(server);

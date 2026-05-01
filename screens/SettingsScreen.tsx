@@ -10,19 +10,27 @@ import { APP_VERSION, GITHUB_RELEASES_URL } from "../utils/constants";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList, Server } from "types";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { sameServer } from "utils/server";
 
 function SettingsScreen({
   route,
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "Settings">) {
   const { t } = useTranslation();
-  const { updateServer, removeServer, servers } = useAppContext();
+  const { activeServer, updateServer, removeServer, servers, setActiveServer } =
+    useAppContext();
   const { server: internalServer, serverIndex } = route.params || {};
 
   const saveServer = React.useCallback(
-    (server: Server) => {
+    async (server: Server) => {
       if (serverIndex !== undefined) {
-        updateServer(server, serverIndex);
+        if (
+          activeServer &&
+          servers.findIndex((s) => sameServer(activeServer, s)) === serverIndex
+        ) {
+          await setActiveServer(server);
+        }
+        await updateServer(server, serverIndex);
       }
       if (navigation.canGoBack()) {
         navigation.goBack();
@@ -33,7 +41,11 @@ function SettingsScreen({
 
   const serverForm = React.useMemo(
     () => (
-      <ServerForm mode="update" server={internalServer} serverSelected={saveServer} />
+      <ServerForm
+        mode="update"
+        server={internalServer}
+        serverSelected={saveServer}
+      />
     ),
     [internalServer, saveServer],
   );
@@ -65,10 +77,9 @@ function SettingsScreen({
             onPress={async () => {
               if (serverIndex !== undefined) {
                 await removeServer(serverIndex);
-
-                if (servers.length > 0 && navigation.canGoBack()) {
-                  navigation.goBack();
-                }
+                navigation.navigate(
+                  servers.length > 0 ? "ChangeServer" : "Main",
+                );
               }
             }}
           >
