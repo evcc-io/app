@@ -19,6 +19,7 @@ export type RootStackParamList = {
   Server: undefined;
   ChangeServer: undefined;
   ServerManual?: {
+    title?: string;
     url?: string;
     username?: string;
     password?: string;

@@ -14,16 +14,18 @@ function ServerManualScreen({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "ServerManual">) {
   const { t } = useTranslation();
-  const { activeServer, setActiveServer, updateServer, addServer } =
+  const { activeServer, setActiveServer, updateServer, addServer, servers } =
     useAppContext();
 
   const {
+    title,
     url: initialUrl = "",
     username,
     password,
     required,
   } = route.params || {};
   const [server, setServer] = useState<Server>({
+    title,
     url: initialUrl,
     basicAuth: {
       username,
@@ -34,6 +36,7 @@ function ServerManualScreen({
 
   useEffect(() => {
     setServer({
+      title,
       url: initialUrl,
       basicAuth: {
         username,
@@ -41,21 +44,21 @@ function ServerManualScreen({
         required: server.basicAuth.required,
       },
     });
-  }, [initialUrl, username, password]);
+  }, [title, initialUrl, username, password]);
 
   const serverSelected = useCallback(
     async (server: Server) => {
       console.log("serverSelected");
       setServer(server);
 
-      if (serverSelected.length === 0) {
+      await setActiveServer(server);
+      await addServer(server);
+
+      if (servers.length === 1) {
         navigation.navigate("Main");
       } else {
         navigation.goBack();
       }
-
-      await setActiveServer(server);
-      await addServer(server);
     },
     [updateServer, navigation],
   );

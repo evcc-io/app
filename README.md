@@ -61,9 +61,9 @@ _Note: Ensure that query values are properly encoded._
 
 **Example:**
 
-![URL Scheme Example](https://api.qrserver.com/v1/create-qr-code/?color=000000&bgcolor=FFFFFF&data=evcc%3A%2F%2Fserver%3Furl%3Dhttps%3A%2F%2Fevcc.local%26username%3Dadmin%26password%3Dsecret&qzone=1&margin=0&size=150x150&ecc=L)
+![URL Scheme Example](https://api.qrserver.com/v1/create-qr-code/?color=000000&bgcolor=FFFFFF&data=evcc%3A%2F%2Fserver%3Furl%3Dhttps%3A%2F%2Fdemo.evcc.io%26title=DemoServer%26username%3Dadmin%26password%3Dsecret&qzone=1&margin=0&size=150x150&ecc=L)
 
-[evcc://server?url=https://evcc.local&username=admin&password=secret](evcc://server?url=https://evcc.local&username=admin&password=secret)
+[evcc://server?url=https://demo.evcc.io&title=DemoServer&username=admin&password=secret](evcc://server?url=https://demo.evcc.io&title=DemoServer&username=admin&password=secret)
 
 ## Development
 

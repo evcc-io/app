@@ -44,7 +44,7 @@ export default function ChangeServerScreen({
           showDone
           onDone={() => {
             if (activeServer !== undefined) {
-              navigation.navigate("Main");
+              navigation.popTo("Main");
             } else {
               shakyText.current?.shake();
             }
