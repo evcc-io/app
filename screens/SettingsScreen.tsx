@@ -17,7 +17,7 @@ function SettingsScreen({
 }: NativeStackScreenProps<RootStackParamList, "Settings">) {
   const { t } = useTranslation();
   const { updateServer, removeServer, servers } = useAppContext();
-  const { server, serverIndex } = route.params || {};
+  const { server: internalServer, serverIndex } = route.params || {};
 
   const saveServer = React.useCallback(
     (server: Server) => {
@@ -33,9 +33,9 @@ function SettingsScreen({
 
   const serverForm = React.useMemo(
     () => (
-      <ServerForm mode="update" server={server} serverSelected={saveServer} />
+      <ServerForm mode="update" server={internalServer} serverSelected={saveServer} />
     ),
-    [server, saveServer],
+    [internalServer, saveServer],
   );
 
   const openGitHubReleases = () => {

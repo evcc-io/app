@@ -24,7 +24,7 @@ function ServerManualScreen({
     password,
     required,
   } = route.params || {};
-  const [server, setServer] = useState<Server>({
+  const [internalServer, setInternalServer] = useState<Server>({
     title,
     url: initialUrl,
     basicAuth: {
@@ -35,13 +35,13 @@ function ServerManualScreen({
   });
 
   useEffect(() => {
-    setServer({
+    setInternalServer({
       title,
       url: initialUrl,
       basicAuth: {
         username,
         password,
-        required: server.basicAuth.required,
+        required: internalServer.basicAuth.required,
       },
     });
   }, [title, initialUrl, username, password]);
@@ -49,15 +49,15 @@ function ServerManualScreen({
   const serverSelected = useCallback(
     async (server: Server) => {
       console.log("serverSelected");
-      setServer(server);
+      setInternalServer(server);
 
       await setActiveServer(server);
       await addServer(server);
 
-      if (servers.length === 1) {
-        navigation.navigate("Main");
-      } else {
+      if (servers.length !== 1 && navigation.canGoBack()) {
         navigation.goBack();
+      } else {
+        navigation.navigate("Main");
       }
     },
     [updateServer, navigation],
@@ -87,7 +87,7 @@ function ServerManualScreen({
         <View style={{ paddingHorizontal: 16 }}>
           <ServerForm
             mode="create"
-            server={server}
+            server={internalServer}
             serverSelected={serverSelected}
           />
         </View>

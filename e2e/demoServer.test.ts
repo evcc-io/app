@@ -10,6 +10,6 @@ describe("Demo server", () => {
   it("open demo server", async () => {
     await element(by.id("useDemo")).tap();
     await waitForWebview();
-    await expect(byWebDataTestId("header")).toHaveText("Demo Mode");
+    await expect(byWebDataTestId("header")).toHaveText("DEMO MODE");
   });
 });

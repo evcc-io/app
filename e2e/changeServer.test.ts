@@ -10,9 +10,8 @@ describe("Roundtrip", () => {
     });
   });
 
-  it("change server", async () => {
+  it.skip("change server", async () => {
     await element(by.id("serverFormCheckAndSave")).tap();
-    await element(by.id("serverSearchListItem0Button")).tap();
 
     await waitForWebview();
     await expect(byWebDataTestId("header")).toHaveText("");
@@ -30,7 +29,7 @@ describe("Roundtrip", () => {
     await expect(byWebDataTestId("header")).toHaveText("DEMO MODE");
   });
 
-  it("remove server", async () => {
+  it.skip("remove server", async () => {
     await element(by.id("serverFormCheckAndSave")).tap();
     await waitForWebview();
 

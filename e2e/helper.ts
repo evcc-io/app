@@ -7,7 +7,7 @@ import { expect } from "detox";
  * WebView element is actually available before the test continues.
  */
 export async function waitForWebview() {
-  const dataTestID = "topnavigation-button";
+  const dataTestID = "header";
   const app = byWebDataTestId(dataTestID);
 
   const timeout = 20000; // twenty seconds
