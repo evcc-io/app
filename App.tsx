@@ -23,6 +23,7 @@ import { RootStackParamList } from "types";
 import { SCHEME } from "utils/constants";
 import ChangeServerScreen from "screens/ChangeServerScreen";
 import SettingsScreen from "screens/SettingsScreen";
+import { KeyboardProvider } from "react-native-keyboard-controller";
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -83,35 +84,40 @@ function AppNavigator() {
         },
       }}
     >
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        {activeServer?.url || servers.length > 0 ? (
-          <>
-            {activeServer?.url && (
-              <Stack.Screen name="Main" component={MainScreen} />
-            )}
-            <Stack.Screen name="ChangeServer" component={ChangeServerScreen} />
-            <Stack.Screen name="Settings" component={SettingsScreen} />
-            <Stack.Screen
-              name="ServerManual"
-              component={ServerManualScreen}
-              options={sheetOpts}
-            />
-          </>
-        ) : (
-          <>
-            <Stack.Screen name="Server" component={ServerScreen} />
-            <Stack.Screen
-              name="ServerManual"
-              component={ServerManualScreen}
-              options={sheetOpts}
-            />
-          </>
-        )}
-      </Stack.Navigator>
+      <KeyboardProvider>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          {activeServer?.url || servers.length > 0 ? (
+            <>
+              {activeServer?.url && (
+                <Stack.Screen name="Main" component={MainScreen} />
+              )}
+              <Stack.Screen
+                name="ChangeServer"
+                component={ChangeServerScreen}
+              />
+              <Stack.Screen name="Settings" component={SettingsScreen} />
+              <Stack.Screen
+                name="ServerManual"
+                component={ServerManualScreen}
+                options={sheetOpts}
+              />
+            </>
+          ) : (
+            <>
+              <Stack.Screen name="Server" component={ServerScreen} />
+              <Stack.Screen
+                name="ServerManual"
+                component={ServerManualScreen}
+                options={sheetOpts}
+              />
+            </>
+          )}
+        </Stack.Navigator>
+      </KeyboardProvider>
     </NavigationContainer>
   );
 }

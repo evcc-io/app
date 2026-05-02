@@ -11,6 +11,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList, Server } from "types";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { sameServer } from "utils/server";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 
 function SettingsScreen({
   route,
@@ -57,49 +58,55 @@ function SettingsScreen({
   return (
     <Layout style={{ flex: 1, paddingBottom: 32 }}>
       <SafeAreaView style={{ flex: 1 }}>
-        <Header
-          title={t("servers.changeServer")}
-          showDone
-          onDone={() => {
-            if (navigation.canGoBack()) {
-              navigation.goBack();
-            }
-          }}
-        />
-        <View style={{ paddingHorizontal: 16 }}>
-          {serverForm}
-
-          <Button
-            testID="setingsScreenRemoveServer"
-            style={{ marginVertical: 16 }}
-            appearance="ghost"
-            status="danger"
-            onPress={async () => {
-              if (serverIndex !== undefined) {
-                if (servers.length > 1) {
-                  navigation.navigate("ChangeServer");
-                }
-                await removeServer(serverIndex);
+        <KeyboardAwareScrollView
+          style={{ flex: 1 }}
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={{ flexGrow: 1 }}
+        >
+          <Header
+            title={t("servers.changeServer")}
+            showDone
+            onDone={() => {
+              if (navigation.canGoBack()) {
+                navigation.goBack();
               }
             }}
+          />
+          <View style={{ paddingHorizontal: 16 }}>
+            {serverForm}
+
+            <Button
+              testID="setingsScreenRemoveServer"
+              style={{ marginVertical: 16 }}
+              appearance="ghost"
+              status="danger"
+              onPress={async () => {
+                if (serverIndex !== undefined) {
+                  if (servers.length > 1) {
+                    navigation.navigate("ChangeServer");
+                  }
+                  await removeServer(serverIndex);
+                }
+              }}
+            >
+              {t("servers.removeServer")}
+            </Button>
+          </View>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "flex-end",
+              alignItems: "center",
+              paddingBottom: 8,
+            }}
           >
-            {t("servers.removeServer")}
-          </Button>
-        </View>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "flex-end",
-            alignItems: "center",
-            paddingBottom: 8,
-          }}
-        >
-          <TouchableOpacity onPress={openGitHubReleases}>
-            <Text appearance="hint" category="c1">
-              {APP_VERSION}
-            </Text>
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity onPress={openGitHubReleases}>
+              <Text appearance="hint" category="c1">
+                {APP_VERSION}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAwareScrollView>
       </SafeAreaView>
     </Layout>
   );

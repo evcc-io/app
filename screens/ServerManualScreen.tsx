@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Server, RootStackParamList } from "types";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 
 function ServerManualScreen({
   route,
@@ -83,14 +84,19 @@ function ServerManualScreen({
   return (
     <Layout style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
-        {memoizedHeader}
-        <View style={{ paddingHorizontal: 16 }}>
-          <ServerForm
-            mode="create"
-            server={internalServer}
-            serverSelected={serverSelected}
-          />
-        </View>
+        <KeyboardAwareScrollView
+          style={{ flex: 1 }}
+          keyboardShouldPersistTaps="handled"
+        >
+          {memoizedHeader}
+          <View style={{ paddingHorizontal: 16 }}>
+            <ServerForm
+              mode="create"
+              server={internalServer}
+              serverSelected={serverSelected}
+            />
+          </View>
+        </KeyboardAwareScrollView>
       </SafeAreaView>
     </Layout>
   );

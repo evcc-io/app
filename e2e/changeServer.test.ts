@@ -110,6 +110,7 @@ describe("Change Server", () => {
     await element(by.id("@serverFormUrl/input")).typeText("localhost:7080");
 
     await element(by.id("serverFormAuth")).tap();
+    await element(by.id("serverFormAuth")).swipe("up");
     await element(by.id("@serverFormAuthUser/input")).typeText("admin");
     await element(by.id("@serverFormAuthPassword/input")).typeText("secret");
 

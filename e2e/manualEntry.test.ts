@@ -29,6 +29,7 @@ describe("Manual entry", () => {
     await expect(element(by.id("@serverFormAuthPassword/input"))).not.toExist();
 
     await element(by.id("serverFormAuth")).tap();
+    await element(by.id("serverFormAuth")).swipe("up");
 
     await element(by.id("@serverFormAuthUser/input")).typeText("admin");
     await element(by.id("@serverFormAuthPassword/input")).typeText("secret");
