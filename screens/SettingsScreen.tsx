@@ -76,10 +76,10 @@ function SettingsScreen({
             status="danger"
             onPress={async () => {
               if (serverIndex !== undefined) {
+                if (servers.length > 1) {
+                  navigation.navigate("ChangeServer");
+                }
                 await removeServer(serverIndex);
-                navigation.navigate(
-                  servers.length > 0 ? "ChangeServer" : "Main",
-                );
               }
             }}
           >

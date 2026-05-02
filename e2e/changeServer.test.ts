@@ -2,7 +2,7 @@ import "detox";
 import { byWebDataTestId, waitForWebview } from "./helper";
 import { expect } from "detox";
 
-describe("Roundtrip", () => {
+describe("Change Server", () => {
   beforeEach(async () => {
     await device.launchApp({
       url: "evcc://server?url=localhost:7070",

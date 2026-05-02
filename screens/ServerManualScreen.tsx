@@ -50,19 +50,15 @@ function ServerManualScreen({
     async (server: Server) => {
       console.log("serverSelected");
       setInternalServer(server);
-      await addServer(server);
 
-      if (servers.length === 1) {
+      if (servers.length === 0) {
         await setActiveServer(server);
+        navigation.popTo("Main");
+      } else if (servers.length > 0) {
+        navigation.popTo("ChangeServer");
       }
 
-      if (servers.length > 1) {
-        navigation.navigate("ChangeServer");
-      } else if (servers.length !== 1 && navigation.canGoBack()) {
-        navigation.goBack();
-      } else {
-        navigation.navigate("Main");
-      }
+      await addServer(server);
     },
     [updateServer, navigation],
   );
