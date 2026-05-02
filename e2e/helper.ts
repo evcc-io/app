@@ -32,6 +32,10 @@ export function byWebDataTestId(dataTestID: string) {
   return web.element(by.web.cssSelector(`[data-testid=${dataTestID}]`));
 }
 
+/**
+ * Some data (such as the list of saved servers) is not immediately passed to the components,
+ * but with a short delay. This method handles that delay.
+ */
 export async function tapAfterWaitFor(element: NativeElement) {
   await waitFor(element).toExist().withTimeout(5000);
   await element.tap();

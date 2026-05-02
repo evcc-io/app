@@ -17,7 +17,7 @@ describe("Change Server", () => {
     await byWebDataTestId("tab-more").tap();
     await byWebDataTestId("tab-more-app").tap();
 
-    await element(by.id("editServer0Icon")).tap();
+    await tapAfterWaitFor(element(by.id("editServer0Icon")));
     await element(by.id("setingsScreenRemoveServer")).tap();
 
     await expect(element(by.id("serverScreenTitle"))).toExist();
@@ -31,7 +31,7 @@ describe("Change Server", () => {
     await byWebDataTestId("tab-more").tap();
     await byWebDataTestId("tab-more-app").tap();
 
-    await element(by.id("editServer0Icon")).tap();
+    await tapAfterWaitFor(element(by.id("editServer0Icon")));
 
     const url = element(by.id("@serverFormUrl/input"));
     await url.clearText();
@@ -76,7 +76,7 @@ describe("Change Server", () => {
     const shakyText = element(by.id("shakyText"));
     await expect(shakyText).not.toExist();
 
-    await element(by.id("editServer0Icon")).tap();
+    await tapAfterWaitFor(element(by.id("editServer0Icon")));
     await element(by.id("setingsScreenRemoveServer")).tap();
 
     await expect(shakyText).toExist();
