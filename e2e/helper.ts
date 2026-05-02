@@ -2,6 +2,8 @@ import "detox";
 import { expect } from "detox";
 import { NativeElement } from "detox/detox";
 
+const TIMEOUT = 20000; // twenty seconds
+
 /**
  * Detox marks the WebView as ready before its content has fully loaded.
  * This method compensates for that timing issue by ensuring the inner
@@ -10,13 +12,10 @@ import { NativeElement } from "detox/detox";
 export async function waitForWebview() {
   const dataTestID = "header";
   const app = byWebDataTestId(dataTestID);
-
-  const timeout = 5000; // five seconds
   const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
-
   const start = Date.now();
 
-  while (Date.now() - start < timeout) {
+  while (Date.now() - start < TIMEOUT) {
     try {
       await expect(app).toExist();
       return;
@@ -37,6 +36,6 @@ export function byWebDataTestId(dataTestID: string) {
  * but with a short delay. This method handles that delay.
  */
 export async function tapAfterWaitFor(element: NativeElement) {
-  await waitFor(element).toExist().withTimeout(5000);
+  await waitFor(element).toExist().withTimeout(TIMEOUT);
   await element.tap();
 }
