@@ -1,5 +1,5 @@
 import "detox";
-import { byWebDataTestId, waitForWebview } from "./helper";
+import { byWebDataTestId, tapAfterWaitFor, waitForWebview } from "./helper";
 import { expect } from "detox";
 
 describe("Change Server", () => {
@@ -38,9 +38,7 @@ describe("Change Server", () => {
     await url.typeText("demo.evcc.io");
     await element(by.id("serverFormCheckAndSave")).tap();
 
-    const server0 = element(by.id("server0"));
-    await waitFor(server0).toExist().withTimeout(5000);
-    await server0.tap();
+    await tapAfterWaitFor(element(by.id("server0")));
 
     await waitForWebview();
     await expect(byWebDataTestId("header")).toHaveText("DEMO MODE");
@@ -54,15 +52,14 @@ describe("Change Server", () => {
     });
     await element(by.id("serverFormCheckAndSave")).tap();
 
-    await expect(element(by.id("server0"))).toExist();
-    await element(by.id("server0")).tap();
+    await tapAfterWaitFor(element(by.id("server0")));
 
     await waitForWebview();
     await expect(byWebDataTestId("header")).toHaveText("");
 
     await byWebDataTestId("tab-more").tap();
     await byWebDataTestId("tab-more-app").tap();
-    await element(by.id("server1")).tap();
+    await tapAfterWaitFor(element(by.id("server1")));
 
     await waitForWebview();
     await expect(byWebDataTestId("header")).toHaveText("DEMO MODE");
@@ -84,7 +81,7 @@ describe("Change Server", () => {
 
     await expect(shakyText).toExist();
 
-    await element(by.id("server0")).tap();
+    await tapAfterWaitFor(element(by.id("server0")));
     await waitForWebview();
   });
 
@@ -101,7 +98,7 @@ describe("Change Server", () => {
     await element(by.id("@serverFormUrl/input")).typeText("demo.evcc.io");
     await element(by.id("serverFormCheckAndSave")).tap();
 
-    await element(by.id("server1")).tap();
+    await tapAfterWaitFor(element(by.id("server1")));
 
     await waitForWebview();
     await byWebDataTestId("tab-more").tap();
@@ -118,7 +115,7 @@ describe("Change Server", () => {
 
     await element(by.id("serverFormCheckAndSave")).tap();
 
-    await element(by.id("server2")).tap();
+    await tapAfterWaitFor(element(by.id("server2")));
 
     await waitForWebview();
   });

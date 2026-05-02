@@ -1,5 +1,6 @@
 import "detox";
 import { expect } from "detox";
+import { NativeElement } from "detox/detox";
 
 /**
  * Detox marks the WebView as ready before its content has fully loaded.
@@ -29,4 +30,9 @@ export async function waitForWebview() {
 
 export function byWebDataTestId(dataTestID: string) {
   return web.element(by.web.cssSelector(`[data-testid=${dataTestID}]`));
+}
+
+export async function tapAfterWaitFor(element: NativeElement) {
+  await waitFor(element).toExist().withTimeout(5000);
+  await element.tap();
 }
