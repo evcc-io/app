@@ -53,7 +53,7 @@ export default function ShakyText({ text, ref }: ShakyTextProps) {
         transform: [{ translateX: shakeAnim }],
       }}
     >
-      <Text style={{ marginBottom: 32 }} status={textStatus}>
+      <Text style={{ marginBottom: 32 }} status={textStatus} testID="shakyText">
         {text}
       </Text>
     </Animated.View>

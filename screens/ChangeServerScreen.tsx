@@ -122,7 +122,7 @@ export default function ChangeServerScreen({
                   }}
                 >
                   <IconAdd
-                    testID="addServer"
+                    testID="addServerIcon"
                     width={28}
                     height={28}
                     fill={theme["text-basic-color"]}
