@@ -37,7 +37,10 @@ describe("Change Server", () => {
     await url.clearText();
     await url.typeText("demo.evcc.io");
     await element(by.id("serverFormCheckAndSave")).tap();
-    await element(by.id("server0")).tap();
+
+    const server0 = element(by.id("server0"));
+    await waitFor(server0).toExist().withTimeout(5000);
+    await server0.tap();
 
     await waitForWebview();
     await expect(byWebDataTestId("header")).toHaveText("DEMO MODE");

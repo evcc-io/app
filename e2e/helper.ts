@@ -10,7 +10,7 @@ export async function waitForWebview() {
   const dataTestID = "header";
   const app = byWebDataTestId(dataTestID);
 
-  const timeout = 20000; // twenty seconds
+  const timeout = 5000; // five seconds
   const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
   const start = Date.now();
