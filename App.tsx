@@ -66,25 +66,25 @@ function AppNavigator() {
   console.log("servers", servers);
 
   return (
-    <NavigationContainer
-      onReady={hideSplash}
-      linking={{
-        prefixes: [SCHEME + "://"],
-        config: {
-          screens: {
-            ServerManual: {
-              path: "server",
-              parse: {
-                url: String,
-                username: String,
-                password: String,
+    <KeyboardProvider>
+      <NavigationContainer
+        onReady={hideSplash}
+        linking={{
+          prefixes: [SCHEME + "://"],
+          config: {
+            screens: {
+              ServerManual: {
+                path: "server",
+                parse: {
+                  url: String,
+                  username: String,
+                  password: String,
+                },
               },
             },
           },
-        },
-      }}
-    >
-      <KeyboardProvider>
+        }}
+      >
         <Stack.Navigator
           screenOptions={{
             headerShown: false,
@@ -117,8 +117,8 @@ function AppNavigator() {
             </>
           )}
         </Stack.Navigator>
-      </KeyboardProvider>
-    </NavigationContainer>
+      </NavigationContainer>
+    </KeyboardProvider>
   );
 }
 
