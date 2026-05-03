@@ -1,6 +1,5 @@
 import "detox";
 import { expect } from "detox";
-import { NativeElement } from "detox/detox";
 
 const TIMEOUT = 20000; // twenty seconds
 
@@ -29,13 +28,4 @@ export async function waitForWebview() {
 
 export function byWebDataTestId(dataTestID: string) {
   return web.element(by.web.cssSelector(`[data-testid=${dataTestID}]`));
-}
-
-/**
- * Some data (such as the list of saved servers) is not immediately passed to the components,
- * but with a short delay. This method handles that delay.
- */
-export async function tapAfterWaitFor(element: NativeElement) {
-  await waitFor(element).toExist().withTimeout(TIMEOUT);
-  await element.tap();
 }

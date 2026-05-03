@@ -1,5 +1,5 @@
 import "detox";
-import { byWebDataTestId, tapAfterWaitFor, waitForWebview } from "./helper";
+import { byWebDataTestId, waitForWebview } from "./helper";
 import { expect } from "detox";
 
 describe("Change Server", () => {
@@ -17,7 +17,7 @@ describe("Change Server", () => {
     await byWebDataTestId("tab-more").tap();
     await byWebDataTestId("tab-more-app").tap();
 
-    await tapAfterWaitFor(element(by.id("editServer0Icon")));
+    await element(by.id("editServer0Icon")).tap();
     await element(by.id("setingsScreenRemoveServer")).tap();
 
     await expect(element(by.id("serverScreenTitle"))).toExist();
@@ -31,14 +31,14 @@ describe("Change Server", () => {
     await byWebDataTestId("tab-more").tap();
     await byWebDataTestId("tab-more-app").tap();
 
-    await tapAfterWaitFor(element(by.id("editServer0Icon")));
+    await element(by.id("editServer0Icon")).tap();
 
     const url = element(by.id("@serverFormUrl/input"));
     await url.clearText();
     await url.typeText("demo.evcc.io");
     await element(by.id("serverFormCheckAndSave")).tap();
 
-    await tapAfterWaitFor(element(by.id("server0")));
+    await element(by.id("server0")).tap();
 
     await waitForWebview();
     await expect(byWebDataTestId("header")).toHaveText("DEMO MODE");
@@ -52,14 +52,14 @@ describe("Change Server", () => {
     });
     await element(by.id("serverFormCheckAndSave")).tap();
 
-    await tapAfterWaitFor(element(by.id("server0")));
+    await element(by.id("server0")).tap();
 
     await waitForWebview();
     await expect(byWebDataTestId("header")).toHaveText("");
 
     await byWebDataTestId("tab-more").tap();
     await byWebDataTestId("tab-more-app").tap();
-    await tapAfterWaitFor(element(by.id("server1")));
+    await element(by.id("server1")).tap();
 
     await waitForWebview();
     await expect(byWebDataTestId("header")).toHaveText("DEMO MODE");
@@ -76,12 +76,12 @@ describe("Change Server", () => {
     const shakyText = element(by.id("shakyText"));
     await expect(shakyText).not.toExist();
 
-    await tapAfterWaitFor(element(by.id("editServer0Icon")));
+    await element(by.id("editServer0Icon")).tap();
     await element(by.id("setingsScreenRemoveServer")).tap();
 
     await expect(shakyText).toExist();
 
-    await tapAfterWaitFor(element(by.id("server0")));
+    await element(by.id("server0")).tap();
     await waitForWebview();
   });
 
@@ -98,7 +98,7 @@ describe("Change Server", () => {
     await element(by.id("@serverFormUrl/input")).typeText("demo.evcc.io");
     await element(by.id("serverFormCheckAndSave")).tap();
 
-    await tapAfterWaitFor(element(by.id("server1")));
+    await element(by.id("server1")).tap();
 
     await waitForWebview();
     await byWebDataTestId("tab-more").tap();
@@ -116,7 +116,7 @@ describe("Change Server", () => {
 
     await element(by.id("serverFormCheckAndSave")).tap();
 
-    await tapAfterWaitFor(element(by.id("server2")));
+    await element(by.id("server2")).tap();
 
     await waitForWebview();
   });
