@@ -5,7 +5,11 @@ export default function LoadingIndicator(props: Partial<ImageProps> = {}) {
   const color = (StyleSheet.flatten(props.style) as ImageStyle)?.tintColor;
   return (
     <View style={{ justifyContent: "center", alignItems: "center" }}>
-      <Spinner size="small" status="control" style={color ? { borderColor: color } : undefined} />
+      <Spinner
+        size="small"
+        status="control"
+        style={color ? { borderColor: color } : undefined}
+      />
     </View>
   );
 }

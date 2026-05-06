@@ -7,32 +7,21 @@ import { Alert } from "react-native";
 import { useAppContext } from "../components/AppContext";
 import ServerList from "../components/ServerList";
 import LoadingIndicator from "../components/animations/LoadingIndicator";
-import { verifyEvccServer } from "../utils/server";
+import { fetchOrGetTitle, sameServer, verifyEvccServer } from "../utils/server";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { EvccInstance, RootStackParamList } from "types";
+import { RootStackParamList, Server } from "types";
 
-export default function ServerScreen({
+export default function OnboardingScreen({
   navigation,
-}: NativeStackScreenProps<RootStackParamList, "Server">) {
+}: NativeStackScreenProps<RootStackParamList, "Onboarding">) {
   const { t } = useTranslation();
   const [searching, setSearching] = useState(false);
   const [finished, setFinished] = useState(false);
   const [scanNotPossible, setScanNotPossible] = useState(false);
-  const [found, setFound] = useState<EvccInstance[]>([]);
+  const [found, setFound] = useState<Server[]>([]);
 
-  const { updateServer } = useAppContext();
-
-  const getTitle = (service: ServiceDiscovery.Service) => {
-    let title = service.hostName;
-    for (const s of [".local.", ".fritz.box"]) {
-      if (title.endsWith(s)) {
-        title = title.slice(0, -1 * s.length);
-        break;
-      }
-    }
-    return title;
-  };
+  const { addServer, setActiveServer } = useAppContext();
 
   const getUrl = (service: ServiceDiscovery.Service) => {
     const scheme = service.type === "_http._tcp." ? "http" : "https";
@@ -44,12 +33,8 @@ export default function ServerScreen({
     return `${scheme}://${hostName}${port}`;
   };
 
-  const toInstance = (service: ServiceDiscovery.Service): EvccInstance => {
-    return { title: getTitle(service), url: getUrl(service) };
-  };
-
-  const sameInstance = (a: EvccInstance, b: EvccInstance) => {
-    return a.url === b.url;
+  const toServer = (service: ServiceDiscovery.Service): Server => {
+    return { url: getUrl(service), basicAuth: {} };
   };
 
   const scanNetwork = useCallback(() => {
@@ -63,13 +48,15 @@ export default function ServerScreen({
 
     const foundListener = ServiceDiscovery.addEventListener(
       "serviceFound",
-      (service: ServiceDiscovery.Service) => {
+      async (service: ServiceDiscovery.Service) => {
         if (service.name === "evcc") {
           console.log("Found service ", service);
+          const server = toServer(service);
+          server.title = await fetchOrGetTitle(server);
+
           setFound((found) => {
-            const instance = toInstance(service);
-            if (!found.some((f) => sameInstance(f, instance))) {
-              return [...found, instance];
+            if (!found.some((f) => sameServer(f, server))) {
+              return [...found, server];
             } else {
               return found;
             }
@@ -80,12 +67,13 @@ export default function ServerScreen({
 
     const lostListener = ServiceDiscovery.addEventListener(
       "serviceLost",
-      (service: ServiceDiscovery.Service) => {
+      async (service: ServiceDiscovery.Service) => {
         if (service.name === "evcc") {
           console.log("Lost service ", service);
+          const server = toServer(service);
+
           setFound((found) => {
-            const instance = toInstance(service);
-            return found.filter((f) => !sameInstance(f, instance));
+            return found.filter((f) => !sameServer(f, server));
           });
         }
       },
@@ -117,26 +105,27 @@ export default function ServerScreen({
   }, []);
 
   const selectDemoServer = useCallback(async () => {
-    await selectServer("https://demo.evcc.io/");
+    const server = { url: "https://demo.evcc.io/", basicAuth: {} } as Server;
+    server.title = await fetchOrGetTitle(server);
+    await selectServer(server);
   }, []);
 
   const selectServer = useCallback(
-    async (url: string) => {
+    async (server: Server) => {
       try {
-        const finalUrl = await verifyEvccServer({
-          url,
-          basicAuth: {},
-        });
-        updateServer({ url: finalUrl, basicAuth: {} });
+        const finalUrl = await verifyEvccServer(server);
+        const verifiedServer = { ...server, url: finalUrl };
+        await addServer(verifiedServer);
+        await setActiveServer(verifiedServer);
       } catch (error) {
         Alert.alert((error as Error).message);
       }
     },
-    [updateServer],
+    [addServer],
   );
 
   const manualEntry = useCallback(() => {
-    navigation.navigate("ServerManual");
+    navigation.navigate("AddServer");
   }, [navigation]);
 
   return (

@@ -5,10 +5,13 @@ import { waitForWebview } from "./helper";
 describe("Deep Linking", () => {
   it("open server", async () => {
     await device.launchApp({
-      url: "evcc://server?url=localhost:7070",
+      url: "evcc://server?url=localhost:7070&title=siteTitle",
       resetAppState: true,
     });
 
+    await expect(element(by.id("@serverFormTitle/input"))).toHaveText(
+      "siteTitle",
+    );
     await expect(element(by.id("@serverFormUrl/input"))).toHaveText(
       "localhost:7070",
     );
@@ -23,10 +26,13 @@ describe("Deep Linking", () => {
 
   it("open server with basic auth", async () => {
     await device.launchApp({
-      url: "evcc://server?url=http://localhost:7080&username=admin&password=secret",
+      url: "evcc://server?url=http://localhost:7080&title=siteTitle&username=admin&password=secret",
       resetAppState: true,
     });
 
+    await expect(element(by.id("@serverFormTitle/input"))).toHaveText(
+      "siteTitle",
+    );
     await expect(element(by.id("@serverFormUrl/input"))).toHaveText(
       "http://localhost:7080",
     );

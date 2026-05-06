@@ -56,22 +56,16 @@ Opens the server entry field with prefilled values.
 All params are optional.
 
 ```
-evcc://server?url=...&username=...&password=...
+evcc://server?url=...&title=...&username=...&password=...
 ```
 
 _Note: Ensure that query values are properly encoded._
 
 **Example:**
 
-![URL Scheme Example](https://api.qrserver.com/v1/create-qr-code/?color=000000&bgcolor=FFFFFF&data=evcc%3A%2F%2Fserver%3Furl%3Dhttps%3A%2F%2Fevcc.local%26username%3Dadmin%26password%3Dsecret&qzone=1&margin=0&size=150x150&ecc=L)
+![URL Scheme Example](https://api.qrserver.com/v1/create-qr-code/?color=000000&bgcolor=FFFFFF&data=evcc%3A%2F%2Fserver%3Furl%3Dhttps%3A%2F%2Fdemo.evcc.io%26title%3DDemo%2520Server%26username%3Dadmin%26password%3Dsecret&qzone=1&margin=0&size=150x150&ecc=L)
 
-[evcc://server?url=https://evcc.local&username=admin&password=secret](evcc://server?url=https://evcc.local&username=admin&password=secret)
-
-## Known limitations
-
-- No support for multiple instances [#3](https://github.com/evcc-io/app/issues/3)
-
-We'll work on these in a future release. Feel free to vote 👍 to help priorization and add new feature ideas.
+[evcc://server?url=https://demo.evcc.io&title=Demo%20Server&username=admin&password=secret](evcc://server?url=https://demo.evcc.io&title=Demo%20Server&username=admin&password=secret)
 
 ## Development
 

@@ -1,39 +1,53 @@
 import React, { useRef, useState } from "react";
 import { Text, Button, Input, CheckBox } from "@ui-kitten/components";
-import { cleanServerUrl, verifyEvccServer } from "../utils/server";
+import { cleanServerUrl, sameServer, verifyEvccServer } from "../utils/server";
 import LoadingIndicator from "./animations/LoadingIndicator";
 import { useTranslation } from "react-i18next";
 import { BasicAuth, Server } from "types";
+import { useAppContext } from "./AppContext";
 
 interface ServerFormProps {
   server: Server | undefined;
   serverSelected: (server: Server) => void;
+  mode: "create" | "update";
 }
 
 export default function ServerForm({
   server,
   serverSelected,
+  mode,
 }: ServerFormProps) {
   const { t } = useTranslation();
+  const { servers } = useAppContext();
   const [inProgress, setInProgress] = useState(false);
   const [error, setError] = useState("");
 
+  const urlRef = useRef<Input | null>(null);
   const usernameRef = useRef<Input | null>(null);
   const passwordRef = useRef<Input | null>(null);
 
-  const [internalServer, setInternalServer] = useState<
-    Server | undefined
-  >(server);
+  const [internalServer, setInternalServer] = useState<Server | undefined>(
+    server,
+  );
   React.useEffect(() => setInternalServer(server), [server]);
 
+  const setInternalTitle = (title: string) => {
+    setInternalServer({
+      title,
+      url: internalServer?.url || "",
+      basicAuth: internalServer?.basicAuth || {},
+    });
+  };
   const setInternalUrl = (url: string) => {
     setInternalServer({
+      title: internalServer?.title,
       url,
       basicAuth: internalServer?.basicAuth || {},
     });
   };
   const setInternalAuth = (basicAuth: BasicAuth) => {
     setInternalServer({
+      title: internalServer?.title,
       url: internalServer?.url || "",
       basicAuth,
     });
@@ -41,6 +55,8 @@ export default function ServerForm({
 
   const validateAndSaveURL = async () => {
     if (inProgress) return;
+    if (!internalServer?.title?.trim()) return;
+    if (!internalServer?.url) return;
 
     const cleanUrl = cleanServerUrl(internalServer?.url || "");
     setInternalUrl(cleanUrl);
@@ -52,10 +68,21 @@ export default function ServerForm({
         url: cleanUrl,
         basicAuth: internalServer?.basicAuth || {},
       });
-      serverSelected({
+
+      const server = {
+        title: internalServer?.title,
         url: finalUrl,
         basicAuth: internalServer?.basicAuth || {},
-      });
+      };
+
+      const sameServerCount = servers.filter((s) =>
+        sameServer(server, s),
+      ).length;
+      if (sameServerCount > (mode === "create" ? 0 : 1)) {
+        throw Error(t("servers.manually.serverExistsAlready"));
+      }
+
+      serverSelected(server);
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
     } finally {
@@ -65,6 +92,22 @@ export default function ServerForm({
 
   return (
     <>
+      <Input
+        style={{ marginBottom: 16 }}
+        placeholder={t("servers.manually.title")}
+        value={internalServer?.title}
+        size="large"
+        status="basic"
+        onChangeText={setInternalTitle}
+        inputMode="text"
+        keyboardType="default"
+        autoCapitalize="none"
+        onSubmitEditing={() => urlRef.current?.focus()}
+        returnKeyType={"next"}
+        autoCorrect={false}
+        testID="serverFormTitle"
+      />
+
       <Input
         style={{ marginBottom: 16 }}
         placeholder="http://evcc.local:7070/"
@@ -80,6 +123,7 @@ export default function ServerForm({
             ? usernameRef.current?.focus()
             : validateAndSaveURL()
         }
+        ref={urlRef}
         returnKeyType={internalServer?.basicAuth.required ? "next" : "go"}
         autoCorrect={false}
         testID="serverFormUrl"
@@ -142,7 +186,7 @@ export default function ServerForm({
         style={{ marginTop: 16, marginBottom: 16 }}
         appearance="filled"
         size="giant"
-        disabled={internalServer?.url.length === 0}
+        disabled={!internalServer?.url || !internalServer?.title?.trim()}
         accessoryLeft={inProgress ? LoadingIndicator : undefined}
         onPress={validateAndSaveURL}
         testID="serverFormCheckAndSave"
@@ -151,7 +195,7 @@ export default function ServerForm({
       </Button>
 
       {error ? (
-        <Text style={{ marginTop: 16 }} category="p1">
+        <Text style={{ marginTop: 16 }} category="p1" status="danger">
           {error}
         </Text>
       ) : null}
