@@ -31,7 +31,7 @@ export default [
     },
     rules: {
       "@typescript-eslint/no-require-imports": "off",
-      "@typescript-eslint/no-namespace": "off"
+      "@typescript-eslint/no-namespace": "off",
     },
   },
 ];

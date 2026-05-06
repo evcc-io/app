@@ -25,11 +25,6 @@ import { RootStackParamList } from "types";
 import { shareFileFromUrl } from "utils/shareFile";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Spinner from "components/animations/Spinner";
-import ActivityIndicator from "components/animations/ActivityIndicator";
-
-function LoadingScreen() {
-  return <ActivityIndicator size="large" animating={false} />;
-}
 
 export default function MainScreen({
   navigation,
@@ -46,7 +41,7 @@ export default function MainScreen({
   const loadScale = useRef(new Animated.Value(isConnected ? 1.2 : 1)).current;
 
   const openSettings = useCallback(() => {
-    navigation.navigate("ChangeServer");
+    navigation.navigate("SwitchServerModal");
   }, [navigation]);
 
   // Reconnect if connection is lost
@@ -155,8 +150,6 @@ export default function MainScreen({
     shareFileFromUrl(downloadUrl);
   };
 
-  const LoadingScreenMemoized = useMemo(() => <LoadingScreen />, []);
-
   const { required, username, password } = activeServer?.basicAuth || {};
   const basicAuthCredential =
     required && username && password ? { username, password } : undefined;
@@ -242,7 +235,7 @@ export default function MainScreen({
   );
 
   if (!activeServer?.url) {
-    return LoadingScreenMemoized;
+    return <Layout style={{ flex: 1 }} />;
   }
 
   console.log("serverUrl", activeServer.url, isConnected);

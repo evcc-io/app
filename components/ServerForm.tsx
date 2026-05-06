@@ -55,6 +55,8 @@ export default function ServerForm({
 
   const validateAndSaveURL = async () => {
     if (inProgress) return;
+    if (!internalServer?.title?.trim()) return;
+    if (!internalServer?.url) return;
 
     const cleanUrl = cleanServerUrl(internalServer?.url || "");
     setInternalUrl(cleanUrl);
@@ -184,7 +186,7 @@ export default function ServerForm({
         style={{ marginTop: 16, marginBottom: 16 }}
         appearance="filled"
         size="giant"
-        disabled={internalServer?.url.length === 0}
+        disabled={!internalServer?.url || !internalServer?.title?.trim()}
         accessoryLeft={inProgress ? LoadingIndicator : undefined}
         onPress={validateAndSaveURL}
         testID="serverFormCheckAndSave"

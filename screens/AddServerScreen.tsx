@@ -10,13 +10,12 @@ import { Server, RootStackParamList } from "types";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 
-function ServerManualScreen({
+function AddServerScreen({
   route,
   navigation,
-}: NativeStackScreenProps<RootStackParamList, "ServerManual">) {
+}: NativeStackScreenProps<RootStackParamList, "AddServer">) {
   const { t } = useTranslation();
-  const { activeServer, setActiveServer, updateServer, addServer, servers } =
-    useAppContext();
+  const { setActiveServer, addServer, servers } = useAppContext();
 
   const {
     title,
@@ -54,31 +53,39 @@ function ServerManualScreen({
 
       if (servers.length === 0) {
         await setActiveServer(server);
-        navigation.popTo("Main");
-      } else if (servers.length > 0) {
-        navigation.popTo("ChangeServer");
       }
-
       await addServer(server);
+
+      if (navigation.canGoBack()) {
+        navigation.goBack();
+      }
     },
-    [updateServer, navigation],
+    [servers.length, setActiveServer, addServer, navigation],
   );
+
+  const isNested = navigation
+    .getState()
+    .routes.some((r) => (r.name as string) === "SwitchServer");
 
   const memoizedHeader = useMemo(
     () => (
       <Header
         title={t("servers.manually.enterUrl")}
-        showDone
+        showBack={isNested}
+        onBack={() => {
+          if (navigation.canGoBack()) {
+            navigation.goBack();
+          }
+        }}
+        showDone={!isNested}
         onDone={() => {
           if (navigation.canGoBack()) {
             navigation.goBack();
-          } else {
-            navigation.navigate(activeServer?.url ? "Main" : "Server");
           }
         }}
       />
     ),
-    [navigation, activeServer?.url, t],
+    [navigation, t, isNested],
   );
 
   return (
@@ -102,4 +109,4 @@ function ServerManualScreen({
   );
 }
 
-export default memo(ServerManualScreen);
+export default memo(AddServerScreen);

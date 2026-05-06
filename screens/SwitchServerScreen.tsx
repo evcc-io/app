@@ -1,28 +1,32 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Layout, Text, useTheme } from "@ui-kitten/components";
 import IconHomeFill from "@material-symbols/svg-400/rounded/home-fill.svg";
 import IconHome from "@material-symbols/svg-400/rounded/home.svg";
 import IconEdit from "@material-symbols/svg-400/rounded/edit.svg";
 import IconAdd from "@material-symbols/svg-400/rounded/add.svg";
+import * as Linking from "expo-linking";
+import * as Haptics from "expo-haptics";
 import { useAppContext } from "../components/AppContext";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "types";
+import { SwitchServerStackParamList } from "types";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import {
+  Pressable,
   ScrollView,
   TouchableOpacity,
   useWindowDimensions,
   View,
 } from "react-native";
 import { sameServer } from "utils/server";
+import { delay } from "utils/delay";
+import { APP_VERSION, GITHUB_RELEASES_URL } from "../utils/constants";
 import Header from "components/Header";
 import ServerEntry, { SERVER_ENTRY_MIN_HEIGHT } from "components/ServerEntry";
-import ShakyText, { ShakyTextHandle } from "components/ShakyText";
 
-export default function ChangeServerScreen({
+export default function SwitchServerScreen({
   navigation,
-}: NativeStackScreenProps<RootStackParamList, "ChangeServer">) {
+}: NativeStackScreenProps<SwitchServerStackParamList, "SwitchServer">) {
   const { t } = useTranslation();
   const theme = useTheme();
   const { activeServer, servers, setActiveServer } = useAppContext();
@@ -34,7 +38,6 @@ export default function ChangeServerScreen({
     paddingHorizontal: 8,
     paddingBottom: 20,
   };
-  const shakyText = useRef<ShakyTextHandle>(null);
 
   return (
     <Layout style={{ flex: 1 }}>
@@ -43,20 +46,10 @@ export default function ChangeServerScreen({
           title={t("servers.switchServer.title")}
           showDone
           onDone={() => {
-            if (activeServer !== undefined) {
-              navigation.popTo("Main");
-            } else {
-              shakyText.current?.shake();
-            }
+            navigation.getParent()?.goBack();
           }}
         />
         <View style={{ flex: 1, paddingHorizontal: 16 }}>
-          {activeServer === undefined && (
-            <ShakyText
-              ref={shakyText}
-              text={t("servers.switchServer.noServerSelected")}
-            />
-          )}
           <ScrollView style={{ flex: 1 }}>
             <View
               style={{
@@ -93,11 +86,13 @@ export default function ChangeServerScreen({
                         />
                       }
                       onPress={async () => {
+                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
                         await setActiveServer(server);
-                        navigation.navigate("Main");
+                        await delay(500);
+                        navigation.goBack();
                       }}
                       onRightPress={() =>
-                        navigation.navigate("Settings", {
+                        navigation.navigate("EditServer", {
                           server,
                           serverIndex: index,
                         })
@@ -107,19 +102,19 @@ export default function ChangeServerScreen({
                 );
               })}
               <View style={cellStyle}>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("ServerManual")}
-                  style={{
+                <Pressable
+                  onPress={() => navigation.navigate("AddServer")}
+                  style={({ pressed }) => ({
                     flexDirection: "row",
                     alignItems: "center",
                     justifyContent: "center",
                     borderColor: theme["color-basic-500"],
                     borderWidth: 1,
-                    borderStyle: "dashed",
+                    borderStyle: pressed ? "solid" : "dashed",
                     borderRadius: 16,
                     minHeight: SERVER_ENTRY_MIN_HEIGHT,
                     paddingHorizontal: 16,
-                  }}
+                  })}
                 >
                   <IconAdd
                     testID="addServerIcon"
@@ -131,10 +126,19 @@ export default function ChangeServerScreen({
                   <Text style={{ color: theme["text-basic-color"] }}>
                     {t("servers.switchServer.addServer")}
                   </Text>
-                </TouchableOpacity>
+                </Pressable>
               </View>
             </View>
           </ScrollView>
+        </View>
+        <View style={{ alignItems: "center", paddingBottom: 8 }}>
+          <TouchableOpacity
+            onPress={() => Linking.openURL(GITHUB_RELEASES_URL)}
+          >
+            <Text appearance="hint" category="c1">
+              {APP_VERSION}
+            </Text>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     </Layout>

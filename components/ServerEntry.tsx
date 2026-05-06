@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableOpacity, View } from "react-native";
+import { Pressable, View } from "react-native";
 import { Text, useTheme } from "@ui-kitten/components";
 
 export const SERVER_ENTRY_MIN_HEIGHT = 72;
@@ -46,7 +46,7 @@ export default function ServerEntry({
       }}
       testID={testID}
     >
-      <TouchableOpacity
+      <Pressable
         onPress={onPress}
         testID={selectTestID}
         style={{
@@ -74,9 +74,9 @@ export default function ServerEntry({
             </Text>
           ) : null}
         </View>
-      </TouchableOpacity>
+      </Pressable>
       {rightIcon ? (
-        <TouchableOpacity
+        <Pressable
           onPress={onRightPress ?? onPress}
           style={{
             paddingHorizontal: 20,
@@ -85,7 +85,7 @@ export default function ServerEntry({
           }}
         >
           {rightIcon}
-        </TouchableOpacity>
+        </Pressable>
       ) : null}
     </View>
   );

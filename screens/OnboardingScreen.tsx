@@ -7,19 +7,14 @@ import { Alert } from "react-native";
 import { useAppContext } from "../components/AppContext";
 import ServerList from "../components/ServerList";
 import LoadingIndicator from "../components/animations/LoadingIndicator";
-import {
-  fetchOrGetTitle,
-  getTitle,
-  sameServer,
-  verifyEvccServer,
-} from "../utils/server";
+import { fetchOrGetTitle, sameServer, verifyEvccServer } from "../utils/server";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList, Server } from "types";
 
-export default function ServerScreen({
+export default function OnboardingScreen({
   navigation,
-}: NativeStackScreenProps<RootStackParamList, "Server">) {
+}: NativeStackScreenProps<RootStackParamList, "Onboarding">) {
   const { t } = useTranslation();
   const [searching, setSearching] = useState(false);
   const [finished, setFinished] = useState(false);
@@ -111,7 +106,7 @@ export default function ServerScreen({
 
   const selectDemoServer = useCallback(async () => {
     const server = { url: "https://demo.evcc.io/", basicAuth: {} } as Server;
-    server.title = getTitle(server);
+    server.title = await fetchOrGetTitle(server);
     await selectServer(server);
   }, []);
 
@@ -119,8 +114,9 @@ export default function ServerScreen({
     async (server: Server) => {
       try {
         const finalUrl = await verifyEvccServer(server);
-        await addServer({ ...server, url: finalUrl });
-        await setActiveServer(server);
+        const verifiedServer = { ...server, url: finalUrl };
+        await addServer(verifiedServer);
+        await setActiveServer(verifiedServer);
       } catch (error) {
         Alert.alert((error as Error).message);
       }
@@ -129,7 +125,7 @@ export default function ServerScreen({
   );
 
   const manualEntry = useCallback(() => {
-    navigation.navigate("ServerManual");
+    navigation.navigate("AddServer");
   }, [navigation]);
 
   return (

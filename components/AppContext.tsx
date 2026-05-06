@@ -58,8 +58,13 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
         ]);
       }
 
-      await setActiveServer(await loadActiveServer());
-      setServers(await loadServers());
+      const loadedServers = await loadServers();
+      let active = await loadActiveServer();
+      if (!active && loadedServers.length > 0) {
+        active = loadedServers[0];
+      }
+      await setActiveServer(active);
+      setServers(loadedServers);
       setIsLoading(false);
     })();
   }, []);
@@ -81,11 +86,11 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
 
   const removeServer = async (index: number) => {
     const removedServer = await storageRemoveServer(index);
-    const servers = await loadServers();
-    setServers(servers);
+    const remaining = await loadServers();
+    setServers(remaining);
 
     if (sameServer(activeServer, removedServer)) {
-      await setActiveServer(undefined);
+      await setActiveServer(remaining.length > 0 ? remaining[0] : undefined);
     }
   };
 

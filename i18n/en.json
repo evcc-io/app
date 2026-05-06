@@ -7,9 +7,7 @@
     "changeServer": "Change server",
     "switchServer": {
       "title": "Switch server",
-      "addServer": "Add server",
-      "current": "current",
-      "noServerSelected": "No server selected. Tap a server to switch to it."
+      "addServer": "Add server"
     },
     "manually": {
       "authenticationRequired": "Authentication required",

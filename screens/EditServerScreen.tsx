@@ -1,22 +1,20 @@
 import React from "react";
-import { Layout, Button, Text } from "@ui-kitten/components";
-import { View, TouchableOpacity } from "react-native";
-import * as Linking from "expo-linking";
+import { Layout, Button } from "@ui-kitten/components";
+import { View } from "react-native";
 import ServerForm from "../components/ServerForm";
 import { useAppContext } from "../components/AppContext";
 import Header from "../components/Header";
 import { useTranslation } from "react-i18next";
-import { APP_VERSION, GITHUB_RELEASES_URL } from "../utils/constants";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList, Server } from "types";
+import { SwitchServerStackParamList, Server } from "types";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { sameServer } from "utils/server";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 
-function SettingsScreen({
+function EditServerScreen({
   route,
   navigation,
-}: NativeStackScreenProps<RootStackParamList, "Settings">) {
+}: NativeStackScreenProps<SwitchServerStackParamList, "EditServer">) {
   const { t } = useTranslation();
   const { activeServer, updateServer, removeServer, servers, setActiveServer } =
     useAppContext();
@@ -51,10 +49,6 @@ function SettingsScreen({
     [internalServer, saveServer],
   );
 
-  const openGitHubReleases = () => {
-    Linking.openURL(GITHUB_RELEASES_URL);
-  };
-
   return (
     <Layout style={{ flex: 1, paddingBottom: 32 }}>
       <SafeAreaView style={{ flex: 1 }}>
@@ -65,8 +59,8 @@ function SettingsScreen({
         >
           <Header
             title={t("servers.changeServer")}
-            showDone
-            onDone={() => {
+            showBack
+            onBack={() => {
               if (navigation.canGoBack()) {
                 navigation.goBack();
               }
@@ -81,30 +75,15 @@ function SettingsScreen({
               appearance="ghost"
               status="danger"
               onPress={async () => {
-                if (serverIndex !== undefined) {
-                  if (servers.length > 1) {
-                    navigation.navigate("ChangeServer");
-                  }
-                  await removeServer(serverIndex);
+                if (serverIndex === undefined) return;
+                if (navigation.canGoBack()) {
+                  navigation.goBack();
                 }
+                await removeServer(serverIndex);
               }}
             >
               {t("servers.removeServer")}
             </Button>
-          </View>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "flex-end",
-              alignItems: "center",
-              paddingBottom: 8,
-            }}
-          >
-            <TouchableOpacity onPress={openGitHubReleases}>
-              <Text appearance="hint" category="c1">
-                {APP_VERSION}
-              </Text>
-            </TouchableOpacity>
           </View>
         </KeyboardAwareScrollView>
       </SafeAreaView>
@@ -112,4 +91,4 @@ function SettingsScreen({
   );
 }
 
-export default React.memo(SettingsScreen);
+export default React.memo(EditServerScreen);
