@@ -1,28 +1,29 @@
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import * as eva from "@eva-design/eva";
-import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
+import { ApplicationProvider } from "@ui-kitten/components";
 import { useColorScheme } from "react-native";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import { getLocales } from "expo-localization";
 import mapping from "./style.json";
 
-import ServerScreen from "./screens/ServerScreen";
-import ServerManualScreen from "./screens/ServerManualScreen";
+import OnboardingScreen from "./screens/OnboardingScreen";
+import AddServerScreen from "./screens/AddServerScreen";
 import MainScreen from "./screens/MainScreen";
-import SettingsScreen from "./screens/SettingsScreen";
 import { AppProvider, useAppContext } from "./components/AppContext";
 import custom from "./themes.json";
 import { useFonts } from "expo-font";
-import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import * as SplashScreen from "expo-splash-screen";
 import { decode, encode } from "base-64";
 import translations from "./i18n";
-import { RootStackParamList } from "types";
+import { SwitchServerStackParamList, RootStackParamList } from "types";
 import { SCHEME } from "utils/constants";
+import SwitchServerScreen from "screens/SwitchServerScreen";
+import EditServerScreen from "screens/EditServerScreen";
+import { KeyboardProvider } from "react-native-keyboard-controller";
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -35,6 +36,8 @@ if (!global.atob) {
 SplashScreen.preventAutoHideAsync();
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
+const SwitchServerStackNav =
+  createNativeStackNavigator<SwitchServerStackParamList>();
 
 i18n.use(initReactI18next).init({
   resources: translations,
@@ -48,8 +51,29 @@ const hideSplash = () => {
   }, 500);
 };
 
+function SwitchServerStack() {
+  return (
+    <SwitchServerStackNav.Navigator
+      screenOptions={{ headerShown: false, animation: "slide_from_right" }}
+    >
+      <SwitchServerStackNav.Screen
+        name="SwitchServer"
+        component={SwitchServerScreen}
+      />
+      <SwitchServerStackNav.Screen
+        name="EditServer"
+        component={EditServerScreen}
+      />
+      <SwitchServerStackNav.Screen
+        name="AddServer"
+        component={AddServerScreen}
+      />
+    </SwitchServerStackNav.Navigator>
+  );
+}
+
 function AppNavigator() {
-  const { activeServer, isLoading } = useAppContext();
+  const { activeServer, isLoading, servers } = useAppContext();
 
   // Show splash/loading while determining initial route
   if (isLoading) {
@@ -61,56 +85,54 @@ function AppNavigator() {
     presentation: "modal" as const,
   };
 
-  return (
-    <NavigationContainer
-      onReady={hideSplash}
-      linking={{
-        prefixes: [SCHEME + "://"],
-        config: {
-          screens: {
-            ServerManual: {
-              path: "server",
-              parse: {
-                url: String,
-                username: String,
-                password: String,
+  console.log("activeServer", activeServer);
+  console.log("servers", servers);
+
+  const linking: LinkingOptions<RootStackParamList> = {
+    prefixes: [SCHEME + "://"],
+    config: {
+      screens:
+        servers.length > 0
+          ? {
+              SwitchServerModal: {
+                initialRouteName: "SwitchServer",
+                screens: { AddServer: "server" },
               },
-            },
-          },
-        },
-      }}
-    >
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        {activeServer?.url ? (
-          <>
-            <Stack.Screen name="Main" component={MainScreen} />
-            <Stack.Screen
-              name="Settings"
-              component={SettingsScreen}
-              options={sheetOpts}
-            />
-            <Stack.Screen
-              name="ServerManual"
-              component={ServerManualScreen}
-              options={sheetOpts}
-            />
-          </>
-        ) : (
-          <>
-            <Stack.Screen name="Server" component={ServerScreen} />
-            <Stack.Screen
-              name="ServerManual"
-              component={ServerManualScreen}
-              options={sheetOpts}
-            />
-          </>
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+            }
+          : { AddServer: "server" },
+    },
+  };
+
+  return (
+    <KeyboardProvider>
+      <NavigationContainer onReady={hideSplash} linking={linking}>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          {servers.length > 0 ? (
+            <>
+              <Stack.Screen name="Main" component={MainScreen} />
+              <Stack.Screen
+                name="SwitchServerModal"
+                component={SwitchServerStack}
+                options={sheetOpts}
+              />
+            </>
+          ) : (
+            <>
+              <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+              <Stack.Screen
+                name="AddServer"
+                component={AddServerScreen}
+                options={sheetOpts}
+              />
+            </>
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </KeyboardProvider>
   );
 }
 
@@ -130,7 +152,6 @@ export default function App() {
 
   return (
     <>
-      <IconRegistry icons={EvaIconsPack} />
       <AppProvider>
         <ApplicationProvider
           {...eva}

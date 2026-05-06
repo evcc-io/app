@@ -1,4 +1,7 @@
+import { NavigatorScreenParams } from "@react-navigation/native";
+
 export interface Server {
+  title?: string;
   url: string;
   basicAuth: BasicAuth;
 }
@@ -9,21 +12,28 @@ export interface BasicAuth {
   password?: string;
 }
 
-export interface EvccInstance {
-  title: string;
-  url: string;
-}
+export type AddServerParams = {
+  title?: string;
+  url?: string;
+  username?: string;
+  password?: string;
+  required?: boolean;
+};
+
+export type SwitchServerStackParamList = {
+  SwitchServer: undefined;
+  EditServer?: {
+    server?: Server;
+    serverIndex: number;
+  };
+  AddServer?: AddServerParams;
+};
 
 export type RootStackParamList = {
   Main: undefined;
-  Settings: undefined;
-  Server: undefined;
-  ServerManual?: {
-    url?: string;
-    username?: string;
-    password?: string;
-    required?: boolean;
-  };
+  Onboarding: undefined;
+  SwitchServerModal?: NavigatorScreenParams<SwitchServerStackParamList>;
+  AddServer?: AddServerParams;
 };
 
 declare global {

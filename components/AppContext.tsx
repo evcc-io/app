@@ -8,26 +8,36 @@ import React, {
   PropsWithChildren,
 } from "react";
 import { BasicAuth, Server } from "types";
+import { sameServer } from "utils/server";
 import {
-  addOrUpdateServer,
-  deleteServers,
+  storeActiveServer,
+  addServer as storageAddServer,
+  updateServer as storageUpdateServer,
+  removeServer as storageRemoveServer,
   loadServers,
   StorageKeys,
+  loadActiveServer,
 } from "utils/storage";
 
 // Create a context
 const AppContext = createContext({
   activeServer: undefined as Server | undefined,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  setActiveServer: async (_server?: Server) => {},
+  servers: [] as Server[],
   isLoading: true,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  updateServer: async (_server: Server) => {},
+  addServer: async (_server: Server) => {},
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  updateServer: async (_server: Server, _index: number) => {},
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   removeServer: async (_index: number) => {},
 });
 
 // Provider component
 export const AppProvider = ({ children }: PropsWithChildren) => {
-  const [activeServer, setActiveServer] = useState<Server | undefined>();
+  const [activeServer, setActiveServerState] = useState<Server | undefined>();
+  const [servers, setServers] = useState<Server[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // Load the URL from AsyncStorage on startup
@@ -48,31 +58,52 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
         ]);
       }
 
-      const servers = await loadServers();
-      if (servers.length == 1) {
-        setActiveServer(servers[0]);
+      const loadedServers = await loadServers();
+      let active = await loadActiveServer();
+      if (!active && loadedServers.length > 0) {
+        active = loadedServers[0];
       }
+      await setActiveServer(active);
+      setServers(loadedServers);
       setIsLoading(false);
     })();
   }, []);
 
-  const updateServer = async (server: Server) => {
-    setActiveServer(server);
-    await addOrUpdateServer(0, server);
+  const setActiveServer = async (server?: Server) => {
+    setActiveServerState(server);
+    await storeActiveServer(server);
+  };
+
+  const addServer = async (server: Server) => {
+    await storageAddServer(server);
+    setServers(await loadServers());
+  };
+
+  const updateServer = async (server: Server, index: number) => {
+    await storageUpdateServer(server, index);
+    setServers(await loadServers());
   };
 
   const removeServer = async (index: number) => {
-    setActiveServer(undefined);
-    await deleteServers(index);
+    const removedServer = await storageRemoveServer(index);
+    const remaining = await loadServers();
+    setServers(remaining);
+
+    if (sameServer(activeServer, removedServer)) {
+      await setActiveServer(remaining.length > 0 ? remaining[0] : undefined);
+    }
   };
 
   return (
     <AppContext.Provider
       value={{
         activeServer,
+        setActiveServer,
+        servers,
         isLoading,
+        addServer,
         updateServer,
-        removeServer: removeServer,
+        removeServer,
       }}
     >
       {children}

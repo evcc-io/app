@@ -5,6 +5,10 @@
   },
   "servers": {
     "changeServer": "Server ändern",
+    "switchServer": {
+      "title": "Server wechseln",
+      "addServer": "Server hinzufügen"
+    },
     "manually": {
       "authenticationRequired": "Anmeldung erforderlich",
       "checkAdress": "Der Server scheint keine evcc Instanz zu sein. Bitte prüfe die Adresse.",
@@ -15,7 +19,9 @@
       "serverIncompatible": "Die evcc Instanz ist noch nicht App-kompatibel. Aktualisiere deine Installation.",
       "serverNotAvailable": "Server nicht erreichbar. Bitte prüfe die Adresse.",
       "specify": "Adresse manuell eingeben",
-      "user": "Benutzer"
+      "user": "Benutzer",
+      "title": "Titel",
+      "serverExistsAlready": "Dieser Server existiert bereits."
     },
     "removeServer": "Server entfernen",
     "search": {
