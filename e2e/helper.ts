@@ -31,11 +31,50 @@ export function byWebDataTestId(dataTestID: string) {
   return web.element(by.web.cssSelector(`[data-testid=${dataTestID}]`));
 }
 
+export function byWebCss(selector: string) {
+  return web.element(by.web.cssSelector(selector));
+}
+
 /**
  * Some data (such as the list of saved servers) is not immediately passed to the components,
  * but with a short delay. This method handles that delay.
  */
 export async function tapAfterWaitFor(element: NativeElement) {
   await waitFor(element).toExist().withTimeout(TIMEOUT);
-  await element.tap();
+  const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
+  const start = Date.now();
+  let lastError: unknown;
+  while (Date.now() - start < TIMEOUT) {
+    try {
+      await element.tap();
+      return;
+    } catch (e) {
+      lastError = e;
+      await sleep(200);
+    }
+  }
+  throw lastError;
+}
+
+/**
+ * Detox web matchers do not support `toBeVisible`; tapping a web element may fail
+ * with "view not hittable" while the WebView is still laying out. Retries the tap
+ * until it succeeds or the timeout is reached.
+ */
+export async function tapWebAfterWaitFor(
+  el: ReturnType<typeof byWebDataTestId>,
+) {
+  const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
+  const start = Date.now();
+  let lastError: unknown;
+  while (Date.now() - start < TIMEOUT) {
+    try {
+      await el.tap();
+      return;
+    } catch (e) {
+      lastError = e;
+      await sleep(200);
+    }
+  }
+  throw lastError;
 }

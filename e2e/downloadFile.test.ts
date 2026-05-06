@@ -4,7 +4,7 @@ import { byWebDataTestId, waitForWebview } from "./helper";
 describe("Download file", () => {
   beforeEach(async () => {
     await device.launchApp({
-      url: "evcc://server?url=localhost:7070",
+      url: "evcc://server?url=localhost:7070&title=Local",
       resetAppState: true,
     });
   });

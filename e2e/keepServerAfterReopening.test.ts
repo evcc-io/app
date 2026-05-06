@@ -25,7 +25,8 @@ describe("Keep server after reopening", () => {
 
   it("manual: url only", async () => {
     await device.launchApp({
-      url: "evcc://server?url=localhost:7070",
+      url: "evcc://server?url=localhost:7070&title=Local",
+      resetAppState: true,
     });
     await element(by.id("serverFormCheckAndSave")).tap();
     await waitForWebview();
@@ -35,7 +36,7 @@ describe("Keep server after reopening", () => {
 
   it("manual: with basic auth", async () => {
     await device.launchApp({
-      url: "evcc://server?url=http://localhost:7080&username=admin&password=secret",
+      url: "evcc://server?url=http://localhost:7080&title=Local%20Auth&username=admin&password=secret",
       resetAppState: true,
     });
     await element(by.id("serverFormCheckAndSave")).tap();
