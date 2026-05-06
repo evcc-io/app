@@ -19,7 +19,7 @@
         "scan": "Scan QR-code",
         "scanning": "detecteren..."
       },
-      "serverIncompatible": "De evcc server is nog niet app-compatible. Update de installatie.",
+      "serverIncompatible": "De evcc server is nog niet app-compatible. Update uw installatie.",
       "serverNotAvailable": "Server onbereikbaar. Controleer het adres.",
       "specify": "Adres handmatig invoeren",
       "user": "Gebruiker"
