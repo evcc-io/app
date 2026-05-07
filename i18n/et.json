@@ -19,9 +19,11 @@
         "scan": "Skaneeri QR-koodi",
         "scanning": "tuvastan..."
       },
+      "serverExistsAlready": "Selline server on juba olemas.",
       "serverIncompatible": "See elektrisõiduki sidekontroller ei ühildu veel rakendusega. Palun proovi kas tema tarkvara uuendamine aitaks.",
       "serverNotAvailable": "Server pole leitav. Palun kontrolli aadressi.",
       "specify": "Sisesta aadress käsitsi",
+      "title": "Nimi",
       "user": "Kasutaja"
     },
     "removeServer": "Eemalda server",
@@ -32,6 +34,10 @@
       "start": "Alusta otsingut"
     },
     "select": "Vali",
+    "switchServer": {
+      "addServer": "Lisa server",
+      "title": "Vaheta serverit"
+    },
     "useDemo": "Kasuta demo-vaadet"
   }
 }
