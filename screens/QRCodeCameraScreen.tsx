@@ -7,7 +7,7 @@ import Header from "../components/Header";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types";
 
-export interface Http {
+export interface QrCodeData {
   title: string;
   url: string;
   username: string;
@@ -15,6 +15,7 @@ export interface Http {
 }
 
 export default function QRCodeCameraScreen({
+  route,
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "QRCodeCamera">) {
   const { t } = useTranslation();
@@ -67,7 +68,7 @@ export default function QRCodeCameraScreen({
       <Header
         title={t("servers.manually.qrcode.scan")}
         showDone
-        onDone={() => navigation.navigate("Onboarding")}
+        onDone={() => navigation.goBack()}
       />
     ),
     [navigation, t],
@@ -84,25 +85,23 @@ export default function QRCodeCameraScreen({
             isScanning
               ? (r) => {
                   try {
-                    const json: Http = JSON.parse(r.data);
-                    if (
-                      json.title &&
-                      json.url &&
-                      json.username &&
-                      json.password
-                    ) {
+                    const json: QrCodeData = JSON.parse(r.data);
+                    if (json.title && json.url) {
                       showStatus(
                         t("servers.manually.qrcode.recognized"),
                         "success",
                       );
                       setTimeout(() => {
-                        navigation.navigate("AddServer", {
+                        route.params.onServerDetected({
                           title: json.title,
                           url: json.url,
-                          required: true,
-                          username: json.username,
-                          password: json.password,
+                          basicAuth: {
+                            required: !!json.username || !!json.password,
+                            username: json.username,
+                            password: json.password,
+                          },
                         });
+                        navigation.goBack();
                       }, 1000);
                     } else {
                       showStatus(t("servers.manually.qrcode.invalid"), "error");

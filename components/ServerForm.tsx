@@ -5,6 +5,7 @@ import LoadingIndicator from "./animations/LoadingIndicator";
 import { useTranslation } from "react-i18next";
 import { BasicAuth, Server } from "types";
 import { useAppContext } from "./AppContext";
+import ScanQRCodeButton from "./ScanQRCodeButton";
 
 interface ServerFormProps {
   server: Server | undefined;
@@ -181,6 +182,12 @@ export default function ServerForm({
           />
         </>
       )}
+
+      <ScanQRCodeButton
+        onServerDetected={(server) => {
+          setInternalServer(server);
+        }}
+      />
 
       <Button
         style={{ marginTop: 16, marginBottom: 16 }}

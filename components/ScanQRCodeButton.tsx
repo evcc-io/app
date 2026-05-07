@@ -3,8 +3,15 @@ import { useTranslation } from "react-i18next";
 import { useCameraPermissions } from "expo-camera";
 import { Linking } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { Server } from "types";
 
-export default function ScanQRCodeButton() {
+interface ScanQRCodeButtonProps {
+  onServerDetected: (_server: Server) => void;
+}
+
+export default function ScanQRCodeButton({
+  onServerDetected,
+}: ScanQRCodeButtonProps) {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const [permission, requestPermission] = useCameraPermissions();
@@ -36,10 +43,10 @@ export default function ScanQRCodeButton() {
         if (!permission.granted) {
           const result = await requestPermission();
           if (result.granted) {
-            navigation.navigate("QRCodeCamera");
+            navigation.navigate("QRCodeCamera", { onServerDetected });
           }
         } else {
-          navigation.navigate("QRCodeCamera");
+          navigation.navigate("QRCodeCamera", { onServerDetected });
         }
       },
     });

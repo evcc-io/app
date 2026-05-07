@@ -30,7 +30,9 @@ export type SwitchServerStackParamList = {
 };
 
 export type RootStackParamList = {
-  QRCodeCamera?: undefined;
+  QRCodeCamera: {
+    onServerDetected: (_server: Server) => void;
+  };
   Main: undefined;
   Onboarding: undefined;
   SwitchServerModal?: NavigatorScreenParams<SwitchServerStackParamList>;
