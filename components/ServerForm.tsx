@@ -183,11 +183,7 @@ export default function ServerForm({
         </>
       )}
 
-      <ScanQRCodeButton
-        onServerDetected={(server) => {
-          setInternalServer(server);
-        }}
-      />
+      {mode === "create" && <ScanQRCodeButton />}
 
       <Button
         style={{ marginTop: 16, marginBottom: 16 }}

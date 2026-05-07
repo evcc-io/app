@@ -6,6 +6,7 @@ import { View, Animated } from "react-native";
 import Header from "../components/Header";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export interface QrCodeData {
   title: string;
@@ -15,7 +16,6 @@ export interface QrCodeData {
 }
 
 export default function QRCodeCameraScreen({
-  route,
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "QRCodeCamera">) {
   const { t } = useTranslation();
@@ -77,7 +77,9 @@ export default function QRCodeCameraScreen({
   return (
     <Layout style={{ flex: 1 }}>
       {memoizedHeader}
-      <View style={{ flex: 1, paddingHorizontal: 16, paddingBottom: 32 }}>
+      <SafeAreaView
+        style={{ flex: 1, paddingHorizontal: 16, paddingBottom: 32 }}
+      >
         <CameraView
           style={{ flex: 1, borderRadius: 16 }}
           barcodeScannerSettings={{ barcodeTypes: ["qr"] }}
@@ -85,23 +87,36 @@ export default function QRCodeCameraScreen({
             isScanning
               ? (r) => {
                   try {
-                    const json: QrCodeData = JSON.parse(r.data);
-                    if (json.title && json.url) {
+                    const qrcodeUrl = new URL(r.data);
+
+                    const title = qrcodeUrl.searchParams.get("title") ?? "";
+                    const url = qrcodeUrl.searchParams.get("url") ?? "";
+                    const username =
+                      qrcodeUrl.searchParams.get("username") ?? "";
+                    const password =
+                      qrcodeUrl.searchParams.get("password") ?? "";
+
+                    if (
+                      qrcodeUrl.protocol === "evcc:" &&
+                      qrcodeUrl.hostname === "server" &&
+                      title &&
+                      url
+                    ) {
                       showStatus(
                         t("servers.manually.qrcode.recognized"),
                         "success",
                       );
+
+                      const server = {
+                        title,
+                        url,
+                        username,
+                        password,
+                        required: !!username || !!password,
+                      };
+
                       setTimeout(() => {
-                        route.params.onServerDetected({
-                          title: json.title,
-                          url: json.url,
-                          basicAuth: {
-                            required: !!json.username || !!json.password,
-                            username: json.username,
-                            password: json.password,
-                          },
-                        });
-                        navigation.goBack();
+                        // TODO: navigation
                       }, 1000);
                     } else {
                       showStatus(t("servers.manually.qrcode.invalid"), "error");
@@ -148,7 +163,7 @@ export default function QRCodeCameraScreen({
             </View>
           )}
         </View>
-      </View>
+      </SafeAreaView>
     </Layout>
   );
 }

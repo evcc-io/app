@@ -14,7 +14,6 @@
       "password": "Heslo",
       "qrcode": {
         "invalid": "Neplatný EVCC QR kod.",
-        "permissionDenied": "Povolte přístup ke kameře v nastavení, abyste mohli naskenovat QR kod.",
         "recognized": "QR kod detekován!",
         "scan": "Naskenujte QR kod",
         "scanning": "analyzování..."

@@ -14,7 +14,6 @@
       "password": "Wachtwoord",
       "qrcode": {
         "invalid": "Ongeldige evcc QR-code.",
-        "permissionDenied": "Schakel cameratoegang in de instellingen in om een QR-code te scannen.",
         "recognized": "QR-code gedetecteerd!",
         "scan": "Scan QR-code",
         "scanning": "detecteren..."

@@ -22,7 +22,6 @@
       "user": "User",
       "qrcode": {
         "scan": "Scan QR code",
-        "permissionDenied": "Enable camera access in the settings to scan a QR code.",
         "recognized": "QR code detected!",
         "invalid": "Not a valid evcc QR code.",
         "scanning": "detecting..."
