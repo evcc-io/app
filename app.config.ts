@@ -74,6 +74,12 @@ export default ({ config }: ConfigContext) =>
           },
         ],
         [
+          "expo-camera",
+          {
+            recordAudioAndroid: false,
+          },
+        ],
+        [
           "expo-font",
           {
             fonts: [

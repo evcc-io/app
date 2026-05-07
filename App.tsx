@@ -24,6 +24,7 @@ import { SCHEME } from "utils/constants";
 import SwitchServerScreen from "screens/SwitchServerScreen";
 import EditServerScreen from "screens/EditServerScreen";
 import { KeyboardProvider } from "react-native-keyboard-controller";
+import QRCodeCameraScreen from "screens/QRCodeCameraScreen";
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -130,6 +131,11 @@ function AppNavigator() {
               />
             </>
           )}
+          <Stack.Screen
+            name="QRCodeCamera"
+            component={QRCodeCameraScreen}
+            options={sheetOpts}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </KeyboardProvider>
