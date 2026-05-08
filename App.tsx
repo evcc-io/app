@@ -69,6 +69,10 @@ function SwitchServerStack() {
         name="AddServer"
         component={AddServerScreen}
       />
+      <SwitchServerStackNav.Screen
+        name="QRCodeCamera"
+        component={QRCodeCameraScreen}
+      />
     </SwitchServerStackNav.Navigator>
   );
 }
@@ -129,13 +133,13 @@ function AppNavigator() {
                 component={AddServerScreen}
                 options={sheetOpts}
               />
+              <Stack.Screen
+                name="QRCodeCamera"
+                component={QRCodeCameraScreen}
+                options={sheetOpts}
+              />
             </>
           )}
-          <Stack.Screen
-            name="QRCodeCamera"
-            component={QRCodeCameraScreen}
-            options={sheetOpts}
-          />
         </Stack.Navigator>
       </NavigationContainer>
     </KeyboardProvider>

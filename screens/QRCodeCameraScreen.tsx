@@ -116,7 +116,14 @@ export default function QRCodeCameraScreen({
                       };
 
                       setTimeout(() => {
-                        // TODO: navigation
+                        // TODO: use popTo ?
+                        navigation.navigate("AddServer", {
+                          title: server.title,
+                          url: server.url,
+                          username: server.username,
+                          password: server.password,
+                          required: server.required,
+                        });
                       }, 1000);
                     } else {
                       showStatus(t("servers.manually.qrcode.invalid"), "error");

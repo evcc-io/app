@@ -170,11 +170,7 @@ export default function OnboardingScreen({
           )}
         </Layout>
         <Layout style={{ paddingVertical: 16 }}>
-          <ScanQRCodeButton
-            onServerDetected={(server) =>
-              navigation.navigate("AddServer", { ...server })
-            }
-          />
+          <ScanQRCodeButton />
           <Button
             testID="manualEntry"
             style={{ marginVertical: 8 }}

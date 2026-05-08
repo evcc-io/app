@@ -27,6 +27,7 @@ export type SwitchServerStackParamList = {
     serverIndex: number;
   };
   AddServer?: AddServerParams;
+  QRCodeCamera: undefined;
 };
 
 export type RootStackParamList = {
