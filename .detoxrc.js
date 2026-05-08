@@ -1,5 +1,5 @@
 const basicLaunchArgs = {
-  disableAnimations: true,
+  testingEnvironment: true,
 };
 
 function createDetoxURLBlacklistRegex(patterns) {

@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Layout, Text, useTheme } from "@ui-kitten/components";
+import { Button, Layout, Text, useTheme } from "@ui-kitten/components";
 import { CameraView } from "expo-camera";
 import { useTranslation } from "react-i18next";
 import { View, Animated } from "react-native";
 import Header from "../components/Header";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "types";
+import { AddServerParams, RootStackParamList } from "types";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { testingEnvironment } from "helper/launchArguments";
 
 export interface QrCodeData {
   title: string;
@@ -63,6 +64,12 @@ export default function QRCodeCameraScreen({
     }
   };
 
+  const serverDetected = (server: AddServerParams) => {
+    setTimeout(() => {
+      navigation.popTo("AddServer", { ...server });
+    }, 1000);
+  };
+
   const memoizedHeader = React.useMemo(
     () => (
       <Header
@@ -80,53 +87,70 @@ export default function QRCodeCameraScreen({
       <SafeAreaView
         style={{ flex: 1, paddingHorizontal: 16, paddingBottom: 32 }}
       >
-        <CameraView
-          style={{ flex: 1, borderRadius: 16 }}
-          barcodeScannerSettings={{ barcodeTypes: ["qr"] }}
-          onBarcodeScanned={
-            isScanning
-              ? (r) => {
-                  try {
-                    const qrcodeUrl = new URL(r.data);
+        {testingEnvironment() ? (
+          <Button
+            testID="testQrCodeDetected"
+            onPress={() =>
+              serverDetected({
+                url: "http://localhost:7080",
+                title: "Local Auth",
+                username: "admin",
+                password: "secret",
+              })
+            }
+          >
+            TestQrCodeDetected
+          </Button>
+        ) : (
+          <CameraView
+            style={{ flex: 1, borderRadius: 16 }}
+            barcodeScannerSettings={{ barcodeTypes: ["qr"] }}
+            onBarcodeScanned={
+              isScanning
+                ? (r) => {
+                    try {
+                      const qrcodeUrl = new URL(r.data);
 
-                    const title = qrcodeUrl.searchParams.get("title") ?? "";
-                    const url = qrcodeUrl.searchParams.get("url") ?? "";
-                    const username =
-                      qrcodeUrl.searchParams.get("username") ?? "";
-                    const password =
-                      qrcodeUrl.searchParams.get("password") ?? "";
+                      const title = qrcodeUrl.searchParams.get("title") ?? "";
+                      const url = qrcodeUrl.searchParams.get("url") ?? "";
+                      const username =
+                        qrcodeUrl.searchParams.get("username") ?? "";
+                      const password =
+                        qrcodeUrl.searchParams.get("password") ?? "";
 
-                    if (
-                      qrcodeUrl.protocol === "evcc:" &&
-                      qrcodeUrl.hostname === "server" &&
-                      title &&
-                      url
-                    ) {
-                      showStatus(
-                        t("servers.manually.qrcode.recognized"),
-                        "success",
-                      );
+                      if (
+                        qrcodeUrl.protocol === "evcc:" &&
+                        qrcodeUrl.hostname === "server" &&
+                        title &&
+                        url
+                      ) {
+                        showStatus(
+                          t("servers.manually.qrcode.recognized"),
+                          "success",
+                        );
 
-                      setTimeout(() => {
-                        navigation.popTo("AddServer", {
+                        serverDetected({
                           title,
                           url,
                           username,
                           password,
                           required: !!username || !!password,
                         });
-                      }, 1000);
-                    } else {
+                      } else {
+                        showStatus(
+                          t("servers.manually.qrcode.invalid"),
+                          "error",
+                        );
+                      }
+                    } catch (e) {
+                      console.log("Error parsing qr code data: ", e);
                       showStatus(t("servers.manually.qrcode.invalid"), "error");
                     }
-                  } catch (e) {
-                    console.log("Error parsing qr code data: ", e);
-                    showStatus(t("servers.manually.qrcode.invalid"), "error");
                   }
-                }
-              : undefined
-          }
-        />
+                : undefined
+            }
+          />
+        )}
 
         <View
           style={{ height: 60, justifyContent: "center", alignItems: "center" }}

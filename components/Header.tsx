@@ -6,7 +6,14 @@ import IconBack from "@material-symbols/svg-400/rounded/arrow_back_ios_new.svg";
 
 export function CloseIcon() {
   const theme = useTheme();
-  return <IconClose width={32} height={32} fill={theme["text-basic-color"]} />;
+  return (
+    <IconClose
+      width={32}
+      height={32}
+      fill={theme["text-basic-color"]}
+      testID="headerCloseIcon"
+    />
+  );
 }
 
 export function BackIcon() {

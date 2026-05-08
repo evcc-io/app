@@ -7,7 +7,6 @@ import { useNavigation } from "@react-navigation/native";
 export default function ScanQRCodeButton() {
   const { t } = useTranslation();
   const navigation = useNavigation();
-
   const [permission, requestPermission] = useCameraPermissions();
 
   if (!permission) {
@@ -19,6 +18,7 @@ export default function ScanQRCodeButton() {
       style={{ marginVertical: 8 }}
       appearance="outline"
       status="primary"
+      testID="scanQrcodeButton"
       onPress={async () => {
         if (!permission.granted) {
           const result = await requestPermission();
