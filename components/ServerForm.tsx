@@ -183,7 +183,7 @@ export default function ServerForm({
         </>
       )}
 
-      {mode === "create" && <ScanQRCodeButton />}
+      {mode === "create" && <ScanQRCodeButton shown="Addserverform" />}
 
       <Button
         style={{ marginTop: 16, marginBottom: 16 }}

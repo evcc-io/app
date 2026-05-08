@@ -30,7 +30,7 @@ describe("QRCode", () => {
     });
 
     await element(by.id("manualEntry")).tap();
-    await element(by.id("scanQrcodeButton")).tap();
+    await element(by.id("scanQrcodeButtonAddserverform")).tap();
     await element(by.id("headerCloseIcon")).tap();
     await element(by.id("headerCloseIcon")).tap();
     await expect(element(by.id("serverScreenTitle"))).toExist();
@@ -42,7 +42,7 @@ describe("QRCode", () => {
     });
 
     await element(by.id("manualEntry")).tap();
-    await element(by.id("scanQrcodeButton")).tap();
+    await element(by.id("scanQrcodeButtonAddserverform")).tap();
     await element(by.id("testQrCodeDetected")).tap();
 
     await expectServerForm();
@@ -56,7 +56,7 @@ describe("QRCode", () => {
       permissions: { camera: "YES" },
     });
 
-    await element(by.id("scanQrcodeButton")).tap();
+    await element(by.id("scanQrcodeButtonOnboarding")).tap();
     await element(by.id("testQrCodeDetected")).tap();
 
     await expectServerForm();
@@ -78,7 +78,7 @@ describe("QRCode", () => {
     await byWebDataTestId("tab-more-app").tap();
 
     await element(by.id("addServerIcon")).tap();
-    await element(by.id("scanQrcodeButton")).tap();
+    await element(by.id("scanQrcodeButtonAddserverform")).tap();
     await element(by.id("headerCloseIcon")).tap();
     await element(by.id("headerCloseIcon")).tap();
 
@@ -101,7 +101,7 @@ describe("QRCode", () => {
     await byWebDataTestId("tab-more-app").tap();
 
     await element(by.id("addServerIcon")).tap();
-    await element(by.id("scanQrcodeButton")).tap();
+    await element(by.id("scanQrcodeButtonAddserverform")).tap();
     await element(by.id("testQrCodeDetected")).tap();
 
     await expectServerForm();

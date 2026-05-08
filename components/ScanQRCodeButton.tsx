@@ -4,7 +4,11 @@ import { useCameraPermissions } from "expo-camera";
 import { Linking } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-export default function ScanQRCodeButton() {
+interface ScanQRCodeButtonProps {
+  shown: "Onboarding" | "Addserverform";
+}
+
+export default function ScanQRCodeButton({ shown }: ScanQRCodeButtonProps) {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const [permission, requestPermission] = useCameraPermissions();
@@ -18,7 +22,7 @@ export default function ScanQRCodeButton() {
       style={{ marginVertical: 8 }}
       appearance="outline"
       status="primary"
-      testID="scanQrcodeButton"
+      testID={`scanQrcodeButton${shown}`}
       onPress={async () => {
         if (!permission.granted) {
           const result = await requestPermission();

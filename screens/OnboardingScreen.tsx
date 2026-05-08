@@ -170,7 +170,7 @@ export default function OnboardingScreen({
           )}
         </Layout>
         <Layout style={{ paddingVertical: 16 }}>
-          <ScanQRCodeButton />
+          <ScanQRCodeButton shown="Onboarding" />
           <Button
             testID="manualEntry"
             style={{ marginVertical: 8 }}
