@@ -97,7 +97,6 @@ export default function QRCodeCameraScreen({
             testID="testQrCodeDetected"
             onPress={() =>
               serverDetected({
-                // don't set required, this should be inferred by username and password existance
                 url: "http://localhost:7080",
                 title: "Local Auth",
                 username: "admin",
