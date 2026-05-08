@@ -107,22 +107,14 @@ export default function QRCodeCameraScreen({
                         "success",
                       );
 
-                      const server = {
-                        title,
-                        url,
-                        username,
-                        password,
-                        required: !!username || !!password,
-                      };
-
                       setTimeout(() => {
                         // TODO: use popTo ?
                         navigation.navigate("AddServer", {
-                          title: server.title,
-                          url: server.url,
-                          username: server.username,
-                          password: server.password,
-                          required: server.required,
+                          title,
+                          url,
+                          username,
+                          password,
+                          required: !!username || !!password,
                         });
                       }, 1000);
                     } else {
