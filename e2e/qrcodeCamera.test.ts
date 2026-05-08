@@ -1,7 +1,6 @@
 import "detox";
 import { byWebDataTestId, waitForWebview } from "./helper";
 import { expect } from "detox";
-import { execSync } from "child_process";
 
 async function expectServerForm() {
   await expect(element(by.id("@serverFormTitle/input"))).toHaveText(
@@ -17,17 +16,8 @@ async function expectServerForm() {
 }
 
 describe("QRCode", () => {
-  beforeEach(async () => {
-    if (device.getPlatform() === "android") {
-      execSync("adb shell pm grant io.evcc.android android.permission.CAMERA");
-    }
-  });
-
   it("onboarding: open and close", async () => {
-    await device.launchApp({
-      resetAppState: true,
-      permissions: { camera: "YES" },
-    });
+    await device.launchApp({ resetAppState: true });
 
     await element(by.id("manualEntry")).tap();
     await element(by.id("scanQrcodeButtonAddserverform")).tap();
@@ -37,10 +27,7 @@ describe("QRCode", () => {
   });
 
   it("onboarding: add server by qrcode button", async () => {
-    await device.launchApp({
-      resetAppState: true,
-      permissions: { camera: "YES" },
-    });
+    await device.launchApp({ resetAppState: true });
 
     await element(by.id("manualEntry")).tap();
     await element(by.id("scanQrcodeButtonAddserverform")).tap();
@@ -53,10 +40,7 @@ describe("QRCode", () => {
   });
 
   it("onboarding: add server by serverform button", async () => {
-    await device.launchApp({
-      resetAppState: true,
-      permissions: { camera: "YES" },
-    });
+    await device.launchApp({ resetAppState: true });
 
     await element(by.id("scanQrcodeButtonOnboarding")).tap();
     await element(by.id("testQrCodeDetected")).tap();
@@ -71,7 +55,6 @@ describe("QRCode", () => {
     await device.launchApp({
       url: "evcc://server?url=localhost:7070&title=siteTitle",
       resetAppState: true,
-      permissions: { camera: "YES" },
     });
 
     await element(by.id("serverFormCheckAndSave")).tap();
@@ -95,7 +78,6 @@ describe("QRCode", () => {
     await device.launchApp({
       url: "evcc://server?url=localhost:7070&title=siteTitle",
       resetAppState: true,
-      permissions: { camera: "YES" },
     });
 
     await element(by.id("serverFormCheckAndSave")).tap();
@@ -111,7 +93,7 @@ describe("QRCode", () => {
     await expectServerForm();
 
     await element(by.id("serverFormCheckAndSave")).tap();
-    await waitFor(element(by.id("server2")))
+    await waitFor(element(by.id("server1")))
       .toExist()
       .withTimeout(20000);
   });
