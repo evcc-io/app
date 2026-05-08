@@ -31,6 +31,11 @@ export default function QRCodeCameraScreen({
   useEffect(() => {
     if (!isScanning) return;
 
+    if (testingEnvironment()) {
+      pulseAnim.setValue(1);
+      return;
+    }
+
     const pulseAnimation = Animated.loop(
       Animated.sequence([
         Animated.timing(pulseAnim, {
