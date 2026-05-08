@@ -35,6 +35,7 @@ describe("QRCode", () => {
     await element(by.id("headerCloseIcon")).tap();
     await expect(element(by.id("serverScreenTitle"))).toExist();
   });
+
   it("onboarding: add server by qrcode button", async () => {
     await device.launchApp({
       resetAppState: true,
@@ -50,6 +51,7 @@ describe("QRCode", () => {
     await element(by.id("serverFormCheckAndSave")).tap();
     await waitForWebview();
   });
+
   it("onboarding: add server by serverform button", async () => {
     await device.launchApp({
       resetAppState: true,
@@ -64,6 +66,7 @@ describe("QRCode", () => {
     await element(by.id("serverFormCheckAndSave")).tap();
     await waitForWebview();
   });
+
   it("switchserver: open and close", async () => {
     await device.launchApp({
       url: "evcc://server?url=localhost:7070&title=siteTitle",
@@ -80,13 +83,14 @@ describe("QRCode", () => {
     await element(by.id("addServerIcon")).tap();
     await element(by.id("scanQrcodeButtonAddserverform")).tap();
     await element(by.id("headerCloseIcon")).tap();
-    await element(by.id("headerCloseIcon")).tap();
+    await element(by.id("headerBackIcon")).tap();
 
     await waitFor(element(by.id("server0")))
       .toExist()
       .withTimeout(20000);
     await expect(element(by.id("server1"))).not.toExist();
   });
+
   it("switchserver: add server by serverform button", async () => {
     await device.launchApp({
       url: "evcc://server?url=localhost:7070&title=siteTitle",
@@ -107,6 +111,8 @@ describe("QRCode", () => {
     await expectServerForm();
 
     await element(by.id("serverFormCheckAndSave")).tap();
-    await waitForWebview();
+    await waitFor(element(by.id("server2")))
+      .toExist()
+      .withTimeout(20000);
   });
 });

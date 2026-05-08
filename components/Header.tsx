@@ -18,7 +18,14 @@ export function CloseIcon() {
 
 export function BackIcon() {
   const theme = useTheme();
-  return <IconBack width={28} height={28} fill={theme["text-basic-color"]} />;
+  return (
+    <IconBack
+      width={28}
+      height={28}
+      fill={theme["text-basic-color"]}
+      testID="headerBackIcon"
+    />
+  );
 }
 
 interface HeaderProps {
