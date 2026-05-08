@@ -108,8 +108,7 @@ export default function QRCodeCameraScreen({
                       );
 
                       setTimeout(() => {
-                        // TODO: use popTo ?
-                        navigation.navigate("AddServer", {
+                        navigation.popTo("AddServer", {
                           title,
                           url,
                           username,
