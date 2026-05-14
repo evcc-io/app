@@ -19,9 +19,11 @@
         "scan": "Lue QR-koodi",
         "scanning": "tunnistetaan..."
       },
+      "serverExistsAlready": "Tämä palvelin on jo määritetty aiemmin.",
       "serverIncompatible": "Evcc-palvelimen versiosi ei ole vielä sovellusyhteensopiva. Päivitä asennuksesi.",
       "serverNotAvailable": "Palvelin ei ole käytettävissä. Tarkista osoite.",
       "specify": "Anna osoite manuaalisesti",
+      "title": "Nimi",
       "user": "Käyttäjä"
     },
     "removeServer": "Poista palvelin",
@@ -32,6 +34,10 @@
       "start": "Aloita haku"
     },
     "select": "Valitse",
+    "switchServer": {
+      "addServer": "Lisää palvelin",
+      "title": "Vaihda palvelinta"
+    },
     "useDemo": "Käytä demo-näkymää"
   }
 }
