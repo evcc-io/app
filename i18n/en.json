@@ -20,6 +20,15 @@
       "serverNotAvailable": "Server not available. Please check the address.",
       "specify": "Enter address manually",
       "user": "User",
+      "qrcode": {
+        "scan": "Scan QR code",
+        "scanOnboarding": "Set up via QR code",
+        "scanPrefill": "Fill in via QR code",
+        "recognized": "QR code detected!",
+        "invalid": "Not a valid evcc QR code.",
+        "permissionDenied": "Camera access denied. Enable it in settings to scan QR codes.",
+        "scanning": "detecting..."
+      },
       "title": "Title",
       "serverExistsAlready": "This server already exists."
     },

@@ -11,6 +11,7 @@ import { fetchOrGetTitle, sameServer, verifyEvccServer } from "../utils/server";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList, Server } from "types";
+import ScanQRCodeButton from "components/ScanQRCodeButton";
 
 export default function OnboardingScreen({
   navigation,
@@ -169,6 +170,7 @@ export default function OnboardingScreen({
           )}
         </Layout>
         <Layout style={{ paddingVertical: 16 }}>
+          <ScanQRCodeButton shown="Onboarding" />
           <Button
             testID="manualEntry"
             style={{ marginVertical: 8 }}

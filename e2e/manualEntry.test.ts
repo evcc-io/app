@@ -16,6 +16,7 @@ describe("Manual entry", () => {
     await expect(element(by.id("@serverFormAuthUser/input"))).not.toExist();
     await expect(element(by.id("@serverFormAuthPassword/input"))).not.toExist();
 
+    await element(by.id("serverFormAuth")).swipe("up");
     await element(by.id("serverFormCheckAndSave")).tap();
 
     await waitForWebview();
@@ -40,5 +41,4 @@ describe("Manual entry", () => {
 
     await waitForWebview();
   });
-
 });

@@ -14,7 +14,6 @@
       "password": "Slaptažodis",
       "qrcode": {
         "invalid": "Tai nėra tinkamas evcc QR kodas.",
-        "permissionDenied": "Suteikite prieigą kamerai QR kodo nuskaitymui.",
         "recognized": "QR kodas aptiktas!",
         "scan": "Nuskaityti QR kodą",
         "scanning": "Tikrinama…"

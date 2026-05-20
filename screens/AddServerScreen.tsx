@@ -24,6 +24,7 @@ function AddServerScreen({
     password,
     required,
   } = route.params || {};
+
   const [internalServer, setInternalServer] = useState<Server>({
     title,
     url: initialUrl,
@@ -41,7 +42,7 @@ function AddServerScreen({
       basicAuth: {
         username,
         password,
-        required: internalServer.basicAuth.required,
+        required: !!username || !!password || required,
       },
     });
   }, [title, initialUrl, username, password]);

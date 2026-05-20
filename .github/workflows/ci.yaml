@@ -172,7 +172,7 @@ jobs:
   android-test:
     name: "Android Detox (test)"
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     needs: android-build
     strategy:
       matrix:

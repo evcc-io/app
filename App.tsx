@@ -24,6 +24,7 @@ import { SCHEME } from "utils/constants";
 import SwitchServerScreen from "screens/SwitchServerScreen";
 import EditServerScreen from "screens/EditServerScreen";
 import { KeyboardProvider } from "react-native-keyboard-controller";
+import QRCodeCameraScreen from "screens/QRCodeCameraScreen";
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -67,6 +68,14 @@ function SwitchServerStack() {
       <SwitchServerStackNav.Screen
         name="AddServer"
         component={AddServerScreen}
+      />
+      <SwitchServerStackNav.Screen
+        name="QRCodeCamera"
+        component={QRCodeCameraScreen}
+        options={{
+          animation: "slide_from_bottom",
+          presentation: "modal",
+        }}
       />
     </SwitchServerStackNav.Navigator>
   );
@@ -126,6 +135,11 @@ function AppNavigator() {
               <Stack.Screen
                 name="AddServer"
                 component={AddServerScreen}
+                options={sheetOpts}
+              />
+              <Stack.Screen
+                name="QRCodeCamera"
+                component={QRCodeCameraScreen}
                 options={sheetOpts}
               />
             </>

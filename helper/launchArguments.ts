@@ -1,12 +1,12 @@
 import { LaunchArguments } from "react-native-launch-arguments";
 
 interface LaunchArgs {
-  disableAnimations?: boolean;
+  testingEnvironment?: boolean;
   testLegacyServerConfig?: boolean;
 }
 
-export function disableAnimations(): boolean {
-  return !!LaunchArguments.value<LaunchArgs>().disableAnimations;
+export function testingEnvironment(): boolean {
+  return !!LaunchArguments.value<LaunchArgs>().testingEnvironment;
 }
 
 export function testLegacyServerConfig(): boolean {

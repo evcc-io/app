@@ -1,7 +1,7 @@
 node_modules/
 .expo/
-ios/
-android/
+/ios/
+/android/
 !fastlane/metadata/android
 !fastlane/metadata/ios
 caddy*.*
