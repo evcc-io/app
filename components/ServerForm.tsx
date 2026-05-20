@@ -183,8 +183,6 @@ export default function ServerForm({
         </>
       )}
 
-      {mode === "create" && <ScanQRCodeButton shown="Addserverform" />}
-
       <Button
         style={{ marginTop: 16, marginBottom: 16 }}
         appearance="filled"
@@ -196,6 +194,8 @@ export default function ServerForm({
       >
         {t("servers.manually.checkAndSave")}
       </Button>
+
+      {mode === "create" && <ScanQRCodeButton shown="Addserverform" />}
 
       {error ? (
         <Text style={{ marginTop: 16 }} category="p1" status="danger">

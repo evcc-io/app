@@ -81,6 +81,7 @@ export default function QRCodeCameraScreen({
         title={t("servers.manually.qrcode.scan")}
         showDone
         onDone={() => navigation.goBack()}
+        doneTestID="headerCloseIconCamera"
       />
     ),
     [navigation, t],

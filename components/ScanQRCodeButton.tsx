@@ -1,7 +1,7 @@
 import { Button } from "@ui-kitten/components";
 import { useTranslation } from "react-i18next";
 import { useCameraPermissions } from "expo-camera";
-import { Linking } from "react-native";
+import { Alert, Linking } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { testingEnvironment } from "helper/launchArguments";
 
@@ -18,11 +18,14 @@ export default function ScanQRCodeButton({ shown }: ScanQRCodeButtonProps) {
     return null;
   }
 
+  const isOnboarding = shown === "Onboarding";
+
   return (
     <Button
       style={{ marginVertical: 8 }}
-      appearance="outline"
-      status="primary"
+      appearance={isOnboarding ? "outline" : "ghost"}
+      status={isOnboarding ? "primary" : "basic"}
+      size={isOnboarding ? "medium" : "small"}
       testID={`scanQrcodeButton${shown}`}
       onPress={async () => {
         if (!testingEnvironment() && !permission.granted) {
@@ -31,6 +34,8 @@ export default function ScanQRCodeButton({ shown }: ScanQRCodeButtonProps) {
           if (!result.granted) {
             if (!result.canAskAgain) {
               await Linking.openSettings();
+            } else {
+              Alert.alert(t("servers.manually.qrcode.permissionDenied"));
             }
             return;
           }
@@ -39,7 +44,11 @@ export default function ScanQRCodeButton({ shown }: ScanQRCodeButtonProps) {
         navigation.navigate("QRCodeCamera");
       }}
     >
-      {t("servers.manually.qrcode.scan")}
+      {t(
+        isOnboarding
+          ? "servers.manually.qrcode.scanOnboarding"
+          : "servers.manually.qrcode.scanPrefill",
+      )}
     </Button>
   );
 }

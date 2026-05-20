@@ -22,8 +22,11 @@
       "user": "Benutzer",
       "qrcode": {
         "scan": "QR-Code scannen",
+        "scanOnboarding": "Mit QR-Code einrichten",
+        "scanPrefill": "Daten aus QR-Code übernehmen",
         "recognized": "QR-Code erkannt!",
         "invalid": "Kein gültiger evcc QR-Code.",
+        "permissionDenied": "Kamerazugriff verweigert. Aktiviere ihn in den Einstellungen, um QR-Codes zu scannen.",
         "scanning": "erkennen..."
       },
       "title": "Titel",

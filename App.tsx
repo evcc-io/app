@@ -72,6 +72,10 @@ function SwitchServerStack() {
       <SwitchServerStackNav.Screen
         name="QRCodeCamera"
         component={QRCodeCameraScreen}
+        options={{
+          animation: "slide_from_bottom",
+          presentation: "modal",
+        }}
       />
     </SwitchServerStackNav.Navigator>
   );

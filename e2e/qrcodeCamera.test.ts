@@ -21,7 +21,7 @@ describe("QRCode", () => {
 
     await element(by.id("manualEntry")).tap();
     await element(by.id("scanQrcodeButtonAddserverform")).tap();
-    await element(by.id("headerCloseIcon")).tap();
+    await element(by.id("headerCloseIconCamera")).tap();
     await element(by.id("headerCloseIcon")).tap();
     await expect(element(by.id("serverScreenTitle"))).toExist();
   });
@@ -65,7 +65,7 @@ describe("QRCode", () => {
 
     await element(by.id("addServerIcon")).tap();
     await element(by.id("scanQrcodeButtonAddserverform")).tap();
-    await element(by.id("headerCloseIcon")).tap();
+    await element(by.id("headerCloseIconCamera")).tap();
     await element(by.id("headerBackIcon")).tap();
 
     await waitFor(element(by.id("server0")))
