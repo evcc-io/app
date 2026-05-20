@@ -14,13 +14,18 @@
       "password": "Slaptažodis",
       "qrcode": {
         "invalid": "Tai nėra tinkamas evcc QR kodas.",
+        "permissionDenied": "Programėlės nustatymuose suteikite leidimą naudoti kamerą, kad nuskaityti QR kodą.",
         "recognized": "QR kodas aptiktas!",
         "scan": "Nuskaityti QR kodą",
+        "scanOnboarding": "Konfigūruoti naudojant QR kodą",
+        "scanPrefill": "Užpildyti naudojant QR kodą",
         "scanning": "Tikrinama…"
       },
+      "serverExistsAlready": "Toks serveris jau yra.",
       "serverIncompatible": "Evcc egzempliorius dar nesuderinamas su programa. Atnaujinkite įdiegimą.",
       "serverNotAvailable": "Serveris nepasiekiamas. Patikrinkite adresą.",
       "specify": "Įveskite adresą",
+      "title": "Pavadinimas",
       "user": "Vartotojas"
     },
     "removeServer": "Pašalinti serverį",
@@ -31,6 +36,10 @@
       "start": "Pradėti paiešką"
     },
     "select": "Pasirinkite",
+    "switchServer": {
+      "addServer": "Pridėti serverį",
+      "title": "Pakeisti serverį"
+    },
     "useDemo": "Naudokite demonstracinę versiją"
   }
 }
