@@ -14,7 +14,6 @@
       "password": "Salasõna",
       "qrcode": {
         "invalid": "Pole korrektne evcc QR-kood.",
-        "permissionDenied": "QR-koodi skaneerimiseks luba seadistustest kaamera kasutamine.",
         "recognized": "QR-kood on tuvastatud!",
         "scan": "Skaneeri QR-koodi",
         "scanning": "tuvastan..."

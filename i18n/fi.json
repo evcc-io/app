@@ -14,7 +14,6 @@
       "password": "Salasana",
       "qrcode": {
         "invalid": "Ei pätevä evcc-QR-koodi.",
-        "permissionDenied": "Salli kameran käyttö asetuksista lukeaksesi QR-koodin.",
         "recognized": "QR-koodi tunnistettu!",
         "scan": "Lue QR-koodi",
         "scanning": "tunnistetaan..."

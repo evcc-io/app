@@ -4,20 +4,35 @@ import { View, Pressable } from "react-native";
 import IconClose from "@material-symbols/svg-400/rounded/close.svg";
 import IconBack from "@material-symbols/svg-400/rounded/arrow_back_ios_new.svg";
 
-export function CloseIcon() {
+export function CloseIcon({ testID = "headerCloseIcon" }: { testID?: string }) {
   const theme = useTheme();
-  return <IconClose width={32} height={32} fill={theme["text-basic-color"]} />;
+  return (
+    <IconClose
+      width={32}
+      height={32}
+      fill={theme["text-basic-color"]}
+      testID={testID}
+    />
+  );
 }
 
 export function BackIcon() {
   const theme = useTheme();
-  return <IconBack width={28} height={28} fill={theme["text-basic-color"]} />;
+  return (
+    <IconBack
+      width={28}
+      height={28}
+      fill={theme["text-basic-color"]}
+      testID="headerBackIcon"
+    />
+  );
 }
 
 interface HeaderProps {
   title: string;
   showDone?: boolean;
   onDone?: () => void;
+  doneTestID?: string;
   showBack?: boolean;
   onBack?: () => void;
 }
@@ -26,6 +41,7 @@ export default function Header({
   title,
   showDone,
   onDone,
+  doneTestID,
   showBack,
   onBack,
 }: HeaderProps) {
@@ -53,7 +69,7 @@ export default function Header({
           onPress={onDone}
           style={{ paddingHorizontal: 16, paddingVertical: 4 }}
         >
-          <CloseIcon />
+          <CloseIcon testID={doneTestID} />
         </Pressable>
       )}
     </View>

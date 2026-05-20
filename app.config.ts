@@ -74,6 +74,15 @@ export default ({ config }: ConfigContext) =>
           },
         ],
         [
+          "expo-camera",
+          {
+            cameraPermission:
+              "Die App benötigt Zugriff auf die Kamera, um QR-Codes zur Servereinrichtung zu scannen.",
+            microphonePermission: false,
+            recordAudioAndroid: false,
+          },
+        ],
+        [
           "expo-font",
           {
             fonts: [
