@@ -14,8 +14,11 @@
       "password": "Salasõna",
       "qrcode": {
         "invalid": "Pole korrektne evcc QR-kood.",
+        "permissionDenied": "Puudub õigus kasutada kaamerat. Et QR-koodide skaneerimine toimiks, palun luba see seadistustest.",
         "recognized": "QR-kood on tuvastatud!",
         "scan": "Skaneeri QR-koodi",
+        "scanOnboarding": "Seadista QR-koodiga",
+        "scanPrefill": "Täida QR-koodi abil",
         "scanning": "tuvastan..."
       },
       "serverExistsAlready": "Selline server on juba olemas.",
