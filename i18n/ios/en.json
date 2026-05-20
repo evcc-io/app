@@ -1,4 +1,0 @@
-{
-  "NSCameraUsageDescription": "The app needs camera access to scan QR codes for server setup.",
-  "NSLocalNetworkUsageDescription": "The app needs access to the local network to find your evcc instance."
-}

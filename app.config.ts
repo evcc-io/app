@@ -15,19 +15,17 @@ export default ({ config }: ConfigContext) =>
       icon: "./assets/icon-light.png",
       userInterfaceStyle: "automatic",
       assetBundlePatterns: ["**/*"],
-      locales: {
-        de: "./i18n/ios/de.json",
-        en: "./i18n/ios/en.json",
-      },
       ios: {
         jsEngine: "hermes",
         supportsTablet: true,
         icon: "./assets/icon-liquid.icon",
         bundleIdentifier: "io.evcc.ios",
         infoPlist: {
-          CFBundleLocalizations: ["de", "en"],
+          CFBundleLocalizations: ["de"],
           CFBundleDevelopmentRegion: "de",
           CFBundleAllowMixedLocalizations: true,
+          NSLocalNetworkUsageDescription:
+            "Die App benötigt Zugriff auf das lokale Netzwerk, um deine evcc Instanz zu finden.",
           NSAppTransportSecurity: {
             NSAllowsArbitraryLoads: true,
           },
