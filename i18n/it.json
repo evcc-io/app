@@ -1,0 +1,30 @@
+{
+  "main": {
+    "description": "Cerca nella tua rete per trovare l'installazione di evcc.",
+    "title": "Configura il server"
+  },
+  "servers": {
+    "changeServer": "Cambia server",
+    "manually": {
+      "authenticationRequired": "Autenticazione richiesta",
+      "checkAdress": "Il server non sembra essere un'istanza evcc. Si prega di verificare l'indirizzo.",
+      "checkAndSave": "Controlla e salva",
+      "enterUrl": "Inserisci l'URL",
+      "missingOrWrongAuthentication": "Autenticazione mancante o errata",
+      "password": "Password",
+      "serverIncompatible": "L'istanza evcc non è ancora compatibile con le app. Aggiorna la tua installazione.",
+      "serverNotAvailable": "Server non disponibile. Si prega di verificare l'indirizzo.",
+      "specify": "Inserisci l'indirizzo manualmente",
+      "user": "Utente"
+    },
+    "removeServer": "Rimuovi server",
+    "search": {
+      "notAvailable": "La funzione di ricerca non è disponibile su questo dispositivo. Utilizzare l'inserimento manuale.",
+      "nothingFound": "Non è stato trovato alcun server evcc.",
+      "searching": "Cerca connessione...",
+      "start": "Inizia la ricerca"
+    },
+    "select": "Selezionare",
+    "useDemo": "Utilizza l'istanza demo"
+  }
+}

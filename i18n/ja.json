@@ -1,0 +1,36 @@
+{
+  "main": {
+    "description": "ネットワーク内を検索して、お使いのevccサーバーを見つけます。",
+    "title": "サーバーをセットアップ"
+  },
+  "servers": {
+    "changeServer": "サーバー変更",
+    "manually": {
+      "authenticationRequired": "認証が必要です",
+      "checkAdress": "指定されたアドレスはevccサーバーではないようです。アドレスを確認してください。",
+      "checkAndSave": "確認して保存",
+      "enterUrl": "URLを入力",
+      "missingOrWrongAuthentication": "認証情報が不足しているか、正しくありません",
+      "password": "パスワード",
+      "serverExistsAlready": "このサーバーはすでに登録されています。",
+      "serverIncompatible": "指定されたevccサーバーはアプリに対応していません。最新バージョンにアップデートしてください。",
+      "serverNotAvailable": "サーバーに接続できません。アドレスを確認してください。",
+      "specify": "アドレスを手動で入力",
+      "title": "タイトル",
+      "user": "ユーザー"
+    },
+    "removeServer": "サーバーを削除",
+    "search": {
+      "notAvailable": "このデバイスでは検索できません。手動で入力してください。",
+      "nothingFound": "evccサーバーが検出されませんでした。",
+      "searching": "接続先を探しています…",
+      "start": "検索開始"
+    },
+    "select": "選択",
+    "switchServer": {
+      "addServer": "サーバーを追加",
+      "title": "サーバー切り替え"
+    },
+    "useDemo": "デモモードを使用する"
+  }
+}

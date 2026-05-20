@@ -19,9 +19,11 @@
         "scan": "Naskenujte QR kod",
         "scanning": "analyzování..."
       },
+      "serverExistsAlready": "Tento server už existuje.",
       "serverIncompatible": "Instalace evcc ještě není kompatibilní s aplikací. Aktualizujte svou instalaci.",
       "serverNotAvailable": "Server není k dispozici. Zkontrolujte prosím adresu.",
       "specify": "Zadejte adresu ručně",
+      "title": "Nadpis",
       "user": "Uživatel"
     },
     "removeServer": "Odebrat server",
@@ -32,6 +34,10 @@
       "start": "Spustit vyhledávání"
     },
     "select": "Vybrat",
+    "switchServer": {
+      "addServer": "Přidat server",
+      "title": "Přepnout server"
+    },
     "useDemo": "Použít ukázkovou instanci"
   }
 }

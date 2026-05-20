@@ -19,9 +19,11 @@
         "scan": "Scan QR koden",
         "scanning": "Scanner..."
       },
+      "serverExistsAlready": "Serveren findes allerede.",
       "serverIncompatible": "evcc-installeringen er endnu ikke app-kompatibel. Opdater din installation.",
       "serverNotAvailable": "Server er ikke tilgængelig. Check venligst adressen.",
       "specify": "Indtast adressen manuelt",
+      "title": "Titel",
       "user": "Bruger"
     },
     "removeServer": "Fjern server",
@@ -32,6 +34,10 @@
       "start": "Start søgning"
     },
     "select": "Vælg",
+    "switchServer": {
+      "addServer": "Tilføj server",
+      "title": "Skift server"
+    },
     "useDemo": "Brug demo installation"
   }
 }
