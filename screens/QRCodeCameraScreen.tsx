@@ -127,7 +127,6 @@ export default function QRCodeCameraScreen({
                       if (
                         qrcodeUrl.protocol === "evcc:" &&
                         qrcodeUrl.hostname === "server" &&
-                        title &&
                         url
                       ) {
                         showStatus(
