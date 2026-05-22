@@ -178,7 +178,12 @@ export default function MainScreen({
               }
             `}
             style={{ flex: 1 }}
-            key={webViewKey}
+            // Key by server URL so switching servers mounts a fresh WebView
+            // instead of navigating the existing WKWebView in place. In-place
+            // navigation leaks web state (cookies, auth) between servers and,
+            // on iOS, makes Detox re-fire stale web invocation results, which
+            // desyncs its websocket and flakes the e2e tests.
+            key={`${activeServer?.url}#${webViewKey}`}
             bounces={false}
             ref={webViewRef}
             overScrollMode="never"
