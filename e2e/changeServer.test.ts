@@ -60,7 +60,6 @@ describe("Change Server", () => {
     await element(by.id("addServerIcon")).tap();
     await element(by.id("@serverFormTitle/input")).typeText("Demo");
     await element(by.id("@serverFormUrl/input")).typeText("demo.evcc.io");
-    await element(by.id("serverFormAuth")).swipe("up");
     await element(by.id("serverFormCheckAndSave")).tap();
 
     await tapAfterWaitFor(element(by.id("server1")));
@@ -77,7 +76,6 @@ describe("Change Server", () => {
     await element(by.id("addServerIcon")).tap();
     await element(by.id("@serverFormTitle/input")).typeText("Demo");
     await element(by.id("@serverFormUrl/input")).typeText("demo.evcc.io");
-    await element(by.id("serverFormAuth")).swipe("up");
     await element(by.id("serverFormCheckAndSave")).tap();
 
     // remove active server (server0 = local); first remaining (demo) is auto-activated
@@ -102,7 +100,6 @@ describe("Change Server", () => {
 
     await element(by.id("@serverFormTitle/input")).typeText("Demo");
     await element(by.id("@serverFormUrl/input")).typeText("demo.evcc.io");
-    await element(by.id("serverFormAuth")).swipe("up");
     await element(by.id("serverFormCheckAndSave")).tap();
 
     await tapAfterWaitFor(element(by.id("server1")));
