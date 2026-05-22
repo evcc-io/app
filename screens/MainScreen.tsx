@@ -25,6 +25,7 @@ import { RootStackParamList } from "types";
 import { shareFileFromUrl } from "utils/shareFile";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Spinner from "components/animations/Spinner";
+import { testingEnvironment } from "helper/launchArguments";
 
 export default function MainScreen({
   navigation,
@@ -62,6 +63,16 @@ export default function MainScreen({
     const duration = 400;
     const smallDelay = 500;
     const largeDelay = smallDelay + duration * 0.3;
+
+    // Under Detox, snap straight to the final state. The timed fades add
+    // ~1s of delay per connection change that the e2e runner waits on.
+    if (testingEnvironment()) {
+      contFade.setValue(isConnected ? 1 : 0);
+      loadFade.setValue(isConnected ? 0 : 1);
+      loadScale.setValue(isConnected ? 1.2 : 1);
+      return;
+    }
+
     Animated.timing(contFade, {
       toValue: isConnected ? 1 : 0,
       delay: isConnected ? largeDelay : smallDelay,

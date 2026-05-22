@@ -26,9 +26,7 @@ module.exports = {
         enabled: true,
         keepOnlyFailedTestsArtifacts: true,
         takeWhen: {
-          testStart: true,
           testFailure: true,
-          testDone: true,
           appNotReady: true,
         },
       },
