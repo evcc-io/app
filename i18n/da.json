@@ -14,8 +14,11 @@
       "password": "Kodeord",
       "qrcode": {
         "invalid": "Det er ikke en gyldig evcc QR kode.",
+        "permissionDenied": "Kamera ikke tilgængelig. Aktivér kamera i indstillinger for at scanne QR-koder.",
         "recognized": "QR code fundet!",
         "scan": "Scan QR koden",
+        "scanOnboarding": "Opsætning via QR-kode",
+        "scanPrefill": "Udfyld via QR-kode",
         "scanning": "Scanner..."
       },
       "serverExistsAlready": "Serveren findes allerede.",
