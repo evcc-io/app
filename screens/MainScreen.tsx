@@ -14,7 +14,6 @@ import { useAppContext } from "../components/AppContext";
 import { useTranslation } from "react-i18next";
 import { USER_AGENT } from "../utils/constants";
 import {
-  FileDownloadEvent,
   ShouldStartLoadRequest,
   WebViewErrorEvent,
   WebViewHttpErrorEvent,
@@ -43,6 +42,13 @@ export default function MainScreen({
   const openSettings = useCallback(() => {
     navigation.navigate("SwitchServerModal");
   }, [navigation]);
+
+  const { required, username, password } = activeServer?.basicAuth || {};
+  const basicAuthCredential = useMemo(
+    () =>
+      required && username && password ? { username, password } : undefined,
+    [required, username, password],
+  );
 
   // Reconnect if connection is lost
   useEffect(() => {
@@ -98,6 +104,9 @@ export default function MainScreen({
         case "settings":
           openSettings();
           break;
+        case "download":
+          shareFileFromUrl(data.url, basicAuthCredential);
+          break;
         case "vibrate": {
           const { Light, Medium, Heavy } = Haptics.ImpactFeedbackStyle;
           const d = Array.isArray(data.pattern)
@@ -108,7 +117,7 @@ export default function MainScreen({
         }
       }
     },
-    [openSettings],
+    [openSettings, basicAuthCredential],
   );
 
   const onShouldStartLoadWithRequest = useCallback(
@@ -144,16 +153,6 @@ export default function MainScreen({
     setIsConnected(false);
   }, []);
 
-  const onFileDownload = ({
-    nativeEvent: { downloadUrl },
-  }: FileDownloadEvent) => {
-    shareFileFromUrl(downloadUrl);
-  };
-
-  const { required, username, password } = activeServer?.basicAuth || {};
-  const basicAuthCredential =
-    required && username && password ? { username, password } : undefined;
-
   const LayoutMemoized = useMemo(
     () => (
       <Layout style={{ flex: 1 }}>
@@ -176,6 +175,19 @@ export default function MainScreen({
                   return true;
                 };
               }
+              if (!window.__evccDownloadHook) {
+                window.__evccDownloadHook = true;
+                // intercept file downloads (e.g. history CSV export) so they can
+                // be fetched natively with the configured basic auth credentials
+                document.addEventListener("click", function(e) {
+                  var target = e.target;
+                  var anchor = target && target.closest ? target.closest("a[download]") : null;
+                  if (anchor && anchor.href) {
+                    e.preventDefault();
+                    window.ReactNativeWebView.postMessage(JSON.stringify({ type: "download", url: anchor.href }));
+                  }
+                }, true);
+              }
             `}
             style={{ flex: 1 }}
             key={webViewKey}
@@ -190,7 +202,6 @@ export default function MainScreen({
             onContentProcessDidTerminate={onTerminate}
             onMessage={handleMessage}
             onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
-            onFileDownload={onFileDownload}
           />
         </Animated.View>
         <Animated.View
