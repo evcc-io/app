@@ -1,6 +1,7 @@
 import { Directory, File, Paths } from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import { encode } from "base-64";
+import { testingEnvironment } from "helper/launchArguments";
 
 interface Credentials {
   username: string;
@@ -23,8 +24,16 @@ export async function shareFileFromUrl(url: string, credentials?: Credentials) {
     }
 
     const file = await File.downloadFileAsync(url, d, { headers });
-    await Sharing.shareAsync(file.uri);
+
+    // the native share sheet cannot be driven by e2e tests; skip it so the
+    // test can assert on the downloaded file instead
+    if (!testingEnvironment()) {
+      await Sharing.shareAsync(file.uri);
+    }
+
+    return file.name;
   } catch (e) {
     console.log(`downloading and sharing file ${url}: error ${e}`);
+    return undefined;
   }
 }

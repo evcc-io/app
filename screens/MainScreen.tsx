@@ -24,6 +24,7 @@ import { RootStackParamList } from "types";
 import { shareFileFromUrl } from "utils/shareFile";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Spinner from "components/animations/Spinner";
+import { testingEnvironment } from "helper/launchArguments";
 
 export default function MainScreen({
   navigation,
@@ -34,6 +35,7 @@ export default function MainScreen({
   const webViewRef = useRef(null);
   const [isConnected, setIsConnected] = useState(false);
   const [webViewKey, setWebViewKey] = useState(0);
+  const [downloadedFile, setDownloadedFile] = useState<string | null>(null);
 
   const contFade = useRef(new Animated.Value(isConnected ? 1 : 0)).current;
   const loadFade = useRef(new Animated.Value(isConnected ? 0 : 1)).current;
@@ -105,7 +107,9 @@ export default function MainScreen({
           openSettings();
           break;
         case "download":
-          shareFileFromUrl(data.url, basicAuthCredential);
+          shareFileFromUrl(data.url, basicAuthCredential).then((name) => {
+            if (name) setDownloadedFile(name);
+          });
           break;
         case "vibrate": {
           const { Light, Medium, Heavy } = Haptics.ImpactFeedbackStyle;
@@ -251,12 +255,26 @@ export default function MainScreen({
 
   console.log("serverUrl", activeServer.url, isConnected);
 
-  return LayoutMemoized;
+  return (
+    <>
+      {LayoutMemoized}
+      {testingEnvironment() && downloadedFile ? (
+        <Text testID="downloadCompleted" style={styles.downloadMarker}>
+          {downloadedFile}
+        </Text>
+      ) : null}
+    </>
+  );
 }
 
 const styles = StyleSheet.create({
   overlay: {
     ...StyleSheet.absoluteFillObject,
     zIndex: 1,
+  },
+  // invisible marker that lets e2e tests assert a download finished
+  downloadMarker: {
+    position: "absolute",
+    opacity: 0,
   },
 });

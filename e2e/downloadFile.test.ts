@@ -1,5 +1,5 @@
 import "detox";
-import { byWebDataTestId, waitForWebview } from "./helper";
+import { byWebCss, waitForWebview } from "./helper";
 
 describe("Download file", () => {
   beforeEach(async () => {
@@ -9,24 +9,25 @@ describe("Download file", () => {
     });
   });
 
-  // TODO: add assertion for file download
-  it.skip("sessions file", async () => {
+  it("downloads a file triggered from the webview", async () => {
     await element(by.id("serverFormCheckAndSave")).tap();
     await waitForWebview();
 
-    await byWebDataTestId("topnavigation-button").tap();
-    await byWebDataTestId("topnavigation-sessions").tap();
-    await byWebDataTestId("sessions-download").tap();
-  });
+    // evcc exposes CSV exports as `<a download>` links; the app intercepts
+    // those clicks and downloads the file natively. Add and click one directly
+    // so the test exercises that path without depending on evcc's web UI.
+    await byWebCss("body").runScript(`(body) => {
+      var link = document.createElement("a");
+      link.href = "/api/sessions?format=csv";
+      link.setAttribute("download", "sessions.csv");
+      link.textContent = "download";
+      body.appendChild(link);
+      link.click();
+    }`);
 
-  // TODO: add assertion for file download
-  it.skip("backup file", async () => {
-    await element(by.id("serverFormCheckAndSave")).tap();
-    await waitForWebview();
-
-    await byWebDataTestId("topnavigation-button").tap();
-    await byWebDataTestId("topnavigation-config").tap();
-    await byWebDataTestId("backup-restore").tap();
-    await byWebDataTestId("backup-restore-open-confirm-modal").tap();
+    // MainScreen renders this marker once shareFileFromUrl has stored a file
+    await waitFor(element(by.id("downloadCompleted")))
+      .toExist()
+      .withTimeout(20000);
   });
 });
