@@ -178,7 +178,8 @@ export default function MainScreen({
               }
             `}
             style={{ flex: 1 }}
-            key={webViewKey}
+            // Fresh WebView per server avoids leaking cookies/auth across servers.
+            key={`${activeServer?.url}#${webViewKey}`}
             bounces={false}
             ref={webViewRef}
             overScrollMode="never"
