@@ -23,12 +23,7 @@ module.exports = {
         keepOnlyFailedTestsArtifacts: true,
       },
       screenshot: {
-        enabled: true,
-        keepOnlyFailedTestsArtifacts: true,
-        takeWhen: {
-          testFailure: true,
-          appNotReady: true,
-        },
+        enabled: false,
       },
       video: {
         enabled: true,
