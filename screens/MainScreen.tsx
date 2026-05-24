@@ -179,19 +179,6 @@ export default function MainScreen({
                   return true;
                 };
               }
-              if (!window.__evccDownloadHook) {
-                window.__evccDownloadHook = true;
-                // intercept file downloads (e.g. history CSV export) so they can
-                // be fetched natively with the configured basic auth credentials
-                document.addEventListener("click", function(e) {
-                  var target = e.target;
-                  var anchor = target && target.closest ? target.closest("a[download]") : null;
-                  if (anchor && anchor.href) {
-                    e.preventDefault();
-                    window.ReactNativeWebView.postMessage(JSON.stringify({ type: "download", url: anchor.href }));
-                  }
-                }, true);
-              }
             `}
             style={{ flex: 1 }}
             key={webViewKey}
