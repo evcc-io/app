@@ -65,4 +65,29 @@ describe("Download file", () => {
 
     await triggerWebviewDownload("/cookietest/file.csv");
   });
+
+  it("downloads via POST with a body", async () => {
+    // mirrors how BackupRestoreModal triggers the backup download — the
+    // event carries method=POST + body, and the in-webview fetch carries
+    // both the body and the auth cookie. /cookietest/post.csv 405s on GET
+    // and 401s without the cookie, so the marker is dual proof.
+    await device.launchApp({
+      url: "evcc://server?url=http://localhost:7081&title=Local%20Cookie",
+      resetAppState: true,
+    });
+    await element(by.id("serverFormCheckAndSave")).tap();
+    await waitForWebview();
+
+    await byWebCss("body").runScript(`() => {
+      window.ReactNativeWebView.postMessage(JSON.stringify({
+        type: "download",
+        url: new URL("/cookietest/post.csv", window.location.href).toString(),
+        method: "POST",
+        body: { hello: "world" },
+      }));
+    }`);
+    await waitFor(element(by.id("downloadCompleted")))
+      .toExist()
+      .withTimeout(20000);
+  });
 });

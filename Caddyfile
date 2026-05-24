@@ -29,6 +29,21 @@
 		respond 401
 	}
 
+	# /cookietest/post.csv requires POST + cookie — mirrors the /system/backup
+	# shape so e2e can prove method+body downloads ride the same bridge as GETs
+	handle /cookietest/post.csv {
+		@notPost not method POST
+		handle @notPost {
+			respond 405
+		}
+		@hasCookie header_regexp Cookie ".*testauth=letmein.*"
+		handle @hasCookie {
+			header Content-Type "text/csv"
+			respond "method,present\nPOST,yes\n" 200
+		}
+		respond 401
+	}
+
 	# every other response sets the HttpOnly cookie so the webview picks it
 	# up on its initial load and replays it on subsequent in-page fetches
 	handle {
