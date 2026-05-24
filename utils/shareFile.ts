@@ -2,13 +2,9 @@ import { Directory, File, Paths } from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import { encode } from "base-64";
 import { testingEnvironment } from "helper/launchArguments";
+import { BasicAuth } from "types";
 
-interface Credentials {
-  username: string;
-  password: string;
-}
-
-export async function shareFileFromUrl(url: string, credentials?: Credentials) {
+export async function shareFileFromUrl(url: string, basicAuth?: BasicAuth) {
   try {
     const d = new Directory(Paths.cache, "file_downloads");
 
@@ -18,8 +14,8 @@ export async function shareFileFromUrl(url: string, credentials?: Credentials) {
 
     // forward basic auth credentials so downloads work on protected servers
     const headers: Record<string, string> = {};
-    if (credentials) {
-      const token = encode(`${credentials.username}:${credentials.password}`);
+    if (basicAuth) {
+      const token = encode(`${basicAuth.username}:${basicAuth.password}`);
       headers["Authorization"] = `Basic ${token}`;
     }
 
