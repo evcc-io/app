@@ -64,8 +64,7 @@ export default function MainScreen({
     const smallDelay = 500;
     const largeDelay = smallDelay + duration * 0.3;
 
-    // Under Detox, snap straight to the final state. The timed fades add
-    // ~1s of delay per connection change that the e2e runner waits on.
+    // snap straight to final state when running tests
     if (testingEnvironment()) {
       contFade.setValue(isConnected ? 1 : 0);
       loadFade.setValue(isConnected ? 0 : 1);
