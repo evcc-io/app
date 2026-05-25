@@ -47,7 +47,7 @@ jobs:
           usePlayStoreLocales: true
 
   ios-build:
-    name: "iOS Detox (build)"
+    name: iOS Detox (build)
     runs-on: depot-macos-15
     timeout-minutes: 30
     steps:
