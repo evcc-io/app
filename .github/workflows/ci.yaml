@@ -46,8 +46,8 @@ jobs:
         with:
           usePlayStoreLocales: true
 
-  ios-detox:
-    name: "iOS Detox (build + test)"
+  ios-build:
+    name: "iOS Detox (build)"
     runs-on: depot-macos-15
     timeout-minutes: 30
     steps:
@@ -86,8 +86,53 @@ jobs:
       - name: Build
         run: npx detox build --configuration ios.sim.release
 
+      - name: Upload app artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: ios-evcc-app
+          path: ios/build/Build/Products/Release-iphonesimulator/evcc.app
+          if-no-files-found: error
+          retention-days: 1
+
+  ios-test:
+    name: "iOS Detox (test)"
+    runs-on: depot-macos-15
+    timeout-minutes: 30
+    needs: ios-build
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Setup Xcode 26.0
+        run: |
+          sudo xcode-select -s /Applications/Xcode_26.0.app/Contents/Developer
+          xcrun simctl list runtimes
+
+          if ! xcrun simctl list runtimes | grep -q "iOS"; then
+            sudo xcodebuild -downloadPlatform iOS
+          fi
+
+      - name: Setup Node.js
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
       - name: Install applesimutils
         run: brew tap wix/brew && brew install applesimutils
+
+      - name: Download app artifact
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: ios-evcc-app
+          path: ios/build/Build/Products/Release-iphonesimulator/evcc.app
 
       - name: Setup evcc daemon
         run: |
@@ -107,14 +152,19 @@ jobs:
           chmod +x caddy
           ./caddy run &
 
-      - name: Test
-        run: npx detox test --configuration ios.sim.release --cleanup --headless --maxWorkers 2
+      - name: Test (shard ${{ matrix.shard }}/2)
+        # `--shard k/N` is a Jest flag — Detox forwards anything after `--`
+        # straight to Jest. Within each shard we keep --maxWorkers 2 so the
+        # two test files that land on a shard can still run on cloned sims
+        # in parallel. Two shards × two workers = effectively four parallel
+        # simulator instances across the two test runners.
+        run: npx detox test --configuration ios.sim.release --cleanup --headless --maxWorkers 2 -- --shard=${{ matrix.shard }}/2
 
       - name: Upload artifacts on failure
         if: failure()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: ios-detox-artifacts
+          name: ios-detox-artifacts-shard-${{ matrix.shard }}
           path: e2e/artifacts/
           retention-days: 7
 
