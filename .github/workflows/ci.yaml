@@ -159,11 +159,6 @@ jobs:
           ./caddy run &
 
       - name: Test (shard ${{ matrix.shard }}/2)
-        # `--shard k/N` is a Jest flag — Detox forwards anything after `--`
-        # straight to Jest. Within each shard we keep --maxWorkers 2 so the
-        # two test files that land on a shard can still run on cloned sims
-        # in parallel. Two shards × two workers = effectively four parallel
-        # simulator instances across the two test runners.
         run: npx detox test --configuration ios.sim.release --cleanup --headless --maxWorkers 2 -- --shard=${{ matrix.shard }}/2
 
       - name: Upload artifacts on failure
