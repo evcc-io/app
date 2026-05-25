@@ -108,7 +108,11 @@ jobs:
           ./caddy run &
 
       - name: Test
-        run: npx detox test --configuration ios.sim.release --cleanup --headless
+        # --workers 2 runs the suite across two cloned simulators in parallel.
+        # Detox handles per-worker device allocation; tests already isolate
+        # state via `resetAppState: true`, and the evcc daemon endpoints we
+        # hit are read-only.
+        run: npx detox test --configuration ios.sim.release --cleanup --headless --workers 2
 
       - name: Upload artifacts on failure
         if: failure()
