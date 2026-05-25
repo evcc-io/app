@@ -95,7 +95,7 @@ jobs:
           retention-days: 1
 
   ios-test:
-    name: "iOS Detox (test)"
+    name: iOS Detox (test)
     runs-on: depot-macos-15
     timeout-minutes: 30
     needs: ios-build
