@@ -93,7 +93,7 @@ Most folders are self-explanatory (`screens/`, `components/`, `utils/`, `i18n/`,
 ## Native Builds
 
 - `android/` and `ios/` are produced by `npx expo prebuild --platform <ios|android> --clean`. They are checked in but should be regenerated rather than hand-edited — local changes get blown away by the next prebuild. To inject native-level config, write or extend an Expo config plugin under `scripts/` and register it in `app.config.ts`.
-- F-Droid is a reproducible-build target. The plugins in `scripts/fdroid/` strip non-reproducible bits (DK build IDs, dependency metadata). The README documents the exact F-Droid recipe (`npx expo prebuild` → `sed` out `signingConfig` → `./gradlew assembleRelease`); keep it working.
+- F-Droid is a reproducible-build target. The plugins in `scripts/fdroid/` strip non-reproducible bits (DK build IDs, dependency metadata). The README documents the exact F-Droid recipe (`npx expo prebuild` → `sed` out `signingConfig` → `./gradlew :app:assembleRelease`); keep it working.
 - Bumping `version` in `package.json` should also bump `ios.buildNumber` and `android.versionCode` in `app.config.ts` (kept in sync, currently both `38`). `USER_AGENT` / `APP_VERSION` / `GITHUB_RELEASES_URL` in `utils/constants.ts` derive from `package.json#version` automatically.
 - `app.config.ts` sets `NSAllowsArbitraryLoads: true` and Android `usesCleartextTraffic: true` on purpose — users run evcc on plain-HTTP local IPs. Don't tighten these without a migration plan.
 
