@@ -8,7 +8,6 @@ import {
 } from "./helper";
 import { expect } from "detox";
 
-// per-suite wall-clock when Detox runs tests across parallel sim workers.
 describe("Add Server", () => {
   beforeEach(async () => {
     await device.launchApp({
