@@ -12,6 +12,10 @@
       "enterUrl": "URLを入力",
       "missingOrWrongAuthentication": "認証情報が不足しているか、正しくありません",
       "password": "パスワード",
+      "qrcode": {
+        "scan": "QRコードを読み取る",
+        "scanOnboarding": "QRコードを使用して設定"
+      },
       "serverExistsAlready": "このサーバーはすでに登録されています。",
       "serverIncompatible": "指定されたevccサーバーはアプリに対応していません。最新バージョンにアップデートしてください。",
       "serverNotAvailable": "サーバーに接続できません。アドレスを確認してください。",
