@@ -15,8 +15,6 @@ async function expectServerForm() {
   );
 }
 
-// Switch-server QR flows — split out of qrcodeCamera.test.ts to even out
-// per-suite wall-clock when Detox runs tests across parallel sim workers.
 describe("QRCode (switch server)", () => {
   it("open and close", async () => {
     await device.launchApp({
