@@ -67,7 +67,6 @@ describe("Add Server", () => {
     await element(by.id("serverFormCheckAndSave")).tap();
 
     // verify the 3rd server was added
-    // "two servers: add and switch"
     await waitFor(element(by.id("server2")))
       .toExist()
       .withTimeout(20000);
