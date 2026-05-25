@@ -8,7 +8,6 @@ import {
 } from "./helper";
 import { expect } from "detox";
 
-// Adding-a-server scenarios — split out of changeServer.test.ts to even out
 // per-suite wall-clock when Detox runs tests across parallel sim workers.
 describe("Add Server", () => {
   beforeEach(async () => {
