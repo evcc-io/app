@@ -3,7 +3,7 @@ import { withSettingsGradle, type ConfigPlugin } from "expo/config-plugins";
 const addExpoAutolinkingExclude: ConfigPlugin = (config) => {
   return withSettingsGradle(config, (gradleConfig) => {
     console.log(
-      "🗑 Script: Excluding non free dependencies from the release build",
+      "🗑 Script: Excluding non free dependencies from release builds",
     );
 
     if (typeof gradleConfig.modResults.contents === "string") {
