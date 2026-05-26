@@ -6,7 +6,15 @@ const withAddLinkOption: ConfigPlugin = (config) => {
   return withDangerousMod(config, [
     "android",
     async (config) => {
-      const packages = ["react-native-screens", "expo-modules-core"];
+      const packages = [
+        "react-native-screens",
+        "expo-modules-core",
+        "react-native-gesture-handler",
+        "react-native-keyboard-controller",
+        "react-native-svg",
+        "react-native-safe-area-context",
+        "react-native-reanimated",
+      ];
       for (const pkg of packages) {
         console.log(
           "🗑 Script: Removing build ID from CMakeLists.txt for package",
