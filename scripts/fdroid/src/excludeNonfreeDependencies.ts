@@ -3,7 +3,7 @@ import { withSettingsGradle, type ConfigPlugin } from "expo/config-plugins";
 const addExpoAutolinkingExclude: ConfigPlugin = (config) => {
   return withSettingsGradle(config, (gradleConfig) => {
     console.log(
-      "🗑 Script: Excluding non free dependencies from the release build",
+      "🗑 Script: Excluding non free dependencies from release builds",
     );
 
     if (typeof gradleConfig.modResults.contents === "string") {
@@ -12,7 +12,7 @@ const addExpoAutolinkingExclude: ConfigPlugin = (config) => {
           "expoAutolinking.useExpoModules()",
           `def isReleaseBuild = gradle.startParameter.taskNames.any { it.toLowerCase().contains('release')}
 if (isReleaseBuild) {
-  expoAutolinking.exclude = ["expo-dev-launcher", "expo-dev-client"]
+  expoAutolinking.exclude = ["expo-dev-launcher", "expo-dev-client", "expo-dev-menu", "expo-dev-menu-interface"]
 }
 expoAutolinking.useExpoModules()
 `,
@@ -22,4 +22,4 @@ expoAutolinking.useExpoModules()
   });
 };
 
-module.exports = addExpoAutolinkingExclude;
+export default addExpoAutolinkingExclude;
