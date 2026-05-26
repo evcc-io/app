@@ -59,8 +59,7 @@ export default ({ config }: ConfigContext) =>
         },
       },
       plugins: [
-        ["./scripts/fdroid/removeDKBuildId.ts"],
-        ["./scripts/fdroid/disableDependencyMetadata.ts"],
+        ["./scripts/fdroid/configureFdroid.ts"],
         [
           "./scripts/detox/configureDetox.ts",
           { subdomains: "*" }, // uncomment to debug app

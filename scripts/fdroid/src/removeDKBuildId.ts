@@ -36,4 +36,4 @@ const withAddLinkOption: ConfigPlugin = (config) => {
   ]);
 };
 
-module.exports = withAddLinkOption;
+export default withAddLinkOption;

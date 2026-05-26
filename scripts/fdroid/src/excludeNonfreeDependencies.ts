@@ -22,4 +22,4 @@ expoAutolinking.useExpoModules()
   });
 };
 
-module.exports = addExpoAutolinkingExclude;
+export default addExpoAutolinkingExclude;

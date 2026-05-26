@@ -22,4 +22,4 @@ const withNDKBuildId: ConfigPlugin = (config) => {
   });
 };
 
-module.exports = withNDKBuildId;
+export default withNDKBuildId;
