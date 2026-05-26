@@ -12,7 +12,7 @@ const addExpoAutolinkingExclude: ConfigPlugin = (config) => {
           "expoAutolinking.useExpoModules()",
           `def isReleaseBuild = gradle.startParameter.taskNames.any { it.toLowerCase().contains('release')}
 if (isReleaseBuild) {
-  expoAutolinking.exclude = ["expo-dev-launcher", "expo-dev-client"]
+  expoAutolinking.exclude = ["expo-dev-launcher", "expo-dev-client", "expo-dev-menu", "expo-dev-menu-interface"]
 }
 expoAutolinking.useExpoModules()
 `,
