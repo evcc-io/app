@@ -46,7 +46,7 @@
     "i18next": "^26.0.8",
     "react": "19.2.0",
     "react-dom": "19.2.0",
-    "react-i18next": "^16.5.4",
+    "react-i18next": "^17.0.8",
     "react-native": "0.83.6",
     "react-native-edge-to-edge": "^1.7.0",
     "react-native-gesture-handler": "^2.30.0",
