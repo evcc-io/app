@@ -1,4 +1,3 @@
-import React from "react";
 import { Layout, Text, useTheme } from "@ui-kitten/components";
 import IconHomeFill from "@material-symbols/svg-400/rounded/home-fill.svg";
 import IconHome from "@material-symbols/svg-400/rounded/home.svg";
