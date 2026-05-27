@@ -10,6 +10,15 @@ updates:
         update-types:
           - minor
           - patch
+    ignore:
+      # Expo SDK pins these — upgrade via `npx expo install --fix`, not Dependabot.
+      - dependency-name: "expo"
+      - dependency-name: "expo-*"
+      - dependency-name: "react-native"
+      - dependency-name: "react-native-*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react"
+      - dependency-name: "react-dom"
 
   - package-ecosystem: github-actions
     directory: /
