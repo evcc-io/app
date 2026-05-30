@@ -325,6 +325,7 @@ jobs:
 
       - name: Setup F-Droid
         run: |
+          sudo add-apt-repository ppa:fdroid/fdroidserver
           sudo apt update
           sudo apt install fdroidserver
 
