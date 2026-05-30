@@ -359,4 +359,4 @@ jobs:
           ./gradlew :app:assembleRelease --parallel --build-cache
 
       - name: Scan
-        run: fdroid scanner --verbose --exit-code app/build/outputs/apk/release/app-release.apk
+        run: fdroid scanner --verbose --exit-code android/app/build/outputs/apk/release/app-release.apk
