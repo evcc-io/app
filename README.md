@@ -147,6 +147,15 @@ This will run caddy on port 7080.
 
 ### Testing Android app _(available on Linux, macOS and Windows)_
 
+#### Create build-type file
+
+For Android-Detox testing the detox scripts (see `./scripts/detox`) have to run.
+To do this, you need to create a file called `android-detox-build`:
+
+```
+touch android-detox-build
+```
+
 #### Emulator (slower):
 
 1. Ensure you have installed [Android Studio](https://developer.android.com/studio).
