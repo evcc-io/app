@@ -210,18 +210,18 @@ jobs:
       - name: Upload app apk
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: app-release.apk
+          name: android-detox-app.apk
           path: android/app/build/outputs/apk/release/app-release.apk
           if-no-files-found: error
-          retention-days: 7
+          retention-days: 1
 
       - name: Upload detox apk
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: app-release-androidTest.apk
+          name: android-detox-runner.apk
           path: android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk
           if-no-files-found: error
-          retention-days: 7
+          retention-days: 1
 
   android-test:
     name: "Android Detox (test)"
@@ -253,13 +253,13 @@ jobs:
       - name: Download app apk
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
-          name: app-release.apk
+          name: android-detox-app.apk
           path: android/app/build/outputs/apk/release
 
       - name: Download detox apk
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
-          name: app-release-androidTest.apk
+          name: android-detox-runner.apk
           path: android/app/build/outputs/apk/androidTest/release
 
       - name: Install system dependencies for android emulator
@@ -323,9 +323,7 @@ jobs:
 
       - name: Get version
         id: version
-        run: |
-          echo "version=$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT
-          echo "sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+        run: echo "version=$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT
 
       - name: Setup Environment
         run: |
@@ -375,7 +373,7 @@ jobs:
       - name: Upload apk
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: evcc-${{ steps.version.outputs.version }}-${{ steps.version.outputs.sha }}.apk
+          name: evcc-${{ steps.version.outputs.version }}-fdroid.apk
           path: android/app/build/outputs/apk/release/app-release.apk
           if-no-files-found: error
-          retention-days: 7
+          retention-days: 90
