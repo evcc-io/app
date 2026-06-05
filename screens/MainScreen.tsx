@@ -109,8 +109,15 @@ export default function MainScreen({
         case "download":
           // do the fetch inside the webview so HttpOnly auth cookies and any
           // basic-auth tied to the webview ride along automatically; post the
-          // bytes back as a data URL for us to persist + share.
-          webViewRef.current?.injectJavaScript(downloadScript(data.url));
+          // bytes back as a data URL for us to persist + share. method/body
+          // are forwarded so POST-with-body downloads (backup) work the same.
+          webViewRef.current?.injectJavaScript(
+            downloadScript(data.url, {
+              method: data.method,
+              body: data.body,
+              headers: data.headers,
+            }),
+          );
           break;
         case "downloadData": {
           const dataUrl = String(data.dataUrl || "");
@@ -269,12 +276,35 @@ export default function MainScreen({
 
 // fetches `url` from inside the webview (so the page's auth cookies and any
 // basic-auth carry along) and posts the bytes back as a data URL plus the
-// server-suggested filename. trailing `true;` keeps injectJavaScript happy.
-function downloadScript(url: string) {
+// server-suggested filename. method/body/headers default to a plain GET; a
+// non-string body is JSON-encoded with Content-Type: application/json so the
+// caller can pass a plain object (used by the backup POST). trailing `true;`
+// keeps injectJavaScript happy.
+type DownloadInit = {
+  method?: string;
+  body?: unknown;
+  headers?: Record<string, string>;
+};
+
+function downloadScript(url: string, init?: DownloadInit) {
   const u = JSON.stringify(url);
+  const i = JSON.stringify(init || {});
   return `(async () => {
+    const init = ${i};
     try {
-      const res = await fetch(${u}, { credentials: "include" });
+      const reqInit = { credentials: "include" };
+      if (init.method) reqInit.method = init.method;
+      const headers = Object.assign({}, init.headers || {});
+      if (init.body !== undefined && init.body !== null) {
+        if (typeof init.body === "string") {
+          reqInit.body = init.body;
+        } else {
+          reqInit.body = JSON.stringify(init.body);
+          if (!headers["Content-Type"]) headers["Content-Type"] = "application/json";
+        }
+      }
+      if (Object.keys(headers).length) reqInit.headers = headers;
+      const res = await fetch(${u}, reqInit);
       if (!res.ok) throw new Error("HTTP " + res.status);
       const cd = res.headers.get("Content-Disposition") || "";
       const m = cd.match(/filename\\*?=(?:UTF-8''([^;]+)|"([^";]+)"|([^;]+))/i);
