@@ -12,11 +12,8 @@ async function testKeepingServer() {
 }
 
 describe("Keep server after reopening", () => {
-  beforeEach(async () => {
-    await device.launchApp({ resetAppState: true });
-  });
-
   it("demo server", async () => {
+    await device.launchApp({ resetAppState: true });
     await element(by.id("useDemo")).tap();
     await waitForWebview();
 

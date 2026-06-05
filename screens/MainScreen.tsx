@@ -72,6 +72,15 @@ export default function MainScreen({
     const duration = 400;
     const smallDelay = 500;
     const largeDelay = smallDelay + duration * 0.3;
+
+    // snap straight to final state when running tests
+    if (testingEnvironment()) {
+      contFade.setValue(isConnected ? 1 : 0);
+      loadFade.setValue(isConnected ? 0 : 1);
+      loadScale.setValue(isConnected ? 1.2 : 1);
+      return;
+    }
+
     Animated.timing(contFade, {
       toValue: isConnected ? 1 : 0,
       delay: isConnected ? largeDelay : smallDelay,
@@ -210,7 +219,8 @@ export default function MainScreen({
               }
             `}
             style={{ flex: 1 }}
-            key={webViewKey}
+            // Fresh WebView per server avoids leaking cookies/auth across servers.
+            key={`${activeServer?.url}#${webViewKey}`}
             bounces={false}
             ref={webViewRef}
             overScrollMode="never"

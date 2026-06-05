@@ -12,6 +12,15 @@
       "enterUrl": "URLを入力",
       "missingOrWrongAuthentication": "認証情報が不足しているか、正しくありません",
       "password": "パスワード",
+      "qrcode": {
+        "invalid": "有効なevcc QRコードではありません。",
+        "permissionDenied": "カメラへのアクセスが拒否されました。設定から許可して、QRコードをスキャンできるようにしてください。",
+        "recognized": "QRコードが見つかりました!",
+        "scan": "QRコードを読み取る",
+        "scanOnboarding": "QRコードを使用して設定",
+        "scanPrefill": "QRコードを使用して入力",
+        "scanning": "読み取り中…"
+      },
       "serverExistsAlready": "このサーバーはすでに登録されています。",
       "serverIncompatible": "指定されたevccサーバーはアプリに対応していません。最新バージョンにアップデートしてください。",
       "serverNotAvailable": "サーバーに接続できません。アドレスを確認してください。",

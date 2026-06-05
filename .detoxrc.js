@@ -23,14 +23,7 @@ module.exports = {
         keepOnlyFailedTestsArtifacts: true,
       },
       screenshot: {
-        enabled: true,
-        keepOnlyFailedTestsArtifacts: true,
-        takeWhen: {
-          testStart: true,
-          testFailure: true,
-          testDone: true,
-          appNotReady: true,
-        },
+        enabled: false,
       },
       video: {
         enabled: true,
@@ -66,7 +59,7 @@ module.exports = {
       reversePorts: [7070, 7080, 7081],
       type: "android.apk",
       binaryPath: "android/app/build/outputs/apk/release/app-release.apk",
-      build: `cd android && "./gradlew" assembleRelease assembleAndroidTest -DtestBuildType=release --parallel --build-cache`,
+      build: `cd android && "./gradlew" :app:assembleRelease :app:assembleAndroidTest -DtestBuildType=release --parallel --build-cache`,
     },
   },
   devices: {
