@@ -2,15 +2,17 @@ import "detox";
 import { byWebCss, waitForWebview } from "./helper";
 
 /**
- * evcc core emits `{type: "download", url}` over the message bridge when the
- * user clicks a CSV export link; the app re-runs that fetch inside the
- * webview so its auth cookies and basic-auth credentials ride along, then
- * persists the response. Dispatch the event directly so the test exercises
- * the contract without depending on evcc's web UI. The downloadCompleted
- * marker only renders once the bytes have been stored — so a 401 (missing
- * auth) silently fails the assertion.
+ * evcc core emits `{type: "download", url, headers}` over the message bridge
+ * when the user triggers an export; the app downloads natively, attaching
+ * the webview's cookies and basic auth. Dispatch the event directly so the
+ * test exercises the contract without depending on evcc's web UI. The
+ * downloadCompleted marker renders the stored filename — so a 401 (missing
+ * auth) fails the assertion.
  */
-async function triggerWebviewDownload(path = "/api/sessions?format=csv") {
+async function triggerWebviewDownload(
+  path = "/api/sessions?format=csv",
+  expectedFilename?: string,
+) {
   const pathJson = JSON.stringify(path);
   await byWebCss("body").runScript(`() => {
     window.ReactNativeWebView.postMessage(JSON.stringify({
@@ -19,9 +21,12 @@ async function triggerWebviewDownload(path = "/api/sessions?format=csv") {
     }));
   }`);
 
-  await waitFor(element(by.id("downloadCompleted")))
-    .toExist()
-    .withTimeout(20000);
+  const marker = waitFor(element(by.id("downloadCompleted")));
+  if (expectedFilename) {
+    await marker.toHaveText(expectedFilename).withTimeout(20000);
+  } else {
+    await marker.toExist().withTimeout(20000);
+  }
 }
 
 describe("Download file", () => {
@@ -38,8 +43,7 @@ describe("Download file", () => {
 
   it("downloads a file from a server protected with basic auth", async () => {
     // localhost:7080 is the Caddy basic-auth reverse proxy (admin/secret).
-    // The in-webview fetch only completes if the webview's basicAuthCredential
-    // was attached to the auth challenge, so the marker is real proof.
+    // Completes only if the stored credentials were attached to the request.
     await device.launchApp({
       url: "evcc://server?url=http://localhost:7080&title=siteTitle&username=admin&password=secret",
       resetAppState: true,
@@ -52,10 +56,9 @@ describe("Download file", () => {
 
   it("downloads a file protected by an HttpOnly cookie", async () => {
     // localhost:7081 reverse-proxies evcc and sets `testauth=letmein` as an
-    // HttpOnly cookie on every non-cookietest response, so the webview picks
-    // it up on first load. /cookietest/file.csv returns 401 unless that
-    // cookie comes back — the marker is real proof the webview's cookies
-    // (which an external download manager couldn't see) followed the fetch.
+    // HttpOnly cookie the webview picks up on first load. /cookietest/file.csv
+    // 401s without it — proof the cookie was extracted from the webview's
+    // cookie store and attached to the native download.
     await device.launchApp({
       url: "evcc://server?url=http://localhost:7081&title=Local%20Cookie",
       resetAppState: true,
@@ -63,31 +66,6 @@ describe("Download file", () => {
     await element(by.id("serverFormCheckAndSave")).tap();
     await waitForWebview();
 
-    await triggerWebviewDownload("/cookietest/file.csv");
-  });
-
-  it("downloads via POST with a body", async () => {
-    // mirrors how BackupRestoreModal triggers the backup download — the
-    // event carries method=POST + body, and the in-webview fetch carries
-    // both the body and the auth cookie. /cookietest/post.csv 405s on GET
-    // and 401s without the cookie, so the marker is dual proof.
-    await device.launchApp({
-      url: "evcc://server?url=http://localhost:7081&title=Local%20Cookie",
-      resetAppState: true,
-    });
-    await element(by.id("serverFormCheckAndSave")).tap();
-    await waitForWebview();
-
-    await byWebCss("body").runScript(`() => {
-      window.ReactNativeWebView.postMessage(JSON.stringify({
-        type: "download",
-        url: new URL("/cookietest/post.csv", window.location.href).toString(),
-        method: "POST",
-        body: { hello: "world" },
-      }));
-    }`);
-    await waitFor(element(by.id("downloadCompleted")))
-      .toExist()
-      .withTimeout(20000);
+    await triggerWebviewDownload("/cookietest/file.csv", "file.csv");
   });
 });

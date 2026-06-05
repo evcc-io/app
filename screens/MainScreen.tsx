@@ -21,7 +21,9 @@ import {
 } from "react-native-webview/lib/WebViewTypes";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types";
-import { shareBase64File } from "utils/shareFile";
+import CookieManager from "@preeternal/react-native-cookie-manager";
+import { encode } from "base-64";
+import { shareFileFromUrl } from "utils/shareFile";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Spinner from "components/animations/Spinner";
 import { testingEnvironment } from "helper/launchArguments";
@@ -92,10 +94,39 @@ export default function MainScreen({
     }).start();
   }, [isConnected]);
 
+  const handleDownload = useCallback(
+    async ({
+      url,
+      headers,
+    }: {
+      url: string;
+      headers?: Record<string, string>;
+    }) => {
+      // attach the webview's auth cookie, basic auth and event headers
+      try {
+        const requestHeaders = { ...headers };
+        const cookies = await CookieManager.get(url, true);
+        const cookieHeader = Object.values(cookies)
+          .map((c) => `${c.name}=${c.value}`)
+          .join("; ");
+        if (cookieHeader) requestHeaders["Cookie"] = cookieHeader;
+        if (basicAuthCredential) {
+          const { username, password } = basicAuthCredential;
+          requestHeaders["Authorization"] =
+            `Basic ${encode(`${username}:${password}`)}`;
+        }
+        const name = await shareFileFromUrl(url, requestHeaders);
+        if (name) setDownloadedFile(name);
+      } catch (e) {
+        console.log(`download failed for ${url}: ${e}`);
+      }
+    },
+    [basicAuthCredential],
+  );
+
   const handleMessage = useCallback(
     (event: WebViewMessageEvent) => {
       const data = JSON.parse(event.nativeEvent.data);
-      console.log("message", data);
       switch (data.type) {
         case "offline":
           setIsConnected(false);
@@ -107,29 +138,7 @@ export default function MainScreen({
           openSettings();
           break;
         case "download":
-          // do the fetch inside the webview so HttpOnly auth cookies and any
-          // basic-auth tied to the webview ride along automatically; post the
-          // bytes back as a data URL for us to persist + share. method/body
-          // are forwarded so POST-with-body downloads (backup) work the same.
-          webViewRef.current?.injectJavaScript(
-            downloadScript(data.url, {
-              method: data.method,
-              body: data.body,
-              headers: data.headers,
-            }),
-          );
-          break;
-        case "downloadData": {
-          const dataUrl = String(data.dataUrl || "");
-          const base64 = dataUrl.split(",", 2)[1] || "";
-          const filename = String(data.filename || "download");
-          shareBase64File(filename, base64).then((name) => {
-            if (name) setDownloadedFile(name);
-          });
-          break;
-        }
-        case "downloadError":
-          console.log(`download failed for ${data.url}: ${data.error}`);
+          handleDownload(data);
           break;
         case "vibrate": {
           const { Light, Medium, Heavy } = Haptics.ImpactFeedbackStyle;
@@ -141,7 +150,7 @@ export default function MainScreen({
         }
       }
     },
-    [openSettings],
+    [openSettings, handleDownload],
   );
 
   const onShouldStartLoadWithRequest = useCallback(
@@ -272,72 +281,6 @@ export default function MainScreen({
       ) : null}
     </>
   );
-}
-
-// fetches `url` from inside the webview (so the page's auth cookies and any
-// basic-auth carry along) and posts the bytes back as a data URL plus the
-// server-suggested filename. method/body/headers default to a plain GET; a
-// non-string body is JSON-encoded with Content-Type: application/json so the
-// caller can pass a plain object (used by the backup POST). trailing `true;`
-// keeps injectJavaScript happy.
-type DownloadInit = {
-  method?: string;
-  body?: unknown;
-  headers?: Record<string, string>;
-};
-
-function downloadScript(url: string, init?: DownloadInit) {
-  const u = JSON.stringify(url);
-  const i = JSON.stringify(init || {});
-  return `(async () => {
-    const init = ${i};
-    try {
-      const reqInit = { credentials: "include" };
-      if (init.method) reqInit.method = init.method;
-      const headers = Object.assign({}, init.headers || {});
-      if (init.body !== undefined && init.body !== null) {
-        if (typeof init.body === "string") {
-          reqInit.body = init.body;
-        } else {
-          reqInit.body = JSON.stringify(init.body);
-          if (!headers["Content-Type"]) headers["Content-Type"] = "application/json";
-        }
-      }
-      if (Object.keys(headers).length) reqInit.headers = headers;
-      const res = await fetch(${u}, reqInit);
-      if (!res.ok) throw new Error("HTTP " + res.status);
-      const cd = res.headers.get("Content-Disposition") || "";
-      const m = cd.match(/filename\\*?=(?:UTF-8''([^;]+)|"([^";]+)"|([^;]+))/i);
-      let filename = m ? decodeURIComponent(m[1] || m[2] || m[3]) : "";
-      if (!filename) {
-        try {
-          const tail = new URL(${u}, location.href).pathname.split("/").pop();
-          filename = tail ? decodeURIComponent(tail) : "download";
-        } catch (_) { filename = "download"; }
-      }
-      const blob = await res.blob();
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        window.ReactNativeWebView.postMessage(JSON.stringify({
-          type: "downloadData",
-          url: ${u},
-          filename: filename,
-          dataUrl: reader.result,
-        }));
-      };
-      reader.onerror = () => {
-        window.ReactNativeWebView.postMessage(JSON.stringify({
-          type: "downloadError", url: ${u}, error: "FileReader failed",
-        }));
-      };
-      reader.readAsDataURL(blob);
-    } catch (e) {
-      window.ReactNativeWebView.postMessage(JSON.stringify({
-        type: "downloadError", url: ${u}, error: String(e && e.message || e),
-      }));
-    }
-  })();
-  true;`;
 }
 
 const styles = StyleSheet.create({
