@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@eva-design/eva": "^2.2.0",
-    "@expo/metro-runtime": "~55.0.10",
+    "@expo/metro-runtime": "~56.0.14",
     "@inthepocket/react-native-service-discovery": "^0.2.4",
     "@material-symbols/svg-400": "^0.40.2",
     "@react-native-async-storage/async-storage": "^2.2.0",
