@@ -74,7 +74,12 @@ export default function SwitchServerScreen({
                       url={server.url}
                       active={isActive}
                       leftIcon={
-                        <StatusIcon width={28} height={28} fill={accentColor} />
+                        <StatusIcon
+                          testID={`selectServer${index}`}
+                          width={28}
+                          height={28}
+                          fill={accentColor}
+                        />
                       }
                       rightIcon={
                         <IconEdit
