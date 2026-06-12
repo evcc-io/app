@@ -60,8 +60,10 @@ describe("Add Server", () => {
     await element(by.id("@serverFormUrl/input")).typeText("localhost:7080");
 
     await tapAfterWaitFor(element(by.id("serverFormAuth")));
-    await element(by.id("@serverFormAuthUser/input")).typeText("admin");
-    await element(by.id("@serverFormAuthPassword/input")).typeText("secret");
+    // replaceText: typeText is IME-mangled on the CI emulator (suggestions
+    // merge keystrokes across fields)
+    await element(by.id("@serverFormAuthUser/input")).replaceText("admin");
+    await element(by.id("@serverFormAuthPassword/input")).replaceText("secret");
 
     await tapAfterWaitFor(element(by.id("serverFormCheckAndSave")));
 

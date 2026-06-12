@@ -32,8 +32,10 @@ describe("Manual entry", () => {
 
     await tapAfterWaitFor(element(by.id("serverFormAuth")));
 
-    await element(by.id("@serverFormAuthUser/input")).typeText("admin");
-    await element(by.id("@serverFormAuthPassword/input")).typeText("secret");
+    // replaceText: typeText is IME-mangled on the CI emulator (suggestions
+    // merge keystrokes across fields)
+    await element(by.id("@serverFormAuthUser/input")).replaceText("admin");
+    await element(by.id("@serverFormAuthPassword/input")).replaceText("secret");
 
     await tapAfterWaitFor(element(by.id("serverFormCheckAndSave")));
 
