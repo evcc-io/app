@@ -1,6 +1,6 @@
 import "detox";
 import { expect } from "detox";
-import { waitForWebview } from "./helper";
+import { tapAfterWaitFor, waitForWebview } from "./helper";
 
 describe("Manual entry", () => {
   beforeEach(async () => {
@@ -30,13 +30,13 @@ describe("Manual entry", () => {
     await expect(element(by.id("@serverFormAuthUser/input"))).not.toExist();
     await expect(element(by.id("@serverFormAuthPassword/input"))).not.toExist();
 
-    await element(by.id("serverFormAuth")).tap();
+    await tapAfterWaitFor(element(by.id("serverFormAuth")));
     await element(by.id("serverFormAuth")).swipe("up");
 
     await element(by.id("@serverFormAuthUser/input")).typeText("admin");
     await element(by.id("@serverFormAuthPassword/input")).typeText("secret");
 
-    await element(by.id("serverFormCheckAndSave")).tap();
+    await tapAfterWaitFor(element(by.id("serverFormCheckAndSave")));
 
     await waitForWebview();
   });
