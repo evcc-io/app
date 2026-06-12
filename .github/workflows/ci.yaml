@@ -48,15 +48,15 @@ jobs:
 
   ios-build:
     name: iOS Detox (build)
-    runs-on: depot-macos-15
+    runs-on: depot-macos-26
     timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
 
-      - name: Setup Xcode 26.0
+      - name: Setup Xcode 26.5
         run: |
-          sudo xcode-select -s /Applications/Xcode_26.0.app/Contents/Developer
+          sudo xcode-select -s /Applications/Xcode_26.5.app/Contents/Developer
           xcodebuild -version
           sudo xcodebuild -runFirstLaunch
           xcrun simctl list runtimes
@@ -96,7 +96,7 @@ jobs:
 
   ios-test:
     name: iOS Detox (test)
-    runs-on: depot-macos-15
+    runs-on: depot-macos-26
     timeout-minutes: 30
     needs: ios-build
     strategy:
@@ -107,9 +107,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
 
-      - name: Setup Xcode 26.0
+      - name: Setup Xcode 26.5
         run: |
-          sudo xcode-select -s /Applications/Xcode_26.0.app/Contents/Developer
+          sudo xcode-select -s /Applications/Xcode_26.5.app/Contents/Developer
           sudo xcodebuild -runFirstLaunch
           xcrun simctl list runtimes
 
@@ -128,7 +128,7 @@ jobs:
 
       - name: Build Detox framework cache
         # the cache lives at ~/Library/Detox/... so it's per-runner; each shard
-        # is a fresh depot-macos-15, the build job's cache is not visible here
+        # is a fresh depot-macos-26, the build job's cache is not visible here
         run: npx detox build-framework-cache
 
       - name: Install applesimutils
