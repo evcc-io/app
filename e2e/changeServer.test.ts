@@ -43,7 +43,7 @@ describe("Change Server", () => {
     await url.typeText("demo.evcc.io");
     await element(by.id("serverFormCheckAndSave")).tap();
 
-    await tapAfterWaitFor(element(by.id("server0")));
+    await tapAfterWaitFor(element(by.id("selectServer0")));
 
     await waitForWebview();
     await expect(byWebCss("[data-testid=header] h1")).toHaveText("DEMO MODE");
@@ -65,7 +65,7 @@ describe("Change Server", () => {
     await element(by.id("setingsScreenRemoveServer")).tap();
 
     // close switch modal by tapping the now-only server, then verify demo is active
-    await tapAfterWaitFor(element(by.id("server0")));
+    await tapAfterWaitFor(element(by.id("selectServer0")));
     await waitForWebview();
     await expect(byWebCss("[data-testid=header] h1")).toHaveText("DEMO MODE");
   });
