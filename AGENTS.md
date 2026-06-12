@@ -103,7 +103,7 @@ Most folders are self-explanatory (`screens/`, `components/`, `utils/`, `i18n/`,
 
 - `lint` — `npm run lint`
 - `fastlane-validate` — store metadata sanity-checks
-- `ios-detox` — full iOS prebuild + Detox run on `depot-macos-15`
+- `ios-detox` — full iOS prebuild + Detox run on `depot-macos-26`
 - `android-build` → `android-test` — Android prebuild, then Detox on an emulator (API 34)
 
 Both Detox jobs install evcc + Caddy in CI before running. If you add a test that needs more services, mirror that setup in both jobs.

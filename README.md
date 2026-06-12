@@ -104,6 +104,9 @@ It will open a server on http://localhost:7080 with `admin:secret` as basic auth
 This is how F-Droid builds the APK:
 
 ```bash
+sed -i '/^\s*\[$/{ N; /\n\s*"expo-camera"/{ :loop; N; /\],$/!b loop; d } }' app.config.ts
+touch fdroid-build
+npm remove expo-camera
 npx expo prebuild --platform android --clean
 cd android/app
 sed -i -e '/signingConfig /d' build.gradle
@@ -143,6 +146,15 @@ caddy run
 This will run caddy on port 7080.
 
 ### Testing Android app _(available on Linux, macOS and Windows)_
+
+#### Create build-type file
+
+For Android-Detox testing the detox scripts (see `./scripts/detox`) have to run.
+To do this, you need to create a file called `android-detox-build`:
+
+```
+touch android-detox-build
+```
 
 #### Emulator (slower):
 
