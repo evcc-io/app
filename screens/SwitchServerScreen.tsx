@@ -49,13 +49,12 @@ export default function SwitchServerScreen({
             navigation.getParent()?.goBack();
           }}
         />
-        <View style={{ flex: 1, paddingHorizontal: 16 }}>
+        <View style={{ flex: 1, paddingHorizontal: 8 }}>
           <ScrollView style={{ flex: 1 }}>
             <View
               style={{
                 flexDirection: "row",
                 flexWrap: "wrap",
-                marginHorizontal: -8,
               }}
             >
               {servers.map((server, index) => {
