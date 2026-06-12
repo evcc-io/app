@@ -60,7 +60,6 @@ describe("Add Server", () => {
     await element(by.id("@serverFormUrl/input")).typeText("localhost:7080");
 
     await tapAfterWaitFor(element(by.id("serverFormAuth")));
-    await element(by.id("serverFormAuth")).swipe("up");
     await element(by.id("@serverFormAuthUser/input")).typeText("admin");
     await element(by.id("@serverFormAuthPassword/input")).typeText("secret");
 
