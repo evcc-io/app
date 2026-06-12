@@ -28,7 +28,7 @@ describe("Add Server", () => {
     await element(by.id("@serverFormUrl/input")).typeText("demo.evcc.io");
     await element(by.id("serverFormCheckAndSave")).tap();
 
-    await tapAfterWaitFor(element(by.id("server1")));
+    await tapAfterWaitFor(element(by.id("selectServer1")));
     await waitForWebview();
     await expect(byWebCss("[data-testid=header] h1")).toHaveText("DEMO MODE");
   });
@@ -47,7 +47,7 @@ describe("Add Server", () => {
     await element(by.id("@serverFormUrl/input")).typeText("demo.evcc.io");
     await element(by.id("serverFormCheckAndSave")).tap();
 
-    await tapAfterWaitFor(element(by.id("server1")));
+    await tapAfterWaitFor(element(by.id("selectServer1")));
 
     await waitForWebview();
     await tapWebAfterWaitFor(byWebDataTestId("tab-more"));
