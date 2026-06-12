@@ -143,6 +143,7 @@ jobs:
       - name: Setup evcc daemon
         run: |
           brew tap evcc-io/tap
+          brew trust evcc-io/tap
           brew update
           brew install evcc
           sudo evcc --disable-auth &
