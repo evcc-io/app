@@ -15,3 +15,24 @@
 	# evcc running locally
 	reverse_proxy http://localhost:7070
 }
+
+# endpoint for cookie-protected app testing — mirrors evcc's HttpOnly auth
+# cookie so e2e can prove the webview's cookies are forwarded to downloads
+:7081 {
+	# /cookietest/file.csv returns 401 unless `testauth=letmein` is sent
+	handle /cookietest/file.csv {
+		@hasCookie header_regexp Cookie ".*testauth=letmein.*"
+		handle @hasCookie {
+			header Content-Type "text/csv"
+			respond "cookie,present\ntestauth,letmein\n" 200
+		}
+		respond 401
+	}
+
+	# every other response sets the HttpOnly cookie so the webview picks it
+	# up on its initial load and replays it on subsequent in-page fetches
+	handle {
+		header +Set-Cookie "testauth=letmein; Path=/; HttpOnly; SameSite=Strict"
+		reverse_proxy http://localhost:7070
+	}
+}
