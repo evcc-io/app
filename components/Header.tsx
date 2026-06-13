@@ -1,4 +1,3 @@
-import React from "react";
 import { Text, useTheme } from "@ui-kitten/components";
 import { View, Pressable } from "react-native";
 import IconClose from "@material-symbols/svg-400/rounded/close.svg";

@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { testLegacyServerConfig } from "helper/launchArguments";
-import React, {
+import {
   createContext,
   useContext,
   useState,
@@ -45,17 +45,14 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
     (async () => {
       // needed for e2e migration test
       if (testLegacyServerConfig()) {
-        await AsyncStorage.multiSet([
-          [StorageKeys.SERVER_URL, "http://localhost:7080"],
-          [
-            StorageKeys.BASIC_AUTH,
-            JSON.stringify({
-              username: "admin",
-              password: "secret",
-              required: true,
-            } satisfies BasicAuth),
-          ],
-        ]);
+        await AsyncStorage.setMany({
+          [StorageKeys.SERVER_URL]: "http://localhost:7080",
+          [StorageKeys.BASIC_AUTH]: JSON.stringify({
+            username: "admin",
+            password: "secret",
+            required: true,
+          } satisfies BasicAuth),
+        });
       }
 
       const loadedServers = await loadServers();

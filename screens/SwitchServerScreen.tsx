@@ -1,4 +1,3 @@
-import React from "react";
 import { Layout, Text, useTheme } from "@ui-kitten/components";
 import IconHomeFill from "@material-symbols/svg-400/rounded/home-fill.svg";
 import IconHome from "@material-symbols/svg-400/rounded/home.svg";
@@ -49,13 +48,12 @@ export default function SwitchServerScreen({
             navigation.getParent()?.goBack();
           }}
         />
-        <View style={{ flex: 1, paddingHorizontal: 16 }}>
+        <View style={{ flex: 1, paddingHorizontal: 8 }}>
           <ScrollView style={{ flex: 1 }}>
             <View
               style={{
                 flexDirection: "row",
                 flexWrap: "wrap",
-                marginHorizontal: -8,
               }}
             >
               {servers.map((server, index) => {
@@ -75,7 +73,12 @@ export default function SwitchServerScreen({
                       url={server.url}
                       active={isActive}
                       leftIcon={
-                        <StatusIcon width={28} height={28} fill={accentColor} />
+                        <StatusIcon
+                          testID={`selectServer${index}`}
+                          width={28}
+                          height={28}
+                          fill={accentColor}
+                        />
                       }
                       rightIcon={
                         <IconEdit
