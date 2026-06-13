@@ -204,6 +204,7 @@ export default function MainScreen({
             basicAuthCredential={basicAuthCredential}
             source={{ uri: activeServer?.url || "" }}
             injectedJavaScript={`
+              window.evccAppCapabilities = ["download"];
               document.documentElement.style.setProperty("--safe-area-inset-top", "${insets.top}px");
               document.documentElement.style.setProperty("--safe-area-inset-bottom", "${insets.bottom}px");
               document.documentElement.style.setProperty("--safe-area-inset-left", "${insets.left}px");
