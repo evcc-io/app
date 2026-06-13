@@ -38,9 +38,8 @@ describe("Change Server", () => {
 
     await tapAfterWaitFor(element(by.id("editServer0Icon")));
 
-    const url = element(by.id("@serverFormUrl/input"));
-    await url.clearText();
-    await url.typeText("demo.evcc.io");
+    // replaceText, not typeText: the CI emulator's IME suggestions mangle typed input
+    await element(by.id("@serverFormUrl/input")).replaceText("demo.evcc.io");
     await element(by.id("serverFormCheckAndSave")).tap();
 
     await tapAfterWaitFor(element(by.id("selectServer0")));
@@ -56,8 +55,8 @@ describe("Change Server", () => {
     await byWebDataTestId("tab-more").tap();
     await byWebDataTestId("tab-more-app").tap();
     await element(by.id("addServerIcon")).tap();
-    await element(by.id("@serverFormTitle/input")).typeText("Demo");
-    await element(by.id("@serverFormUrl/input")).typeText("demo.evcc.io");
+    await element(by.id("@serverFormTitle/input")).replaceText("Demo");
+    await element(by.id("@serverFormUrl/input")).replaceText("demo.evcc.io");
     await element(by.id("serverFormCheckAndSave")).tap();
 
     // remove active server (server0 = local); first remaining (demo) is auto-activated
