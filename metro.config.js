@@ -1,6 +1,10 @@
 const { getDefaultConfig } = require("expo/metro-config");
+const fs = require("fs");
 const path = require("path");
-const { isFdroidBuild } = require("./scripts/buildType");
+
+// Inlined from scripts/buildType.ts: metro.config.js is plain CommonJS loaded by
+// raw Node (e.g. eas build), which cannot require .ts files.
+const isFdroidBuild = fs.existsSync(path.join(__dirname, "fdroid-build"));
 
 const config = getDefaultConfig(__dirname);
 
