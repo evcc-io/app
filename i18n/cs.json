@@ -14,8 +14,11 @@
       "password": "Heslo",
       "qrcode": {
         "invalid": "Neplatný EVCC QR kod.",
+        "permissionDenied": "Přístup ke kameře zakázán. Povolte v nastavení telefonu abyste mohli skenovat QR kody.",
         "recognized": "QR kod detekován!",
         "scan": "Naskenujte QR kod",
+        "scanOnboarding": "Nastavit přes QR kod",
+        "scanPrefill": "Vyplnit přes QR kod",
         "scanning": "analyzování..."
       },
       "serverExistsAlready": "Tento server už existuje.",

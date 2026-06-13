@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { testLegacyServerConfig } from "helper/launchArguments";
-import React, {
+import {
   createContext,
   useContext,
   useState,

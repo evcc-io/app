@@ -14,8 +14,11 @@
       "password": "Salasana",
       "qrcode": {
         "invalid": "Ei pätevä evcc-QR-koodi.",
+        "permissionDenied": "Kameraan ei pääsyä. Salli sen käyttö skannataksesi QR-koodeja.",
         "recognized": "QR-koodi tunnistettu!",
         "scan": "Lue QR-koodi",
+        "scanOnboarding": "Siirrä asetukset QR-koodilla",
+        "scanPrefill": "Täytä perusasetukset QR-koodista",
         "scanning": "tunnistetaan..."
       },
       "serverExistsAlready": "Tämä palvelin on jo määritetty aiemmin.",

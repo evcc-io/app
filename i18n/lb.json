@@ -12,9 +12,20 @@
       "enterUrl": "URL aginn",
       "missingOrWrongAuthentication": "Fehlend oder falsch Umeldung",
       "password": "Passwuert",
+      "qrcode": {
+        "invalid": "Keen validen evcc QR-Code.",
+        "permissionDenied": "Accès op d'Kamera verweigert. An den Astellungen aktiveieren fir QR-Codes ze scannen.",
+        "recognized": "QR-Code erkannt!",
+        "scan": "QR-Code scannen",
+        "scanOnboarding": "Mat QR-Code arichten",
+        "scanPrefill": "Daten aus dem QR-Code iwwerhuelen",
+        "scanning": "erkennen..."
+      },
+      "serverExistsAlready": "Dësen Server existéiert schon.",
       "serverIncompatible": "D'evcc Instanz ass nach net App-kompatibel. Aktualiséier deng Installatioun.",
       "serverNotAvailable": "Server net erreechbar. Iwwerpréif wgl. d'Adress.",
       "specify": "Adress manuell aginn",
+      "title": "Titel",
       "user": "Benotzer"
     },
     "removeServer": "Server ewechhuelen",
@@ -25,6 +36,10 @@
       "start": "Sich starten"
     },
     "select": "Auswielen",
+    "switchServer": {
+      "addServer": "Server dobäifügen",
+      "title": "Server wiesselen"
+    },
     "useDemo": "Demoinstanz verwennen"
   }
 }

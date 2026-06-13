@@ -16,7 +16,6 @@ export default ({ config }: ConfigContext) =>
       userInterfaceStyle: "automatic",
       assetBundlePatterns: ["**/*"],
       ios: {
-        jsEngine: "hermes",
         supportsTablet: true,
         icon: "./assets/icon-liquid.icon",
         bundleIdentifier: "io.evcc.ios",
@@ -37,7 +36,6 @@ export default ({ config }: ConfigContext) =>
         buildNumber: "41",
       },
       android: {
-        jsEngine: "hermes",
         permissions: [
           "android.permission.ACCESS_NETWORK_STATE",
           "android.permission.ACCESS_WIFI_STATE",
@@ -69,6 +67,9 @@ export default ({ config }: ConfigContext) =>
           {
             android: {
               usesCleartextTraffic: true,
+            },
+            ios: {
+              deploymentTarget: "16.4",
             },
           },
         ],
@@ -104,6 +105,7 @@ export default ({ config }: ConfigContext) =>
         ],
         "expo-localization",
         "expo-sharing",
+        "expo-status-bar",
         "expo-web-browser",
         "react-native-edge-to-edge",
       ],
