@@ -10,8 +10,9 @@ describe("Manual entry", () => {
   it("url only", async () => {
     await element(by.id("manualEntry")).tap();
 
-    await element(by.id("@serverFormTitle/input")).typeText("Local");
-    await element(by.id("@serverFormUrl/input")).typeText("localhost:7070");
+    // replaceText, not typeText: the CI emulator's IME suggestions mangle typed input
+    await element(by.id("@serverFormTitle/input")).replaceText("Local");
+    await element(by.id("@serverFormUrl/input")).replaceText("localhost:7070");
 
     await expect(element(by.id("@serverFormAuthUser/input"))).not.toExist();
     await expect(element(by.id("@serverFormAuthPassword/input"))).not.toExist();
@@ -24,16 +25,14 @@ describe("Manual entry", () => {
   it("with basic auth", async () => {
     await element(by.id("manualEntry")).tap();
 
-    await element(by.id("@serverFormTitle/input")).typeText("Local Auth");
-    await element(by.id("@serverFormUrl/input")).typeText("localhost:7080");
+    await element(by.id("@serverFormTitle/input")).replaceText("Local Auth");
+    await element(by.id("@serverFormUrl/input")).replaceText("localhost:7080");
 
     await expect(element(by.id("@serverFormAuthUser/input"))).not.toExist();
     await expect(element(by.id("@serverFormAuthPassword/input"))).not.toExist();
 
     await tapAfterWaitFor(element(by.id("serverFormAuth")));
 
-    // replaceText: typeText is IME-mangled on the CI emulator (suggestions
-    // merge keystrokes across fields)
     await element(by.id("@serverFormAuthUser/input")).replaceText("admin");
     await element(by.id("@serverFormAuthPassword/input")).replaceText("secret");
 

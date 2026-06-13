@@ -24,8 +24,9 @@ describe("Add Server", () => {
     await tapWebAfterWaitFor(byWebDataTestId("tab-more"));
     await tapWebAfterWaitFor(byWebDataTestId("tab-more-app"));
     await tapAfterWaitFor(element(by.id("addServerIcon")));
-    await element(by.id("@serverFormTitle/input")).typeText("Demo");
-    await element(by.id("@serverFormUrl/input")).typeText("demo.evcc.io");
+    // replaceText, not typeText: the CI emulator's IME suggestions mangle typed input
+    await element(by.id("@serverFormTitle/input")).replaceText("Demo");
+    await element(by.id("@serverFormUrl/input")).replaceText("demo.evcc.io");
     await tapAfterWaitFor(element(by.id("serverFormCheckAndSave")));
 
     await tapAfterWaitFor(element(by.id("selectServer1")));
@@ -43,8 +44,8 @@ describe("Add Server", () => {
     // without basic auth
     await tapAfterWaitFor(element(by.id("addServerIcon")));
 
-    await element(by.id("@serverFormTitle/input")).typeText("Demo");
-    await element(by.id("@serverFormUrl/input")).typeText("demo.evcc.io");
+    await element(by.id("@serverFormTitle/input")).replaceText("Demo");
+    await element(by.id("@serverFormUrl/input")).replaceText("demo.evcc.io");
     await tapAfterWaitFor(element(by.id("serverFormCheckAndSave")));
 
     await tapAfterWaitFor(element(by.id("selectServer1")));
@@ -56,12 +57,10 @@ describe("Add Server", () => {
     // with basic auth
     await tapAfterWaitFor(element(by.id("addServerIcon")));
 
-    await element(by.id("@serverFormTitle/input")).typeText("Local Auth");
-    await element(by.id("@serverFormUrl/input")).typeText("localhost:7080");
+    await element(by.id("@serverFormTitle/input")).replaceText("Local Auth");
+    await element(by.id("@serverFormUrl/input")).replaceText("localhost:7080");
 
     await tapAfterWaitFor(element(by.id("serverFormAuth")));
-    // replaceText: typeText is IME-mangled on the CI emulator (suggestions
-    // merge keystrokes across fields)
     await element(by.id("@serverFormAuthUser/input")).replaceText("admin");
     await element(by.id("@serverFormAuthPassword/input")).replaceText("secret");
 
