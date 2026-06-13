@@ -30,7 +30,7 @@ async function migrateStorage() {
   const server = await loadLegacyStorage();
   await storeActiveServer(server);
   await storeServers([server]);
-  await AsyncStorage.multiRemove([
+  await AsyncStorage.removeMany([
     StorageKeys.SERVER_URL,
     StorageKeys.BASIC_AUTH,
   ]);
