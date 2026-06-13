@@ -14,7 +14,6 @@ import { useAppContext } from "../components/AppContext";
 import { useTranslation } from "react-i18next";
 import { USER_AGENT } from "../utils/constants";
 import {
-  FileDownloadEvent,
   ShouldStartLoadRequest,
   WebViewErrorEvent,
   WebViewHttpErrorEvent,
@@ -22,6 +21,8 @@ import {
 } from "react-native-webview/lib/WebViewTypes";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types";
+import CookieManager from "@preeternal/react-native-cookie-manager";
+import { encode } from "base-64";
 import { shareFileFromUrl } from "utils/shareFile";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Spinner from "components/animations/Spinner";
@@ -33,9 +34,10 @@ export default function MainScreen({
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const { activeServer } = useAppContext();
-  const webViewRef = useRef(null);
+  const webViewRef = useRef<WebView>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [webViewKey, setWebViewKey] = useState(0);
+  const [downloadedFile, setDownloadedFile] = useState<string | null>(null);
 
   const contFade = useRef(new Animated.Value(isConnected ? 1 : 0)).current;
   const loadFade = useRef(new Animated.Value(isConnected ? 0 : 1)).current;
@@ -44,6 +46,13 @@ export default function MainScreen({
   const openSettings = useCallback(() => {
     navigation.navigate("SwitchServerModal");
   }, [navigation]);
+
+  const { required, username, password } = activeServer?.basicAuth || {};
+  const basicAuthCredential = useMemo(
+    () =>
+      required && username && password ? { username, password } : undefined,
+    [required, username, password],
+  );
 
   // Reconnect if connection is lost
   useEffect(() => {
@@ -94,10 +103,39 @@ export default function MainScreen({
     }).start();
   }, [isConnected]);
 
+  const handleDownload = useCallback(
+    async ({
+      url,
+      headers,
+    }: {
+      url: string;
+      headers?: Record<string, string>;
+    }) => {
+      // attach the webview's auth cookie, basic auth and event headers
+      try {
+        const requestHeaders = { ...headers };
+        const cookies = await CookieManager.get(url, true);
+        const cookieHeader = Object.values(cookies)
+          .map((c) => `${c.name}=${c.value}`)
+          .join("; ");
+        if (cookieHeader) requestHeaders["Cookie"] = cookieHeader;
+        if (basicAuthCredential) {
+          const { username, password } = basicAuthCredential;
+          requestHeaders["Authorization"] =
+            `Basic ${encode(`${username}:${password}`)}`;
+        }
+        const name = await shareFileFromUrl(url, requestHeaders);
+        if (name) setDownloadedFile(name);
+      } catch (e) {
+        console.log(`download failed for ${url}: ${e}`);
+      }
+    },
+    [basicAuthCredential],
+  );
+
   const handleMessage = useCallback(
     (event: WebViewMessageEvent) => {
       const data = JSON.parse(event.nativeEvent.data);
-      console.log("message", data);
       switch (data.type) {
         case "offline":
           setIsConnected(false);
@@ -107,6 +145,9 @@ export default function MainScreen({
           break;
         case "settings":
           openSettings();
+          break;
+        case "download":
+          handleDownload(data);
           break;
         case "vibrate": {
           const { Light, Medium, Heavy } = Haptics.ImpactFeedbackStyle;
@@ -118,7 +159,7 @@ export default function MainScreen({
         }
       }
     },
-    [openSettings],
+    [openSettings, handleDownload],
   );
 
   const onShouldStartLoadWithRequest = useCallback(
@@ -154,16 +195,6 @@ export default function MainScreen({
     setIsConnected(false);
   }, []);
 
-  const onFileDownload = ({
-    nativeEvent: { downloadUrl },
-  }: FileDownloadEvent) => {
-    shareFileFromUrl(downloadUrl);
-  };
-
-  const { required, username, password } = activeServer?.basicAuth || {};
-  const basicAuthCredential =
-    required && username && password ? { username, password } : undefined;
-
   const LayoutMemoized = useMemo(
     () => (
       <Layout style={{ flex: 1 }}>
@@ -173,6 +204,7 @@ export default function MainScreen({
             basicAuthCredential={basicAuthCredential}
             source={{ uri: activeServer?.url || "" }}
             injectedJavaScript={`
+              window.evccAppCapabilities = ["download"];
               document.documentElement.style.setProperty("--safe-area-inset-top", "${insets.top}px");
               document.documentElement.style.setProperty("--safe-area-inset-bottom", "${insets.bottom}px");
               document.documentElement.style.setProperty("--safe-area-inset-left", "${insets.left}px");
@@ -201,7 +233,6 @@ export default function MainScreen({
             onContentProcessDidTerminate={onTerminate}
             onMessage={handleMessage}
             onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
-            onFileDownload={onFileDownload}
           />
         </Animated.View>
         <Animated.View
@@ -251,7 +282,16 @@ export default function MainScreen({
 
   console.log("serverUrl", activeServer.url, isConnected);
 
-  return LayoutMemoized;
+  return (
+    <>
+      {LayoutMemoized}
+      {testingEnvironment() && downloadedFile ? (
+        <Text testID="downloadCompleted" style={styles.downloadMarker}>
+          {downloadedFile}
+        </Text>
+      ) : null}
+    </>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -262,5 +302,10 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     zIndex: 1,
+  },
+  // invisible marker that lets e2e tests assert a download finished
+  downloadMarker: {
+    position: "absolute",
+    opacity: 0,
   },
 });
