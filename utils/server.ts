@@ -54,6 +54,9 @@ export async function verifyEvccServer(server: Server) {
 export function getTitle(server: Server): string {
   const url = new URL(server.url);
   let host = url.host;
+  if (host.startsWith("www.")) {
+    host = host.slice(3);
+  }
   for (const s of [`:${url.port}`, ".local.", ".fritz.box"]) {
     if (host.endsWith(s)) {
       host = host.slice(0, -1 * s.length);
