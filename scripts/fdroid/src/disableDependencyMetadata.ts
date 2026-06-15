@@ -11,7 +11,7 @@ const withNDKBuildId: ConfigPlugin = (config) => {
           `android {
     dependenciesInfo {
         // Disables dependency metadata when building APKs.
-        includeInApk = false
+        includeInApk = true
         // Disables dependency metadata when building Android App Bundles.
         includeInBundle = false
     }
