@@ -20,16 +20,17 @@ export function cleanServerUrl(url: string) {
 }
 
 export async function verifyEvccServer(server: Server) {
+  const options: AxiosRequestConfig = { ...AXIOS_OPTIONS };
   if (server.basicAuth) {
     const { username, password } = server.basicAuth;
     if (username && password) {
-      AXIOS_OPTIONS.auth = { username, password };
+      options.auth = { username, password };
     }
   }
 
   let response;
   try {
-    response = await axios.get(server.url, AXIOS_OPTIONS);
+    response = await axios.get(server.url, options);
   } catch (error) {
     console.log(error);
     if (axios.isAxiosError(error) && error.response?.status === 401) {
