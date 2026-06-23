@@ -33,7 +33,7 @@ export default ({ config }: ConfigContext) =>
         config: {
           usesNonExemptEncryption: false,
         },
-        buildNumber: "43",
+        buildNumber: "44",
       },
       android: {
         permissions: [
@@ -46,7 +46,7 @@ export default ({ config }: ConfigContext) =>
           foregroundImage: "./assets/adaptive-icon.png",
           backgroundColor: "#010322",
         },
-        versionCode: 43,
+        versionCode: 44,
       },
       web: {
         favicon: "./assets/favicon.png",
