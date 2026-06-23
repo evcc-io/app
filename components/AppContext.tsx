@@ -15,7 +15,6 @@ import {
   updateServer as storageUpdateServer,
   removeServer as storageRemoveServer,
   loadServers,
-  StorageKeys,
   loadActiveServer,
 } from "utils/storage";
 
@@ -45,9 +44,11 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
     (async () => {
       // needed for e2e migration test
       if (testLegacyServerConfig()) {
+        // seed the literal keys the pre-multi-server app wrote, so the
+        // migration test guards the real key names rather than the enum
         await AsyncStorage.setMany({
-          [StorageKeys.SERVER_URL]: "http://localhost:7080",
-          [StorageKeys.BASIC_AUTH]: JSON.stringify({
+          serverUrl: "http://localhost:7080",
+          basicAuth: JSON.stringify({
             username: "admin",
             password: "secret",
             required: true,

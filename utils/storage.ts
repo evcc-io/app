@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BasicAuth, type Server } from "types";
 
 export enum StorageKeys {
-  SERVER_URL = "serverurl", // legacy
+  SERVER_URL = "serverUrl", // legacy
   BASIC_AUTH = "basicAuth", // legacy
   SERVERS = "servers",
   ACTIVE_SERVER = "activeServer",
