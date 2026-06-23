@@ -62,7 +62,7 @@
     "react-native-worklets": "^0.8.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.28.5",
+    "@babel/core": "^7.29.6",
     "@eslint/eslintrc": "^3.3.3",
     "@eslint/js": "^10.0.1",
     "@types/base-64": "^1.0.2",
