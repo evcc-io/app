@@ -76,7 +76,7 @@
     },
     "description": {
       "solar": "Vorhergesagte Solarproduktion.",
-      "price": "Vorhergesagter Netzpreis.",
+      "price": "Vorhergesagter Netzbezugspreis.",
       "co2": "Vorhergesagte CO₂-Emissionen.",
       "feedin": "Vorhergesagte Einspeisevergütung."
     }

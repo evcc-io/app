@@ -76,9 +76,9 @@
     },
     "description": {
       "solar": "Forecast solar production.",
-      "price": "Forecast grid price.",
+      "price": "Forecast grid import price.",
       "co2": "Forecast CO₂ emissions.",
-      "feedin": "Forecast feed-in tariff."
+      "feedin": "Forecast grid export price."
     }
   }
 }

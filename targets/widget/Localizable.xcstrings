@@ -6186,163 +6186,163 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid price."
+            "value": "Forecast grid import price."
           }
         },
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid price."
+            "value": "Forecast grid import price."
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid price."
+            "value": "Forecast grid import price."
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid price."
+            "value": "Forecast grid import price."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vorhergesagter Netzpreis."
+            "value": "Vorhergesagter Netzbezugspreis."
           }
         },
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid price."
+            "value": "Forecast grid import price."
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid price."
+            "value": "Forecast grid import price."
           }
         },
         "et": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid price."
+            "value": "Forecast grid import price."
           }
         },
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid price."
+            "value": "Forecast grid import price."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid price."
+            "value": "Forecast grid import price."
           }
         },
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid price."
+            "value": "Forecast grid import price."
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid price."
+            "value": "Forecast grid import price."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid price."
+            "value": "Forecast grid import price."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid price."
+            "value": "Forecast grid import price."
           }
         },
         "lb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid price."
+            "value": "Forecast grid import price."
           }
         },
         "lt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid price."
+            "value": "Forecast grid import price."
           }
         },
         "nb-NO": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid price."
+            "value": "Forecast grid import price."
           }
         },
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid price."
+            "value": "Forecast grid import price."
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid price."
+            "value": "Forecast grid import price."
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid price."
+            "value": "Forecast grid import price."
           }
         },
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid price."
+            "value": "Forecast grid import price."
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid price."
+            "value": "Forecast grid import price."
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid price."
+            "value": "Forecast grid import price."
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid price."
+            "value": "Forecast grid import price."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid price."
+            "value": "Forecast grid import price."
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid price."
+            "value": "Forecast grid import price."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid price."
+            "value": "Forecast grid import price."
           }
         }
       }
@@ -6520,25 +6520,25 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast feed-in tariff."
+            "value": "Forecast grid export price."
           }
         },
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast feed-in tariff."
+            "value": "Forecast grid export price."
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast feed-in tariff."
+            "value": "Forecast grid export price."
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast feed-in tariff."
+            "value": "Forecast grid export price."
           }
         },
         "de": {
@@ -6550,133 +6550,133 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast feed-in tariff."
+            "value": "Forecast grid export price."
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast feed-in tariff."
+            "value": "Forecast grid export price."
           }
         },
         "et": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast feed-in tariff."
+            "value": "Forecast grid export price."
           }
         },
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast feed-in tariff."
+            "value": "Forecast grid export price."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast feed-in tariff."
+            "value": "Forecast grid export price."
           }
         },
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast feed-in tariff."
+            "value": "Forecast grid export price."
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast feed-in tariff."
+            "value": "Forecast grid export price."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast feed-in tariff."
+            "value": "Forecast grid export price."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast feed-in tariff."
+            "value": "Forecast grid export price."
           }
         },
         "lb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast feed-in tariff."
+            "value": "Forecast grid export price."
           }
         },
         "lt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast feed-in tariff."
+            "value": "Forecast grid export price."
           }
         },
         "nb-NO": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast feed-in tariff."
+            "value": "Forecast grid export price."
           }
         },
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast feed-in tariff."
+            "value": "Forecast grid export price."
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast feed-in tariff."
+            "value": "Forecast grid export price."
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast feed-in tariff."
+            "value": "Forecast grid export price."
           }
         },
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast feed-in tariff."
+            "value": "Forecast grid export price."
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast feed-in tariff."
+            "value": "Forecast grid export price."
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast feed-in tariff."
+            "value": "Forecast grid export price."
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast feed-in tariff."
+            "value": "Forecast grid export price."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast feed-in tariff."
+            "value": "Forecast grid export price."
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast feed-in tariff."
+            "value": "Forecast grid export price."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast feed-in tariff."
+            "value": "Forecast grid export price."
           }
         }
       }

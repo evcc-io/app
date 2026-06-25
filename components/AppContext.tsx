@@ -100,7 +100,8 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
       }
       if (hostname === "loadpoint") {
         const lp = queryParams?.["lp"];
-        setTargetPath(`/?lp=${typeof lp === "string" ? lp : "1"}`);
+        const lpNum = typeof lp === "string" && /^\d+$/.test(lp) ? lp : "1";
+        setTargetPath(`/?lp=${lpNum}`);
       } else {
         setTargetPath("/forecast");
       }

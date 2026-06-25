@@ -10,7 +10,7 @@
     "lint": "tsc --noEmit && eslint .",
     "format": "prettier --write .",
     "translations": "node ./scripts/load-translations.mts",
-    "widget:strings": "node ./scripts/build-widget-strings.mts",
+    "widget:strings": "tsx ./scripts/build-widget-strings.mts",
     "eas:ios": "eas build -p ios",
     "eas:android:github": "eas build --platform android --profile preview",
     "eas:android:playstore": "eas build -p android",

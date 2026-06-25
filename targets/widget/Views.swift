@@ -153,9 +153,13 @@ struct ForecastChart: View {
     .chartLegend(.hidden)
   }
 
-  // Labels: 0 + max (ceil to next integer). Negatives extend the domain so they
-  // show, but get no label.
-  private var axisTop: Double { max(ceil(points.map { $0.value }.max() ?? 0), 1) }
+  // Labels: 0 + max (ceil to next integer; for fractional <1 series ceil to 0.1
+  // so sub-unit currencies aren't flattened). Negatives extend the domain, no label.
+  private var axisTop: Double {
+    let m = points.map { $0.value }.max() ?? 0
+    if m <= 0 { return 1 }
+    return m < 1 ? ceil(m * 10) / 10 : ceil(m)
+  }
   private var axisBottom: Double { min(0, points.map { $0.value }.min() ?? 0) }
   private var yValues: [Double] { [0, axisTop] }
 }
