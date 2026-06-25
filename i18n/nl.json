@@ -14,13 +14,18 @@
       "password": "Wachtwoord",
       "qrcode": {
         "invalid": "Ongeldige evcc QR-code.",
+        "permissionDenied": "Camera toegang geweigerd. Zet deze aan in instellingen om de QR code te scannen.",
         "recognized": "QR-code gedetecteerd!",
         "scan": "Scan QR-code",
+        "scanOnboarding": "Configuratie via QR code",
+        "scanPrefill": "Invullen via QR code",
         "scanning": "detecteren..."
       },
+      "serverExistsAlready": "Deze server is al aanwezig.",
       "serverIncompatible": "De evcc server is nog niet app-compatible. Update uw installatie.",
       "serverNotAvailable": "Server onbereikbaar. Controleer het adres.",
       "specify": "Adres handmatig invoeren",
+      "title": "Titel",
       "user": "Gebruiker"
     },
     "removeServer": "Server verwijderen",
@@ -31,6 +36,10 @@
       "start": "Zoeken starten"
     },
     "select": "Selecteren",
+    "switchServer": {
+      "addServer": "Toevoegen server",
+      "title": "Wissel server"
+    },
     "useDemo": "Demo server gebruiken"
   }
 }
