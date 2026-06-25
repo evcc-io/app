@@ -12,9 +12,20 @@
       "enterUrl": "Inserir URL",
       "missingOrWrongAuthentication": "Autenticação inexistente ou incorreta",
       "password": "Password",
+      "qrcode": {
+        "invalid": "Este código QR não é um código do evcc válido.",
+        "permissionDenied": "Acesso à câmara negado. Ative-o nas definições para ler códigos QR.",
+        "recognized": "Foi detetado um código QR!",
+        "scan": "Escaneie o código QR",
+        "scanOnboarding": "Configurar através do código QR",
+        "scanPrefill": "Preencher através do código QR",
+        "scanning": "a detetar..."
+      },
+      "serverExistsAlready": "Este servidor já existe.",
       "serverIncompatible": "A instalação evcc ainda não é compatível com a aplicação. Atualize a sua instalação.",
       "serverNotAvailable": "Servidor não encontrado. Por favor, verifique o endereço.",
       "specify": "Introduzir o endereço manualmente",
+      "title": "Título",
       "user": "Utilizador"
     },
     "removeServer": "Apagar servidor",
@@ -25,6 +36,10 @@
       "start": "Iniciar a pesquisa"
     },
     "select": "Selecionar",
+    "switchServer": {
+      "addServer": "Adicionar um servidor",
+      "title": "Mudar de servidor"
+    },
     "useDemo": "Usar modo de demonstração"
   }
 }
