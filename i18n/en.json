@@ -41,5 +41,44 @@
     },
     "select": "Select",
     "useDemo": "Use demo instance"
+  },
+  "widget": {
+    "type": { "price": "Grid import price", "feedin": "Grid export price" },
+    "solar": { "adjust": "Adjust to real data" },
+    "now": "now",
+    "noData": {
+      "title": "No data",
+      "body": "This server has no data of this type."
+    },
+    "unreachable": {
+      "title": "Server unreachable",
+      "body": "Could not load the evcc instance."
+    },
+    "setup": {
+      "title": "Set up evcc",
+      "body": "Tap to connect a server and pick a data type."
+    },
+    "config": {
+      "title": "evcc Forecast",
+      "desc": "Server for the forecast.",
+      "server": "Server",
+      "loadpoint": "Loadpoint"
+    },
+    "loadpoint": {
+      "name": "Loadpoint",
+      "description": "Loadpoint status and charge mode."
+    },
+    "name": {
+      "solar": "Solar forecast",
+      "price": "Grid import price",
+      "co2": "CO₂",
+      "feedin": "Grid export price"
+    },
+    "description": {
+      "solar": "Forecast solar production.",
+      "price": "Forecast grid price.",
+      "co2": "Forecast CO₂ emissions.",
+      "feedin": "Forecast feed-in tariff."
+    }
   }
 }

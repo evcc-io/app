@@ -10,6 +10,7 @@
     "lint": "tsc --noEmit && eslint .",
     "format": "prettier --write .",
     "translations": "node ./scripts/load-translations.mts",
+    "widget:strings": "node ./scripts/build-widget-strings.mts",
     "eas:ios": "eas build -p ios",
     "eas:android:github": "eas build --platform android --profile preview",
     "eas:android:playstore": "eas build -p android",
@@ -19,6 +20,7 @@
     "bump": "tsx ./scripts/updateVersion.ts"
   },
   "dependencies": {
+    "@bacons/apple-targets": "^4.0.7",
     "@eva-design/eva": "^2.2.0",
     "@expo/metro-runtime": "~56.0.15",
     "@inthepocket/react-native-service-discovery": "^0.2.4",
