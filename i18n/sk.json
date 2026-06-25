@@ -1,1 +1,45 @@
-{}
+{
+  "main": {
+    "description": "Prehľadávajte svoju sieť a nájdite inštaláciu evcc.",
+    "title": "Nastavenie servera"
+  },
+  "servers": {
+    "changeServer": "Zmeniť server",
+    "manually": {
+      "authenticationRequired": "Potrebná autorizácia",
+      "checkAdress": "Server pravdepodobne nieje instanciou evcc. Prosím skontrolujte adresu.",
+      "checkAndSave": "Skontrolovať a uložiť",
+      "enterUrl": "Zadajte URL",
+      "missingOrWrongAuthentication": "Chýbajúce alebo nesprávne overenie",
+      "password": "Heslo",
+      "qrcode": {
+        "invalid": "Neplatný QR kód pre evcc.",
+        "permissionDenied": "Prístup ku kamere bol zamietnutý. Povoľte ho v nastaveniach na skenovanie QR kódov.",
+        "recognized": "Zistený QR kód!",
+        "scan": "Skenovať QR kód",
+        "scanOnboarding": "Nastaviť pomocou QR kódu",
+        "scanPrefill": "Vyplňiť pomocou QR kódu",
+        "scanning": "zisťuje sa..."
+      },
+      "serverExistsAlready": "Tento server už existuje.",
+      "serverIncompatible": "Vaše evcc ešte nie je kompatibilné s Aplikáciou. Aktualizujte svoju inštaláciu.",
+      "serverNotAvailable": "Server nie je k dispozícii. Skontrolujte adresu.",
+      "specify": "Zadajte adresu manuálne",
+      "title": "Názov",
+      "user": "Užívateľ"
+    },
+    "removeServer": "Odstrániť server",
+    "search": {
+      "notAvailable": "Hľadanie nie je možné na tomto zariadení. Použite manuálny vstup.",
+      "nothingFound": "Nebol nájdený žiadny server evcc.",
+      "searching": "Hľadať pripojenie ...",
+      "start": "Spustiť vyhľadávanie"
+    },
+    "select": "Vybrať",
+    "switchServer": {
+      "addServer": "Pridať server",
+      "title": "Prepnúť server"
+    },
+    "useDemo": "Použiť demo inštanciu"
+  }
+}
