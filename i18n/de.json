@@ -41,5 +41,44 @@
     },
     "select": "Auswählen",
     "useDemo": "Demoinstanz verwenden"
+  },
+  "widget": {
+    "type": { "price": "Netzbezugspreis", "feedin": "Einspeisevergütung" },
+    "solar": { "adjust": "An Realdaten anpassen" },
+    "now": "jetzt",
+    "noData": {
+      "title": "Keine Daten",
+      "body": "Dieser Server liefert keine Daten dieses Typs."
+    },
+    "unreachable": {
+      "title": "Server nicht erreichbar",
+      "body": "evcc-Instanz konnte nicht geladen werden."
+    },
+    "setup": {
+      "title": "evcc einrichten",
+      "body": "Tippen, um Server zu verbinden und einen Datentyp zu wählen."
+    },
+    "config": {
+      "title": "evcc Vorhersage",
+      "desc": "Server der Vorhersage.",
+      "server": "Server",
+      "loadpoint": "Ladepunkt"
+    },
+    "loadpoint": {
+      "name": "Ladepunkt",
+      "description": "Ladepunkt-Status und Lademodus."
+    },
+    "name": {
+      "solar": "Solarprognose",
+      "price": "Netzbezugspreis",
+      "co2": "CO₂",
+      "feedin": "Einspeisevergütung"
+    },
+    "description": {
+      "solar": "Vorhergesagte Solarproduktion.",
+      "price": "Vorhergesagter Netzbezugspreis.",
+      "co2": "Vorhergesagte CO₂-Emissionen.",
+      "feedin": "Vorhergesagte Einspeisevergütung."
+    }
   }
 }

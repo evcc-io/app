@@ -9,3 +9,6 @@ tsconfig.tsbuildinfo
 .claude/
 e2e/artifacts
 evcc*.*
+
+# @bacons/apple-targets plugin output (regenerated on prebuild)
+targets/*/generated.entitlements
