@@ -82,7 +82,9 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
   // Capture incoming deep links (cold start + while running).
   useEffect(() => {
     Linking.getInitialURL().then((url) => url && setPendingUrl(url));
-    const sub = Linking.addEventListener("url", ({ url }) => setPendingUrl(url));
+    const sub = Linking.addEventListener("url", ({ url }) =>
+      setPendingUrl(url),
+    );
     return () => sub.remove();
   }, []);
 
@@ -100,8 +102,7 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
       }
       if (hostname === "loadpoint") {
         const lp = queryParams?.["lp"];
-        const lpNum = typeof lp === "string" && /^\d+$/.test(lp) ? lp : "1";
-        setTargetPath(`/?lp=${lpNum}`);
+        setTargetPath(typeof lp === "string" ? `/?lp=${lp}` : "/");
       } else {
         setTargetPath("/forecast");
       }

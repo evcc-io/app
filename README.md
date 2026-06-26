@@ -50,7 +50,7 @@ Especially helpful when dealing with longer URLs for public tunnels or related s
 
 The app supports the following URL scheme:
 
-**Format:**
+### Add a server
 
 Opens the server entry field with prefilled values.
 All params are optional.
@@ -66,6 +66,22 @@ _Note: Ensure that query values are properly encoded._
 ![URL Scheme Example](https://api.qrserver.com/v1/create-qr-code/?color=000000&bgcolor=FFFFFF&data=evcc%3A%2F%2Fserver%3Furl%3Dhttps%3A%2F%2Fdemo.evcc.io%26title%3DDemo%2520Server%26username%3Dadmin%26password%3Dsecret&qzone=1&margin=0&size=150x150&ecc=L)
 
 [evcc://server?url=https://demo.evcc.io&title=Demo%20Server&username=admin&password=secret](evcc://server?url=https://demo.evcc.io&title=Demo%20Server&username=admin&password=secret)
+
+### Open the forecast
+
+Navigates to the forecast page. `server` is the 0-based index of the saved server. If omitted, the active server is used.
+
+```
+evcc://forecast?server=<index>
+```
+
+### Open a loadpoint
+
+Navigates to the loadpoints page. `lp` focuses the loadpoint with that 1-based number. If omitted, the current loadpoint is used. `server` as above.
+
+```
+evcc://loadpoint?lp=<number>&server=<index>
+```
 
 ## Development
 

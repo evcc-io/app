@@ -22,7 +22,7 @@ struct LoadpointView: View {
     c.scheme = "evcc"
     c.host = "loadpoint"
     var items = [URLQueryItem(name: "lp", value: String(entry.lp))]
-    if let id = entry.serverId { items.insert(URLQueryItem(name: "server", value: id), at: 0) }
+    if let id = entry.serverId { items.append(URLQueryItem(name: "server", value: id)) }
     c.queryItems = items
     return c.url
   }
