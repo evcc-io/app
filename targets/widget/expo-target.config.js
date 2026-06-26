@@ -9,6 +9,6 @@ module.exports = {
   // Shared App Group so the widget can read the server list the app writes.
   // Must match ios.entitlements in app.config.ts.
   entitlements: {
-    "com.apple.security.application-groups": ["group.io.evcc.ios"],
+    "com.apple.security.application-groups": ["group.io.evcc.app"],
   },
 };

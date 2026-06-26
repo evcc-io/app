@@ -1,7 +1,7 @@
 import { Platform } from "react-native";
 import { Server } from "types";
 
-const APP_GROUP = "group.io.evcc.ios";
+const APP_GROUP = "group.io.evcc.app";
 
 enum WidgetStorageKeys {
   SERVERS = "servers",
