@@ -24,7 +24,7 @@ export default ({ config }: ConfigContext) =>
         // extension reads it. `@bacons/apple-targets` auto-syncs this group to
         // the widget target on prebuild.
         entitlements: {
-          "com.apple.security.application-groups": ["group.io.evcc.ios"],
+          "com.apple.security.application-groups": ["group.io.evcc.app"],
         },
         infoPlist: {
           CFBundleLocalizations: ["de"],

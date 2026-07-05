@@ -18,7 +18,7 @@ struct StoredServer: Codable, Identifiable {
 
 /// Reads the server list the app writes into the shared App Group container.
 enum SharedStore {
-  static let appGroup = "group.io.evcc.ios"
+  static let appGroup = "group.io.evcc.app"
 
   private static var defaults: UserDefaults? { UserDefaults(suiteName: appGroup) }
 
