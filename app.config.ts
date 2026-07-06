@@ -70,6 +70,8 @@ export default ({ config }: ConfigContext) =>
           "./scripts/detox/configureDetox.ts",
           { subdomains: "*" }, // uncomment to debug app
         ],
+        ["./scripts/trustUserCAs.ts"],
+        ["./scripts/increaseGradleMemory.ts"],
         [
           "expo-build-properties",
           {

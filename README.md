@@ -35,6 +35,9 @@ Native app wrapper for evcc UI based on [react-native](https://reactnative.dev/)
 - Configured URL can be changed
   - in offline mode
   - via additional top navigation entry "Change server"
+- Self-signed certificates
+  - trusts CA certificates the user has installed on the device (Android)
+  - lets the app reach evcc behind a TLS proxy with a private CA (see [here](#self-signed-certificates))
 - Light and dark mode for native UI
   - based on system settings (not configurable)
 
@@ -82,6 +85,13 @@ Navigates to the loadpoints page. `lp` focuses the loadpoint with that 1-based n
 ```
 evcc://loadpoint?lp=<number>&server=<index>
 ```
+
+## Self-signed certificates
+
+To reach evcc behind a TLS proxy that uses a private CA, install the root CA on the device and connect via `https://…`. The certificate must have a SAN matching the hostname or IP you connect to. Plain-HTTP setups keep working unchanged.
+
+- **Android:** _Settings → Security & privacy → More security settings → Encryption & credentials → Install a certificate → CA certificate_ (requires a screen lock). The app opts in to trusting user-installed CAs, so it is honored in both the connection check and the WebView.
+- **iOS:** No app-specific step. Install the CA profile, then enable full trust under _Settings → General → About → Certificate Trust Settings_.
 
 ## Development
 
