@@ -21,7 +21,14 @@ async function loadLegacyStorage(): Promise<Server> {
 
 async function migrate() {
   const keys = await AsyncStorage.getAllKeys();
-  if (keys.includes(StorageKeys.SERVER_URL)) {
+  if (!keys.includes(StorageKeys.SERVER_URL)) return;
+  if (keys.includes(StorageKeys.SERVERS)) {
+    // stale legacy leftovers next to an existing config: current config wins
+    await AsyncStorage.removeMany([
+      StorageKeys.SERVER_URL,
+      StorageKeys.BASIC_AUTH,
+    ]);
+  } else {
     await migrateStorage();
   }
 }
