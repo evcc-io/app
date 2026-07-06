@@ -11,15 +11,25 @@ import path from "path";
 
 const NETWORK_SECURITY_CONFIG_FILE = "network_security_config.xml";
 
-const XML_HEADER = '<?xml version="1.0" encoding="utf-8"?>';
-const USER_CA_XML_PARENT_TAG = 'network-security-config';
-const USER_CA_CONFIG_XML = `
-    <base-config>
-        <trust-anchors>
-            <certificates src="system" />
-            <certificates src="user" />
-        </trust-anchors>
-    </base-config>
+/**
+ * Once a network security config is present, Android ignores the manifest's
+ * `android:usesCleartextTraffic` flag entirely. Plain-HTTP access to local
+ * evcc instances is the primary use case, so cleartext must be re-enabled
+ * here explicitly.
+ *
+ * May not have new lines or spaces in the beginning.
+ * Otherwise build fails with:
+ * "AAPT: error: XML or text declaration not at start of entity"
+ */
+const NETWORK_SECURITY_CONFIG = `<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+  <base-config cleartextTrafficPermitted="true">
+    <trust-anchors>
+      <certificates src="system" />
+      <certificates src="user" />
+    </trust-anchors>
+  </base-config>
+</network-security-config>
 `;
 
 const withNetworkSecurityConfigFile: ConfigPlugin = (config) => {
@@ -30,26 +40,12 @@ const withNetworkSecurityConfigFile: ConfigPlugin = (config) => {
         config.modRequest.platformProjectRoot,
         "app/src/main/res/xml",
       );
-      const filePath = path.join(resXmlPath, NETWORK_SECURITY_CONFIG_FILE);
-
-      if (fs.existsSync(filePath)) {
-        const existing = fs.readFileSync(filePath, "utf-8");
-        if (existing.includes('certificates src="user"')) return config;
-
-        const merged = existing.replace(
-          `</${USER_CA_XML_PARENT_TAG}>`,
-          `${USER_CA_CONFIG_XML}</${USER_CA_XML_PARENT_TAG}>`
-        );
-        fs.writeFileSync(filePath, merged, "utf-8");
-      } else {
-        fs.mkdirSync(resXmlPath, { recursive: true });
-        fs.writeFileSync(
-          filePath,
-          `${XML_HEADER}<${USER_CA_XML_PARENT_TAG}>${USER_CA_CONFIG_XML}</${USER_CA_XML_PARENT_TAG}>`,
-          "utf-8",
-        );
-      }
-
+      fs.mkdirSync(resXmlPath, { recursive: true });
+      fs.writeFileSync(
+        path.join(resXmlPath, NETWORK_SECURITY_CONFIG_FILE),
+        NETWORK_SECURITY_CONFIG,
+        "utf-8",
+      );
       return config;
     },
   ]);
@@ -75,8 +71,4 @@ const trustUserCAs: ConfigPlugin = (config) => {
   ]);
 };
 
-export default createRunOncePlugin(
-  trustUserCAs,
-  "trust-user-cas",
-  "1.0.0",
-);
+export default createRunOncePlugin(trustUserCAs, "trust-user-cas", "1.0.0");
