@@ -71,6 +71,7 @@ export default ({ config }: ConfigContext) =>
           { subdomains: "*" }, // uncomment to debug app
         ],
         ["./scripts/trustUserCAs.ts"],
+        ["./scripts/increaseGradleMemory.ts"],
         [
           "expo-build-properties",
           {
