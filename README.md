@@ -40,6 +40,10 @@ Native app wrapper for evcc UI based on [react-native](https://reactnative.dev/)
   - lets the app reach evcc behind a TLS proxy with a private CA (see [here](#self-signed-certificates))
 - Light and dark mode for native UI
   - based on system settings (not configurable)
+- Home screen widgets (iOS)
+  - solar, price, CO₂ and feed-in forecast
+  - loadpoint status with quick mode switching
+  - tap to jump straight into the app
 
 ## Screenshots
 
