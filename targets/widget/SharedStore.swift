@@ -9,6 +9,8 @@ struct StoredServer: Codable, Identifiable {
   let username: String?
   let password: String?
   let authRequired: Bool?
+  let serviceTokenId: String?
+  let serviceTokenSecret: String?
 
   var displayTitle: String {
     if let t = title, !t.trimmingCharacters(in: .whitespaces).isEmpty { return t }

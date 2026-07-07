@@ -1,10 +1,4 @@
-import {
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-  useMemo,
-} from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { WebView, WebViewMessageEvent } from "react-native-webview";
 import { StyleSheet, Animated } from "react-native";
 import * as Linking from "expo-linking";
@@ -13,6 +7,7 @@ import { Text, Layout, Button } from "@ui-kitten/components";
 import { useAppContext } from "../components/AppContext";
 import { useTranslation } from "react-i18next";
 import { USER_AGENT } from "../utils/constants";
+import { serviceTokenHeaders } from "../utils/server";
 import {
   ShouldStartLoadRequest,
   WebViewErrorEvent,
@@ -53,6 +48,16 @@ export default function MainScreen({
       required && username && password ? { username, password } : undefined,
     [required, username, password],
   );
+
+  // Cloudflare Access service token headers, sent on the first document load —
+  // the only request the WebView can attach headers to. That's enough: Access
+  // responds with a CF_Authorization cookie that carries all subsequent traffic
+  // (assets, XHR, WebSocket). Cookie expiry surfaces as a connection loss,
+  // which the reconnect remount answers with a fresh header-carrying load.
+  const tokenHeaders = useMemo(() => {
+    const headers = serviceTokenHeaders(activeServer);
+    return Object.keys(headers).length > 0 ? headers : undefined;
+  }, [activeServer]);
 
   // Tell the web UI to navigate to a deep-linked path (e.g. "/forecast") once
   // it's connected. The web UI handles the actual routing (added separately).
@@ -122,9 +127,12 @@ export default function MainScreen({
       url: string;
       headers?: Record<string, string>;
     }) => {
-      // attach the webview's auth cookie, basic auth and event headers
+      // attach the webview's auth cookie, basic auth, service token and event headers
       try {
-        const requestHeaders = { ...headers };
+        const requestHeaders = {
+          ...headers,
+          ...serviceTokenHeaders(activeServer),
+        };
         const cookies = await CookieManager.get(url, true);
         const cookieHeader = Object.values(cookies)
           .map((c) => `${c.name}=${c.value}`)
@@ -141,7 +149,7 @@ export default function MainScreen({
         console.log(`download failed for ${url}: ${e}`);
       }
     },
-    [basicAuthCredential],
+    [basicAuthCredential, activeServer],
   );
 
   const handleMessage = useCallback(
@@ -213,7 +221,7 @@ export default function MainScreen({
           <WebView
             testID="mainWebView"
             basicAuthCredential={basicAuthCredential}
-            source={{ uri: activeServer?.url || "" }}
+            source={{ uri: activeServer?.url || "", headers: tokenHeaders }}
             injectedJavaScript={`
               window.evccAppCapabilities = ["download"];
               document.documentElement.style.setProperty("--safe-area-inset-top", "${insets.top}px");
@@ -273,6 +281,7 @@ export default function MainScreen({
     [
       activeServer?.url,
       basicAuthCredential,
+      tokenHeaders,
       webViewKey,
       contFade,
       loadFade,

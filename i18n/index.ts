@@ -1,6 +1,7 @@
 import { Resource } from "i18next";
 
 import ar from "./ar.json";
+import bs from "./bs.json";
 import cs from "./cs.json";
 import da from "./da.json";
 import de from "./de.json";
@@ -11,8 +12,11 @@ import fi from "./fi.json";
 import fr from "./fr.json";
 import hr from "./hr.json";
 import hu from "./hu.json";
+import it from "./it.json";
+import ja from "./ja.json";
 import lb from "./lb.json";
 import lt from "./lt.json";
+import nbNO from "./nb-NO.json";
 import nl from "./nl.json";
 import pl from "./pl.json";
 import pt from "./pt.json";
@@ -26,6 +30,7 @@ import zhHans from "./zh-Hans.json";
 
 const translations: Resource = {
   ar: { translation: ar },
+  bs: { translation: bs },
   cs: { translation: cs },
   da: { translation: da },
   de: { translation: de },
@@ -36,8 +41,11 @@ const translations: Resource = {
   fr: { translation: fr },
   hr: { translation: hr },
   hu: { translation: hu },
+  it: { translation: it },
+  ja: { translation: ja },
   lb: { translation: lb },
   lt: { translation: lt },
+  "nb-NO": { translation: nbNO },
   nl: { translation: nl },
   pl: { translation: pl },
   pt: { translation: pt },

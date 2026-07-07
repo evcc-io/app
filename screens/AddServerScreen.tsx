@@ -23,9 +23,11 @@ function AddServerScreen({
     username,
     password,
     required,
+    serviceTokenId,
+    serviceTokenSecret,
   } = route.params || {};
 
-  const [internalServer, setInternalServer] = useState<Server>({
+  const paramsToServer = (): Server => ({
     title,
     url: initialUrl,
     basicAuth: {
@@ -33,19 +35,25 @@ function AddServerScreen({
       password,
       required: !!username || !!password || required,
     },
+    serviceToken: {
+      clientId: serviceTokenId,
+      clientSecret: serviceTokenSecret,
+      required: !!serviceTokenId || !!serviceTokenSecret,
+    },
   });
 
+  const [internalServer, setInternalServer] = useState<Server>(paramsToServer);
+
   useEffect(() => {
-    setInternalServer({
-      title,
-      url: initialUrl,
-      basicAuth: {
-        username,
-        password,
-        required: !!username || !!password || required,
-      },
-    });
-  }, [title, initialUrl, username, password]);
+    setInternalServer(paramsToServer());
+  }, [
+    title,
+    initialUrl,
+    username,
+    password,
+    serviceTokenId,
+    serviceTokenSecret,
+  ]);
 
   const serverSelected = useCallback(
     async (server: Server) => {

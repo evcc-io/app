@@ -29,6 +29,11 @@
         "permissionDenied": "Kamerazugriff verweigert. Aktiviere ihn in den Einstellungen, um QR-Codes zu scannen.",
         "scanning": "erkennen..."
       },
+      "serviceToken": {
+        "label": "Cloudflare Access Service-Token",
+        "clientId": "Client-ID",
+        "clientSecret": "Client-Secret"
+      },
       "title": "Titel",
       "serverExistsAlready": "Dieser Server existiert bereits."
     },

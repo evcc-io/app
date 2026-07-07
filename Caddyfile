@@ -36,3 +36,27 @@
 		reverse_proxy http://localhost:7070
 	}
 }
+
+# endpoint emulating Cloudflare Access with a service token: a request carrying
+# valid CF-Access-Client-Id/-Secret headers mints a CF_Authorization cookie,
+# cookie-only requests (assets, XHR, websocket) pass, everything else is 403 —
+# mirroring https://developers.cloudflare.com/cloudflare-one/access-controls/service-credentials/service-tokens/
+:7082 {
+	@cookie header_regexp Cookie ".*CF_Authorization=test-jwt.*"
+	handle @cookie {
+		reverse_proxy http://localhost:7070
+	}
+
+	@token {
+		header CF-Access-Client-Id test-id.access
+		header CF-Access-Client-Secret test-secret
+	}
+	handle @token {
+		header +Set-Cookie "CF_Authorization=test-jwt; Path=/; HttpOnly"
+		reverse_proxy http://localhost:7070
+	}
+
+	handle {
+		respond 403
+	}
+}

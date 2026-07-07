@@ -123,6 +123,10 @@ export default function QRCodeCameraScreen({
                         qrcodeUrl.searchParams.get("username") ?? "";
                       const password =
                         qrcodeUrl.searchParams.get("password") ?? "";
+                      const serviceTokenId =
+                        qrcodeUrl.searchParams.get("serviceTokenId") ?? "";
+                      const serviceTokenSecret =
+                        qrcodeUrl.searchParams.get("serviceTokenSecret") ?? "";
 
                       if (
                         qrcodeUrl.protocol === "evcc:" &&
@@ -140,6 +144,8 @@ export default function QRCodeCameraScreen({
                           username,
                           password,
                           required: !!username || !!password,
+                          serviceTokenId,
+                          serviceTokenSecret,
                         });
                       } else {
                         showStatus(

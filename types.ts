@@ -4,6 +4,7 @@ export interface Server {
   title?: string;
   url: string;
   basicAuth: BasicAuth;
+  serviceToken?: ServiceToken;
 }
 
 export interface BasicAuth {
@@ -12,12 +13,24 @@ export interface BasicAuth {
   password?: string;
 }
 
+// Cloudflare Access service token. Sent as CF-Access-Client-Id/-Secret on
+// native requests and the WebView's first document load; Access answers with
+// a CF_Authorization cookie that carries all subsequent traffic (XHR, assets,
+// WebSocket). See https://github.com/evcc-io/app/issues/100.
+export interface ServiceToken {
+  required?: boolean;
+  clientId?: string;
+  clientSecret?: string;
+}
+
 export type AddServerParams = {
   title?: string;
   url?: string;
   username?: string;
   password?: string;
   required?: boolean;
+  serviceTokenId?: string;
+  serviceTokenSecret?: string;
 };
 
 export type SwitchServerStackParamList = {

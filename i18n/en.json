@@ -29,6 +29,11 @@
         "permissionDenied": "Camera access denied. Enable it in settings to scan QR codes.",
         "scanning": "detecting..."
       },
+      "serviceToken": {
+        "label": "Cloudflare Access service token",
+        "clientId": "Client ID",
+        "clientSecret": "Client Secret"
+      },
       "title": "Title",
       "serverExistsAlready": "This server already exists."
     },

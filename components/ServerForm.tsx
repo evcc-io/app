@@ -3,7 +3,7 @@ import { Text, Button, Input, CheckBox } from "@ui-kitten/components";
 import { cleanServerUrl, sameServer, verifyEvccServer } from "../utils/server";
 import LoadingIndicator from "./animations/LoadingIndicator";
 import { useTranslation } from "react-i18next";
-import { BasicAuth, Server } from "types";
+import { BasicAuth, Server, ServiceToken } from "types";
 import { useAppContext } from "./AppContext";
 import ScanQRCodeButton from "./ScanQRCodeButton";
 
@@ -26,33 +26,29 @@ export default function ServerForm({
   const urlRef = useRef<Input | null>(null);
   const usernameRef = useRef<Input | null>(null);
   const passwordRef = useRef<Input | null>(null);
+  const tokenIdRef = useRef<Input | null>(null);
+  const tokenSecretRef = useRef<Input | null>(null);
 
   const [internalServer, setInternalServer] = useState<Server | undefined>(
     server,
   );
   React.useEffect(() => setInternalServer(server), [server]);
 
-  const setInternalTitle = (title: string) => {
-    setInternalServer({
-      title,
-      url: internalServer?.url || "",
-      basicAuth: internalServer?.basicAuth || {},
-    });
-  };
-  const setInternalUrl = (url: string) => {
-    setInternalServer({
-      title: internalServer?.title,
-      url,
-      basicAuth: internalServer?.basicAuth || {},
-    });
-  };
-  const setInternalAuth = (basicAuth: BasicAuth) => {
+  const patchInternalServer = (patch: Partial<Server>) => {
     setInternalServer({
       title: internalServer?.title,
       url: internalServer?.url || "",
-      basicAuth,
+      basicAuth: internalServer?.basicAuth || {},
+      serviceToken: internalServer?.serviceToken,
+      ...patch,
     });
   };
+  const setInternalTitle = (title: string) => patchInternalServer({ title });
+  const setInternalUrl = (url: string) => patchInternalServer({ url });
+  const setInternalAuth = (basicAuth: BasicAuth) =>
+    patchInternalServer({ basicAuth });
+  const setInternalServiceToken = (serviceToken: ServiceToken) =>
+    patchInternalServer({ serviceToken });
 
   const validateAndSaveURL = async () => {
     if (inProgress) return;
@@ -68,12 +64,14 @@ export default function ServerForm({
       const finalUrl = await verifyEvccServer({
         url: cleanUrl,
         basicAuth: internalServer?.basicAuth || {},
+        serviceToken: internalServer?.serviceToken,
       });
 
       const server = {
         title: internalServer?.title,
         url: finalUrl,
         basicAuth: internalServer?.basicAuth || {},
+        serviceToken: internalServer?.serviceToken,
       };
 
       const sameServerCount = servers.filter((s) =>
@@ -183,6 +181,68 @@ export default function ServerForm({
         </>
       )}
 
+      <CheckBox
+        style={{ marginTop: 8, marginBottom: 16 }}
+        checked={internalServer?.serviceToken?.required}
+        onChange={(v) =>
+          setInternalServiceToken({
+            ...internalServer?.serviceToken,
+            required: v,
+          })
+        }
+        testID="serverFormServiceToken"
+      >
+        {t("servers.manually.serviceToken.label")}
+      </CheckBox>
+
+      {internalServer?.serviceToken?.required && (
+        <>
+          <Input
+            style={{ marginTop: 8, marginBottom: 16 }}
+            size="large"
+            status="basic"
+            onChangeText={(v) =>
+              setInternalServiceToken({
+                ...internalServer?.serviceToken,
+                clientId: v,
+              })
+            }
+            value={internalServer?.serviceToken?.clientId}
+            inputMode="text"
+            keyboardType="default"
+            autoCapitalize="none"
+            returnKeyType="next"
+            autoCorrect={false}
+            placeholder={t("servers.manually.serviceToken.clientId")}
+            ref={tokenIdRef}
+            onSubmitEditing={() => tokenSecretRef.current?.focus()}
+            testID="serverFormServiceTokenId"
+          />
+          <Input
+            style={{ marginTop: 8, marginBottom: 16 }}
+            size="large"
+            status="basic"
+            onChangeText={(v) =>
+              setInternalServiceToken({
+                ...internalServer?.serviceToken,
+                clientSecret: v,
+              })
+            }
+            value={internalServer?.serviceToken?.clientSecret}
+            inputMode="text"
+            keyboardType="default"
+            autoCapitalize="none"
+            returnKeyType="go"
+            autoCorrect={false}
+            placeholder={t("servers.manually.serviceToken.clientSecret")}
+            secureTextEntry
+            ref={tokenSecretRef}
+            onSubmitEditing={validateAndSaveURL}
+            testID="serverFormServiceTokenSecret"
+          />
+        </>
+      )}
+
       <Button
         style={{ marginTop: 16, marginBottom: 16 }}
         appearance="filled"
@@ -198,7 +258,12 @@ export default function ServerForm({
       {mode === "create" && <ScanQRCodeButton shown="Addserverform" />}
 
       {error ? (
-        <Text style={{ marginTop: 16 }} category="p1" status="danger">
+        <Text
+          style={{ marginTop: 16 }}
+          category="p1"
+          status="danger"
+          testID="serverFormError"
+        >
           {error}
         </Text>
       ) : null}

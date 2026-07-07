@@ -20,10 +20,13 @@ interface WidgetServer {
   username: string;
   password: string;
   authRequired: boolean;
+  serviceTokenId: string;
+  serviceTokenSecret: string;
 }
 
 function toWidgetServer(server: Server, index: number): WidgetServer {
   const required = !!server.basicAuth?.required;
+  const tokenRequired = !!server.serviceToken?.required;
   return {
     id: widgetServerId(index),
     title: server.title?.trim() || server.url,
@@ -31,6 +34,10 @@ function toWidgetServer(server: Server, index: number): WidgetServer {
     username: required ? (server.basicAuth?.username ?? "") : "",
     password: required ? (server.basicAuth?.password ?? "") : "",
     authRequired: required,
+    serviceTokenId: tokenRequired ? (server.serviceToken?.clientId ?? "") : "",
+    serviceTokenSecret: tokenRequired
+      ? (server.serviceToken?.clientSecret ?? "")
+      : "",
   };
 }
 
@@ -49,7 +56,10 @@ function getExtensionStorage() {
  * can list servers in its config and authenticate its own /api/state fetches,
  * then ask WidgetKit to reload. Best-effort: failures are swallowed.
  */
-export function syncWidgetServers(servers: Server[], activeServer?: Server): void {
+export function syncWidgetServers(
+  servers: Server[],
+  activeServer?: Server,
+): void {
   const mod = getExtensionStorage();
   if (!mod) return;
   try {
@@ -62,7 +72,10 @@ export function syncWidgetServers(servers: Server[], activeServer?: Server): voi
       ? servers.findIndex((s) => s.url === activeServer.url)
       : -1;
     if (activeIndex >= 0) {
-      storage.set(WidgetStorageKeys.ACTIVE_SERVER_ID, widgetServerId(activeIndex));
+      storage.set(
+        WidgetStorageKeys.ACTIVE_SERVER_ID,
+        widgetServerId(activeIndex),
+      );
     } else {
       storage.remove(WidgetStorageKeys.ACTIVE_SERVER_ID);
     }

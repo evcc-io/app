@@ -20,6 +20,12 @@ enum ApiClient {
       let token = Data("\(u):\(p)".utf8).base64EncodedString()
       req.setValue("Basic \(token)", forHTTPHeaderField: "Authorization")
     }
+    // Cloudflare Access service token (stateless, no cookie handling needed)
+    if let id = server.serviceTokenId, !id.isEmpty,
+       let secret = server.serviceTokenSecret, !secret.isEmpty {
+      req.setValue(id, forHTTPHeaderField: "CF-Access-Client-Id")
+      req.setValue(secret, forHTTPHeaderField: "CF-Access-Client-Secret")
+    }
   }
 
   static func request(_ server: StoredServer, jq: String) -> URLRequest? {

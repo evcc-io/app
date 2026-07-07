@@ -63,8 +63,10 @@ Opens the server entry field with prefilled values.
 All params are optional.
 
 ```
-evcc://server?url=...&title=...&username=...&password=...
+evcc://server?url=...&title=...&username=...&password=...&serviceTokenId=...&serviceTokenSecret=...
 ```
+
+`serviceTokenId` and `serviceTokenSecret` prefill a [Cloudflare Access service token](https://developers.cloudflare.com/cloudflare-one/access-controls/service-credentials/service-tokens/) for instances behind a Cloudflare tunnel. The Access application needs at least one **Allow** policy that includes the service token — with Service Auth-only policies Cloudflare does not issue the session cookie the app relies on.
 
 _Note: Ensure that query values are properly encoded._
 
@@ -127,7 +129,7 @@ You can test basic auth locally by with a [caddy server](https://caddyserver.com
 caddy run
 ```
 
-It will open a server on http://localhost:7080 with `admin:secret` as basic auth credentials and forward requests to your local evcc instance 7070.
+It will open a server on http://localhost:7080 with `admin:secret` as basic auth credentials and forward requests to your local evcc instance 7070. It also serves http://localhost:7082, which emulates a Cloudflare Access service-token setup (client id `test-id.access`, secret `test-secret`).
 
 ## Build Android APK without EAS
 
