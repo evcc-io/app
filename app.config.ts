@@ -40,7 +40,7 @@ export default ({ config }: ConfigContext) =>
         config: {
           usesNonExemptEncryption: false,
         },
-        buildNumber: "45",
+        buildNumber: "46",
       },
       android: {
         permissions: [
@@ -53,7 +53,7 @@ export default ({ config }: ConfigContext) =>
           foregroundImage: "./assets/adaptive-icon.png",
           backgroundColor: "#010322",
         },
-        versionCode: 45,
+        versionCode: 46,
       },
       web: {
         favicon: "./assets/favicon.png",
