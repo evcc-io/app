@@ -33,7 +33,7 @@ export default function MainScreen({
 }: NativeStackScreenProps<RootStackParamList, "Main">) {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
-  const { activeServer } = useAppContext();
+  const { activeServer, targetPath, clearTargetPath } = useAppContext();
   const webViewRef = useRef<WebView>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [webViewKey, setWebViewKey] = useState(0);
@@ -53,6 +53,17 @@ export default function MainScreen({
       required && username && password ? { username, password } : undefined,
     [required, username, password],
   );
+
+  // Tell the web UI to navigate to a deep-linked path (e.g. "/forecast") once
+  // it's connected. The web UI handles the actual routing (added separately).
+  useEffect(() => {
+    if (targetPath && isConnected && webViewRef.current) {
+      webViewRef.current.postMessage(
+        JSON.stringify({ type: "navigate", path: targetPath }),
+      );
+      clearTargetPath();
+    }
+  }, [targetPath, isConnected, clearTargetPath]);
 
   // Reconnect if connection is lost
   useEffect(() => {

@@ -7,8 +7,10 @@ import {
   useEffect,
   PropsWithChildren,
 } from "react";
+import * as Linking from "expo-linking";
 import { BasicAuth, Server } from "types";
 import { sameServer } from "utils/server";
+import { syncWidgetServers } from "utils/widgetSync";
 import {
   storeActiveServer,
   addServer as storageAddServer,
@@ -31,6 +33,9 @@ const AppContext = createContext({
   updateServer: async (_server: Server, _index: number) => {},
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   removeServer: async (_index: number) => {},
+  // webview path a deep link wants to open (e.g. "/forecast"); MainScreen consumes it
+  targetPath: undefined as string | undefined,
+  clearTargetPath: () => {},
 });
 
 // Provider component
@@ -38,6 +43,8 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
   const [activeServer, setActiveServerState] = useState<Server | undefined>();
   const [servers, setServers] = useState<Server[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [targetPath, setTargetPath] = useState<string>();
+  const [pendingUrl, setPendingUrl] = useState<string | null>(null);
 
   // Load the URL from AsyncStorage on startup
   useEffect(() => {
@@ -66,6 +73,42 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
       setIsLoading(false);
     })();
   }, []);
+
+  // Keep the iOS widget's shared App Group in sync with the server list.
+  useEffect(() => {
+    if (!isLoading) syncWidgetServers(servers, activeServer);
+  }, [servers, activeServer, isLoading]);
+
+  // Capture incoming deep links (cold start + while running).
+  useEffect(() => {
+    Linking.getInitialURL().then((url) => url && setPendingUrl(url));
+    const sub = Linking.addEventListener("url", ({ url }) =>
+      setPendingUrl(url),
+    );
+    return () => sub.remove();
+  }, []);
+
+  // Process a widget deep link once servers are loaded: switch to the matching
+  // server and ask MainScreen to open the target page.
+  // `evcc://forecast?server=<id>` or `evcc://loadpoint?server=<id>&lp=<n>`.
+  useEffect(() => {
+    if (!pendingUrl || isLoading) return;
+    const { hostname, queryParams } = Linking.parse(pendingUrl);
+    if (hostname === "forecast" || hostname === "loadpoint") {
+      const id = queryParams?.["server"];
+      if (typeof id === "string") {
+        const match = servers[Number(id)];
+        if (match && !sameServer(match, activeServer)) setActiveServer(match);
+      }
+      if (hostname === "loadpoint") {
+        const lp = queryParams?.["lp"];
+        setTargetPath(typeof lp === "string" ? `/?lp=${lp}` : "/");
+      } else {
+        setTargetPath("/forecast");
+      }
+    }
+    setPendingUrl(null);
+  }, [pendingUrl, isLoading, servers, activeServer]);
 
   const setActiveServer = async (server?: Server) => {
     setActiveServerState(server);
@@ -102,6 +145,8 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
         addServer,
         updateServer,
         removeServer,
+        targetPath,
+        clearTargetPath: () => setTargetPath(undefined),
       }}
     >
       {children}

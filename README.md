@@ -35,8 +35,15 @@ Native app wrapper for evcc UI based on [react-native](https://reactnative.dev/)
 - Configured URL can be changed
   - in offline mode
   - via additional top navigation entry "Change server"
+- Self-signed certificates
+  - trusts CA certificates the user has installed on the device (Android)
+  - lets the app reach evcc behind a TLS proxy with a private CA (see [here](#self-signed-certificates))
 - Light and dark mode for native UI
   - based on system settings (not configurable)
+- Home screen widgets (iOS)
+  - solar, price, CO₂ and feed-in forecast
+  - loadpoint status with quick mode switching
+  - tap to jump straight into the app
 
 ## Screenshots
 
@@ -50,7 +57,7 @@ Especially helpful when dealing with longer URLs for public tunnels or related s
 
 The app supports the following URL scheme:
 
-**Format:**
+### Add a server
 
 Opens the server entry field with prefilled values.
 All params are optional.
@@ -66,6 +73,29 @@ _Note: Ensure that query values are properly encoded._
 ![URL Scheme Example](https://api.qrserver.com/v1/create-qr-code/?color=000000&bgcolor=FFFFFF&data=evcc%3A%2F%2Fserver%3Furl%3Dhttps%3A%2F%2Fdemo.evcc.io%26title%3DDemo%2520Server%26username%3Dadmin%26password%3Dsecret&qzone=1&margin=0&size=150x150&ecc=L)
 
 [evcc://server?url=https://demo.evcc.io&title=Demo%20Server&username=admin&password=secret](evcc://server?url=https://demo.evcc.io&title=Demo%20Server&username=admin&password=secret)
+
+### Open the forecast
+
+Navigates to the forecast page. `server` is the 0-based index of the saved server. If omitted, the active server is used.
+
+```
+evcc://forecast?server=<index>
+```
+
+### Open a loadpoint
+
+Navigates to the loadpoints page. `lp` focuses the loadpoint with that 1-based number. If omitted, the current loadpoint is used. `server` as above.
+
+```
+evcc://loadpoint?lp=<number>&server=<index>
+```
+
+## Self-signed certificates
+
+To reach evcc behind a TLS proxy that uses a private CA, install the root CA on the device and connect via `https://…`. The certificate must have a SAN matching the hostname or IP you connect to. Plain-HTTP setups keep working unchanged.
+
+- **Android:** _Settings → Security & privacy → More security settings → Encryption & credentials → Install a certificate → CA certificate_ (requires a screen lock). The app opts in to trusting user-installed CAs, so it is honored in both the connection check and the WebView.
+- **iOS:** No app-specific step. Install the CA profile, then enable full trust under _Settings → General → About → Certificate Trust Settings_.
 
 ## Development
 

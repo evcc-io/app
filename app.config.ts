@@ -10,7 +10,7 @@ export default ({ config }: ConfigContext) =>
       slug: "evcc",
       scheme: SCHEME,
       description: "open source solar charging",
-      version: "1.3.5",
+      version: "1.4.0",
       orientation: "default",
       icon: "./assets/icon-light.png",
       userInterfaceStyle: "automatic",
@@ -19,6 +19,13 @@ export default ({ config }: ConfigContext) =>
         supportsTablet: true,
         icon: "./assets/icon-liquid.icon",
         bundleIdentifier: "io.evcc.ios",
+        appleTeamId: "UX3KG7U4Y6",
+        // Shared App Group: the app writes the server list here and the widget
+        // extension reads it. `@bacons/apple-targets` auto-syncs this group to
+        // the widget target on prebuild.
+        entitlements: {
+          "com.apple.security.application-groups": ["group.io.evcc.app"],
+        },
         infoPlist: {
           CFBundleLocalizations: ["de"],
           CFBundleDevelopmentRegion: "de",
@@ -33,7 +40,7 @@ export default ({ config }: ConfigContext) =>
         config: {
           usesNonExemptEncryption: false,
         },
-        buildNumber: "44",
+        buildNumber: "45",
       },
       android: {
         permissions: [
@@ -46,7 +53,7 @@ export default ({ config }: ConfigContext) =>
           foregroundImage: "./assets/adaptive-icon.png",
           backgroundColor: "#010322",
         },
-        versionCode: 44,
+        versionCode: 45,
       },
       web: {
         favicon: "./assets/favicon.png",
@@ -57,11 +64,14 @@ export default ({ config }: ConfigContext) =>
         },
       },
       plugins: [
+        "@bacons/apple-targets",
         ["./scripts/fdroid/configureFdroid.ts"],
         [
           "./scripts/detox/configureDetox.ts",
           { subdomains: "*" }, // uncomment to debug app
         ],
+        ["./scripts/trustUserCAs.ts"],
+        ["./scripts/increaseGradleMemory.ts"],
         [
           "expo-build-properties",
           {
