@@ -92,7 +92,7 @@ jobs:
           name: ios-evcc-app
           path: ios/build/Build/Products/Release-iphonesimulator/evcc.app
           if-no-files-found: error
-          retention-days: 1
+          retention-days: 7
 
   ios-test:
     name: iOS Detox (test)
@@ -214,7 +214,7 @@ jobs:
           name: android-detox-app.apk
           path: android/app/build/outputs/apk/release/app-release.apk
           if-no-files-found: error
-          retention-days: 1
+          retention-days: 7
 
       - name: Upload detox apk
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -222,7 +222,7 @@ jobs:
           name: android-detox-runner.apk
           path: android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk
           if-no-files-found: error
-          retention-days: 1
+          retention-days: 7
 
   android-test:
     name: "Android Detox (test)"
