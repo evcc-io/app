@@ -12,9 +12,20 @@
       "enterUrl": "Ange URL",
       "missingOrWrongAuthentication": "Saknad eller inkorrekt registrering",
       "password": "Lösenord",
+      "qrcode": {
+        "invalid": "Ej giltig evcc QR-kod.",
+        "permissionDenied": "Kamera ej tillgänglig. Aktivera i inställningar för att skanna QR-kod.",
+        "recognized": "QR-kod upptäckt!",
+        "scan": "Skanna QR-kod",
+        "scanOnboarding": "Ställ in via QR-kod",
+        "scanPrefill": "Fyll i via QR-kod",
+        "scanning": "söker..."
+      },
+      "serverExistsAlready": "Servern finns sedan tidigare.",
       "serverIncompatible": "Evcc-versionen är inte app-kompatibel. Uppgradera din installation.",
       "serverNotAvailable": "Servern är inte tillgänglig. Vänligen kolla adressen.",
       "specify": "Ange adress",
+      "title": "Titel",
       "user": "Användare"
     },
     "removeServer": "Ta bort server",
@@ -25,6 +36,10 @@
       "start": "Starta sök"
     },
     "select": "Välj",
+    "switchServer": {
+      "addServer": "Lägg till server",
+      "title": "Byt server"
+    },
     "useDemo": "Använd demo-installation"
   }
 }

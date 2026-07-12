@@ -1,0 +1,45 @@
+{
+  "main": {
+    "description": "Meklējiet savā tīklā evcc instalāciju.",
+    "title": "Iestatīt serveri"
+  },
+  "servers": {
+    "changeServer": "Mainīt serveri",
+    "manually": {
+      "authenticationRequired": "Nepieciešama autentifikācija",
+      "checkAdress": "Serveris nešķiet esam evcc instance. Lūdzu pārbaudiet adresi.",
+      "checkAndSave": "Pārbaudīt un saglabāt",
+      "enterUrl": "Ievadiet URL",
+      "missingOrWrongAuthentication": "Trūkstoša vai nepareiza autentifikācija",
+      "password": "Parole",
+      "qrcode": {
+        "invalid": "Nederīgs evcc QR kods.",
+        "permissionDenied": "Kameras piekļuve liegta. Iespējojiet to iestatījumos QR kodu skenēšanai.",
+        "recognized": "QR kods atpazīts!",
+        "scan": "Skenēt QR kodu",
+        "scanOnboarding": "Iestatīt ar QR kodu",
+        "scanPrefill": "Aizpildīt no QR koda",
+        "scanning": "atpazīst..."
+      },
+      "serverExistsAlready": "Šis serveris jau pastāv.",
+      "serverIncompatible": "evcc instance vēl nav saderīga ar lietotni. Atjauniniet instalāciju.",
+      "serverNotAvailable": "Serveris nav pieejams. Lūdzu pārbaudiet adresi.",
+      "specify": "Ievadiet adresi manuāli",
+      "title": "Nosaukums",
+      "user": "Lietotājs"
+    },
+    "removeServer": "Noņemt serveri",
+    "search": {
+      "notAvailable": "Meklēšana šajā ierīcē nav iespējama. Izmantojiet manuālo ievadi.",
+      "nothingFound": "Nav atrasts neviens evcc serveris.",
+      "searching": "Meklē savienojumu...",
+      "start": "Sākt meklēšanu"
+    },
+    "select": "Izvēlēties",
+    "switchServer": {
+      "addServer": "Pievienot serveri",
+      "title": "Pārslēgt serveri"
+    },
+    "useDemo": "Izmantot demo instanci"
+  }
+}
