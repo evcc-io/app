@@ -32,7 +32,9 @@ struct SeriesPayload: Decodable {
   let slots: [ForecastSlot]?
 }
 
-// MARK: - JSON decoding (ISO-8601 with timezone offset, e.g. 2026-06-23T00:15:00+02:00)
+// MARK: - JSON decoding
+// Dates arrive as ISO-8601 strings (e.g. 2026-06-23T00:15:00+02:00) from older
+// evcc versions, or as unix seconds from newer ones (evcc-io/evcc#31765).
 
 enum EvccJSON {
   private static let isoNoFrac: ISO8601DateFormatter = {
@@ -50,6 +52,9 @@ enum EvccJSON {
     let d = JSONDecoder()
     d.dateDecodingStrategy = .custom { dec in
       let c = try dec.singleValueContainer()
+      if let seconds = try? c.decode(Double.self) {
+        return Date(timeIntervalSince1970: seconds)
+      }
       let s = try c.decode(String.self)
       if let date = isoNoFrac.date(from: s) ?? isoFrac.date(from: s) { return date }
       throw DecodingError.dataCorruptedError(in: c, debugDescription: "bad date \(s)")
