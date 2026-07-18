@@ -22,13 +22,12 @@ config.resolver = {
 
 if (isFdroidBuild) {
   console.log(
-    "📦 F-Droid build detected: stubbing out expo-camera and expo-notifications (no GMS/MLKit/FCM)",
+    "📦 F-Droid build detected: stubbing out expo-camera (no GMS/MLKit)",
   );
-  const stubbed = ["expo-camera", "expo-notifications"];
   config.resolver.resolveRequest = (context, moduleName, platform) => {
-    if (stubbed.includes(moduleName)) {
+    if (moduleName === "expo-camera") {
       return {
-        filePath: path.join(__dirname, `stubs/${moduleName}.ts`),
+        filePath: path.join(__dirname, "stubs/expo-camera.ts"),
         type: "sourceFile",
       };
     }

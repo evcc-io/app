@@ -329,7 +329,6 @@ jobs:
       - name: Setup Environment
         run: |
           sed -i '/^\s*\[$/{ N; /\n\s*"expo-camera"/{ :loop; N; /\],$/!b loop; d } }' app.config.ts
-          sed -i '/^\s*"expo-notifications",$/d' app.config.ts
           touch fdroid-build
 
       - name: Setup F-Droid
@@ -346,7 +345,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm remove expo-camera expo-notifications
+          npm remove expo-camera
           npm ci
 
       - name: Setup Expo
