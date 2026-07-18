@@ -114,6 +114,7 @@ export default ({ config }: ConfigContext) =>
           },
         ],
         "expo-localization",
+        "expo-notifications",
         "expo-sharing",
         "expo-status-bar",
         "expo-web-browser",

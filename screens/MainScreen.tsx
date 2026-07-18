@@ -24,6 +24,7 @@ import { RootStackParamList } from "types";
 import CookieManager from "@preeternal/react-native-cookie-manager";
 import { encode } from "base-64";
 import { shareFileFromUrl } from "utils/shareFile";
+import { showNotification } from "utils/notifications";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Spinner from "components/animations/Spinner";
 import { testingEnvironment } from "helper/launchArguments";
@@ -160,6 +161,9 @@ export default function MainScreen({
         case "download":
           handleDownload(data);
           break;
+        case "notification":
+          showNotification(data.title, data.message);
+          break;
         case "vibrate": {
           const { Light, Medium, Heavy } = Haptics.ImpactFeedbackStyle;
           const d = Array.isArray(data.pattern)
@@ -215,7 +219,7 @@ export default function MainScreen({
             basicAuthCredential={basicAuthCredential}
             source={{ uri: activeServer?.url || "" }}
             injectedJavaScript={`
-              window.evccAppCapabilities = ["download"];
+              window.evccAppCapabilities = ["download", "notification"];
               document.documentElement.style.setProperty("--safe-area-inset-top", "${insets.top}px");
               document.documentElement.style.setProperty("--safe-area-inset-bottom", "${insets.bottom}px");
               document.documentElement.style.setProperty("--safe-area-inset-left", "${insets.left}px");
