@@ -11,6 +11,7 @@
     },
     "manually": {
       "authenticationRequired": "Anmeldung erforderlich",
+      "notifications": "Benachrichtigungen an dieses Gerät senden",
       "checkAdress": "Der Server scheint keine evcc Instanz zu sein. Bitte prüfe die Adresse.",
       "checkAndSave": "Prüfen und speichern",
       "enterUrl": "URL eingeben",
