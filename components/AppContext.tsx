@@ -12,6 +12,10 @@ import { BasicAuth, Server } from "types";
 import { sameServer } from "utils/server";
 import { syncWidgetServers } from "utils/widgetSync";
 import {
+  registerPushToken,
+  unregisterPushToken,
+} from "utils/notifications";
+import {
   storeActiveServer,
   addServer as storageAddServer,
   updateServer as storageUpdateServer,
@@ -118,17 +122,26 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
   const addServer = async (server: Server) => {
     await storageAddServer(server);
     setServers(await loadServers());
+    if (server.notifications) registerPushToken(server);
   };
 
   const updateServer = async (server: Server, index: number) => {
+    const previous = servers[index];
     await storageUpdateServer(server, index);
     setServers(await loadServers());
+    if (server.notifications && !previous?.notifications) {
+      registerPushToken(server);
+    } else if (!server.notifications && previous?.notifications) {
+      unregisterPushToken(server);
+    }
   };
 
   const removeServer = async (index: number) => {
     const removedServer = await storageRemoveServer(index);
     const remaining = await loadServers();
     setServers(remaining);
+
+    if (removedServer?.notifications) unregisterPushToken(removedServer);
 
     if (sameServer(activeServer, removedServer)) {
       await setActiveServer(remaining.length > 0 ? remaining[0] : undefined);
