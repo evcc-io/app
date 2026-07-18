@@ -9,15 +9,6 @@ const TIMEOUT = 20000; // twenty seconds
  * This method compensates for that timing issue by ensuring the inner
  * WebView element is actually available before the test continues.
  */
-// scroll the server form until el is visible (e.g. out from under the keyboard), then tap
-export async function tapAfterScrollTo(el: Detox.IndexableNativeElement) {
-  await waitFor(el)
-    .toBeVisible()
-    .whileElement(by.id("serverFormScroll"))
-    .scroll(120, "down");
-  await tapAfterWaitFor(el);
-}
-
 export async function waitForWebview() {
   const dataTestID = "header";
   const app = byWebDataTestId(dataTestID);

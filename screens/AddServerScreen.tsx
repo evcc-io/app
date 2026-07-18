@@ -95,7 +95,6 @@ function AddServerScreen({
         <KeyboardAwareScrollView
           style={{ flex: 1 }}
           keyboardShouldPersistTaps="handled"
-          testID="serverFormScroll"
         >
           {memoizedHeader}
           <View style={{ paddingHorizontal: 16 }}>

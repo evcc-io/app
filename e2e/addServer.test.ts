@@ -2,7 +2,6 @@ import "detox";
 import {
   byWebCss,
   byWebDataTestId,
-  tapAfterScrollTo,
   tapAfterWaitFor,
   tapWebAfterWaitFor,
   waitForWebview,
@@ -65,7 +64,8 @@ describe("Add Server", () => {
     await element(by.id("@serverFormAuthUser/input")).replaceText("admin");
     await element(by.id("@serverFormAuthPassword/input")).replaceText("secret");
 
-    await tapAfterScrollTo(element(by.id("serverFormCheckAndSave")));
+    // keyboard covers the save button; the password field's "go" key submits instead
+    await element(by.id("@serverFormAuthPassword/input")).tapReturnKey();
 
     // verify the 3rd server was added
     await waitFor(element(by.id("server2")))
