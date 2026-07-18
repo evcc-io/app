@@ -1,6 +1,6 @@
 import "detox";
 import { expect } from "detox";
-import { tapAfterWaitFor, waitForWebview } from "./helper";
+import { tapAfterScrollTo, tapAfterWaitFor, waitForWebview } from "./helper";
 
 describe("Manual entry", () => {
   beforeEach(async () => {
@@ -36,7 +36,7 @@ describe("Manual entry", () => {
     await element(by.id("@serverFormAuthUser/input")).replaceText("admin");
     await element(by.id("@serverFormAuthPassword/input")).replaceText("secret");
 
-    await tapAfterWaitFor(element(by.id("serverFormCheckAndSave")));
+    await tapAfterScrollTo(element(by.id("serverFormCheckAndSave")));
 
     await waitForWebview();
   });
