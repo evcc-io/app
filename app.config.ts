@@ -64,6 +64,7 @@ export default ({ config }: ConfigContext) =>
         },
       },
       plugins: [
+        ["./scripts/configureAndroidWidgets.ts"],
         "@bacons/apple-targets",
         ["./scripts/fdroid/configureFdroid.ts"],
         [
