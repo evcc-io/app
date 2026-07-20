@@ -26,7 +26,7 @@ const withAndroidWidgets: ConfigPlugin = (config) => {
           ),
         )
       )
-        .filter((file) => file.endsWith(".kt"))
+        .filter((file) => file.endsWith("Widget.kt"))
         .map((file) => path.basename(file, ".kt"));
 
       console.log(
@@ -56,31 +56,55 @@ const withAndroidWidgets: ConfigPlugin = (config) => {
       config.modResults,
     );
 
-    application.receiver = widgetNames.map((w) => ({
-      $: {
-        "android:name": `io.evcc.android.${w}`,
-        "android:exported": "false",
-      },
-      "intent-filter": [
-        {
-          action: [
-            {
-              $: {
-                "android:name": "android.appwidget.action.APPWIDGET_UPDATE",
+    application.receiver = (application.receiver || []).concat(
+      widgetNames.map((w) => ({
+        $: {
+          "android:name": `io.evcc.android.${w}`,
+          "android:exported": "false",
+        },
+        "intent-filter": [
+          {
+            action: [
+              {
+                $: {
+                  "android:name": "android.appwidget.action.APPWIDGET_UPDATE",
+                },
               },
-            },
-          ],
-        },
-      ],
-      "meta-data": [
-        {
-          $: {
-            "android:name": "android.appwidget.provider",
-            "android:resource": `@xml/${toSnakeCase(w)}_info`,
+            ],
           },
+        ],
+        "meta-data": [
+          {
+            $: {
+              "android:name": "android.appwidget.provider",
+              "android:resource": `@xml/${toSnakeCase(w)}_info`,
+            },
+          },
+        ],
+      })),
+    );
+
+    application.activity = (application.activity || []).concat(
+      widgetNames.map((w) => ({
+        $: {
+          "android:name": `io.evcc.android.${w}ConfigureActivity`,
+          "android:exported": "true",
+          "android:theme": "@style/Theme.Evcc.WidgetConfigDialog",
         },
-      ],
-    }));
+        "intent-filter": [
+          {
+            action: [
+              {
+                $: {
+                  "android:name":
+                    "android.appwidget.action.APPWIDGET_CONFIGURE",
+                },
+              },
+            ],
+          },
+        ],
+      })),
+    );
 
     return config;
   });

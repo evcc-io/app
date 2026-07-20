@@ -1,0 +1,6 @@
+<resources>
+    <style name="Theme.Evcc.WidgetConfigDialog" parent="Theme.Material3.DayNight.Dialog">
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
+    </style>
+</resources>

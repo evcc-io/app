@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="simple_widget_default_server">evcc</string>
+    <string name="simple_widget_server_hint">Servername</string>
+    <string name="simple_widget_save">Widget hinzufügen</string>
+</resources>
