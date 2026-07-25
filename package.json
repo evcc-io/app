@@ -3,6 +3,7 @@
   "version": "1.4.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
+    "postinstall": "patch-package",
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
@@ -80,6 +81,7 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-native": "^5.0.0",
     "jest": "^30.4.2",
+    "patch-package": "^8.0.1",
     "prettier": "^3.7.4",
     "react-native-launch-arguments": "^4.1.1",
     "ts-jest": "^29.4.6",
