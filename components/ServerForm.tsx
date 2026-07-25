@@ -3,9 +3,13 @@ import { Text, Button, Input, CheckBox } from "@ui-kitten/components";
 import { cleanServerUrl, sameServer, verifyEvccServer } from "../utils/server";
 import LoadingIndicator from "./animations/LoadingIndicator";
 import { useTranslation } from "react-i18next";
-import { BasicAuth, Server } from "types";
+import { BasicAuth, ClientCert, Server } from "types";
 import { useAppContext } from "./AppContext";
 import ScanQRCodeButton from "./ScanQRCodeButton";
+import * as DocumentPicker from "expo-document-picker";
+import * as FileSystem from "expo-file-system/legacy";
+import { storeCert } from "../utils/certStorage";
+import NativeClientCertModule from "../modules/test-module/src/TestModule";
 
 interface ServerFormProps {
   server: Server | undefined;
@@ -44,6 +48,7 @@ export default function ServerForm({
       title: internalServer?.title,
       url,
       basicAuth: internalServer?.basicAuth || {},
+      clientCert: internalServer?.clientCert,
     });
   };
   const setInternalAuth = (basicAuth: BasicAuth) => {
@@ -51,7 +56,54 @@ export default function ServerForm({
       title: internalServer?.title,
       url: internalServer?.url || "",
       basicAuth,
+      clientCert: internalServer?.clientCert,
     });
+  };
+
+  const [certPassword, setCertPassword] = useState("");
+  const [certBase64, setCertBase64] = useState<string | undefined>();
+  const [certLabel, setCertLabel] = useState<string | undefined>();
+
+  const toggleClientCert = (enabled: boolean) => {
+    if (!enabled) {
+      setCertBase64(undefined);
+      setCertPassword("");
+      setCertLabel(undefined);
+      setInternalServer({
+        ...internalServer,
+        url: internalServer?.url || "",
+        basicAuth: internalServer?.basicAuth || {},
+        clientCert: undefined,
+      });
+    } else {
+      setInternalServer({
+        ...internalServer,
+        url: internalServer?.url || "",
+        basicAuth: internalServer?.basicAuth || {},
+        clientCert: { label: "", secureStoreKey: "" },
+      });
+    }
+  };
+
+  const pickCertificate = async () => {
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: ["application/x-pkcs12", "application/pkcs12", "application/octet-stream"],
+        copyToCacheDirectory: true,
+      });
+
+      if (result.canceled) return;
+
+      const file = result.assets[0];
+      const base64 = await FileSystem.readAsStringAsync(file.uri, {
+        encoding: FileSystem.EncodingType.Base64,
+      });
+
+      setCertBase64(base64);
+      setCertLabel(file.name);
+    } catch (e) {
+      console.log("Error picking certificate", e);
+    }
   };
 
   const validateAndSaveURL = async () => {
@@ -68,13 +120,31 @@ export default function ServerForm({
       const finalUrl = await verifyEvccServer({
         url: cleanUrl,
         basicAuth: internalServer?.basicAuth || {},
+        clientCert: internalServer?.clientCert,
       });
 
-      const server = {
+      const server: Server = {
         title: internalServer?.title,
         url: finalUrl,
         basicAuth: internalServer?.basicAuth || {},
       };
+
+      if (internalServer?.clientCert && certBase64) {
+        try {
+          NativeClientCertModule.setCertificate(certBase64, certPassword);
+        } catch (e) {
+          throw new Error(t("servers.manually.clientCertNote") + " (Password invalid?)");
+        }
+        const key = "cert_" + Date.now();
+        await storeCert(key, certBase64, certPassword);
+        server.clientCert = {
+          label: certLabel || "Certificate",
+          secureStoreKey: key,
+        };
+      } else if (internalServer?.clientCert?.secureStoreKey) {
+        // keep existing cert during update
+        server.clientCert = internalServer.clientCert;
+      }
 
       const sameServerCount = servers.filter((s) =>
         sameServer(server, s),
@@ -180,6 +250,62 @@ export default function ServerForm({
             onSubmitEditing={validateAndSaveURL}
             testID="serverFormAuthPassword"
           />
+        </>
+      )}
+
+      <CheckBox
+        style={{ marginTop: 8, marginBottom: 16 }}
+        checked={!!internalServer?.clientCert}
+        onChange={toggleClientCert}
+        testID="serverFormClientCert"
+      >
+        {t("servers.manually.clientCertRequired")}
+      </CheckBox>
+
+      {!!internalServer?.clientCert && (
+        <>
+          <Button
+            style={{ marginTop: 8, marginBottom: certLabel ? 4 : 16 }}
+            appearance={certLabel ? "filled" : "outline"}
+            status={certLabel ? "success" : "basic"}
+            onPress={pickCertificate}
+          >
+            {certLabel
+              ? `✓ ${certLabel}`
+              : internalServer?.clientCert?.label
+              ? `✓ ${internalServer.clientCert.label}`
+              : t("servers.manually.clientCertSelect")}
+          </Button>
+
+          {certLabel && (
+            <Text style={{ marginBottom: 12 }} category="c1" appearance="hint">
+              {t("servers.manually.clientCertNote")}
+            </Text>
+          )}
+
+          {!!certBase64 && (
+            <Input
+              style={{ marginTop: 4, marginBottom: 16 }}
+              size="large"
+              status="basic"
+              onChangeText={setCertPassword}
+              value={certPassword}
+              inputMode="text"
+              keyboardType="default"
+              autoCapitalize="none"
+              returnKeyType="go"
+              autoCorrect={false}
+              placeholder={t("servers.manually.clientCertPassword")}
+              secureTextEntry
+              onSubmitEditing={validateAndSaveURL}
+            />
+          )}
+
+          {!certLabel && !!internalServer?.clientCert && (
+            <Text style={{ marginTop: 4, marginBottom: 16 }} category="c1" appearance="hint">
+              {t("servers.manually.clientCertNote")}
+            </Text>
+          )}
         </>
       )}
 

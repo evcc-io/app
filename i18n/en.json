@@ -30,7 +30,11 @@
         "scanning": "detecting..."
       },
       "title": "Title",
-      "serverExistsAlready": "This server already exists."
+      "serverExistsAlready": "This server already exists.",
+      "clientCertRequired": "Use client certificate",
+      "clientCertSelect": "Select certificate (.p12)",
+      "clientCertPassword": "Certificate password",
+      "clientCertNote": "The certificate will be used when connecting to the server. Verification is skipped."
     },
     "removeServer": "Remove server",
     "search": {
