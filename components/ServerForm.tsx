@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { Platform } from "react-native";
 import { Text, Button, Input, CheckBox } from "@ui-kitten/components";
 import { cleanServerUrl, sameServer, verifyEvccServer } from "../utils/server";
 import LoadingIndicator from "./animations/LoadingIndicator";
@@ -253,58 +254,62 @@ export default function ServerForm({
         </>
       )}
 
-      <CheckBox
-        style={{ marginTop: 8, marginBottom: 16 }}
-        checked={!!internalServer?.clientCert}
-        onChange={toggleClientCert}
-        testID="serverFormClientCert"
-      >
-        {t("servers.manually.clientCertRequired")}
-      </CheckBox>
-
-      {!!internalServer?.clientCert && (
+      {Platform.OS === "android" && (
         <>
-          <Button
-            style={{ marginTop: 8, marginBottom: certLabel ? 4 : 16 }}
-            appearance={certLabel ? "filled" : "outline"}
-            status={certLabel ? "success" : "basic"}
-            onPress={pickCertificate}
+          <CheckBox
+            style={{ marginTop: 8, marginBottom: 16 }}
+            checked={!!internalServer?.clientCert}
+            onChange={toggleClientCert}
+            testID="serverFormClientCert"
           >
-            {certLabel
-              ? `✓ ${certLabel}`
-              : internalServer?.clientCert?.label
-              ? `✓ ${internalServer.clientCert.label}`
-              : t("servers.manually.clientCertSelect")}
-          </Button>
+            {t("servers.manually.clientCertRequired")}
+          </CheckBox>
 
-          {certLabel && (
-            <Text style={{ marginBottom: 12 }} category="c1" appearance="hint">
-              {t("servers.manually.clientCertNote")}
-            </Text>
-          )}
+          {!!internalServer?.clientCert && (
+            <>
+              <Button
+                style={{ marginTop: 8, marginBottom: certLabel ? 4 : 16 }}
+                appearance={certLabel ? "filled" : "outline"}
+                status={certLabel ? "success" : "basic"}
+                onPress={pickCertificate}
+              >
+                {certLabel
+                  ? `✓ ${certLabel}`
+                  : internalServer?.clientCert?.label
+                  ? `✓ ${internalServer.clientCert.label}`
+                  : t("servers.manually.clientCertSelect")}
+              </Button>
 
-          {!!certBase64 && (
-            <Input
-              style={{ marginTop: 4, marginBottom: 16 }}
-              size="large"
-              status="basic"
-              onChangeText={setCertPassword}
-              value={certPassword}
-              inputMode="text"
-              keyboardType="default"
-              autoCapitalize="none"
-              returnKeyType="go"
-              autoCorrect={false}
-              placeholder={t("servers.manually.clientCertPassword")}
-              secureTextEntry
-              onSubmitEditing={validateAndSaveURL}
-            />
-          )}
+              {certLabel && (
+                <Text style={{ marginBottom: 12 }} category="c1" appearance="hint">
+                  {t("servers.manually.clientCertNote")}
+                </Text>
+              )}
 
-          {!certLabel && !!internalServer?.clientCert && (
-            <Text style={{ marginTop: 4, marginBottom: 16 }} category="c1" appearance="hint">
-              {t("servers.manually.clientCertNote")}
-            </Text>
+              {!!certBase64 && (
+                <Input
+                  style={{ marginTop: 4, marginBottom: 16 }}
+                  size="large"
+                  status="basic"
+                  onChangeText={setCertPassword}
+                  value={certPassword}
+                  inputMode="text"
+                  keyboardType="default"
+                  autoCapitalize="none"
+                  returnKeyType="go"
+                  autoCorrect={false}
+                  placeholder={t("servers.manually.clientCertPassword")}
+                  secureTextEntry
+                  onSubmitEditing={validateAndSaveURL}
+                />
+              )}
+
+              {!certLabel && !!internalServer?.clientCert && (
+                <Text style={{ marginTop: 4, marginBottom: 16 }} category="c1" appearance="hint">
+                  {t("servers.manually.clientCertNote")}
+                </Text>
+              )}
+            </>
           )}
         </>
       )}
