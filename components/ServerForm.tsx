@@ -3,7 +3,7 @@ import { Text, Button, Input, CheckBox } from "@ui-kitten/components";
 import { cleanServerUrl, sameServer, verifyEvccServer } from "../utils/server";
 import LoadingIndicator from "./animations/LoadingIndicator";
 import { useTranslation } from "react-i18next";
-import { BasicAuth, ClientCert, Server } from "types";
+import { BasicAuth, Server } from "types";
 import { useAppContext } from "./AppContext";
 import ScanQRCodeButton from "./ScanQRCodeButton";
 import * as DocumentPicker from "expo-document-picker";
