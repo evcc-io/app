@@ -1,5 +1,5 @@
 diff --git a/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebViewClient.java b/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebViewClient.java
-index 0287e1c..e781a44 100644
+index 0287e1c..7835002 100644
 --- a/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebViewClient.java
 +++ b/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebViewClient.java
 @@ -10,6 +10,7 @@ import android.webkit.HttpAuthHandler;
@@ -18,7 +18,7 @@ index 0287e1c..e781a44 100644
 +  @Override
 +  public void onReceivedClientCertRequest(WebView view, ClientCertRequest request) {
 +    try {
-+        Class<?> clazz = Class.forName("expo.modules.testmodule.ClientCertStore");
++        Class<?> clazz = Class.forName("expo.modules.clientcert.ClientCertStore");
 +        java.security.PrivateKey key = (java.security.PrivateKey) clazz.getMethod("getPrivateKey").invoke(null);
 +        java.security.cert.X509Certificate[] chain = (java.security.cert.X509Certificate[]) clazz.getMethod("getCertificateChain").invoke(null);
 +        

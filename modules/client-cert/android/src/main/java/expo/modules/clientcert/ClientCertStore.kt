@@ -1,4 +1,4 @@
-package expo.modules.testmodule
+package expo.modules.clientcert
 
 import java.security.KeyStore
 import java.security.PrivateKey

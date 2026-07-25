@@ -1,0 +1,9 @@
+{
+  "platforms": ["apple", "android", "web"],
+  "apple": {
+    "modules": ["ClientCertModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.clientcert.ClientCertModule"]
+  }
+}

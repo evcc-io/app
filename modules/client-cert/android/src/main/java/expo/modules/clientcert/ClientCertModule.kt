@@ -1,4 +1,4 @@
-package expo.modules.testmodule
+package expo.modules.clientcert
 
 import android.webkit.ClientCertRequest
 import android.webkit.WebView
@@ -6,7 +6,7 @@ import android.webkit.WebViewClient
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 
-class TestModule : Module() {
+class ClientCertModule : Module() {
   override fun definition() = ModuleDefinition {
     Name("ClientCert")
 

@@ -9,7 +9,7 @@ import ScanQRCodeButton from "./ScanQRCodeButton";
 import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from "expo-file-system/legacy";
 import { storeCert } from "../utils/certStorage";
-import NativeClientCertModule from "../modules/test-module/src/TestModule";
+import NativeClientCertModule from "../modules/client-cert/src/ClientCertModule";
 
 interface ServerFormProps {
   server: Server | undefined;

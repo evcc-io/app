@@ -27,7 +27,7 @@ import { shareFileFromUrl } from "utils/shareFile";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Spinner from "components/animations/Spinner";
 import { testingEnvironment } from "helper/launchArguments";
-import NativeClientCertModule from "modules/test-module/src/TestModule";
+import NativeClientCertModule from "modules/client-cert/src/ClientCertModule";
 import { loadCert } from "utils/certStorage";
 
 export default function MainScreen({
