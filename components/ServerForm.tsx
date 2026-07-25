@@ -132,7 +132,7 @@ export default function ServerForm({
       if (internalServer?.clientCert && certBase64) {
         try {
           NativeClientCertModule.setCertificate(certBase64, certPassword);
-        } catch (e) {
+        } catch {
           throw new Error(t("servers.manually.clientCertNote") + " (Password invalid?)");
         }
         const key = "cert_" + Date.now();
