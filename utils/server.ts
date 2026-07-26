@@ -20,6 +20,12 @@ export function cleanServerUrl(url: string) {
 }
 
 export async function verifyEvccServer(server: Server) {
+  if (server.clientCert) {
+    // We cannot verify mTLS connections using plain axios easily.
+    // Skip verification and assume it works; it will be tested when the WebView loads.
+    return cleanServerUrl(server.url);
+  }
+
   const options: AxiosRequestConfig = { ...AXIOS_OPTIONS };
   if (server.basicAuth) {
     const { username, password } = server.basicAuth;

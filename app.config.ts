@@ -67,8 +67,8 @@ export default ({ config }: ConfigContext) =>
         "@bacons/apple-targets",
         ["./scripts/fdroid/configureFdroid.ts"],
         [
-          "./scripts/detox/configureDetox.ts",
-          { subdomains: "*" }, // uncomment to debug app
+            "./scripts/detox/configureDetox.ts",
+            { subdomains: "*" }, // uncomment to debug app
         ],
         ["./scripts/trustUserCAs.ts"],
         ["./scripts/increaseGradleMemory.ts"],

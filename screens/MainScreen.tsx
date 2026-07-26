@@ -27,6 +27,8 @@ import { shareFileFromUrl } from "utils/shareFile";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Spinner from "components/animations/Spinner";
 import { testingEnvironment } from "helper/launchArguments";
+import NativeClientCertModule from "modules/client-cert/src/ClientCertModule";
+import { loadCert } from "utils/certStorage";
 
 export default function MainScreen({
   navigation,
@@ -64,6 +66,25 @@ export default function MainScreen({
       clearTargetPath();
     }
   }, [targetPath, isConnected, clearTargetPath]);
+
+  useEffect(() => {
+    (async () => {
+      if (activeServer?.clientCert) {
+        try {
+          const cert = await loadCert(activeServer.clientCert.secureStoreKey);
+          if (cert) {
+            NativeClientCertModule.setCertificate(cert.p12Base64, cert.password);
+          } else {
+            console.warn("Client cert not found in secure store");
+          }
+        } catch (e) {
+          console.error("Failed to load client cert", e);
+        }
+      } else {
+        NativeClientCertModule.clearCertificate();
+      }
+    })();
+  }, [activeServer]);
 
   // Reconnect if connection is lost
   useEffect(() => {

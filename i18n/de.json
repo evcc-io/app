@@ -30,7 +30,11 @@
         "scanning": "erkennen..."
       },
       "title": "Titel",
-      "serverExistsAlready": "Dieser Server existiert bereits."
+      "serverExistsAlready": "Dieser Server existiert bereits.",
+      "clientCertRequired": "Client-Zertifikat verwenden",
+      "clientCertSelect": "Zertifikat auswählen (.p12)",
+      "clientCertPassword": "Zertifikat-Passwort",
+      "clientCertNote": "Das Zertifikat wird beim Verbindungsaufbau verwendet. Die Prüfung beim Speichern wird übersprungen."
     },
     "removeServer": "Server entfernen",
     "search": {

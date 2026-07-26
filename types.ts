@@ -1,9 +1,15 @@
 import { NavigatorScreenParams } from "@react-navigation/native";
 
+export interface ClientCert {
+  label: string;
+  secureStoreKey: string;
+}
+
 export interface Server {
   title?: string;
   url: string;
   basicAuth: BasicAuth;
+  clientCert?: ClientCert;
 }
 
 export interface BasicAuth {
