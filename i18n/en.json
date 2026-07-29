@@ -44,7 +44,6 @@
   },
   "widget": {
     "type": { "price": "Grid import price", "feedin": "Grid export price" },
-    "solar": { "adjust": "Adjust to real data" },
     "now": "now",
     "noData": {
       "title": "No data",
