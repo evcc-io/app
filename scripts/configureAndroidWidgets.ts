@@ -4,12 +4,32 @@ import {
   createRunOncePlugin,
   withAndroidManifest,
   withDangerousMod,
+  withAppBuildGradle,
 } from "expo/config-plugins";
 import fs from "fs";
 import path from "path";
 
+const addDependencies: ConfigPlugin = (config) => {
+  return withAppBuildGradle(config, (gradleConfig) => {
+    console.log("» Android widgets: Add dependencies to build.gradle");
+
+    if (typeof gradleConfig.modResults.contents === "string") {
+      gradleConfig.modResults.contents =
+        gradleConfig.modResults.contents.replace(
+          "dependencies {",
+          `dependencies {
+    implementation("androidx.work:work-runtime-ktx:2.11.2")
+`,
+        );
+    }
+    return gradleConfig;
+  });
+};
+
 const withAndroidWidgets: ConfigPlugin = (config) => {
   let widgetNames: string[] = [];
+
+  config = addDependencies(config);
 
   config = withDangerousMod(config, [
     "android",
@@ -84,27 +104,29 @@ const withAndroidWidgets: ConfigPlugin = (config) => {
       })),
     );
 
-    application.activity = (application.activity || []).concat(
-      widgetNames.map((w) => ({
-        $: {
-          "android:name": `io.evcc.android.${w}ConfigureActivity`,
-          "android:exported": "true",
-          "android:theme": "@style/Theme.Evcc.WidgetConfigDialog",
-        },
-        "intent-filter": [
-          {
-            action: [
-              {
-                $: {
-                  "android:name":
-                    "android.appwidget.action.APPWIDGET_CONFIGURE",
-                },
-              },
-            ],
-          },
-        ],
-      })),
-    );
+    // TODO: uncomment when adding activities
+    //
+    // application.activity = (application.activity || []).concat(
+    //   widgetNames.map((w) => ({
+    //     $: {
+    //       "android:name": `io.evcc.android.${w}ConfigureActivity`,
+    //       "android:exported": "true",
+    //       "android:theme": "@style/Theme.Evcc.WidgetConfigDialog",
+    //     },
+    //     "intent-filter": [
+    //       {
+    //         action: [
+    //           {
+    //             $: {
+    //               "android:name":
+    //                 "android.appwidget.action.APPWIDGET_CONFIGURE",
+    //             },
+    //           },
+    //         ],
+    //       },
+    //     ],
+    //   })),
+    // );
 
     return config;
   });
