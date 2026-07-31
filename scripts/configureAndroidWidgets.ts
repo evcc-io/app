@@ -19,6 +19,8 @@ const addDependencies: ConfigPlugin = (config) => {
           "dependencies {",
           `dependencies {
     implementation("androidx.work:work-runtime-ktx:2.11.2")
+    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+    implementation("com.squareup.retrofit2:converter-gson:3.0.0")
 `,
         );
     }

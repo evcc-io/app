@@ -45,7 +45,7 @@ class LoadpointWidgetWorker(
         widgetIds.forEach { widgetId ->
             val views = RemoteViews(
                 context.packageName,
-                R.layout.widget_empty
+                R.layout.loadpoint
             )
 
             views.setTextViewText(
@@ -76,7 +76,7 @@ class LoadpointWidgetWorker(
         widgetIds.forEach { widgetId ->
             val views = RemoteViews(
                 context.packageName,
-                R.layout.widget_empty
+                R.layout.loadpoint
             )
 
             views.setTextViewText(
