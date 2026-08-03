@@ -41,5 +41,22 @@
       "title": "Wissel server"
     },
     "useDemo": "Demo server gebruiken"
+  },
+  "widget": {
+    "noData": {
+      "body": "Deze server heeft geen data van dit type.",
+      "title": "Geen data"
+    },
+    "now": "nu",
+    "solar": {
+      "adjust": "Corrigeer op basis van reële data"
+    },
+    "type": {
+      "feedin": "Netstroom prijs voor injectie",
+      "price": "Netstroom prijs voor import"
+    },
+    "unreachable": {
+      "title": "Server onbereikbaar"
+    }
   }
 }
