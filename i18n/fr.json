@@ -41,5 +41,49 @@
       "title": "Changer de serveur"
     },
     "useDemo": "Utiliser une instance de démonstration"
+  },
+  "widget": {
+    "config": {
+      "desc": "Serveur fournissant les prévisions.",
+      "loadpoint": "Point de charge",
+      "server": "Serveur",
+      "title": "Prévisions evcc"
+    },
+    "description": {
+      "co2": "Prévision des émissions de CO₂.",
+      "feedin": "Prévision du prix d’export vers le réseau.",
+      "price": "Prévision du prix d’import du réseau.",
+      "solar": "Prévisions de la production solaire."
+    },
+    "loadpoint": {
+      "description": "Statut et mode du point de charge.",
+      "name": "Point de charge"
+    },
+    "name": {
+      "co2": "CO₂",
+      "feedin": "Prix d’export vers le réseau",
+      "price": "Prix d’import du réseau",
+      "solar": "Prévisions solaires"
+    },
+    "noData": {
+      "body": "Le serveur n’a pas de données de ce type.",
+      "title": "Aucune donnée"
+    },
+    "now": "maintenant",
+    "setup": {
+      "body": "Cliquez pour se connecter à un serveur et choisir un type de données.",
+      "title": "Configuration evcc"
+    },
+    "solar": {
+      "adjust": "Ajuster aux données réelles"
+    },
+    "type": {
+      "feedin": "Prix d’export vers le réseau",
+      "price": "Prix d’import du réseau"
+    },
+    "unreachable": {
+      "body": "Impossible de charger l’instance d’evcc.",
+      "title": "Serveur indisponible"
+    }
   }
 }
