@@ -41,5 +41,49 @@
       "title": "Vaheta serverit"
     },
     "useDemo": "Kasuta demo-vaadet"
+  },
+  "widget": {
+    "config": {
+      "desc": "Server ennustuse jaoks.",
+      "loadpoint": "Laadimispunkt",
+      "server": "Server",
+      "title": "evcc ennustus"
+    },
+    "description": {
+      "co2": "CO₂ heitmete ennustus.",
+      "feedin": "Võrku eksportimise hinna ennustus.",
+      "price": "Võrgust importimise hinna ennustus.",
+      "solar": "Päikeseenergia tootmise ennustus."
+    },
+    "loadpoint": {
+      "description": "Laadimispunkti olek ja laadimisviis.",
+      "name": "Laadimispunkt"
+    },
+    "name": {
+      "co2": "CO₂",
+      "feedin": "Võrku eksportimise hind",
+      "price": "Võrgust importimise hind",
+      "solar": "Päikeseenergia ennustus"
+    },
+    "noData": {
+      "body": "Selles serveris pole antud tüüpi andmeid.",
+      "title": "Andmeid pole"
+    },
+    "now": "praegu",
+    "setup": {
+      "body": "Klõpsa ühendamaks serveriga ja andmetüübi valimiseks.",
+      "title": "Seadista evcc-ühendus"
+    },
+    "solar": {
+      "adjust": "Kohenda vastavalt tegelikele andmetele"
+    },
+    "type": {
+      "feedin": "Võrku eksportimise hind",
+      "price": "Võrgust importimise hind"
+    },
+    "unreachable": {
+      "body": "evcc serveri laadimine ei õnnestunud.",
+      "title": "Server pole leitav"
+    }
   }
 }
