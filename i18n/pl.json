@@ -17,9 +17,11 @@
         "scan": "Zeskanuj QR kod",
         "scanning": "wykrywanie..."
       },
+      "serverExistsAlready": "Ten serwer już istnieje.",
       "serverIncompatible": "Instancja evcc nie jest jeszcze kompatybilna z aplikacją. Zaktualizuj instalację.",
       "serverNotAvailable": "Serwer niedostępny. Proszę sprawdzić adres.",
       "specify": "Wprowadź adres ręcznie",
+      "title": "Tytuł",
       "user": "Użytkownik"
     },
     "removeServer": "Usuń serwer",
@@ -30,6 +32,10 @@
       "start": "Rozpocznij wyszukiwanie"
     },
     "select": "Wybierz",
+    "switchServer": {
+      "addServer": "Dodaj serwer",
+      "title": "Zmiana serwera"
+    },
     "useDemo": "Użyj instancji demonstracyjnej"
   }
 }
