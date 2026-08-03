@@ -4,6 +4,8 @@ export interface Server {
   title?: string;
   url: string;
   basicAuth: BasicAuth;
+  // push notifications for messaging events enabled on this device
+  notifications?: boolean;
 }
 
 export interface BasicAuth {

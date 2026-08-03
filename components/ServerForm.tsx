@@ -32,27 +32,18 @@ export default function ServerForm({
   );
   React.useEffect(() => setInternalServer(server), [server]);
 
-  const setInternalTitle = (title: string) => {
+  const patchInternalServer = (patch: Partial<Server>) => {
     setInternalServer({
-      title,
-      url: internalServer?.url || "",
-      basicAuth: internalServer?.basicAuth || {},
+      url: "",
+      basicAuth: {},
+      ...internalServer,
+      ...patch,
     });
   };
-  const setInternalUrl = (url: string) => {
-    setInternalServer({
-      title: internalServer?.title,
-      url,
-      basicAuth: internalServer?.basicAuth || {},
-    });
-  };
-  const setInternalAuth = (basicAuth: BasicAuth) => {
-    setInternalServer({
-      title: internalServer?.title,
-      url: internalServer?.url || "",
-      basicAuth,
-    });
-  };
+  const setInternalTitle = (title: string) => patchInternalServer({ title });
+  const setInternalUrl = (url: string) => patchInternalServer({ url });
+  const setInternalAuth = (basicAuth: BasicAuth) =>
+    patchInternalServer({ basicAuth });
 
   const validateAndSaveURL = async () => {
     if (inProgress) return;
@@ -74,6 +65,7 @@ export default function ServerForm({
         title: internalServer?.title,
         url: finalUrl,
         basicAuth: internalServer?.basicAuth || {},
+        notifications: internalServer?.notifications,
       };
 
       const sameServerCount = servers.filter((s) =>
@@ -139,6 +131,15 @@ export default function ServerForm({
         testID="serverFormAuth"
       >
         {t("servers.manually.authenticationRequired")}
+      </CheckBox>
+
+      <CheckBox
+        style={{ marginTop: 8, marginBottom: 16 }}
+        checked={internalServer?.notifications}
+        onChange={(v) => patchInternalServer({ notifications: v })}
+        testID="serverFormNotifications"
+      >
+        {t("servers.manually.notifications")}
       </CheckBox>
 
       {internalServer?.basicAuth.required && (

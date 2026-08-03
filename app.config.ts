@@ -25,6 +25,7 @@ export default ({ config }: ConfigContext) =>
         // the widget target on prebuild.
         entitlements: {
           "com.apple.security.application-groups": ["group.io.evcc.app"],
+          "aps-environment": "production",
         },
         infoPlist: {
           CFBundleLocalizations: ["de"],
@@ -114,6 +115,7 @@ export default ({ config }: ConfigContext) =>
           },
         ],
         "expo-localization",
+        "expo-notifications",
         "expo-sharing",
         "expo-status-bar",
         "expo-web-browser",

@@ -11,6 +11,7 @@
     },
     "manually": {
       "authenticationRequired": "Authentication required",
+      "notifications": "Send notifications to this device",
       "checkAdress": "The server does not appear to be an evcc instance. Please check the address.",
       "checkAndSave": "Check and save",
       "enterUrl": "Enter URL",
