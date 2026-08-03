@@ -32,24 +32,11 @@ struct ServerOptions: DynamicOptionsProvider {
   // active server internally (SharedStore.defaultServer).
 }
 
-/// Per-instance config for price / CO₂ / feed-in: which server (by id).
-/// Data type is fixed by the widget kind.
+/// Per-instance config: which server (by id). Data type is fixed by the widget kind.
 struct ConfigurationAppIntent: WidgetConfigurationIntent {
   static var title: LocalizedStringResource = "widget.config.title"
   static var description = IntentDescription("widget.config.desc")
 
   @Parameter(title: "widget.config.server", optionsProvider: ServerOptions())
   var server: String?
-}
-
-/// Solar config adds the "adjust to real production" toggle (forecast.scale).
-struct SolarConfigurationAppIntent: WidgetConfigurationIntent {
-  static var title: LocalizedStringResource = "widget.config.title"
-  static var description = IntentDescription("widget.config.desc")
-
-  @Parameter(title: "widget.config.server", optionsProvider: ServerOptions())
-  var server: String?
-
-  @Parameter(title: "widget.solar.adjust", default: false)
-  var adjust: Bool
 }

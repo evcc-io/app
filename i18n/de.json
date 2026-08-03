@@ -44,7 +44,6 @@
   },
   "widget": {
     "type": { "price": "Netzbezugspreis", "feedin": "Einspeisevergütung" },
-    "solar": { "adjust": "An Realdaten anpassen" },
     "now": "jetzt",
     "noData": {
       "title": "Keine Daten",

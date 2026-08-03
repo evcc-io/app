@@ -26,6 +26,12 @@ struct SolarForecast: Decodable {
   let timeseries: [SolarPoint]?
 }
 
+/// Solar payload: the forecast + the server-side "adjust to real data" setting.
+struct SolarPayload: Decodable {
+  let adjusted: Bool?
+  let solar: SolarForecast?
+}
+
 /// Price / feed-in payload: the slots + the site currency (for evcc price rules).
 struct SeriesPayload: Decodable {
   let currency: String?
@@ -96,10 +102,10 @@ struct SolarVM {
   let todayRemainingWh: Double  // raw Wh (formatted via Format.fmtWh)
   let tomorrowWh: Double
 
-  static func build(solar f: SolarForecast, adjust: Bool, now: Date = Date()) -> SolarVM? {
+  static func build(solar f: SolarForecast, adjusted: Bool, now: Date = Date()) -> SolarVM? {
     guard let ts = f.timeseries, !ts.isEmpty else { return nil }
-    // `scale` adjusts the forecast to real production; opt-in via the widget toggle.
-    let scale = adjust ? (f.scale ?? 1) : 1
+    // `scale` adjusts the forecast to real production; server-side setting, matches the web UI.
+    let scale = adjusted ? (f.scale ?? 1) : 1
     let w = ForecastWindow.bounds(now: now)
 
     let inWindow = ts.filter { $0.ts >= w.start && $0.ts < w.end }
