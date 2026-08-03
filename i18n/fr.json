@@ -12,9 +12,20 @@
       "enterUrl": "Entrez l'URL",
       "missingOrWrongAuthentication": "Authentification manquante ou incorrecte",
       "password": "Mot de passe",
+      "qrcode": {
+        "invalid": "Ce QR code EVCC n'est pas valide.",
+        "permissionDenied": "Accès à l'appareil photo refusé. Activez-le dans les paramètres pour scanner les QR codes.",
+        "recognized": "QR code détecté !",
+        "scan": "Scannez le QR code",
+        "scanOnboarding": "Configuration via un QR code",
+        "scanPrefill": "Remplir via le QR code",
+        "scanning": "détection en cours..."
+      },
+      "serverExistsAlready": "Ce serveur existe déjà.",
       "serverIncompatible": "L'instance evcc n'est pas encore compatible avec l'application. Mettez à jour votre installation.",
       "serverNotAvailable": "Le serveur n'est pas disponible. Veuillez vérifier l'adresse.",
       "specify": "Entrer l'adresse manuellement",
+      "title": "Titre",
       "user": "Utilisateur"
     },
     "removeServer": "Supprimer le serveur",
@@ -25,6 +36,10 @@
       "start": "Commencer la recherche"
     },
     "select": "Sélectionner",
+    "switchServer": {
+      "addServer": "Ajouter un serveur",
+      "title": "Changer de serveur"
+    },
     "useDemo": "Utiliser une instance de démonstration"
   }
 }

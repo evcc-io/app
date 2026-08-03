@@ -41,5 +41,49 @@
       "title": "Server wiesselen"
     },
     "useDemo": "Demoinstanz verwennen"
+  },
+  "widget": {
+    "config": {
+      "desc": "Server fir d'Viraussoen.",
+      "loadpoint": "Opluedpunkt",
+      "server": "Server",
+      "title": "evcc Viraussoen"
+    },
+    "description": {
+      "co2": "Virausgesote CO₂-Emissiounen.",
+      "feedin": "Virausgesote Präis vum Netz-Export.",
+      "price": "Virausgesote Kaafpräis vum Netz.",
+      "solar": "Prognose fir d'Solarproduktioun."
+    },
+    "loadpoint": {
+      "description": "Status vum Opluedpunkt a Luedmodus.",
+      "name": "Opluedpunkt"
+    },
+    "name": {
+      "co2": "CO₂",
+      "feedin": "Präis vum Netz-Export",
+      "price": "Käschte vum Netz-Import",
+      "solar": "Solarprognos"
+    },
+    "noData": {
+      "body": "Dëse Server huet keng Donnéeën vun dësem Typ.",
+      "title": "Keng Donnéeën"
+    },
+    "now": "elo",
+    "setup": {
+      "body": "Tippt fir e Server ze verbannen an e Datentyp auszewielen.",
+      "title": "evcc astellen"
+    },
+    "solar": {
+      "adjust": "Un déi reell Donnéeën upassen"
+    },
+    "type": {
+      "feedin": "Käschte vum Export an d'Netz",
+      "price": "Käschte vum Import vum Netz"
+    },
+    "unreachable": {
+      "body": "Et war net méiglech, d'evcc-Instanz ze lueden.",
+      "title": "De Server ass net erreechbar"
+    }
   }
 }
