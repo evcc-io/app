@@ -317,6 +317,19 @@ jobs:
           path: e2e/artifacts/
           retention-days: 7
 
+  detox-status:
+    name: Detox Status
+    runs-on: ubuntu-24.04
+    needs: [ios-test, android-test]
+    if: always()
+    steps:
+      - name: Check results
+        run: |
+          if [ "${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}" = "true" ]; then
+            echo "A Detox job failed or was cancelled."
+            exit 1
+          fi
+
   fdroid-build:
     name: F-Droid
     runs-on: depot-ubuntu-24.04-32
