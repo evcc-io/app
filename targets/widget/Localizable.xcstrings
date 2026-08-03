@@ -127,7 +127,7 @@
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Solar Production"
+            "value": "Solárna výroba"
           }
         },
         "sl": {
@@ -145,7 +145,7 @@
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "சூரிய"
+            "value": "சூரிய விளைவாக்கம்"
           }
         },
         "tr": {
@@ -294,7 +294,7 @@
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "CO₂ Emissions"
+            "value": "CO₂ Emisie"
           }
         },
         "sl": {
@@ -312,7 +312,7 @@
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "கோ"
+            "value": "CO₂ உமிழ்வுகள்"
           }
         },
         "tr": {
@@ -461,7 +461,7 @@
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "remaining"
+            "value": "zostávajúce"
           }
         },
         "sl": {
@@ -628,7 +628,7 @@
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tomorrow"
+            "value": "Zajtra"
           }
         },
         "sl": {
@@ -795,7 +795,7 @@
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Off"
+            "value": "Vypnuté"
           }
         },
         "sl": {
@@ -962,7 +962,7 @@
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Solar"
+            "value": "Solár"
           }
         },
         "sl": {
@@ -1129,7 +1129,7 @@
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Min+Solar"
+            "value": "Min+Solár"
           }
         },
         "sl": {
@@ -1296,7 +1296,7 @@
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Fast"
+            "value": "Rýchlo"
           }
         },
         "sl": {
@@ -1463,7 +1463,7 @@
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Disconnected."
+            "value": "Odpojené."
           }
         },
         "sl": {
@@ -1630,7 +1630,7 @@
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Connected."
+            "value": "Pripojené."
           }
         },
         "sl": {
@@ -1797,7 +1797,7 @@
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ready. Waiting for vehicle…"
+            "value": "Pripravené. Čakám na vozidlo…"
           }
         },
         "sl": {
@@ -1964,7 +1964,7 @@
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Finished."
+            "value": "Dokončené."
           }
         },
         "sl": {
@@ -2131,7 +2131,7 @@
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Charging…"
+            "value": "Nabíja sa…"
           }
         },
         "sl": {
@@ -2298,7 +2298,7 @@
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Heating…"
+            "value": "Vyhrievanie…"
           }
         },
         "sl": {
@@ -2465,7 +2465,7 @@
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Standby."
+            "value": "Pohotovostný režim."
           }
         },
         "sl": {
@@ -2626,13 +2626,13 @@
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pronto. À espera do aquecedor…"
+            "value": "Pronto para aquecer…"
           }
         },
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ready to heat…"
+            "value": "Pripravený na ohrev…"
           }
         },
         "sl": {
@@ -2650,7 +2650,7 @@
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ready. Waiting க்கு heater…"
+            "value": "சூடாக்க தயார்…"
           }
         },
         "tr": {
@@ -2669,173 +2669,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "准备就绪。等待加热器启动…"
-          }
-        }
-      }
-    },
-    "widget.solar.adjust": {
-      "extractionState": "manual",
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adjust to real data"
-          }
-        },
-        "bs": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adjust to real data"
-          }
-        },
-        "cs": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adjust to real data"
-          }
-        },
-        "da": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adjust to real data"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "An Realdaten anpassen"
-          }
-        },
-        "el": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adjust to real data"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adjust to real data"
-          }
-        },
-        "et": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adjust to real data"
-          }
-        },
-        "fi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adjust to real data"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adjust to real data"
-          }
-        },
-        "hr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adjust to real data"
-          }
-        },
-        "hu": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adjust to real data"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adjust to real data"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adjust to real data"
-          }
-        },
-        "lb": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adjust to real data"
-          }
-        },
-        "lt": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adjust to real data"
-          }
-        },
-        "nb-NO": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adjust to real data"
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adjust to real data"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adjust to real data"
-          }
-        },
-        "pt": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adjust to real data"
-          }
-        },
-        "sk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adjust to real data"
-          }
-        },
-        "sl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adjust to real data"
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adjust to real data"
-          }
-        },
-        "ta": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adjust to real data"
-          }
-        },
-        "tr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adjust to real data"
-          }
-        },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adjust to real data"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adjust to real data"
           }
         }
       }

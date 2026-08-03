@@ -40,7 +40,6 @@ const KEYS: Record<string, { repo: "evcc" | "app"; key: string }> = {
   "widget.lpheat.connected": { repo: "evcc", key: "main.heatingStatus.connected" },
   "widget.lpheat.waitForVehicle": { repo: "evcc", key: "main.heatingStatus.waitForVehicle" },
   // everything else is widget-specific → this app's i18n
-  "widget.solar.adjust": { repo: "app", key: "widget.solar.adjust" },
   "widget.type.price": { repo: "app", key: "widget.type.price" },
   "widget.type.feedin": { repo: "app", key: "widget.type.feedin" },
   "widget.now": { repo: "app", key: "widget.now" },

@@ -23,29 +23,33 @@ private func singleTimeline(_ entry: ForecastEntry) -> Timeline<ForecastEntry> {
   Timeline(entries: [entry], policy: .after(nextReload()))
 }
 
-// MARK: - Solar provider (has the "adjust to real production" toggle)
+// MARK: - Solar provider
 
 struct SolarProvider: AppIntentTimelineProvider {
   func placeholder(in context: Context) -> ForecastEntry {
     ForecastEntry(date: .now, state: .notConfigured, serverId: nil)
   }
 
-  func snapshot(for configuration: SolarConfigurationAppIntent, in context: Context) async -> ForecastEntry {
+  func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> ForecastEntry {
     await load(configuration)
   }
 
-  func timeline(for configuration: SolarConfigurationAppIntent, in context: Context) async -> Timeline<ForecastEntry> {
+  func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<ForecastEntry> {
     singleTimeline(await load(configuration))
   }
 
-  private func load(_ config: SolarConfigurationAppIntent) async -> ForecastEntry {
+  private func load(_ config: ConfigurationAppIntent) async -> ForecastEntry {
     guard let server = SharedStore.server(id: config.server) else {
       return ForecastEntry(date: .now, state: .notConfigured, serverId: nil)
     }
     let state: WidgetState
-    switch await ApiClient.fetch(server, jq: ".forecast.solar", as: SolarForecast.self) {
-    case .success(let f):
-      state = SolarVM.build(solar: f, adjust: config.adjust).map(WidgetState.solar) ?? .noData(.solar)
+    switch await ApiClient.fetch(
+      server, jq: "{adjusted:.solarAdjusted,solar:.forecast.solar}", as: SolarPayload.self)
+    {
+    case .success(let p):
+      state = p.solar
+        .flatMap { SolarVM.build(solar: $0, adjusted: p.adjusted ?? false) }
+        .map(WidgetState.solar) ?? .noData(.solar)
     case .noData: state = .noData(.solar)
     case .failure: state = .unreachable(.solar)
     }
@@ -110,7 +114,7 @@ struct ForecastProvider: AppIntentTimelineProvider {
 
 struct SolarWidget: Widget {
   var body: some WidgetConfiguration {
-    AppIntentConfiguration(kind: "EvccSolarWidget", intent: SolarConfigurationAppIntent.self,
+    AppIntentConfiguration(kind: "EvccSolarWidget", intent: ConfigurationAppIntent.self,
                            provider: SolarProvider()) { entry in
       ForecastWidgetView(entry: entry)
     }
