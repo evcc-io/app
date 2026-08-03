@@ -6,6 +6,23 @@ struct ForecastSlot: Decodable {
   let start: Date
   let end: Date
   let value: Double
+
+  private enum CodingKeys: String, CodingKey { case start, end, value }
+
+  init(from decoder: Decoder) throws {
+    // newer evcc versions send [start, end, value] with unix seconds
+    if var slot = try? decoder.unkeyedContainer() {
+      start = Date(timeIntervalSince1970: try slot.decode(Double.self))
+      end = Date(timeIntervalSince1970: try slot.decode(Double.self))
+      value = try slot.decode(Double.self)
+      return
+    }
+
+    let c = try decoder.container(keyedBy: CodingKeys.self)
+    start = try c.decode(Date.self, forKey: .start)
+    end = try c.decode(Date.self, forKey: .end)
+    value = try c.decode(Double.self, forKey: .value)
+  }
 }
 
 struct SolarEnergy: Decodable {
@@ -16,6 +33,21 @@ struct SolarEnergy: Decodable {
 struct SolarPoint: Decodable {
   let ts: Date
   let val: Double  // W
+
+  private enum CodingKeys: String, CodingKey { case ts, val }
+
+  init(from decoder: Decoder) throws {
+    // newer evcc versions send [ts, val] with unix seconds
+    if var point = try? decoder.unkeyedContainer() {
+      ts = Date(timeIntervalSince1970: try point.decode(Double.self))
+      val = try point.decode(Double.self)
+      return
+    }
+
+    let c = try decoder.container(keyedBy: CodingKeys.self)
+    ts = try c.decode(Date.self, forKey: .ts)
+    val = try c.decode(Double.self, forKey: .val)
+  }
 }
 
 struct SolarForecast: Decodable {
@@ -38,7 +70,9 @@ struct SeriesPayload: Decodable {
   let slots: [ForecastSlot]?
 }
 
-// MARK: - JSON decoding (ISO-8601 with timezone offset, e.g. 2026-06-23T00:15:00+02:00)
+// MARK: - JSON decoding
+// Dates arrive as ISO-8601 strings (e.g. 2026-06-23T00:15:00+02:00) from older
+// evcc versions, or as unix seconds from newer ones (evcc-io/evcc#32391).
 
 enum EvccJSON {
   private static let isoNoFrac: ISO8601DateFormatter = {
@@ -56,6 +90,9 @@ enum EvccJSON {
     let d = JSONDecoder()
     d.dateDecodingStrategy = .custom { dec in
       let c = try dec.singleValueContainer()
+      if let seconds = try? c.decode(Double.self) {
+        return Date(timeIntervalSince1970: seconds)
+      }
       let s = try c.decode(String.self)
       if let date = isoNoFrac.date(from: s) ?? isoFrac.date(from: s) { return date }
       throw DecodingError.dataCorruptedError(in: c, debugDescription: "bad date \(s)")
