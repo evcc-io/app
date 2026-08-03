@@ -1,0 +1,89 @@
+{
+  "main": {
+    "description": "Meklējiet savā tīklā evcc instalāciju.",
+    "title": "Iestatīt serveri"
+  },
+  "servers": {
+    "changeServer": "Mainīt serveri",
+    "manually": {
+      "authenticationRequired": "Nepieciešama autentifikācija",
+      "checkAdress": "Serveris nešķiet esam evcc instance. Lūdzu pārbaudiet adresi.",
+      "checkAndSave": "Pārbaudīt un saglabāt",
+      "enterUrl": "Ievadiet URL",
+      "missingOrWrongAuthentication": "Trūkstoša vai nepareiza autentifikācija",
+      "password": "Parole",
+      "qrcode": {
+        "invalid": "Nederīgs evcc QR kods.",
+        "permissionDenied": "Kameras piekļuve liegta. Iespējojiet to iestatījumos QR kodu skenēšanai.",
+        "recognized": "QR kods atpazīts!",
+        "scan": "Skenēt QR kodu",
+        "scanOnboarding": "Iestatīt ar QR kodu",
+        "scanPrefill": "Aizpildīt no QR koda",
+        "scanning": "atpazīst..."
+      },
+      "serverExistsAlready": "Šis serveris jau pastāv.",
+      "serverIncompatible": "evcc instance vēl nav saderīga ar lietotni. Atjauniniet instalāciju.",
+      "serverNotAvailable": "Serveris nav pieejams. Lūdzu pārbaudiet adresi.",
+      "specify": "Ievadiet adresi manuāli",
+      "title": "Nosaukums",
+      "user": "Lietotājs"
+    },
+    "removeServer": "Noņemt serveri",
+    "search": {
+      "notAvailable": "Meklēšana šajā ierīcē nav iespējama. Izmantojiet manuālo ievadi.",
+      "nothingFound": "Nav atrasts neviens evcc serveris.",
+      "searching": "Meklē savienojumu...",
+      "start": "Sākt meklēšanu"
+    },
+    "select": "Izvēlēties",
+    "switchServer": {
+      "addServer": "Pievienot serveri",
+      "title": "Pārslēgt serveri"
+    },
+    "useDemo": "Izmantot demo instanci"
+  },
+  "widget": {
+    "config": {
+      "desc": "Prognozes serveris.",
+      "loadpoint": "Slodzes punkts",
+      "server": "Serveris",
+      "title": "evcc Prognoze"
+    },
+    "description": {
+      "co2": "Prognozēt CO₂ emisijas.",
+      "feedin": "Prognozēt tīkla atdeves cenu.",
+      "price": "Prognozēt tīkla iepirkuma cenu.",
+      "solar": "Prognozēt saules enerģijas ražošanu."
+    },
+    "loadpoint": {
+      "description": "Slodzes punkta statuss un uzlādes režīms.",
+      "name": "Slodzes punkts"
+    },
+    "name": {
+      "co2": "CO₂",
+      "feedin": "Tīkla atdeves cena",
+      "price": "Tīkla iepirkuma cena",
+      "solar": "Saules prognoze"
+    },
+    "noData": {
+      "body": "Šim serverim nav šāda veida datu.",
+      "title": "Nav datu"
+    },
+    "now": "tagad",
+    "setup": {
+      "body": "Pieskarieties, lai izveidotu savienojumu ar serveri un izvēlētos datu tipu.",
+      "title": "Iestatīt evcc"
+    },
+    "solar": {
+      "adjust": "Pielāgot reāliem datiem"
+    },
+    "type": {
+      "feedin": "Tīkla pārdošanas cena",
+      "price": "Tīkla iepirkuma cena"
+    },
+    "unreachable": {
+      "body": "Neizdevās ielādēt evcc instanci.",
+      "title": "Serveris nav sasniedzams"
+    }
+  }
+}
