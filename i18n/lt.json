@@ -7,7 +7,7 @@
     "changeServer": "Keisti serverį",
     "manually": {
       "authenticationRequired": "Reikalingas autentifikavimas",
-      "checkAdress": "Atrodo, kad serveris nėra evcc serveris. Patikrinkite adresą.",
+      "checkAdress": "Atrodo, kad šis serveris nėra evcc serveris. Patikrinkite adresą.",
       "checkAndSave": "Patikrinti ir išsaugoti",
       "enterUrl": "Įveskite URL",
       "missingOrWrongAuthentication": "Nėra autentifikavimo arba jis neteisingas",
@@ -22,7 +22,7 @@
         "scanning": "Tikrinama…"
       },
       "serverExistsAlready": "Toks serveris jau yra.",
-      "serverIncompatible": "Evcc egzempliorius dar nesuderinamas su programa. Atnaujinkite įdiegimą.",
+      "serverIncompatible": "Evcc egzempliorius dar nesuderinamas su programa. Atnaujinkite evcc.",
       "serverNotAvailable": "Serveris nepasiekiamas. Patikrinkite adresą.",
       "specify": "Įveskite adresą",
       "title": "Pavadinimas",
@@ -41,5 +41,49 @@
       "title": "Pakeisti serverį"
     },
     "useDemo": "Naudokite demonstracinę versiją"
+  },
+  "widget": {
+    "config": {
+      "desc": "Serveris prognozei.",
+      "loadpoint": "Įkroviklis",
+      "server": "Serveris",
+      "title": "evcc Prognozė"
+    },
+    "description": {
+      "co2": "Prognozuojami CO₂ išmetimai.",
+      "feedin": "Prognozuojama tinklo eksporto kaina.",
+      "price": "Prognozuojama tinklo importo kaina.",
+      "solar": "Prognozuojama saulės energijos gamyba."
+    },
+    "loadpoint": {
+      "description": "Įkroviklio būsena ir įkrovimo režimas.",
+      "name": "Įkroviklis"
+    },
+    "name": {
+      "co2": "CO₂",
+      "feedin": "Tinklo eksporto kaina",
+      "price": "Tinklo importo kaina",
+      "solar": "Saulės prognozė"
+    },
+    "noData": {
+      "body": "Šiame serveryje nėra tokio tipo duomenų.",
+      "title": "Nėra duomenų"
+    },
+    "now": "dabar",
+    "setup": {
+      "body": "Palieskite, kad prisijungtumėte prie serverio ir pasirinktumėte duomenų tipą.",
+      "title": "Nustatyti evcc"
+    },
+    "solar": {
+      "adjust": "Pakoreguoti pagal realius duomenis"
+    },
+    "type": {
+      "feedin": "Tinklo eksporto kaina",
+      "price": "Tinklo importo kaina"
+    },
+    "unreachable": {
+      "body": "Nepavyko įkelti evcc.",
+      "title": "Serveris nepasiekiamas"
+    }
   }
 }

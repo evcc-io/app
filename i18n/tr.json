@@ -12,9 +12,20 @@
       "enterUrl": "URL girin",
       "missingOrWrongAuthentication": "Eksik veya yanlış kimlik doğrulaması",
       "password": "Şifre",
+      "qrcode": {
+        "invalid": "Geçerli bir evcc QR kodu değil.",
+        "permissionDenied": "Kamera erişimi reddedildi. QR kodlarını tarayabilmek için ayarlardan etkinleştirin.",
+        "recognized": "QR kodu algılandı!",
+        "scan": "QR kodu tara",
+        "scanOnboarding": "QR koduyla kur",
+        "scanPrefill": "QR koduyla doldur",
+        "scanning": "algılanıyor..."
+      },
+      "serverExistsAlready": "Bu sunucu zaten var.",
       "serverIncompatible": "evcc örneği henüz uygulamayla uyumlu değil. Kurulumunuzu güncelleyin.",
       "serverNotAvailable": "Sunucu mevcut değil. Lütfen adressi kontrol edin.",
       "specify": "Adresi manuel gir",
+      "title": "Başlık",
       "user": "Kullanıcı"
     },
     "removeServer": "Sunucuyu sil",
@@ -25,6 +36,10 @@
       "start": "Aramaya başla"
     },
     "select": "Seç",
+    "switchServer": {
+      "addServer": "Sunucu ekle",
+      "title": "Sunucuyu değiştir"
+    },
     "useDemo": "Demo örnek kullan"
   }
 }

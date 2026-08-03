@@ -5,10 +5,6 @@
   },
   "servers": {
     "changeServer": "Server ändern",
-    "switchServer": {
-      "title": "Server wechseln",
-      "addServer": "Server hinzufügen"
-    },
     "manually": {
       "authenticationRequired": "Anmeldung erforderlich",
       "checkAdress": "Der Server scheint keine evcc Instanz zu sein. Bitte prüfe die Adresse.",
@@ -16,21 +12,21 @@
       "enterUrl": "URL eingeben",
       "missingOrWrongAuthentication": "Fehlende oder falsche Anmeldung",
       "password": "Passwort",
-      "serverIncompatible": "Die evcc Instanz ist noch nicht App-kompatibel. Aktualisiere deine Installation.",
-      "serverNotAvailable": "Server nicht erreichbar. Bitte prüfe die Adresse.",
-      "specify": "Adresse manuell eingeben",
-      "user": "Benutzer",
       "qrcode": {
+        "invalid": "Kein gültiger evcc QR-Code.",
+        "permissionDenied": "Kamerazugriff verweigert. Aktiviere ihn in den Einstellungen, um QR-Codes zu scannen.",
+        "recognized": "QR-Code erkannt!",
         "scan": "QR-Code scannen",
         "scanOnboarding": "Mit QR-Code einrichten",
         "scanPrefill": "Daten aus QR-Code übernehmen",
-        "recognized": "QR-Code erkannt!",
-        "invalid": "Kein gültiger evcc QR-Code.",
-        "permissionDenied": "Kamerazugriff verweigert. Aktiviere ihn in den Einstellungen, um QR-Codes zu scannen.",
-        "scanning": "erkennen..."
+        "scanning": "erkennung..."
       },
+      "serverExistsAlready": "Dieser Server existiert bereits.",
+      "serverIncompatible": "Die evcc Instanz ist noch nicht App-kompatibel. Aktualisiere deine Installation.",
+      "serverNotAvailable": "Server nicht erreichbar. Bitte prüfe die Adresse.",
+      "specify": "Adresse manuell eingeben",
       "title": "Titel",
-      "serverExistsAlready": "Dieser Server existiert bereits."
+      "user": "Benutzer"
     },
     "removeServer": "Server entfernen",
     "search": {
@@ -40,45 +36,54 @@
       "start": "Suche starten"
     },
     "select": "Auswählen",
+    "switchServer": {
+      "addServer": "Server hinzufügen",
+      "title": "Server wechseln"
+    },
     "useDemo": "Demoinstanz verwenden"
   },
   "widget": {
-    "type": { "price": "Netzbezugspreis", "feedin": "Einspeisevergütung" },
-    "solar": { "adjust": "An Realdaten anpassen" },
-    "now": "jetzt",
-    "noData": {
-      "title": "Keine Daten",
-      "body": "Dieser Server liefert keine Daten dieses Typs."
-    },
-    "unreachable": {
-      "title": "Server nicht erreichbar",
-      "body": "evcc-Instanz konnte nicht geladen werden."
-    },
-    "setup": {
-      "title": "evcc einrichten",
-      "body": "Tippen, um Server zu verbinden und einen Datentyp zu wählen."
-    },
     "config": {
-      "title": "evcc Vorhersage",
       "desc": "Server der Vorhersage.",
+      "loadpoint": "Ladepunkt",
       "server": "Server",
-      "loadpoint": "Ladepunkt"
-    },
-    "loadpoint": {
-      "name": "Ladepunkt",
-      "description": "Ladepunkt-Status und Lademodus."
-    },
-    "name": {
-      "solar": "Solarprognose",
-      "price": "Netzbezugspreis",
-      "co2": "CO₂",
-      "feedin": "Einspeisevergütung"
+      "title": "evcc Vorhersage"
     },
     "description": {
-      "solar": "Vorhergesagte Solarproduktion.",
-      "price": "Vorhergesagter Netzbezugspreis.",
       "co2": "Vorhergesagte CO₂-Emissionen.",
-      "feedin": "Vorhergesagte Einspeisevergütung."
+      "feedin": "Vorhergesagte Einspeisevergütung.",
+      "price": "Vorhergesagter Netzbezugspreis.",
+      "solar": "Vorhergesagte Solarproduktion."
+    },
+    "loadpoint": {
+      "description": "Ladepunkt-Status und Lademodus.",
+      "name": "Ladepunkt"
+    },
+    "name": {
+      "co2": "CO₂",
+      "feedin": "Einspeisevergütung",
+      "price": "Netzbezugspreis",
+      "solar": "Solarprognose"
+    },
+    "noData": {
+      "body": "Dieser Server liefert keine Daten dieses Typs.",
+      "title": "Keine Daten"
+    },
+    "now": "jetzt",
+    "setup": {
+      "body": "Tippen, um Server zu verbinden und einen Datentyp zu wählen.",
+      "title": "evcc einrichten"
+    },
+    "solar": {
+      "adjust": "An Realdaten anpassen"
+    },
+    "type": {
+      "feedin": "Einspeisevergütung",
+      "price": "Netzbezugspreis"
+    },
+    "unreachable": {
+      "body": "evcc-Instanz konnte nicht geladen werden.",
+      "title": "Server nicht erreichbar"
     }
   }
 }

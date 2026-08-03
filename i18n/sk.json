@@ -1,1 +1,89 @@
-{}
+{
+  "main": {
+    "description": "Prehľadávajte svoju sieť a nájdite inštaláciu evcc.",
+    "title": "Nastavenie servera"
+  },
+  "servers": {
+    "changeServer": "Zmeniť server",
+    "manually": {
+      "authenticationRequired": "Potrebná autorizácia",
+      "checkAdress": "Server pravdepodobne nieje instanciou evcc. Prosím skontrolujte adresu.",
+      "checkAndSave": "Skontrolovať a uložiť",
+      "enterUrl": "Zadajte URL",
+      "missingOrWrongAuthentication": "Chýbajúce alebo nesprávne overenie",
+      "password": "Heslo",
+      "qrcode": {
+        "invalid": "Neplatný QR kód pre evcc.",
+        "permissionDenied": "Prístup ku kamere bol zamietnutý. Povoľte ho v nastaveniach na skenovanie QR kódov.",
+        "recognized": "Zistený QR kód!",
+        "scan": "Skenovať QR kód",
+        "scanOnboarding": "Nastaviť pomocou QR kódu",
+        "scanPrefill": "Vyplňiť pomocou QR kódu",
+        "scanning": "zisťuje sa..."
+      },
+      "serverExistsAlready": "Tento server už existuje.",
+      "serverIncompatible": "Vaše evcc ešte nie je kompatibilné s Aplikáciou. Aktualizujte svoju inštaláciu.",
+      "serverNotAvailable": "Server nie je k dispozícii. Skontrolujte adresu.",
+      "specify": "Zadajte adresu manuálne",
+      "title": "Názov",
+      "user": "Užívateľ"
+    },
+    "removeServer": "Odstrániť server",
+    "search": {
+      "notAvailable": "Hľadanie nie je možné na tomto zariadení. Použite manuálny vstup.",
+      "nothingFound": "Nebol nájdený žiadny server evcc.",
+      "searching": "Hľadať pripojenie ...",
+      "start": "Spustiť vyhľadávanie"
+    },
+    "select": "Vybrať",
+    "switchServer": {
+      "addServer": "Pridať server",
+      "title": "Prepnúť server"
+    },
+    "useDemo": "Použiť demo inštanciu"
+  },
+  "widget": {
+    "config": {
+      "desc": "Server pre predpoveď.",
+      "loadpoint": "Nabíjací bod",
+      "server": "Server",
+      "title": "predpoveď evcc"
+    },
+    "description": {
+      "co2": "Predpoveď emisií CO2.",
+      "feedin": "Predpovedaná cena exportu do siete.",
+      "price": "Predpovedaná cena importu zo siete.",
+      "solar": "Predpoveď slnečnej výroby."
+    },
+    "loadpoint": {
+      "description": "Stav nabíjacieho bodu a režim nabíjania.",
+      "name": "Nabíjací bod"
+    },
+    "name": {
+      "co2": "CO₂",
+      "feedin": "Cena exportu do siete",
+      "price": "Cena za odber zo siete",
+      "solar": "Solárna predpoveď"
+    },
+    "noData": {
+      "body": "Tento server nemá žiadne údaje tohto typu.",
+      "title": "Žiadne údaje"
+    },
+    "now": "teraz",
+    "setup": {
+      "body": "Kliknite na pripojenie servera a vyberte dátový typ.",
+      "title": "Nastaviť evcc"
+    },
+    "solar": {
+      "adjust": "Upraviť na skutočné dáta"
+    },
+    "type": {
+      "feedin": "Cena exportu do siete",
+      "price": "Cena za odber zo siete"
+    },
+    "unreachable": {
+      "body": "Nemohol načítať evcc inštanciu.",
+      "title": "Server nedostupný"
+    }
+  }
+}
