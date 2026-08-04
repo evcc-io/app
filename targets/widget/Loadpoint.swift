@@ -16,19 +16,26 @@ struct Loadpoint: Decodable {
   let sessionEnergy: Double?
   let chargedEnergy: Double?
   let mode: String?
+  let alwaysCharge: String?
   let charging: Bool?
   let connected: Bool?
   let enabled: Bool?
   let chargerFeatureHeating: Bool?
   let chargerFeatureSwitchDevice: Bool?
+  let chargerFeatureContinuous: Bool?
   let ui: LoadpointUI?
 }
 
 // MARK: - Modes / status
 
-enum ChargeMode: String, CaseIterable {
-  case off, pv, minpv, now
-  var labelKey: String { "widget.mode.\(rawValue)" }
+enum ChargeMode: String {
+  case off, pv, minpv, now, smart
+}
+
+// A selectable mode with its device-class-specific label.
+struct ModeItem: Hashable {
+  let rawValue: String
+  let labelKey: String
 }
 
 enum LoadpointStatus: String {
@@ -57,8 +64,9 @@ struct LoadpointVM {
   let metricUnit: String
   let fill: Double?  // 0…1 progress; nil = no bar (kWh-only)
   let power: (value: String, unit: String)
-  let currentMode: ChargeMode?
-  let modes: [ChargeMode]
+  let currentMode: ModeItem?
+  let modes: [ModeItem]
+  let alwaysChargeActive: Bool
 
   static func build(from lp: Loadpoint) -> LoadpointVM {
     let heating = lp.chargerFeatureHeating == true
@@ -103,7 +111,26 @@ struct LoadpointVM {
     }
 
     let switchDevice = lp.chargerFeatureSwitchDevice == true
-    let modes: [ChargeMode] = switchDevice ? [.off, .pv, .now] : [.off, .pv, .minpv, .now]
+    let continuous = lp.chargerFeatureContinuous == true
+    // alwaysCharge exists since the smart-mode redesign; its presence tells
+    // new servers (off/smart/now) from old ones (off/pv/minpv/now).
+    let smartModeServer = lp.alwaysCharge != nil
+
+    func item(_ mode: ChargeMode) -> ModeItem {
+      var key = "widget.mode.\(mode.rawValue)"
+      if smartModeServer {
+        if mode == .off, continuous { key = "widget.mode.normal" }
+        if mode == .now {
+          if continuous { key = "widget.mode.boost" } else if switchDevice { key = "widget.mode.on" }
+        }
+      }
+      return ModeItem(rawValue: mode.rawValue, labelKey: key)
+    }
+
+    let modeList: [ChargeMode] =
+      smartModeServer
+      ? [.off, .smart, .now]
+      : switchDevice ? [.off, .pv, .now] : [.off, .pv, .minpv, .now]
 
     return LoadpointVM(
       title: title,
@@ -114,8 +141,9 @@ struct LoadpointVM {
       metricUnit: metricUnit,
       fill: fill,
       power: splitValueUnit(Format.fmtW(lp.chargePower ?? 0, .auto)),
-      currentMode: ChargeMode(rawValue: lp.mode ?? ""),
-      modes: modes)
+      currentMode: ChargeMode(rawValue: lp.mode ?? "").map(item),
+      modes: modeList.map(item),
+      alwaysChargeActive: lp.alwaysCharge == "on" || lp.alwaysCharge == "once")
   }
 }
 
