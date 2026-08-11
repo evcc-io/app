@@ -1,19 +1,18 @@
 {
   "main": {
-    "description": "Search your network to find your evcc installation.",
-    "title": "Setup server"
+    "description": "Let's connect to your server.",
+    "title": "Welcome"
   },
   "servers": {
-    "changeServer": "Change server",
+    "changeServer": "Change Server",
     "switchServer": {
-      "title": "Switch server",
-      "addServer": "Add server"
+      "title": "Change Server",
+      "addServer": "Add Server"
     },
     "manually": {
       "authenticationRequired": "Authentication required",
       "checkAdress": "The server does not appear to be an evcc instance. Please check the address.",
       "checkAndSave": "Check and save",
-      "enterUrl": "Enter URL",
       "missingOrWrongAuthentication": "Missing or incorrect authentication",
       "password": "Password",
       "serverIncompatible": "The evcc instance is not yet app-compatible. Update your installation.",
@@ -21,7 +20,7 @@
       "specify": "Enter address manually",
       "user": "User",
       "qrcode": {
-        "scan": "Scan QR code",
+        "scan": "Scan QR Code",
         "scanOnboarding": "Set up via QR code",
         "scanPrefill": "Fill in via QR code",
         "recognized": "QR code detected!",
@@ -34,16 +33,29 @@
     },
     "removeServer": "Remove server",
     "search": {
+      "inProgress": "Searching …",
+      "connect": "Connect",
+      "tryAgain": "Search again",
       "notAvailable": "The search is not possible on this device. Use the manual input.",
-      "nothingFound": "No evcc server was found.",
+      "nothingFound": "No server found.",
       "searching": "Search for connection ...",
-      "start": "Start search"
+      "start": "Find server",
+      "hint": "This usually takes a few seconds.",
+      "foundOne": "Server found",
+      "foundMany": "{{count}} servers found",
+      "selectHelper": "Select the one you want to connect to.",
+      "cancel": "Cancel"
     },
-    "select": "Select",
-    "useDemo": "Use demo instance"
+    "useDemo": "Use demo instance",
+    "remove": "Remove",
+    "removeConfirm": "Do you really want to remove {{title}}?",
+    "editServer": "Edit Server"
   },
   "widget": {
-    "type": { "price": "Grid import price", "feedin": "Grid export price" },
+    "type": {
+      "price": "Grid import price",
+      "feedin": "Grid export price"
+    },
     "now": "now",
     "noData": {
       "title": "No data",

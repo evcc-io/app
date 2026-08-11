@@ -116,7 +116,12 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
   };
 
   const addServer = async (server: Server) => {
-    await storageAddServer(server);
+    // ignore duplicates — double-taps and repeated deep links otherwise add
+    // the same server twice
+    const existing = await loadServers();
+    if (!existing.some((s) => sameServer(s, server))) {
+      await storageAddServer(server);
+    }
     setServers(await loadServers());
   };
 

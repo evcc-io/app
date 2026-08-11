@@ -2,7 +2,7 @@
 
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/evcc-io/app/badge)](https://scorecard.dev/viewer/?uri=github.com/evcc-io/app)
 
-Native app wrapper for evcc UI based on [react-native](https://reactnative.dev/) and [expo.dev](https://expo.dev/). It uses [UI Kitten / Eva](https://akveo.github.io/react-native-ui-kitten/) as a design system. Native parts are written in TypeScript and kept to a minimum.
+Native app wrapper for evcc UI based on [react-native](https://reactnative.dev/) and [expo.dev](https://expo.dev/). It uses [Expo UI](https://docs.expo.dev/versions/latest/sdk/ui/) (SwiftUI / Jetpack Compose) for native components. Native parts are written in TypeScript and kept to a minimum.
 
 ## Download the App
 
@@ -113,12 +113,11 @@ Start dev mode to get into an interactive development environment.
 npm run start
 ```
 
-Or start iOS, Android or Web simulator directly.
+Or start iOS or Android simulator directly.
 
 ```bash
 npm run ios
 npm run android
-npm run web
 ```
 
 You can test basic auth locally by with a [caddy server](https://caddyserver.com):

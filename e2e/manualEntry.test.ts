@@ -11,11 +11,11 @@ describe("Manual entry", () => {
     await element(by.id("manualEntry")).tap();
 
     // replaceText, not typeText: the CI emulator's IME suggestions mangle typed input
-    await element(by.id("@serverFormTitle/input")).replaceText("Local");
-    await element(by.id("@serverFormUrl/input")).replaceText("localhost:7070");
+    await element(by.id("serverFormTitle")).replaceText("Local");
+    await element(by.id("serverFormUrl")).replaceText("localhost:7070");
 
-    await expect(element(by.id("@serverFormAuthUser/input"))).not.toExist();
-    await expect(element(by.id("@serverFormAuthPassword/input"))).not.toExist();
+    await expect(element(by.id("serverFormAuthUser"))).not.toExist();
+    await expect(element(by.id("serverFormAuthPassword"))).not.toExist();
 
     await element(by.id("serverFormCheckAndSave")).tap();
 
@@ -25,16 +25,16 @@ describe("Manual entry", () => {
   it("with basic auth", async () => {
     await element(by.id("manualEntry")).tap();
 
-    await element(by.id("@serverFormTitle/input")).replaceText("Local Auth");
-    await element(by.id("@serverFormUrl/input")).replaceText("localhost:7080");
+    await element(by.id("serverFormTitle")).replaceText("Local Auth");
+    await element(by.id("serverFormUrl")).replaceText("localhost:7080");
 
-    await expect(element(by.id("@serverFormAuthUser/input"))).not.toExist();
-    await expect(element(by.id("@serverFormAuthPassword/input"))).not.toExist();
+    await expect(element(by.id("serverFormAuthUser"))).not.toExist();
+    await expect(element(by.id("serverFormAuthPassword"))).not.toExist();
 
     await tapAfterWaitFor(element(by.id("serverFormAuth")));
 
-    await element(by.id("@serverFormAuthUser/input")).replaceText("admin");
-    await element(by.id("@serverFormAuthPassword/input")).replaceText("secret");
+    await element(by.id("serverFormAuthUser")).replaceText("admin");
+    await element(by.id("serverFormAuthPassword")).replaceText("secret");
 
     await tapAfterWaitFor(element(by.id("serverFormCheckAndSave")));
 

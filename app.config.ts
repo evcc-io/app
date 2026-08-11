@@ -57,11 +57,6 @@ export default ({ config }: ConfigContext) =>
       },
       web: {
         favicon: "./assets/favicon.png",
-        build: {
-          babel: {
-            include: ["@ui-kitten/components"],
-          },
-        },
       },
       plugins: [
         "@bacons/apple-targets",

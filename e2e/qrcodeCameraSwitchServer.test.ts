@@ -3,14 +3,14 @@ import { byWebDataTestId, waitForWebview } from "./helper";
 import { expect } from "detox";
 
 async function expectServerForm() {
-  await expect(element(by.id("@serverFormTitle/input"))).toHaveText(
+  await expect(element(by.id("serverFormTitle"))).toHaveText(
     "Local Auth",
   );
-  await expect(element(by.id("@serverFormUrl/input"))).toHaveText(
+  await expect(element(by.id("serverFormUrl"))).toHaveText(
     "http://localhost:7080",
   );
-  await expect(element(by.id("@serverFormAuthUser/input"))).toHaveText("admin");
-  await expect(element(by.id("@serverFormAuthPassword/input"))).toHaveText(
+  await expect(element(by.id("serverFormAuthUser"))).toHaveText("admin");
+  await expect(element(by.id("serverFormAuthPassword"))).toHaveText(
     "secret",
   );
 }

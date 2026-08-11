@@ -1,11 +1,19 @@
 import React, { useRef, useState } from "react";
-import { Text, Button, Input, CheckBox } from "@ui-kitten/components";
+import {
+  Platform,
+  Switch,
+  TextInput,
+  TextInputProps,
+  View,
+} from "react-native";
 import { cleanServerUrl, sameServer, verifyEvccServer } from "../utils/server";
-import LoadingIndicator from "./animations/LoadingIndicator";
 import { useTranslation } from "react-i18next";
 import { BasicAuth, Server } from "types";
 import { useAppContext } from "./AppContext";
 import ScanQRCodeButton from "./ScanQRCodeButton";
+import AppText from "components/AppText";
+import Button from "components/Button";
+import { radius, useThemeColors } from "utils/theme";
 
 interface ServerFormProps {
   server: Server | undefined;
@@ -13,19 +21,50 @@ interface ServerFormProps {
   mode: "create" | "update";
 }
 
+interface FormInputProps extends TextInputProps {
+  danger?: boolean;
+}
+
+const FormInput = React.forwardRef<TextInput, FormInputProps>(
+  function FormInput({ danger, style, ...props }, ref) {
+    const colors = useThemeColors();
+    return (
+      <TextInput
+        ref={ref}
+        {...props}
+        placeholderTextColor={colors.textHint}
+        style={[
+          {
+            backgroundColor: colors.surface,
+            borderColor: danger ? colors.danger : colors.border,
+            borderWidth: 1,
+            borderRadius: radius.card,
+            paddingHorizontal: 16,
+            paddingVertical: Platform.OS === "ios" ? 14 : 10,
+            fontSize: 16,
+            color: colors.text,
+          },
+          style,
+        ]}
+      />
+    );
+  },
+);
+
 export default function ServerForm({
   server,
   serverSelected,
   mode,
 }: ServerFormProps) {
   const { t } = useTranslation();
+  const colors = useThemeColors();
   const { servers } = useAppContext();
   const [inProgress, setInProgress] = useState(false);
   const [error, setError] = useState("");
 
-  const urlRef = useRef<Input | null>(null);
-  const usernameRef = useRef<Input | null>(null);
-  const passwordRef = useRef<Input | null>(null);
+  const urlRef = useRef<TextInput | null>(null);
+  const usernameRef = useRef<TextInput | null>(null);
+  const passwordRef = useRef<TextInput | null>(null);
 
   const [internalServer, setInternalServer] = useState<Server | undefined>(
     server,
@@ -93,12 +132,10 @@ export default function ServerForm({
 
   return (
     <>
-      <Input
+      <FormInput
         style={{ marginBottom: 16 }}
         placeholder={t("servers.manually.title")}
         value={internalServer?.title}
-        size="large"
-        status="basic"
         onChangeText={setInternalTitle}
         inputMode="text"
         keyboardType="default"
@@ -109,12 +146,11 @@ export default function ServerForm({
         testID="serverFormTitle"
       />
 
-      <Input
+      <FormInput
         style={{ marginBottom: 16 }}
         placeholder="http://evcc.local:7070/"
         value={internalServer?.url}
-        size="large"
-        status={error ? "danger" : "basic"}
+        danger={!!error}
         onChangeText={setInternalUrl}
         inputMode="url"
         keyboardType="url"
@@ -130,23 +166,31 @@ export default function ServerForm({
         testID="serverFormUrl"
       />
 
-      <CheckBox
-        style={{ marginTop: 8, marginBottom: 16 }}
-        checked={internalServer?.basicAuth.required}
-        onChange={(v) =>
-          setInternalAuth({ ...internalServer?.basicAuth, required: v })
-        }
-        testID="serverFormAuth"
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          marginTop: 8,
+          marginBottom: 16,
+        }}
       >
-        {t("servers.manually.authenticationRequired")}
-      </CheckBox>
+        <Switch
+          value={!!internalServer?.basicAuth.required}
+          onValueChange={(v) =>
+            setInternalAuth({ ...internalServer?.basicAuth, required: v })
+          }
+          trackColor={{ true: colors.primary }}
+          testID="serverFormAuth"
+        />
+        <AppText style={{ marginLeft: 12, flex: 1 }}>
+          {t("servers.manually.authenticationRequired")}
+        </AppText>
+      </View>
 
       {internalServer?.basicAuth.required && (
         <>
-          <Input
+          <FormInput
             style={{ marginTop: 8, marginBottom: 16 }}
-            size="large"
-            status="basic"
             onChangeText={(v) =>
               setInternalAuth({ ...internalServer?.basicAuth, username: v })
             }
@@ -161,10 +205,8 @@ export default function ServerForm({
             onSubmitEditing={() => passwordRef.current?.focus()}
             testID="serverFormAuthUser"
           />
-          <Input
+          <FormInput
             style={{ marginTop: 8, marginBottom: 16 }}
-            size="large"
-            status="basic"
             onChangeText={(v) =>
               setInternalAuth({ ...internalServer?.basicAuth, password: v })
             }
@@ -183,12 +225,17 @@ export default function ServerForm({
         </>
       )}
 
+      {error ? (
+        <AppText style={{ marginBottom: 16 }} color="danger">
+          {error}
+        </AppText>
+      ) : null}
+
       <Button
-        style={{ marginTop: 16, marginBottom: 16 }}
-        appearance="filled"
-        size="giant"
+        style={{ marginTop: 8, marginBottom: 16 }}
+
         disabled={!internalServer?.url || !internalServer?.title?.trim()}
-        accessoryLeft={inProgress ? LoadingIndicator : undefined}
+        loading={inProgress}
         onPress={validateAndSaveURL}
         testID="serverFormCheckAndSave"
       >
@@ -196,12 +243,6 @@ export default function ServerForm({
       </Button>
 
       {mode === "create" && <ScanQRCodeButton shown="Addserverform" />}
-
-      {error ? (
-        <Text style={{ marginTop: 16 }} category="p1" status="danger">
-          {error}
-        </Text>
-      ) : null}
     </>
   );
 }
