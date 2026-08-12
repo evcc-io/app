@@ -243,6 +243,16 @@ touch android-detox-build
    npm run test:ios
    ```
 
+### Troubleshooting
+
+If the Android emulator misbehaves (e.g. builds install but the app won't launch), its state may be corrupted. Wipe it and start fresh (`-list-avds` shows your device names):
+
+```bash
+$ANDROID_HOME/emulator/emulator -avd test -wipe-data
+```
+
+If that doesn't help, delete the virtual device and recreate it (see above).
+
 ## Translation
 
 We use [Weblate](https://hosted.weblate.org/projects/evcc/app/) to manage our translations.
