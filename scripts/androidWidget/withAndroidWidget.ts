@@ -1,0 +1,318 @@
+import {
+  ConfigPlugin,
+  withAppBuildGradle,
+  withProjectBuildGradle,
+  withAndroidManifest,
+  withDangerousMod,
+  AndroidConfig,
+} from "expo/config-plugins";
+import fs from "fs";
+import path from "path";
+
+// Injects the Jetpack Glance loadpoint widget into the prebuilt Android
+// project. Android counterpart of the @bacons/apple-targets iOS widget.
+//
+// ⚠ The Glance/Compose gradle wiring below is the #1 thing to verify after
+// `expo prebuild`: the Compose compiler must match the project's Kotlin
+// version. See targets/android-widget/README.md.
+
+const PACKAGE = "io.evcc.android";
+const WIDGET_SUBDIR = "widget"; // io.evcc.android.widget
+const KOTLIN_SRC = "targets/android-widget/kotlin";
+
+const GLANCE_VERSION = "1.1.1";
+// Compose compiler is versioned with Kotlin (2.0+). Must match the project's
+// Kotlin version — check `android/build.gradle` after prebuild if it changes.
+const COMPOSE_KOTLIN = "2.1.20";
+
+// Root build.gradle: put the Compose compiler gradle plugin on the buildscript
+// classpath so app/build.gradle can `apply plugin`. Without this the build
+// fails with "Plugin with id 'org.jetbrains.kotlin.plugin.compose' not found".
+const withComposeClasspath: ConfigPlugin = (config) =>
+  withProjectBuildGradle(config, (config) => {
+    if (!config.modResults.contents.includes("compose-compiler-gradle-plugin")) {
+      const cp = `classpath("org.jetbrains.kotlin:compose-compiler-gradle-plugin:${COMPOSE_KOTLIN}")`;
+      config.modResults.contents = config.modResults.contents.replace(
+        /(classpath\(["']com\.android\.tools\.build:gradle["'][^\n]*\)\n)/,
+        (m) => `${m}        ${cp}\n`,
+      );
+    }
+    return config;
+  });
+
+const withGlanceGradle: ConfigPlugin = (config) =>
+  withAppBuildGradle(config, (config) => {
+    let src = config.modResults.contents;
+
+    if (!src.includes("glance-appwidget")) {
+      // Glance brings a compatible Compose runtime transitively, so no BOM needed.
+      const deps = [
+        `    implementation("androidx.glance:glance-appwidget:${GLANCE_VERSION}")`,
+        `    implementation("androidx.glance:glance-material3:${GLANCE_VERSION}")`,
+      ].join("\n");
+      src = src.replace(/dependencies\s*\{/, (m) => `${m}\n${deps}`);
+    }
+
+    // enable Compose for the app module (needed to compile Glance @Composable)
+    if (!src.includes("buildFeatures") || !/compose\s+true/.test(src)) {
+      src = src.replace(
+        /android\s*\{/,
+        (m) => `${m}\n    buildFeatures {\n        compose true\n    }`,
+      );
+    }
+
+    config.modResults.contents = src;
+    return config;
+  });
+
+const withGlanceComposeCompiler: ConfigPlugin = (config) =>
+  // Kotlin 2.0+: the Compose compiler is a gradle plugin. Apply it to the app
+  // module. (For Kotlin < 2.0 use composeOptions.kotlinCompilerExtensionVersion
+  // instead — see README.)
+  withAppBuildGradle(config, (config) => {
+    const apply = `apply plugin: "org.jetbrains.kotlin.plugin.compose"`;
+    if (!config.modResults.contents.includes(apply)) {
+      config.modResults.contents = `${apply}\n${config.modResults.contents}`;
+    }
+    return config;
+  });
+
+// The forecast widgets (Solar/Price/CO₂/Feed-in) share one appwidget-provider
+// XML, but each gets a distinct android:label so the widget picker names them.
+const FORECAST_RECEIVERS = [
+  { name: "EvccSolarWidgetReceiver", label: "Solar" },
+  { name: "EvccPriceWidgetReceiver", label: "Price" },
+  { name: "EvccCo2WidgetReceiver", label: "CO₂" },
+  { name: "EvccFeedinWidgetReceiver", label: "Feed-in" },
+];
+
+const pushWidgetReceiver = (app: any, shortName: string, infoResource: string, label: string) => {
+  app.receiver = app.receiver ?? [];
+  const name = `.${WIDGET_SUBDIR}.${shortName}`;
+  if (app.receiver.some((r: any) => r.$["android:name"] === name)) return;
+  app.receiver.push({
+    $: { "android:name": name, "android:exported": "false", "android:label": label },
+    "intent-filter": [
+      { action: [{ $: { "android:name": "android.appwidget.action.APPWIDGET_UPDATE" } }] },
+    ],
+    "meta-data": [
+      {
+        $: {
+          "android:name": "android.appwidget.provider",
+          "android:resource": `@xml/${infoResource}`,
+        },
+      },
+    ],
+  });
+};
+
+const withWidgetReceiver: ConfigPlugin = (config) =>
+  withAndroidManifest(config, (config) => {
+    const app = AndroidConfig.Manifest.getMainApplicationOrThrow(config.modResults);
+
+    pushWidgetReceiver(app, "EvccLoadpointWidgetReceiver", "loadpoint_widget_info", "Loadpoint");
+    for (const r of FORECAST_RECEIVERS) pushWidgetReceiver(app, r.name, "forecast_widget_info", r.label);
+
+    // widget placement configuration Activities (loadpoint picker; forecast server + solar toggle)
+    app.activity = app.activity ?? [];
+    for (const actName of [
+      `.${WIDGET_SUBDIR}.LoadpointWidgetConfigActivity`,
+      `.${WIDGET_SUBDIR}.ForecastWidgetConfigActivity`,
+    ]) {
+      if (app.activity.some((a) => a.$["android:name"] === actName)) continue;
+      app.activity.push({
+        $: { "android:name": actName, "android:exported": "true" },
+        "intent-filter": [
+          {
+            action: [{ $: { "android:name": "android.appwidget.action.APPWIDGET_CONFIGURE" } }],
+          },
+        ],
+      } as any);
+    }
+    return config;
+  });
+
+const widgetInfoXml = (pkg: string) => `<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="180dp"
+    android:minHeight="110dp"
+    android:targetCellWidth="3"
+    android:targetCellHeight="2"
+    android:updatePeriodMillis="1800000"
+    android:resizeMode="horizontal|vertical"
+    android:widgetCategory="home_screen"
+    android:configure="${pkg}.${WIDGET_SUBDIR}.LoadpointWidgetConfigActivity"
+    android:previewImage="@drawable/widget_preview_loadpoint"
+    android:previewLayout="@layout/loadpoint_widget_preview" />
+`;
+
+// Static preview image (vector) for the widget picker. Many OEM launchers
+// (Xiaomi/MIUI, Nova, …) ignore android:previewLayout and only honour a
+// previewImage drawable, so provide both.
+const vBar = (x: number, h: number, w = 16) =>
+  `<path android:fillColor="#0FDE41" android:pathData="M${x},${128 - h}h${w}v${h}h-${w}z" />`;
+const previewImageVector = `<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="250dp" android:height="140dp"
+    android:viewportWidth="250" android:viewportHeight="140">
+    <path android:fillColor="#1B1B1B" android:pathData="M0,0h250v140h-250z" />
+    <path android:fillColor="#B3FFFFFF" android:pathData="M14,20h70v10h-70z" />
+    <path android:fillColor="#FFFFFF" android:pathData="M14,40h100v16h-100z" />
+    ${[
+      [14, 22],
+      [35, 40],
+      [56, 58],
+      [77, 78],
+      [98, 96],
+      [119, 100],
+      [140, 82],
+      [161, 60],
+      [182, 42],
+      [203, 26],
+      [224, 16],
+    ]
+      .map(([x, h]) => vBar(x, h))
+      .join("\n    ")}
+</vector>
+`;
+
+// Loadpoint preview image: a card with title / status / power lines and a row
+// of mode "pills" (one highlighted), so it reads as a loadpoint, not a chart.
+const loadpointPreviewImageVector = `<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="250dp" android:height="140dp"
+    android:viewportWidth="250" android:viewportHeight="140">
+    <path android:fillColor="#1B1B1B" android:pathData="M0,0h250v140h-250z" />
+    <path android:fillColor="#FFFFFF" android:pathData="M16,18h84v12h-84z" />
+    <path android:fillColor="#B3FFFFFF" android:pathData="M16,38h120v9h-120z" />
+    <path android:fillColor="#FFFFFF" android:pathData="M16,56h70v20h-70z" />
+    <path android:fillColor="#B3FFFFFF" android:pathData="M16,104h34v16h-34z" />
+    <path android:fillColor="#0FDE41" android:pathData="M56,104h34v16h-34z" />
+    <path android:fillColor="#B3FFFFFF" android:pathData="M96,104h34v16h-34z" />
+    <path android:fillColor="#B3FFFFFF" android:pathData="M136,104h34v16h-34z" />
+</vector>
+`;
+
+// Forecast widgets: medium size, no configuration Activity.
+const forecastInfoXml = (pkg: string) => `<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="250dp"
+    android:minHeight="110dp"
+    android:targetCellWidth="4"
+    android:targetCellHeight="2"
+    android:updatePeriodMillis="1800000"
+    android:resizeMode="horizontal|vertical"
+    android:widgetCategory="home_screen"
+    android:configure="${pkg}.${WIDGET_SUBDIR}.ForecastWidgetConfigActivity"
+    android:previewImage="@drawable/widget_preview"
+    android:previewLayout="@layout/forecast_widget_preview" />
+`;
+
+// Static preview layouts shown in the widget picker (the Glance content only
+// renders once placed). Kept representative of the real widgets.
+const loadpointPreviewXml = `<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#1B1B1B"
+    android:padding="12dp">
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="Loadpoint" android:textColor="#FFFFFF" android:textSize="14sp" android:textStyle="bold" />
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="Charging · 62%" android:textColor="#B3FFFFFF" android:textSize="12sp" android:paddingTop="2dp" />
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="7.4 kW" android:textColor="#FFFFFF" android:textSize="20sp" android:paddingTop="2dp" />
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:paddingTop="8dp">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="off" android:textColor="#B3FFFFFF" android:textSize="12sp" android:paddingEnd="10dp" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="pv" android:textColor="#0FDE41" android:textSize="12sp" android:paddingEnd="10dp" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="min+pv" android:textColor="#B3FFFFFF" android:textSize="12sp" android:paddingEnd="10dp" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="now" android:textColor="#B3FFFFFF" android:textSize="12sp" />
+    </LinearLayout>
+</LinearLayout>
+`;
+
+// A green bar in the preview sparkline (fixed height, equal weight).
+const bar = (h: number) =>
+  `<View android:layout_width="0dp" android:layout_height="${h}dp" android:layout_weight="1" ` +
+  `android:layout_marginHorizontal="1dp" android:background="#0FDE41" />`;
+
+const forecastPreviewXml = `<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#1B1B1B"
+    android:padding="12dp">
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="Solar" android:textColor="#B3FFFFFF" android:textSize="12sp" />
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="3.2 kW" android:textColor="#FFFFFF" android:textSize="20sp" />
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="today 24 kWh · tom. 31 kWh" android:textColor="#B3FFFFFF" android:textSize="11sp" />
+    <LinearLayout android:layout_width="match_parent" android:layout_height="44dp"
+        android:orientation="horizontal" android:gravity="bottom" android:paddingTop="8dp">
+        ${[6, 10, 16, 24, 34, 40, 44, 38, 30, 20, 12, 6].map(bar).join("\n        ")}
+    </LinearLayout>
+</LinearLayout>
+`;
+
+const withWidgetFiles: ConfigPlugin = (config) =>
+  withDangerousMod(config, [
+    "android",
+    (config) => {
+      const root = config.modRequest.platformProjectRoot; // android/
+      const main = path.join(root, "app", "src", "main");
+
+      // derive the package from config so a fork test build can use a distinct
+      // applicationId (e.g. io.evcc.android.dev) and coexist with the official app.
+      const pkg = config.android?.package ?? PACKAGE;
+      const widgetPkg = `${pkg}.${WIDGET_SUBDIR}`;
+
+      // 1. Kotlin sources → java/<pkg>/widget/, rewriting the package declaration
+      // from the source's io.evcc.android.widget to match the actual app package.
+      const dest = path.join(main, "java", ...pkg.split("."), WIDGET_SUBDIR);
+      fs.mkdirSync(dest, { recursive: true });
+      const srcDir = path.join(config.modRequest.projectRoot, KOTLIN_SRC);
+      for (const f of fs.readdirSync(srcDir).filter((f) => f.endsWith(".kt"))) {
+        const src = fs
+          .readFileSync(path.join(srcDir, f), "utf8")
+          .replace(`package ${PACKAGE}.${WIDGET_SUBDIR}`, `package ${widgetPkg}`);
+        fs.writeFileSync(path.join(dest, f), src);
+      }
+
+      // 2. res/xml widget info + a minimal preview layout
+      const xmlDir = path.join(main, "res", "xml");
+      fs.mkdirSync(xmlDir, { recursive: true });
+      fs.writeFileSync(path.join(xmlDir, "loadpoint_widget_info.xml"), widgetInfoXml(pkg));
+      fs.writeFileSync(path.join(xmlDir, "forecast_widget_info.xml"), forecastInfoXml(pkg));
+
+      const layoutDir = path.join(main, "res", "layout");
+      fs.mkdirSync(layoutDir, { recursive: true });
+      fs.writeFileSync(path.join(layoutDir, "loadpoint_widget_preview.xml"), loadpointPreviewXml);
+      fs.writeFileSync(path.join(layoutDir, "forecast_widget_preview.xml"), forecastPreviewXml);
+
+      const drawableDir = path.join(main, "res", "drawable");
+      fs.mkdirSync(drawableDir, { recursive: true });
+      fs.writeFileSync(path.join(drawableDir, "widget_preview.xml"), previewImageVector);
+      fs.writeFileSync(path.join(drawableDir, "widget_preview_loadpoint.xml"), loadpointPreviewImageVector);
+
+      return config;
+    },
+  ]);
+
+const withAndroidWidget: ConfigPlugin = (config) => {
+  config = withComposeClasspath(config);
+  config = withGlanceGradle(config);
+  config = withGlanceComposeCompiler(config);
+  config = withWidgetReceiver(config);
+  config = withWidgetFiles(config);
+  return config;
+};
+
+export default withAndroidWidget;

@@ -31,6 +31,7 @@
     "@types/react": "~19.2.10",
     "axios": "^1.16.0",
     "base-64": "^1.0.0",
+    "evcc-widget": "file:./modules/evcc-widget",
     "expo": "^57.0.0",
     "expo-build-properties": "~57.0.7",
     "expo-camera": "~57.0.3",
