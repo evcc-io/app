@@ -6,9 +6,10 @@ this is a Kotlin/Glance reimplementation of the same contracts.
 
 ## Status
 
-This is a **pipeline spike**: one interactive **Loadpoint** widget, end-to-end.
-It has **not been compiled** yet — it needs `expo prebuild` + a real Android
-build to verify (see below). Treat it as a foundation to iterate on.
+Five interactive home-screen widgets, end-to-end, with per-instance
+configuration and instant refresh: **Loadpoint**, and forecast widgets for
+**Solar / Price / CO₂ / Feed-in**. Verified with `expo prebuild` + a real local
+Android build (`./gradlew assembleDebug` / `assembleRelease`).
 
 Done:
 
@@ -19,22 +20,27 @@ Done:
 - `kotlin/ApiClient.kt` — GET `/api/state?jq=…` + basic auth + POST actions, plus
   the `Loadpoint` model (mirrors `ApiClient.swift` / `Loadpoint.swift`).
 - `kotlin/LoadpointWidget.kt` — Glance widget + interactive mode buttons.
+- `kotlin/ForecastWidget.kt` / `ChartRenderer.kt` — the four forecast widgets,
+  with a Canvas-drawn chart (mirrors `ForecastWidget.swift`).
+- **Per-instance config**: `LoadpointWidgetConfigActivity.kt` (pick server, then
+  loadpoint) and `ForecastWidgetConfigActivity.kt` (pick server; Solar also gets
+  an "adjust to real production" toggle). Selections persist per `appWidgetId` in
+  `WidgetConfig.kt`, including a fallback queue for launchers (e.g. MIUI) that
+  hand the configure Activity a different id than the one the widget binds with.
+- **Immediate refresh on config/server change**: `modules/evcc-widget` (a small
+  local Expo native module) exposes `refresh()`, called from
+  `utils/widgetRefresh.ts` after `widgetSync.ts` writes the file — no need to
+  wait for the periodic `updatePeriodMillis` tick.
 - `kotlin/Theme.kt` — brand colors / text styles.
 - `scripts/androidWidget/withAndroidWidget.ts` — Expo config plugin: injects the
-  Kotlin, the `res/xml` widget info, the manifest `<receiver>`, and the
-  Glance/Compose gradle wiring. Registered in `app.config.ts`.
+  Kotlin, the `res/xml` widget info, the manifest `<receiver>`/`<activity>`
+  entries, and the Glance/Compose gradle wiring. Registered in `app.config.ts`.
 
 Not done yet (follow-ups for parity with iOS):
 
-- **Per-instance config** (pick server + loadpoint). iOS uses App Intents; Android
-  needs a widget **configuration Activity**. The spike uses the default server and
-  `loadpoints[0]`.
-- **The other 5 widgets** (Solar / Price / CO₂ / Feed-in forecasts).
-- **Immediate refresh on config change** — `widgetSync.ts` only writes the file;
-  pushing an instant update from RN needs a tiny native module calling
-  `LoadpointWidget().updateAll(context)`. Today the widget refreshes on its own
-  schedule (`updatePeriodMillis`, 30 min floor) / after a mode change.
-- Localization (`.xcstrings` → `strings.xml`), size variants, full visual parity.
+- Localization (`.xcstrings` → Android string resources) — widget text is
+  currently hardcoded English in the Kotlin.
+- Size variants, full visual parity with the iOS widgets.
 
 ## Build / test
 

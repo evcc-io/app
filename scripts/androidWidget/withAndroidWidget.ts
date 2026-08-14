@@ -86,11 +86,25 @@ const FORECAST_RECEIVERS = [
   { name: "EvccFeedinWidgetReceiver", label: "Feed-in" },
 ];
 
-const pushWidgetReceiver = (app: any, shortName: string, infoResource: string, label: string) => {
+// The manifest types don't model android:label or <meta-data> on <receiver>
+// (Expo's typings only add them for activities/applications), though the
+// manifest XML writer accepts both fine.
+type ManifestReceiver = NonNullable<AndroidConfig.Manifest.ManifestApplication["receiver"]>[number];
+type LabeledManifestReceiver = ManifestReceiver & {
+  $: ManifestReceiver["$"] & { "android:label"?: string };
+  "meta-data"?: AndroidConfig.Manifest.ManifestMetaData[];
+};
+
+const pushWidgetReceiver = (
+  app: AndroidConfig.Manifest.ManifestApplication,
+  shortName: string,
+  infoResource: string,
+  label: string,
+) => {
   app.receiver = app.receiver ?? [];
   const name = `.${WIDGET_SUBDIR}.${shortName}`;
-  if (app.receiver.some((r: any) => r.$["android:name"] === name)) return;
-  app.receiver.push({
+  if (app.receiver.some((r) => r.$["android:name"] === name)) return;
+  const receiver: LabeledManifestReceiver = {
     $: { "android:name": name, "android:exported": "false", "android:label": label },
     "intent-filter": [
       { action: [{ $: { "android:name": "android.appwidget.action.APPWIDGET_UPDATE" } }] },
@@ -103,7 +117,8 @@ const pushWidgetReceiver = (app: any, shortName: string, infoResource: string, l
         },
       },
     ],
-  });
+  };
+  app.receiver.push(receiver);
 };
 
 const withWidgetReceiver: ConfigPlugin = (config) =>
@@ -127,7 +142,7 @@ const withWidgetReceiver: ConfigPlugin = (config) =>
             action: [{ $: { "android:name": "android.appwidget.action.APPWIDGET_CONFIGURE" } }],
           },
         ],
-      } as any);
+      });
     }
     return config;
   });
