@@ -1,196 +1,107 @@
-import { useState, useCallback } from "react";
-import * as ServiceDiscovery from "@inthepocket/react-native-service-discovery";
-import { Layout, Text, Button } from "@ui-kitten/components";
+import { useCallback } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Alert } from "react-native";
+import { Alert, View } from "react-native";
+import Svg, { Path } from "react-native-svg";
 
 import { useAppContext } from "../components/AppContext";
-import ServerList from "../components/ServerList";
-import LoadingIndicator from "../components/animations/LoadingIndicator";
-import { fetchOrGetTitle, sameServer, verifyEvccServer } from "../utils/server";
+import AppText from "components/AppText";
+import Button from "components/Button";
+import TextLink from "components/TextLink";
+import { useThemeColors } from "utils/theme";
+import { fetchOrGetTitle, verifyEvccServer } from "../utils/server";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList, Server } from "types";
 import ScanQRCodeButton from "components/ScanQRCodeButton";
+import StatusCircle from "components/StatusCircle";
+
+// the evcc logo bolt (assets/icon-trans-light.svg), recolorable
+function EvccBolt({ size, color }: { size: number; color: string }) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 1024 1024">
+      <Path
+        fill={color}
+        d="M495.562,140.165l192.397,-0c6.932,-0 13.369,3.589 17.013,9.485c3.644,5.896 3.976,13.259 0.876,19.459l-113.793,227.585l95.904,-0c7.036,-0 13.554,3.697 17.165,9.735c3.611,6.038 3.784,13.529 0.455,19.727l-241.013,448.797c-4.605,8.574 -14.713,12.589 -23.945,9.512c-9.233,-3.078 -14.91,-12.355 -13.449,-21.977l45.124,-297.142l-137.065,0c-6.686,0 -12.929,-3.34 -16.639,-8.903c-3.709,-5.562 -4.394,-12.61 -1.825,-18.782l160.331,-385.182c3.104,-7.457 10.387,-12.314 18.464,-12.314Z"
+      />
+    </Svg>
+  );
+}
 
 export default function OnboardingScreen({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "Onboarding">) {
   const { t } = useTranslation();
-  const [searching, setSearching] = useState(false);
-  const [finished, setFinished] = useState(false);
-  const [scanNotPossible, setScanNotPossible] = useState(false);
-  const [found, setFound] = useState<Server[]>([]);
-
+  const colors = useThemeColors();
   const { addServer, setActiveServer } = useAppContext();
-
-  const getUrl = (service: ServiceDiscovery.Service) => {
-    const scheme = service.type === "_http._tcp." ? "http" : "https";
-    const hostName = service.hostName.endsWith(".")
-      ? service.hostName.slice(0, -1)
-      : service.hostName;
-    const port =
-      service.port === 80 || service.port === 443 ? "" : `:${service.port}`;
-    return `${scheme}://${hostName}${port}`;
-  };
-
-  const toServer = (service: ServiceDiscovery.Service): Server => {
-    return { url: getUrl(service), basicAuth: {} };
-  };
-
-  const scanNetwork = useCallback(() => {
-    // for multiple clicks on button
-    ServiceDiscovery.stopSearch("http");
-    ServiceDiscovery.stopSearch("https");
-
-    setSearching(true);
-    setFinished(false);
-    setFound([]);
-
-    const foundListener = ServiceDiscovery.addEventListener(
-      "serviceFound",
-      async (service: ServiceDiscovery.Service) => {
-        if (service.name === "evcc") {
-          console.log("Found service ", service);
-          const server = toServer(service);
-          server.title = await fetchOrGetTitle(server);
-
-          setFound((found) => {
-            if (!found.some((f) => sameServer(f, server))) {
-              return [...found, server];
-            } else {
-              return found;
-            }
-          });
-        }
-      },
-    );
-
-    const lostListener = ServiceDiscovery.addEventListener(
-      "serviceLost",
-      async (service: ServiceDiscovery.Service) => {
-        if (service.name === "evcc") {
-          console.log("Lost service ", service);
-          const server = toServer(service);
-
-          setFound((found) => {
-            return found.filter((f) => !sameServer(f, server));
-          });
-        }
-      },
-    );
-
-    (async () => {
-      try {
-        await Promise.all([
-          ServiceDiscovery.startSearch("http"),
-          ServiceDiscovery.startSearch("https"),
-        ]);
-
-        setTimeout(() => {
-          ServiceDiscovery.stopSearch("http");
-          ServiceDiscovery.stopSearch("https");
-
-          foundListener.remove();
-          lostListener.remove();
-
-          setSearching(false);
-          setFinished(true);
-        }, 60 * 1000);
-      } catch (e) {
-        console.log("error", e);
-        setSearching(false);
-        setScanNotPossible(true);
-      }
-    })();
-  }, []);
 
   const selectDemoServer = useCallback(async () => {
     const server = { url: "https://demo.evcc.io/", basicAuth: {} } as Server;
     server.title = await fetchOrGetTitle(server);
-    await selectServer(server);
-  }, []);
+    try {
+      const finalUrl = await verifyEvccServer(server);
+      const verifiedServer = { ...server, url: finalUrl };
+      await addServer(verifiedServer);
+      await setActiveServer(verifiedServer);
+    } catch (error) {
+      Alert.alert((error as Error).message);
+    }
+  }, [addServer, setActiveServer]);
 
-  const selectServer = useCallback(
-    async (server: Server) => {
-      try {
-        const finalUrl = await verifyEvccServer(server);
-        const verifiedServer = { ...server, url: finalUrl };
-        await addServer(verifiedServer);
-        await setActiveServer(verifiedServer);
-      } catch (error) {
-        Alert.alert((error as Error).message);
-      }
-    },
-    [addServer],
-  );
+  const startSearch = useCallback(() => {
+    navigation.navigate("SearchServer");
+  }, [navigation]);
 
   const manualEntry = useCallback(() => {
     navigation.navigate("AddServer");
   }, [navigation]);
 
   return (
-    <Layout style={{ flex: 1, paddingHorizontal: 16 }}>
+    <View
+      style={{
+        flex: 1,
+        paddingHorizontal: 24,
+        backgroundColor: colors.background,
+      }}
+    >
       <SafeAreaView style={{ flex: 1 }}>
-        <Layout style={{ flex: 1 }}>
-          <Text
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
+          <StatusCircle color={colors.primaryTint}>
+            <EvccBolt size={88} color={colors.onPrimaryTint} />
+          </StatusCircle>
+          <AppText
             testID="serverScreenTitle"
-            style={{ marginVertical: 32 }}
-            category="h2"
+            variant="h2"
+            style={{ textAlign: "center" }}
           >
             {t("main.title")}
-          </Text>
-          <Text style={{ marginBottom: 32 }} category="p1">
-            {t("main.description")}
-          </Text>
-
-          <Button
-            style={{ marginTop: 8, marginBottom: 32 }}
-            appearance="filled"
-            size="giant"
-            onPress={scanNetwork}
-            accessoryLeft={searching ? LoadingIndicator : undefined}
-            disabled={scanNotPossible}
-            testID="serverSearchButton"
+          </AppText>
+          <AppText
+            color="hint"
+            style={{
+              fontSize: 17,
+              lineHeight: 25,
+              textAlign: "center",
+              marginTop: 12,
+            }}
           >
+            {t("main.description")}
+          </AppText>
+        </View>
+        <View style={{ paddingBottom: 8, gap: 12 }}>
+          <Button onPress={startSearch} testID="serverSearchButton">
             {t("servers.search.start")}
           </Button>
-
-          {scanNotPossible ? (
-            <Text style={{ marginVertical: 16 }} category="p1">
-              {t("servers.search.notAvailable")}
-            </Text>
-          ) : null}
-          {finished && found.length === 0 ? (
-            <Text style={{ marginVertical: 16 }} category="p1">
-              {t("servers.search.nothingFound")}
-            </Text>
-          ) : (
-            <ServerList entries={Array.from(found)} onSelect={selectServer} />
-          )}
-        </Layout>
-        <Layout style={{ paddingVertical: 16 }}>
           <ScanQRCodeButton shown="Onboarding" />
-          <Button
-            testID="manualEntry"
-            style={{ marginVertical: 8 }}
-            appearance="outline"
-            status="primary"
-            onPress={manualEntry}
-          >
+          <TextLink onPress={manualEntry} testID="manualEntry">
             {t("servers.manually.specify")}
-          </Button>
-          <Button
-            testID="useDemo"
-            style={{ marginVertical: 8 }}
-            appearance="ghost"
-            status="basic"
-            onPress={selectDemoServer}
-          >
+          </TextLink>
+          <TextLink onPress={selectDemoServer} testID="useDemo">
             {t("servers.useDemo")}
-          </Button>
-        </Layout>
+          </TextLink>
+        </View>
       </SafeAreaView>
-    </Layout>
+    </View>
   );
 }

@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Button, Layout, Text, useTheme } from "@ui-kitten/components";
 import { CameraView } from "expo-camera";
+import AppText from "components/AppText";
+import Button from "components/Button";
+import { radius, useThemeColors } from "utils/theme";
 import { useTranslation } from "react-i18next";
 import { View, Animated } from "react-native";
 import Header from "../components/Header";
@@ -20,7 +22,7 @@ export default function QRCodeCameraScreen({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "QRCodeCamera">) {
   const { t } = useTranslation();
-  const theme = useTheme();
+  const colors = useThemeColors();
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [statusType, setStatusType] = useState<"success" | "error" | null>(
     null,
@@ -88,7 +90,7 @@ export default function QRCodeCameraScreen({
   );
 
   return (
-    <Layout style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
       {memoizedHeader}
       <SafeAreaView
         style={{ flex: 1, paddingHorizontal: 16, paddingBottom: 32 }}
@@ -109,7 +111,7 @@ export default function QRCodeCameraScreen({
           </Button>
         ) : (
           <CameraView
-            style={{ flex: 1, borderRadius: 16 }}
+            style={{ flex: 1, borderRadius: radius.card }}
             barcodeScannerSettings={{ barcodeTypes: ["qr"] }}
             onBarcodeScanned={
               isScanning
@@ -161,13 +163,13 @@ export default function QRCodeCameraScreen({
           style={{ height: 60, justifyContent: "center", alignItems: "center" }}
         >
           {statusMessage ? (
-            <Text
-              status={statusType === "success" ? "success" : "danger"}
-              category="s1"
+            <AppText
+              color={statusType === "success" ? "success" : "danger"}
+              variant="s1"
               style={{ textAlign: "center" }}
             >
               {statusMessage}
-            </Text>
+            </AppText>
           ) : (
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Animated.View
@@ -175,22 +177,22 @@ export default function QRCodeCameraScreen({
                   width: 8,
                   height: 8,
                   borderRadius: 4,
-                  backgroundColor: theme["color-success-500"],
+                  backgroundColor: colors.primary,
                   opacity: pulseAnim,
                   marginRight: 8,
                 }}
               />
-              <Text
-                appearance="hint"
-                category="s1"
+              <AppText
+                color="hint"
+                variant="s1"
                 style={{ textAlign: "center" }}
               >
                 {t("servers.manually.qrcode.scanning")}
-              </Text>
+              </AppText>
             </View>
           )}
         </View>
       </SafeAreaView>
-    </Layout>
+    </View>
   );
 }

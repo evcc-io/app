@@ -1,20 +1,15 @@
 import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
-import * as eva from "@eva-design/eva";
-import { ApplicationProvider } from "@ui-kitten/components";
-import { useColorScheme } from "react-native";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import { getLocales } from "expo-localization";
-import mapping from "./style.json";
 
 import OnboardingScreen from "./screens/OnboardingScreen";
+import SearchServerScreen from "./screens/SearchServerScreen";
 import AddServerScreen from "./screens/AddServerScreen";
 import MainScreen from "./screens/MainScreen";
 import { AppProvider, useAppContext } from "./components/AppContext";
-import custom from "./themes.json";
-import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { decode, encode } from "base-64";
 import translations from "./i18n";
@@ -132,6 +127,11 @@ function AppNavigator() {
             <>
               <Stack.Screen name="Onboarding" component={OnboardingScreen} />
               <Stack.Screen
+                name="SearchServer"
+                component={SearchServerScreen}
+                options={{ animation: "slide_from_right" }}
+              />
+              <Stack.Screen
                 name="AddServer"
                 component={AddServerScreen}
                 options={sheetOpts}
@@ -150,29 +150,10 @@ function AppNavigator() {
 }
 
 export default function App() {
-  const colorScheme = useColorScheme();
-  const theme: "light" | "dark" = colorScheme === "dark" ? "dark" : "light";
-  const [fontsLoaded] = useFonts({
-    "Montserrat-Bold": require("./assets/fonts/Montserrat-Bold.ttf"),
-    "Montserrat-Medium": require("./assets/fonts/Montserrat-Medium.ttf"),
-  });
-
-  const mergedTheme = { ...eva[theme], ...custom[theme] };
-
-  if (!fontsLoaded) {
-    return null;
-  }
-
   return (
     <>
       <AppProvider>
-        <ApplicationProvider
-          {...eva}
-          theme={mergedTheme}
-          customMapping={{ ...eva.mapping, ...mapping }}
-        >
-          <AppNavigator />
-        </ApplicationProvider>
+        <AppNavigator />
       </AppProvider>
       <StatusBar style="auto" />
     </>

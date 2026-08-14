@@ -1,45 +1,53 @@
-import { Layout, Text, useTheme } from "@ui-kitten/components";
-import IconHomeFill from "@material-symbols/svg-400/rounded/home-fill.svg";
-import IconHome from "@material-symbols/svg-400/rounded/home.svg";
-import IconEdit from "@material-symbols/svg-400/rounded/edit.svg";
-import IconAdd from "@material-symbols/svg-400/rounded/add.svg";
 import * as Linking from "expo-linking";
 import * as Haptics from "expo-haptics";
+import { useCallback } from "react";
 import { useAppContext } from "../components/AppContext";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { SwitchServerStackParamList } from "types";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useTranslation } from "react-i18next";
+import { Server, SwitchServerStackParamList } from "types";
 import {
-  Pressable,
-  ScrollView,
-  TouchableOpacity,
-  useWindowDimensions,
-  View,
-} from "react-native";
-import { sameServer } from "utils/server";
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
+import { TouchableOpacity, View } from "react-native";
 import { delay } from "utils/delay";
 import { APP_VERSION, GITHUB_RELEASES_URL } from "../utils/constants";
 import Header from "components/Header";
-import ServerEntry, { SERVER_ENTRY_MIN_HEIGHT } from "components/ServerEntry";
+import AppText from "components/AppText";
+import SwitchServerList from "components/SwitchServerList";
+import { useThemeColors } from "utils/theme";
 
 export default function SwitchServerScreen({
   navigation,
 }: NativeStackScreenProps<SwitchServerStackParamList, "SwitchServer">) {
   const { t } = useTranslation();
-  const theme = useTheme();
-  const { activeServer, servers, setActiveServer } = useAppContext();
-  const { width } = useWindowDimensions();
-  const numColumns = width >= 600 ? 2 : 1;
-  const cellWidth = `${100 / numColumns}%` as const;
-  const cellStyle = {
-    width: cellWidth,
-    paddingHorizontal: 8,
-    paddingBottom: 20,
-  };
+  const colors = useThemeColors();
+  const insets = useSafeAreaInsets();
+  const { setActiveServer } = useAppContext();
+
+  const onSelect = useCallback(
+    async (server: Server) => {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+      await setActiveServer(server);
+      await delay(500);
+      navigation.goBack();
+    },
+    [setActiveServer, navigation],
+  );
+
+  const onEdit = useCallback(
+    (server: Server, serverIndex: number) => {
+      navigation.navigate("EditServer", { server, serverIndex });
+    },
+    [navigation],
+  );
+
+  const onAdd = useCallback(() => {
+    navigation.navigate("AddServer");
+  }, [navigation]);
 
   return (
-    <Layout style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
       <SafeAreaView style={{ flex: 1 }}>
         <Header
           title={t("servers.switchServer.title")}
@@ -48,102 +56,24 @@ export default function SwitchServerScreen({
             navigation.getParent()?.goBack();
           }}
         />
-        <View style={{ flex: 1, paddingHorizontal: 8 }}>
-          <ScrollView style={{ flex: 1 }}>
-            <View
-              style={{
-                flexDirection: "row",
-                flexWrap: "wrap",
-              }}
-            >
-              {servers.map((server, index) => {
-                const isActive = sameServer(server, activeServer);
-                const accentColor = isActive
-                  ? theme["text-primary-color"]
-                  : theme["text-basic-color"];
-                const StatusIcon = isActive ? IconHomeFill : IconHome;
-                return (
-                  <View
-                    key={server.url ?? `server-${index}`}
-                    style={cellStyle}
-                    testID={`server${index}`}
-                  >
-                    <ServerEntry
-                      title={server.title}
-                      url={server.url}
-                      active={isActive}
-                      leftIcon={
-                        <StatusIcon
-                          testID={`selectServer${index}`}
-                          width={28}
-                          height={28}
-                          fill={accentColor}
-                        />
-                      }
-                      rightIcon={
-                        <IconEdit
-                          testID={`editServer${index}Icon`}
-                          width={28}
-                          height={28}
-                          fill={accentColor}
-                        />
-                      }
-                      onPress={async () => {
-                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-                        await setActiveServer(server);
-                        await delay(500);
-                        navigation.goBack();
-                      }}
-                      onRightPress={() =>
-                        navigation.navigate("EditServer", {
-                          server,
-                          serverIndex: index,
-                        })
-                      }
-                    />
-                  </View>
-                );
-              })}
-              <View style={cellStyle}>
-                <Pressable
-                  onPress={() => navigation.navigate("AddServer")}
-                  style={({ pressed }) => ({
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    borderColor: theme["color-basic-500"],
-                    borderWidth: 1,
-                    borderStyle: pressed ? "solid" : "dashed",
-                    borderRadius: 16,
-                    minHeight: SERVER_ENTRY_MIN_HEIGHT,
-                    paddingHorizontal: 16,
-                  })}
-                >
-                  <IconAdd
-                    testID="addServerIcon"
-                    width={28}
-                    height={28}
-                    fill={theme["text-basic-color"]}
-                    style={{ marginRight: 8 }}
-                  />
-                  <Text style={{ color: theme["text-basic-color"] }}>
-                    {t("servers.switchServer.addServer")}
-                  </Text>
-                </Pressable>
-              </View>
-            </View>
-          </ScrollView>
-        </View>
-        <View style={{ alignItems: "center", paddingBottom: 8 }}>
+        <SwitchServerList onSelect={onSelect} onEdit={onEdit} onAdd={onAdd} />
+        <View
+          style={{
+            alignItems: "center",
+            paddingTop: 8,
+            // modal sheets don't reliably propagate the bottom inset to SafeAreaView
+            paddingBottom: Math.max(insets.bottom, 8),
+          }}
+        >
           <TouchableOpacity
             onPress={() => Linking.openURL(GITHUB_RELEASES_URL)}
           >
-            <Text appearance="hint" category="c1">
+            <AppText color="hint" variant="c1">
               {APP_VERSION}
-            </Text>
+            </AppText>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
-    </Layout>
+    </View>
   );
 }
