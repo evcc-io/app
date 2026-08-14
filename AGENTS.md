@@ -11,14 +11,14 @@ Related agent files in sibling repos:
 
 - Native mobile app wrapper around the evcc web UI, built with [Expo](https://expo.dev/) + [React Native](https://reactnative.dev/).
 - The app is intentionally thin: a `WebView` renders the actual evcc UI served by a user's local evcc instance. Native code only handles onboarding, server discovery, server management, deep links, downloads, haptics, and online/offline detection.
-- Design system: [UI Kitten](https://akveo.github.io/react-native-ui-kitten/) with `@eva-design/eva`. Custom theme tokens live in `themes.json` / `style.json`.
+- Design system: [Expo UI](https://docs.expo.dev/versions/latest/sdk/ui/) (`@expo/ui`, SwiftUI/Jetpack Compose native components) for buttons, plain React Native components elsewhere. The light/dark color palette lives in `utils/theme.ts` (`useThemeColors()`); themed text goes through `components/AppText.tsx`.
 - Ships on App Store, Mac App Store, Google Play, F-Droid, and as a direct APK on GitHub Releases.
 
 ## Essential Commands
 
 - `npm install` — install dependencies
 - `npm run start` — Expo dev mode (interactive)
-- `npm run ios` / `npm run android` / `npm run web` — start a platform target directly
+- `npm run ios` / `npm run android` — start a platform target directly
 - `npm run lint` — `tsc --noEmit && eslint .` (TypeScript types + ESLint)
 - `npm run format` — Prettier on the whole repo
 - `npm run translations` — regenerate `i18n/index.ts` from the JSON files in `i18n/` (run after adding a locale)
@@ -72,7 +72,7 @@ Most folders are self-explanatory (`screens/`, `components/`, `utils/`, `i18n/`,
 
 - **TypeScript everywhere**, `strict: true`. The lint script fails on type errors, so type things properly rather than `any`-casting.
 - React function components with hooks. Use `useCallback` / `useMemo` for handlers and JSX passed to children (see `MainScreen.tsx` for the established pattern).
-- UI Kitten primitives (`Layout`, `Text`, `Button`, …) over raw RN components when an equivalent exists, so theming stays consistent.
+- Use `components/AppText.tsx` for text and `components/Button.tsx` (an `@expo/ui` wrapper) for buttons so theming stays consistent. Colors always come from `useThemeColors()` (`utils/theme.ts`) — no hardcoded hex values in components. Native `@expo/ui` subtrees need a `Host` wrapper; layout inside a `Host` uses SwiftUI stacks / Compose rows, not flexbox.
 - Theming is automatic light/dark via `useColorScheme()` — there is no in-app theme toggle. Don't add one.
 - Product name is **"evcc"** (always lowercase, even sentence-initial), matching the docs style guide.
 - Keep native code surface minimal — prefer doing things in the web UI (main evcc repo) when possible. The app's job is to host the UI and bridge the few things only native can do.
@@ -84,7 +84,7 @@ Most folders are self-explanatory (`screens/`, `components/`, `utils/`, `i18n/`,
 - Local prerequisites:
   - `evcc --demo` running on `:7070`
   - `caddy run` on `:7080` (basic-auth wrapper for the auth tests)
-- Selectors: prefer `by.id("…")` matching `testID` props you set in components (e.g. `serverFormCheckAndSave`, `@serverFormUrl/input`). For elements inside the WebView, use `byWebDataTestId` / `byWebCss` from `e2e/helper.ts`.
+- Selectors: prefer `by.id("…")` matching `testID` props you set in components (e.g. `serverFormCheckAndSave`, `serverFormUrl`). For elements inside the WebView, use `byWebDataTestId` / `byWebCss` from `e2e/helper.ts`.
 - The WebView is "ready" before its content has loaded — always gate WebView assertions with `waitForWebview()`.
 - WebView taps can fail with "view not hittable" mid-layout; use `tapWebAfterWaitFor` / `tapAfterWaitFor` instead of bare `.tap()` for flaky-prone interactions.
 - Never use fixed `sleep`s as a substitute for these helpers.

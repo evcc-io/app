@@ -1,7 +1,7 @@
 {
   "main": {
-    "description": "Durchsuche dein Netzwerk, um deine evcc Installation zu finden.",
-    "title": "Server einrichten"
+    "description": "Verbinden wir uns mit deinem Server.",
+    "title": "Willkommen"
   },
   "servers": {
     "changeServer": "Server ändern",
@@ -13,7 +13,6 @@
       "authenticationRequired": "Anmeldung erforderlich",
       "checkAdress": "Der Server scheint keine evcc Instanz zu sein. Bitte prüfe die Adresse.",
       "checkAndSave": "Prüfen und speichern",
-      "enterUrl": "URL eingeben",
       "missingOrWrongAuthentication": "Fehlende oder falsche Anmeldung",
       "password": "Passwort",
       "serverIncompatible": "Die evcc Instanz ist noch nicht App-kompatibel. Aktualisiere deine Installation.",
@@ -34,16 +33,29 @@
     },
     "removeServer": "Server entfernen",
     "search": {
+      "inProgress": "Suche läuft …",
+      "connect": "Verbinden",
+      "tryAgain": "Erneut suchen",
       "notAvailable": "Die Suche ist auf diesem Gerät nicht möglich. Nutze die manuelle Eingabe.",
-      "nothingFound": "Es wurde kein evcc Server gefunden.",
+      "nothingFound": "Kein Server gefunden.",
       "searching": "Suche nach Verbindung ...",
-      "start": "Suche starten"
+      "start": "Server suchen",
+      "hint": "Das dauert normalerweise nur wenige Sekunden.",
+      "foundOne": "Server gefunden",
+      "foundMany": "{{count}} Server gefunden",
+      "selectHelper": "Wähle aus, womit du dich verbinden möchtest.",
+      "cancel": "Abbrechen"
     },
-    "select": "Auswählen",
-    "useDemo": "Demoinstanz verwenden"
+    "useDemo": "Demoinstanz verwenden",
+    "remove": "Entfernen",
+    "removeConfirm": "Möchtest du {{title}} wirklich entfernen?",
+    "editServer": "Server bearbeiten"
   },
   "widget": {
-    "type": { "price": "Netzbezugspreis", "feedin": "Einspeisevergütung" },
+    "type": {
+      "price": "Netzbezugspreis",
+      "feedin": "Einspeisevergütung"
+    },
     "now": "jetzt",
     "noData": {
       "title": "Keine Daten",

@@ -24,6 +24,7 @@ describe("Change Server", () => {
 
     await tapAfterWaitFor(element(by.id("editServer0Icon")));
     await element(by.id("setingsScreenRemoveServer")).tap();
+    await element(by.text("Remove")).tap();
 
     await expect(element(by.id("serverScreenTitle"))).toExist();
   });
@@ -39,7 +40,7 @@ describe("Change Server", () => {
     await tapAfterWaitFor(element(by.id("editServer0Icon")));
 
     // replaceText, not typeText: the CI emulator's IME suggestions mangle typed input
-    await element(by.id("@serverFormUrl/input")).replaceText("demo.evcc.io");
+    await element(by.id("serverFormUrl")).replaceText("demo.evcc.io");
     await element(by.id("serverFormCheckAndSave")).tap();
 
     await tapAfterWaitFor(element(by.id("selectServer0")));
@@ -55,13 +56,14 @@ describe("Change Server", () => {
     await byWebDataTestId("tab-more").tap();
     await byWebDataTestId("tab-more-app").tap();
     await element(by.id("addServerIcon")).tap();
-    await element(by.id("@serverFormTitle/input")).replaceText("Demo");
-    await element(by.id("@serverFormUrl/input")).replaceText("demo.evcc.io");
+    await element(by.id("serverFormTitle")).replaceText("Demo");
+    await element(by.id("serverFormUrl")).replaceText("demo.evcc.io");
     await element(by.id("serverFormCheckAndSave")).tap();
 
     // remove active server (server0 = local); first remaining (demo) is auto-activated
     await tapAfterWaitFor(element(by.id("editServer0Icon")));
     await element(by.id("setingsScreenRemoveServer")).tap();
+    await element(by.text("Remove")).tap();
 
     // close switch modal by tapping the now-only server, then verify demo is active
     await tapAfterWaitFor(element(by.id("selectServer0")));

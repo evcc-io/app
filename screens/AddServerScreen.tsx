@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
-import { Layout } from "@ui-kitten/components";
 import { View } from "react-native";
+import { useThemeColors } from "utils/theme";
 import ServerForm from "../components/ServerForm";
 import Header from "../components/Header";
 import { useAppContext } from "../components/AppContext";
@@ -15,7 +15,8 @@ function AddServerScreen({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "AddServer">) {
   const { t } = useTranslation();
-  const { setActiveServer, addServer, servers } = useAppContext();
+  const colors = useThemeColors();
+  const { setActiveServer, addServer } = useAppContext();
 
   const {
     title,
@@ -52,16 +53,15 @@ function AddServerScreen({
       console.log("serverSelected");
       setInternalServer(server);
 
-      if (servers.length === 0) {
-        await setActiveServer(server);
-      }
+      // a freshly added server becomes the active one
       await addServer(server);
+      await setActiveServer(server);
 
       if (navigation.canGoBack()) {
         navigation.goBack();
       }
     },
-    [servers.length, setActiveServer, addServer, navigation],
+    [setActiveServer, addServer, navigation],
   );
 
   const isNested = navigation
@@ -71,7 +71,7 @@ function AddServerScreen({
   const memoizedHeader = useMemo(
     () => (
       <Header
-        title={t("servers.manually.enterUrl")}
+        title={t("servers.switchServer.addServer")}
         showBack={isNested}
         onBack={() => {
           if (navigation.canGoBack()) {
@@ -90,7 +90,7 @@ function AddServerScreen({
   );
 
   return (
-    <Layout style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
       <SafeAreaView style={{ flex: 1 }}>
         <KeyboardAwareScrollView
           style={{ flex: 1 }}
@@ -106,7 +106,7 @@ function AddServerScreen({
           </View>
         </KeyboardAwareScrollView>
       </SafeAreaView>
-    </Layout>
+    </View>
   );
 }
 

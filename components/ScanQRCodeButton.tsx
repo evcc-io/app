@@ -1,9 +1,10 @@
-import { Button } from "@ui-kitten/components";
 import { useTranslation } from "react-i18next";
 import { useCameraPermissions } from "expo-camera";
 import { Alert, Linking } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { testingEnvironment } from "helper/launchArguments";
+import Button from "components/Button";
+import TextLink from "components/TextLink";
 
 interface ScanQRCodeButtonProps {
   shown: "Onboarding" | "Addserverform";
@@ -19,36 +20,41 @@ export default function ScanQRCodeButton({ shown }: ScanQRCodeButtonProps) {
   }
 
   const isOnboarding = shown === "Onboarding";
+  const testID = `scanQrcodeButton${shown}`;
+
+  const onPress = async () => {
+    if (!testingEnvironment() && !permission.granted) {
+      const result = await requestPermission();
+
+      if (!result.granted) {
+        if (!result.canAskAgain) {
+          await Linking.openSettings();
+        } else {
+          Alert.alert(t("servers.manually.qrcode.permissionDenied"));
+        }
+        return;
+      }
+    }
+
+    navigation.navigate("QRCodeCamera");
+  };
+
+  if (!isOnboarding) {
+    return (
+      <TextLink onPress={onPress} testID={testID}>
+        {t("servers.manually.qrcode.scanPrefill")}
+      </TextLink>
+    );
+  }
 
   return (
     <Button
-      style={{ marginVertical: 8 }}
-      appearance={isOnboarding ? "outline" : "ghost"}
-      status={isOnboarding ? "primary" : "basic"}
-      size={isOnboarding ? "medium" : "small"}
-      testID={`scanQrcodeButton${shown}`}
-      onPress={async () => {
-        if (!testingEnvironment() && !permission.granted) {
-          const result = await requestPermission();
-
-          if (!result.granted) {
-            if (!result.canAskAgain) {
-              await Linking.openSettings();
-            } else {
-              Alert.alert(t("servers.manually.qrcode.permissionDenied"));
-            }
-            return;
-          }
-        }
-
-        navigation.navigate("QRCodeCamera");
-      }}
+      variant="outline"
+      status="primary"
+      testID={testID}
+      onPress={onPress}
     >
-      {t(
-        isOnboarding
-          ? "servers.manually.qrcode.scanOnboarding"
-          : "servers.manually.qrcode.scanPrefill",
-      )}
+      {t("servers.manually.qrcode.scanOnboarding")}
     </Button>
   );
 }

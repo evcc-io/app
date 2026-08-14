@@ -1,15 +1,11 @@
-import {
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-  useMemo,
-} from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { WebView, WebViewMessageEvent } from "react-native-webview";
-import { StyleSheet, Animated } from "react-native";
+import { StyleSheet, Animated, View, Text } from "react-native";
 import * as Linking from "expo-linking";
 import * as Haptics from "expo-haptics";
-import { Text, Layout, Button } from "@ui-kitten/components";
+import AppText from "components/AppText";
+import TextLink from "components/TextLink";
+import { useThemeColors } from "utils/theme";
 import { useAppContext } from "../components/AppContext";
 import { useTranslation } from "react-i18next";
 import { USER_AGENT } from "../utils/constants";
@@ -25,13 +21,14 @@ import CookieManager from "@preeternal/react-native-cookie-manager";
 import { encode } from "base-64";
 import { shareFileFromUrl } from "utils/shareFile";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Spinner from "components/animations/Spinner";
+import Spinner from "components/Spinner";
 import { testingEnvironment } from "helper/launchArguments";
 
 export default function MainScreen({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "Main">) {
   const { t } = useTranslation();
+  const colors = useThemeColors();
   const insets = useSafeAreaInsets();
   const { activeServer, targetPath, clearTargetPath } = useAppContext();
   const webViewRef = useRef<WebView>(null);
@@ -81,8 +78,11 @@ export default function MainScreen({
 
   useEffect(() => {
     const duration = 400;
-    const smallDelay = 500;
-    const largeDelay = smallDelay + duration * 0.3;
+    // hiding is quick; showing waits out brief outages — starting the hide
+    // animation cancels a still-delayed show, so short blips never surface
+    const hideDelay = 500;
+    const showDelay = 2000;
+    const stagger = duration * 0.3;
 
     // snap straight to final state when running tests
     if (testingEnvironment()) {
@@ -94,21 +94,21 @@ export default function MainScreen({
 
     Animated.timing(contFade, {
       toValue: isConnected ? 1 : 0,
-      delay: isConnected ? largeDelay : smallDelay,
+      delay: isConnected ? hideDelay + stagger : showDelay,
       duration,
       useNativeDriver: true,
     }).start();
 
     Animated.timing(loadFade, {
       toValue: isConnected ? 0 : 1,
-      delay: isConnected ? smallDelay : largeDelay,
+      delay: isConnected ? hideDelay : showDelay + stagger,
       duration,
       useNativeDriver: true,
     }).start();
 
     Animated.timing(loadScale, {
       toValue: isConnected ? 1.2 : 1,
-      delay: isConnected ? smallDelay : largeDelay,
+      delay: isConnected ? hideDelay : showDelay + stagger,
       duration,
       useNativeDriver: true,
     }).start();
@@ -187,10 +187,6 @@ export default function MainScreen({
     [activeServer?.url],
   );
 
-  const onLoad = useCallback(() => {
-    console.log("onLoad");
-  }, []);
-
   const onError = useCallback((event: WebViewErrorEvent) => {
     console.log("onError", event);
     setIsConnected(false);
@@ -208,7 +204,7 @@ export default function MainScreen({
 
   const LayoutMemoized = useMemo(
     () => (
-      <Layout style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: colors.background }}>
         <Animated.View style={{ flex: 1, opacity: contFade }}>
           <WebView
             testID="mainWebView"
@@ -240,7 +236,6 @@ export default function MainScreen({
             applicationNameForUserAgent={USER_AGENT}
             onError={onError}
             onHttpError={onHttpError}
-            onLoad={onLoad}
             onContentProcessDidTerminate={onTerminate}
             onMessage={handleMessage}
             onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
@@ -254,21 +249,31 @@ export default function MainScreen({
             pointerEvents: isConnected ? "none" : "auto",
           }}
         >
-          <Layout
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: colors.background,
+            }}
           >
-            <Text style={{ marginVertical: 32 }} category="p1">
+            <Spinner />
+            <AppText color="hint" style={{ marginTop: 24 }}>
               {t("servers.search.searching")}
-            </Text>
-            <Spinner size="large" />
-          </Layout>
-          <Layout style={{ paddingVertical: 32 }}>
-            <Button appearance="ghost" status="basic" onPress={openSettings}>
+            </AppText>
+          </View>
+          <View
+            style={{
+              paddingVertical: 32,
+              backgroundColor: colors.background,
+            }}
+          >
+            <TextLink onPress={openSettings}>
               {t("servers.changeServer")}
-            </Button>
-          </Layout>
+            </TextLink>
+          </View>
         </Animated.View>
-      </Layout>
+      </View>
     ),
     [
       activeServer?.url,
@@ -279,16 +284,18 @@ export default function MainScreen({
       loadScale,
       isConnected,
       onError,
-      onLoad,
       onShouldStartLoadWithRequest,
       onTerminate,
       handleMessage,
       openSettings,
+      colors,
+      t,
+      insets,
     ],
   );
 
   if (!activeServer?.url) {
-    return <Layout style={{ flex: 1 }} />;
+    return <View style={{ flex: 1, backgroundColor: colors.background }} />;
   }
 
   console.log("serverUrl", activeServer.url, isConnected);
