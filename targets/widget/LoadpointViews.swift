@@ -115,7 +115,13 @@ struct LoadpointCard: View {
         Spacer(minLength: 4)
         // mode shown here only in square; the wide variant has the mode selector
         if family != .systemMedium, let m = vm.currentMode {
-          Text(L.t(m.labelKey)).font(.system(size: 11, weight: .semibold)).foregroundStyle(.secondary)
+          HStack(spacing: 3) {
+            Text(L.t(m.labelKey)).font(.system(size: 11, weight: .semibold))
+            if vm.alwaysChargeActive, m.rawValue == ChargeMode.smart.rawValue {
+              Image(systemName: "infinity").font(.system(size: 9, weight: .bold))
+            }
+          }
+          .foregroundStyle(.secondary)
         }
       }
     }
@@ -127,9 +133,13 @@ struct LoadpointCard: View {
       ForEach(vm.modes, id: \.self) { mode in
         let selected = mode == vm.currentMode
         Button(intent: SetModeIntent(serverId: serverId, lp: lp, mode: mode.rawValue)) {
-          Text(L.t(mode.labelKey))
-            .font(.system(size: 12, weight: .bold))
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+          HStack(spacing: 4) {
+            Text(L.t(mode.labelKey)).font(.system(size: 12, weight: .bold))
+            if vm.alwaysChargeActive, mode.rawValue == ChargeMode.smart.rawValue {
+              Image(systemName: "infinity").font(.system(size: 10, weight: .bold))
+            }
+          }
+          .frame(maxWidth: .infinity, maxHeight: .infinity)
             .foregroundColor(selected ? (scheme == .dark ? .black : .white)
                                       : (scheme == .dark ? Color.modeTextDark : Color.modeTextLight))
             .background(selected ? AnyShapeStyle(.primary)

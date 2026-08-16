@@ -28,9 +28,11 @@ const KEYS: Record<string, { repo: "evcc" | "app"; key: string }> = {
   "widget.solar.tomorrow": { repo: "evcc", key: "forecast.solar.tomorrow" },
   // loadpoint charge modes + statuses — reuse evcc daemon translations
   "widget.mode.off": { repo: "evcc", key: "main.mode.off" },
-  "widget.mode.pv": { repo: "evcc", key: "main.mode.pv" },
-  "widget.mode.minpv": { repo: "evcc", key: "main.mode.minpv" },
+  "widget.mode.smart": { repo: "evcc", key: "main.mode.smart" },
   "widget.mode.now": { repo: "evcc", key: "main.mode.now" },
+  "widget.mode.on": { repo: "evcc", key: "main.mode.on" },
+  "widget.mode.normal": { repo: "evcc", key: "main.mode.normal" },
+  "widget.mode.boost": { repo: "evcc", key: "main.mode.boost" },
   "widget.lpstatus.disconnected": { repo: "evcc", key: "main.vehicleStatus.disconnected" },
   "widget.lpstatus.connected": { repo: "evcc", key: "main.vehicleStatus.connected" },
   "widget.lpstatus.waitForVehicle": { repo: "evcc", key: "main.vehicleStatus.waitForVehicle" },
@@ -63,6 +65,59 @@ const KEYS: Record<string, { repo: "evcc" | "app"; key: string }> = {
   "widget.description.price": { repo: "app", key: "widget.description.price" },
   "widget.description.co2": { repo: "app", key: "widget.description.co2" },
   "widget.description.feedin": { repo: "app", key: "widget.description.feedin" },
+};
+
+// Labels for legacy servers (pre smart-mode redesign). evcc removed
+// main.mode.pv/minpv from its i18n, so the last Weblate state is frozen here.
+// Locales missing from a map fall back to en.
+const FROZEN: Record<string, Record<string, string>> = {
+  "widget.mode.pv": {
+    en: "Solar",
+    cs: "Solár",
+    da: "Sol",
+    de: "PV",
+    el: "Φ/Β",
+    fi: "PV",
+    fr: "Solaire",
+    hr: "Solarno",
+    hu: "Szolár",
+    it: "Solare",
+    ja: "太陽光",
+    lb: "PV",
+    lt: "Saulė",
+    nl: "PV",
+    pl: "Słońce",
+    sk: "Solár",
+    sl: "Sonce",
+    sv: "Sol",
+    ta: "ஞாயிறு",
+    tr: "GES",
+    uk: "Сонячна",
+    "zh-Hans": "太阳能",
+  },
+  "widget.mode.minpv": {
+    en: "Min+Solar",
+    da: "Min+Sol",
+    de: "Min+PV",
+    el: "Ελαχ+Φ/Β",
+    fi: "Min+PV",
+    fr: "Min+Solaire",
+    hr: "Min+Solarno",
+    hu: "Min+Szolár",
+    it: "Min+Solare",
+    ja: "Min+太陽光",
+    lb: "Min+PV",
+    lt: "Min+Saulė",
+    nl: "Min+PV",
+    pl: "Min+Słońce",
+    sk: "Min+Solár",
+    sl: "Min+Sonce",
+    sv: "Min+Sol",
+    ta: "குறை+ஞாயிறு",
+    tr: "Asg.+GES",
+    uk: "Мін+Сонце",
+    "zh-Hans": "最少+太阳能",
+  },
 };
 
 if (!fs.existsSync(EVCC_I18N)) {
@@ -120,6 +175,15 @@ for (const [iosKey, src] of Object.entries(KEYS)) {
   const localizations: Record<string, unknown> = {};
   for (const locale of locales) {
     const value = lookup(src.repo, src.key, locale) ?? en;
+    localizations[locale] = { stringUnit: { state: "translated", value } };
+  }
+  strings[iosKey] = { extractionState: "manual", localizations };
+}
+
+for (const [iosKey, frozen] of Object.entries(FROZEN)) {
+  const localizations: Record<string, unknown> = {};
+  for (const locale of locales) {
+    const value = frozen[locale] ?? frozen[locale.split("-")[0]] ?? frozen[SOURCE_LANG];
     localizations[locale] = { stringUnit: { state: "translated", value } };
   }
   strings[iosKey] = { extractionState: "manual", localizations };
