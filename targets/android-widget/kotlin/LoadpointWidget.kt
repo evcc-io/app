@@ -2,6 +2,7 @@ package io.evcc.android.widget
 
 import android.content.Context
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
@@ -15,6 +16,8 @@ import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import androidx.glance.appwidget.action.ActionCallback
 import androidx.glance.appwidget.action.actionRunCallback
+import androidx.glance.LocalSize
+import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.provideContent
 import androidx.glance.appwidget.updateAll
@@ -23,8 +26,10 @@ import androidx.glance.color.isNightMode
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
 import androidx.glance.layout.Column
+import androidx.glance.layout.ColumnScope
 import androidx.glance.layout.Row
 import androidx.glance.layout.Spacer
+import androidx.glance.layout.fillMaxHeight
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.height
@@ -41,11 +46,20 @@ import kotlinx.coroutines.withContext
  * loadpoint; per-instance configuration (server + loadpoint picker) is set by
  * LoadpointWidgetConfigActivity.
  *
- * Deliberate simplifications vs. iOS: single compact layout (no systemMedium
- * mode-selector column - the mode chips are always shown inline instead, which
- * keeps the interactive mode-switching that a medium-only selector would drop
- * for this widget's only size), no reload button, no deep link.
+ * Two sizes, like iOS's systemSmall/systemMedium: compact shows the mode chips
+ * inline below the metric (unlike iOS's compact layout, which only shows the
+ * current mode as text - keeping the chips interactive here instead of
+ * dropping mode-switching entirely for the smallest size); wide shows a
+ * vertical mode-selector column alongside, mirroring LoadpointCard's
+ * `HStack { left; modeSelector }`. Deliberate simplifications vs. iOS: no
+ * reload button, no deep link.
  */
+private val SMALL_SIZE = DpSize(180.dp, 110.dp)
+private val WIDE_SIZE = DpSize(340.dp, 110.dp)
+
+// Row measurements are unreliable right at a boundary on some launchers, so
+// the switch-over threshold sits well below WIDE_SIZE's width.
+private val WIDE_THRESHOLD = 260.dp
 // visible (not private) so the config activities can reuse them for previews
 fun modeLabel(context: Context, mode: String): String = when (mode) {
     "off" -> context.getString(R.string.widget_mode_off)
@@ -123,6 +137,8 @@ fun modes(lp: Loadpoint): List<String> =
     if (lp.chargerFeatureSwitchDevice) listOf("off", "pv", "now") else listOf("off", "pv", "minpv", "now")
 
 class LoadpointWidget : GlanceAppWidget() {
+    override val sizeMode = SizeMode.Responsive(setOf(SMALL_SIZE, WIDE_SIZE))
+
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         // per-instance config (server + loadpoint) written by LoadpointWidgetConfigActivity,
         // keyed by the appWidgetId this glanceId maps to.
@@ -174,6 +190,27 @@ class LoadpointWidget : GlanceAppWidget() {
 
     @Composable
     private fun LoadpointBody(context: Context, state: LoadpointState.Data) {
+        val wide = LocalSize.current.width >= WIDE_THRESHOLD
+        if (wide) {
+            Row(modifier = GlanceModifier.fillMaxSize()) {
+                Column(modifier = GlanceModifier.defaultWeight().fillMaxHeight()) {
+                    LoadpointInfo(context, state)
+                }
+                Spacer(GlanceModifier.width(14.dp))
+                Column(modifier = GlanceModifier.width(116.dp).fillMaxHeight()) {
+                    ModeSelectorColumn(context, state)
+                }
+            }
+        } else {
+            LoadpointInfo(context, state)
+            Spacer(GlanceModifier.height(8.dp))
+            ModeChipsRow(context, state)
+        }
+    }
+
+    // main status/metric/power column, shared by both sizes (mirrors LoadpointCard's `left`)
+    @Composable
+    private fun LoadpointInfo(context: Context, state: LoadpointState.Data) {
         val lp = state.lp
         val s = status(lp)
         val m = metric(lp)
@@ -220,22 +257,45 @@ class LoadpointWidget : GlanceAppWidget() {
             Text(powerValue, style = powerStyle)
             Text(" $powerUnit", style = powerUnitStyle)
         }
+    }
 
-        Spacer(GlanceModifier.height(8.dp))
-
+    // compact size: chips in a row below the metric (see class doc for why this
+    // stays interactive here, unlike iOS's compact-size plain-text mode label)
+    @Composable
+    private fun ModeChipsRow(context: Context, state: LoadpointState.Data) {
         Row {
-            modes(lp).forEachIndexed { i, mode ->
+            modes(state.lp).forEachIndexed { i, mode ->
                 if (i > 0) Spacer(GlanceModifier.width(4.dp))
-                ModeChip(context, mode = mode, current = lp.mode, serverId = state.serverId, lpIndex = state.lpIndex)
+                ModeChip(context, mode = mode, current = state.lp.mode, serverId = state.serverId, lpIndex = state.lpIndex)
             }
         }
     }
 
+    // wide size: a vertical column of full-width chips (mirrors modeSelector in LoadpointViews.swift).
+    // A ColumnScope extension (not just called within one) so defaultWeight() resolves below.
     @Composable
-    private fun ModeChip(context: Context, mode: String, current: String?, serverId: String, lpIndex: Int) {
+    private fun ColumnScope.ModeSelectorColumn(context: Context, state: LoadpointState.Data) {
+        modes(state.lp).forEachIndexed { i, mode ->
+            if (i > 0) Spacer(GlanceModifier.height(6.dp))
+            ModeChip(
+                context, mode = mode, current = state.lp.mode, serverId = state.serverId, lpIndex = state.lpIndex,
+                modifier = GlanceModifier.fillMaxWidth().defaultWeight(),
+            )
+        }
+    }
+
+    @Composable
+    private fun ModeChip(
+        context: Context,
+        mode: String,
+        current: String?,
+        serverId: String,
+        lpIndex: Int,
+        modifier: GlanceModifier = GlanceModifier,
+    ) {
         val selected = mode == current
         Box(
-            modifier = GlanceModifier
+            modifier = modifier
                 .background(if (selected) modeSelectedBackground else modeUnselectedBackground)
                 .cornerRadius(9.dp)
                 .padding(horizontal = 8.dp, vertical = 5.dp)
@@ -248,6 +308,7 @@ class LoadpointWidget : GlanceAppWidget() {
                         ),
                     ),
                 ),
+            contentAlignment = Alignment.Center,
         ) {
             Text(
                 text = modeLabel(context, mode),
