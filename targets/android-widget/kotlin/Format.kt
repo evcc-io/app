@@ -76,3 +76,10 @@ object Format {
         return if (withUnit) "$price ${pricePerKWhUnit(currency)}" else price
     }
 }
+
+/** Splits a "<number> <unit>" string (e.g. "8.4 kW") so a header can render the
+ *  value large and the unit small. Mirrors splitValueUnit in Format.swift. */
+fun splitValueUnit(s: String): Pair<String, String> {
+    val i = s.indexOf(' ')
+    return if (i < 0) s to "" else s.substring(0, i) to s.substring(i + 1)
+}

@@ -87,6 +87,9 @@ object ApiClient {
     }
 }
 
+/** Subset of /api/state .loadpoints[].ui used by the widget (see Loadpoint.swift). */
+data class LoadpointUi(val minTemp: Double?, val maxTemp: Double?)
+
 /** Subset of /api/state .loadpoints[] used by the widget (see Loadpoint.swift). */
 data class Loadpoint(
     val title: String?,
@@ -94,25 +97,39 @@ data class Loadpoint(
     val vehicleSoc: Double?,
     val effectiveLimitSoc: Double?,
     val chargePower: Double?,
+    val sessionEnergy: Double?,
+    val chargedEnergy: Double?,
     val mode: String?,
     val charging: Boolean,
     val connected: Boolean,
     val enabled: Boolean,
+    val chargerFeatureHeating: Boolean,
+    val chargerFeatureSwitchDevice: Boolean,
+    val ui: LoadpointUi?,
 ) {
     companion object {
         fun parse(json: String): Loadpoint? = runCatching {
             val o = JSONObject(json)
             fun d(k: String) = if (o.has(k) && !o.isNull(k)) o.optDouble(k) else null
+            val ui = o.optJSONObject("ui")?.let {
+                fun uiD(k: String) = if (it.has(k) && !it.isNull(k)) it.optDouble(k) else null
+                LoadpointUi(minTemp = uiD("minTemp"), maxTemp = uiD("maxTemp"))
+            }
             Loadpoint(
                 title = o.optString("title").takeIf { it.isNotEmpty() },
                 vehicleTitle = o.optString("vehicleTitle").takeIf { it.isNotEmpty() },
                 vehicleSoc = d("vehicleSoc"),
                 effectiveLimitSoc = d("effectiveLimitSoc"),
                 chargePower = d("chargePower"),
+                sessionEnergy = d("sessionEnergy"),
+                chargedEnergy = d("chargedEnergy"),
                 mode = o.optString("mode").takeIf { it.isNotEmpty() },
                 charging = o.optBoolean("charging", false),
                 connected = o.optBoolean("connected", false),
                 enabled = o.optBoolean("enabled", false),
+                chargerFeatureHeating = o.optBoolean("chargerFeatureHeating", false),
+                chargerFeatureSwitchDevice = o.optBoolean("chargerFeatureSwitchDevice", false),
+                ui = ui,
             )
         }.getOrNull()
     }

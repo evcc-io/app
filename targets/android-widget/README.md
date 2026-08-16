@@ -31,16 +31,39 @@ Done:
   local Expo native module) exposes `refresh()`, called from
   `utils/widgetRefresh.ts` after `widgetSync.ts` writes the file — no need to
   wait for the periodic `updatePeriodMillis` tick.
-- `kotlin/Theme.kt` — brand colors / text styles.
+- `kotlin/Theme.kt` — day/night colors (mirrors iOS's `scheme == .dark`
+  branches), full typography scale, per-forecast-type palette (mirrors
+  `Theme.swift`'s `Palette.make`).
 - `scripts/androidWidget/withAndroidWidget.ts` — Expo config plugin: injects the
   Kotlin, the `res/xml` widget info, the manifest `<receiver>`/`<activity>`
   entries, and the Glance/Compose gradle wiring. Registered in `app.config.ts`.
+- **Visual parity with iOS** (mirrors `LoadpointViews.swift`/`Views.swift`):
+  status dot + color-coded status text, a rounded/striped progress bar
+  (`ProgressBarRenderer.kt`, since Glance has no fractional-width layout
+  modifier), chip-style mode buttons with a selected-state fill, full
+  heating/finished/waitForVehicle status + kWh-fallback metric logic ported
+  from `LoadpointVM.build`, a two-column forecast header, a Y-axis +
+  step-vs-area chart modes + per-type color in `ChartRenderer.kt` (previously
+  always a flat green area line regardless of data type), bold/colored footer
+  stats, and light/dark card backgrounds throughout. Deliberately not ported:
+  size variants (`systemMedium`'s mode-selector column - the mode chips are
+  always shown inline instead), the reload button, deep links, and Swift
+  Charts' `.monotone` spline smoothing (straight line segments instead).
+- **Live preview when configuring**: both config Activities now fetch real
+  data for the tapped server/loadpoint/toggle and render an actual preview of
+  the widget (`WidgetPreview.kt`) before committing via a new "Use this"
+  button - previously the pick-a-row tap committed immediately with no
+  preview. Built with plain Views (reusing `ChartRenderer`/`ProgressBarRenderer`
+  bitmaps) rather than a live Glance render, since embedding real Glance
+  content in a classic-Views Activity needs the full Compose UI stack plus an
+  unpublished/experimental Google API - see the "Live preview" discussion this
+  was scoped from for the trade-off.
 
 Not done yet (follow-ups for parity with iOS):
 
 - Localization (`.xcstrings` → Android string resources) — widget text is
   currently hardcoded English in the Kotlin.
-- Size variants, full visual parity with the iOS widgets.
+- Size variants (see above).
 
 ## Build / test
 

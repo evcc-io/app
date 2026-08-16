@@ -2,8 +2,11 @@ package io.evcc.android.widget
 
 import android.content.Context
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.dp
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
+import androidx.glance.Image
+import androidx.glance.ImageProvider
 import androidx.glance.action.ActionParameters
 import androidx.glance.action.actionParametersOf
 import androidx.glance.action.clickable
@@ -12,31 +15,102 @@ import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import androidx.glance.appwidget.action.ActionCallback
 import androidx.glance.appwidget.action.actionRunCallback
+import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.provideContent
 import androidx.glance.appwidget.updateAll
+import androidx.glance.background
+import androidx.glance.color.isNightMode
 import androidx.glance.layout.Alignment
+import androidx.glance.layout.Box
 import androidx.glance.layout.Column
 import androidx.glance.layout.Row
+import androidx.glance.layout.Spacer
 import androidx.glance.layout.fillMaxSize
+import androidx.glance.layout.fillMaxWidth
+import androidx.glance.layout.height
 import androidx.glance.layout.padding
+import androidx.glance.layout.width
 import androidx.glance.text.Text
-import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 /**
- * Loadpoint home-screen widget (Android counterpart of LoadpointWidget.swift).
+ * Loadpoint home-screen widget (Android counterpart of LoadpointWidget.swift /
+ * LoadpointViews.swift's LoadpointCard). Uses the default server and the first
+ * loadpoint; per-instance configuration (server + loadpoint picker) is set by
+ * LoadpointWidgetConfigActivity.
  *
- * Spike scope: uses the default server and the first loadpoint. Per-instance
- * configuration (server + loadpoint picker) is a follow-up via a widget
- * configuration Activity — see targets/android-widget/README.md.
+ * Deliberate simplifications vs. iOS: single compact layout (no systemMedium
+ * mode-selector column - the mode chips are always shown inline instead, which
+ * keeps the interactive mode-switching that a medium-only selector would drop
+ * for this widget's only size), no reload button, no deep link.
  */
+// visible (not private) so the config activities can reuse them for previews
+val MODE_LABELS = mapOf("off" to "Off", "pv" to "Solar", "minpv" to "Min+Solar", "now" to "Fast")
+
+enum class LpStatus(val active: Boolean) {
+    DISCONNECTED(false), CONNECTED(false), WAIT_FOR_VEHICLE(false), FINISHED(false), CHARGING(true), HEATING(true),
+}
+
+data class Metric(val value: String, val unit: String, val fill: Double?)
+
 private sealed interface LoadpointState {
     data class Data(val lp: Loadpoint, val serverId: String, val lpIndex: Int) : LoadpointState
     object NoData : LoadpointState
     object Unreachable : LoadpointState
     object NotConfigured : LoadpointState
 }
+
+// mirrors LoadpointVM.build's status derivation in Loadpoint.swift
+fun status(lp: Loadpoint): LpStatus {
+    val heating = lp.chargerFeatureHeating
+    val soc = lp.vehicleSoc ?: 0.0
+    val limit = lp.effectiveLimitSoc ?: 0.0
+    return when {
+        !lp.connected -> LpStatus.DISCONNECTED
+        lp.charging -> if (heating) LpStatus.HEATING else LpStatus.CHARGING
+        lp.enabled -> if (limit > 0 && soc >= limit) LpStatus.FINISHED else LpStatus.WAIT_FOR_VEHICLE
+        else -> LpStatus.CONNECTED
+    }
+}
+
+// mirrors LoadpointStatus.labelKey(heating:) resolved against evcc's own
+// main.vehicleStatus.* / main.heatingStatus.* English strings
+fun statusLabel(s: LpStatus, heating: Boolean): String = when (s) {
+    LpStatus.DISCONNECTED -> "Disconnected."
+    LpStatus.CONNECTED -> if (heating) "Standby." else "Connected."
+    LpStatus.WAIT_FOR_VEHICLE -> if (heating) "Ready to heat…" else "Ready. Waiting for vehicle…"
+    LpStatus.FINISHED -> "Finished."
+    LpStatus.CHARGING -> "Charging…"
+    LpStatus.HEATING -> "Heating…"
+}
+
+// mirrors LoadpointVM.build's metricValue/metricUnit/fill derivation
+fun metric(lp: Loadpoint): Metric {
+    val heating = lp.chargerFeatureHeating
+    val soc = lp.vehicleSoc ?: 0.0
+    return when {
+        heating -> {
+            val minT = lp.ui?.minTemp ?: 0.0
+            val maxT = lp.ui?.maxTemp ?: 100.0
+            val fill = if (maxT > minT) ((soc - minT) / (maxT - minT)).coerceIn(0.0, 1.0) else null
+            Metric(Format.fmtNumber(soc, 1), "°C", fill)
+        }
+        soc > 0 -> Metric(Format.fmtNumber(soc, 0), "%", (soc / 100).coerceIn(0.0, 1.0))
+        else -> {
+            val kWh = ((lp.chargedEnergy ?: lp.sessionEnergy ?: 0.0)) / 1000
+            Metric(Format.fmtNumber(kWh, 1), "kWh", null)
+        }
+    }
+}
+
+fun title(lp: Loadpoint): String {
+    val vt = lp.vehicleTitle?.trim().orEmpty()
+    return vt.ifEmpty { lp.title ?: "Loadpoint" }
+}
+
+fun modes(lp: Loadpoint): List<String> =
+    if (lp.chargerFeatureSwitchDevice) listOf("off", "pv", "now") else listOf("off", "pv", "minpv", "now")
 
 class LoadpointWidget : GlanceAppWidget() {
     override suspend fun provideGlance(context: Context, id: GlanceId) {
@@ -50,7 +124,7 @@ class LoadpointWidget : GlanceAppWidget() {
             val (serverId, lpIndex) = resolved
             load(context, serverId, lpIndex)
         }
-        provideContent { Content(state) }
+        provideContent { Content(context, state) }
     }
 
     private suspend fun load(context: Context, serverId: String?, lpIndex: Int): LoadpointState = withContext(Dispatchers.IO) {
@@ -65,45 +139,90 @@ class LoadpointWidget : GlanceAppWidget() {
     }
 
     @Composable
-    private fun Content(state: LoadpointState) {
+    private fun Content(context: Context, state: LoadpointState) {
+        val notConfigured = state == LoadpointState.NotConfigured
         Column(
-            modifier = GlanceModifier.fillMaxSize().padding(12.dp),
+            modifier = GlanceModifier.fillMaxSize()
+                .background(if (notConfigured) notConfiguredBackground else cardBackground)
+                .padding(12.dp),
             verticalAlignment = Alignment.Vertical.Top,
         ) {
             when (state) {
-                is LoadpointState.Data -> LoadpointBody(state)
-                LoadpointState.NoData -> Text("No data", style = subtle)
-                LoadpointState.Unreachable -> Text("Unreachable", style = subtle)
-                LoadpointState.NotConfigured -> Text("Open the app to set up", style = subtle)
+                is LoadpointState.Data -> LoadpointBody(context, state)
+                LoadpointState.NoData -> MessageBody("No data", "This server has no data of this type.")
+                LoadpointState.Unreachable -> MessageBody("Server unreachable", "Could not load the evcc instance.")
+                LoadpointState.NotConfigured -> NotConfiguredBody()
             }
         }
     }
 
     @Composable
-    private fun LoadpointBody(state: LoadpointState.Data) {
+    private fun LoadpointBody(context: Context, state: LoadpointState.Data) {
         val lp = state.lp
-        Text(lp.title ?: lp.vehicleTitle ?: "Loadpoint", style = titleStyle)
-        val soc = lp.vehicleSoc?.let { "${it.toInt()}%" }
-        val power = lp.chargePower?.let { formatPower(it) }
-        Text(listOfNotNull(statusLabel(lp), soc).joinToString(" · "), style = subtle)
-        if (power != null) Text(power, style = titleStyle)
+        val s = status(lp)
+        val m = metric(lp)
+        val heating = lp.chargerFeatureHeating
 
-        // interactive mode buttons (charging control), like the iOS widget
-        Row(modifier = GlanceModifier.padding(top = 8.dp)) {
-            for (mode in listOf("off", "pv", "minpv", "now")) {
-                ModeButton(mode = mode, current = lp.mode, serverId = state.serverId, lpIndex = state.lpIndex)
+        Text(title(lp), style = titleStyle)
+
+        Row(modifier = GlanceModifier.padding(top = 3.dp), verticalAlignment = Alignment.Vertical.CenterVertically) {
+            Box(modifier = GlanceModifier.width(7.dp).height(7.dp).background(statusColor(s.active, heating)).cornerRadius(4.dp)) {}
+            Spacer(GlanceModifier.width(5.dp))
+            Text(statusLabel(s, heating), style = statusStyle.copy(color = statusColor(s.active, heating)))
+        }
+
+        Spacer(GlanceModifier.height(6.dp))
+
+        Row(verticalAlignment = Alignment.Vertical.Bottom) {
+            Text(m.value, style = metricStyle)
+            Text(" ${m.unit}", style = metricUnitStyle)
+        }
+
+        if (m.fill != null) {
+            Spacer(GlanceModifier.height(6.dp))
+            val dark = context.isNightMode
+            Image(
+                provider = ImageProvider(
+                    ProgressBarRenderer.render(
+                        fraction = m.fill,
+                        fillColor = barFillColor(lp.connected, heating),
+                        trackColor = barTrackColor(dark),
+                        striped = s.active,
+                        stripeColor = barStripeColor(heating),
+                    ),
+                ),
+                contentDescription = null,
+                modifier = GlanceModifier.fillMaxWidth().height(6.dp),
+            )
+        }
+
+        Spacer(GlanceModifier.height(6.dp))
+
+        val power = lp.chargePower?.let { Format.fmtW(it) } ?: "–"
+        val (powerValue, powerUnit) = splitValueUnit(power)
+        Row {
+            Text(powerValue, style = powerStyle)
+            Text(" $powerUnit", style = powerUnitStyle)
+        }
+
+        Spacer(GlanceModifier.height(8.dp))
+
+        Row {
+            modes(lp).forEachIndexed { i, mode ->
+                if (i > 0) Spacer(GlanceModifier.width(4.dp))
+                ModeChip(mode = mode, current = lp.mode, serverId = state.serverId, lpIndex = state.lpIndex)
             }
         }
     }
 
     @Composable
-    private fun ModeButton(mode: String, current: String?, serverId: String, lpIndex: Int) {
+    private fun ModeChip(mode: String, current: String?, serverId: String, lpIndex: Int) {
         val selected = mode == current
-        Text(
-            text = mode,
-            style = if (selected) titleStyle else subtle,
+        Box(
             modifier = GlanceModifier
-                .padding(horizontal = 6.dp, vertical = 4.dp)
+                .background(if (selected) modeSelectedBackground else modeUnselectedBackground)
+                .cornerRadius(9.dp)
+                .padding(horizontal = 8.dp, vertical = 5.dp)
                 .clickable(
                     actionRunCallback<ModeAction>(
                         actionParametersOf(
@@ -113,17 +232,37 @@ class LoadpointWidget : GlanceAppWidget() {
                         ),
                     ),
                 ),
-        )
+        ) {
+            Text(
+                text = MODE_LABELS[mode] ?: mode,
+                style = modeChipStyle.copy(color = if (selected) modeSelectedText else modeUnselectedText),
+            )
+        }
     }
 
-    private fun statusLabel(lp: Loadpoint): String = when {
-        lp.charging -> "Charging"
-        lp.connected -> "Connected"
-        else -> "Disconnected"
+    @Composable
+    private fun MessageBody(title: String, message: String) {
+        Column(
+            modifier = GlanceModifier.fillMaxSize(),
+            verticalAlignment = Alignment.Vertical.CenterVertically,
+            horizontalAlignment = Alignment.Horizontal.CenterHorizontally,
+        ) {
+            Text(title, style = messageTitleStyle)
+            Text(message, style = messageBodyStyle)
+        }
     }
 
-    private fun formatPower(w: Double): String =
-        if (w >= 1000) String.format("%.1f kW", w / 1000) else "${w.toInt()} W"
+    @Composable
+    private fun NotConfiguredBody() {
+        Column(
+            modifier = GlanceModifier.fillMaxSize(),
+            verticalAlignment = Alignment.Vertical.CenterVertically,
+            horizontalAlignment = Alignment.Horizontal.CenterHorizontally,
+        ) {
+            Text("Set up evcc", style = notConfiguredTitleStyle)
+            Text("Tap to connect a server and pick a data type.", style = notConfiguredBodyStyle)
+        }
+    }
 }
 
 /** Applies a charge mode from a widget button, then refreshes the widget. */

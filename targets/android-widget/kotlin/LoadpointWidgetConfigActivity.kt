@@ -3,11 +3,13 @@ package io.evcc.android.widget
 import android.app.Activity
 import android.appwidget.AppWidgetManager
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
@@ -20,6 +22,9 @@ import kotlinx.coroutines.withContext
 /**
  * Widget placement configuration: pick a server, then a loadpoint. Stores the
  * choice in the widget's per-instance config (read back by LoadpointWidget).
+ * Tapping a loadpoint fetches its live data and shows a preview of the actual
+ * widget (see WidgetPreview) before committing via the "Use this loadpoint"
+ * button, so placement is a pick-and-confirm flow rather than pick-and-commit.
  *
  * Uses classic Views (not Compose) so it needs no dependencies beyond Glance -
  * the RN app is not otherwise a Compose app. Rows are built explicitly (not via
@@ -29,9 +34,15 @@ import kotlinx.coroutines.withContext
 class LoadpointWidgetConfigActivity : Activity() {
     private val scope = MainScope()
     private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
+    private var pending: Pair<String, Int>? = null // (serverId, lpIndex) shown in the preview, ready to confirm
 
     private lateinit var titleView: TextView
+    private lateinit var previewContainer: FrameLayout
     private lateinit var container: LinearLayout // holds the tappable rows
+    private lateinit var confirmButton: TextView
+
+    private val dark: Boolean
+        get() = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +76,10 @@ class LoadpointWidgetConfigActivity : Activity() {
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 22f)
             setTypeface(typeface, Typeface.BOLD)
         }
+        previewContainer = FrameLayout(this).apply {
+            setPadding(dp(20), 0, dp(20), dp(4))
+            visibility = View.GONE
+        }
         container = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
         val scroll = ScrollView(this).apply {
             layoutParams = LinearLayout.LayoutParams(
@@ -72,8 +87,21 @@ class LoadpointWidgetConfigActivity : Activity() {
             )
             addView(container)
         }
+        confirmButton = TextView(this).apply {
+            text = "Use this loadpoint"
+            setTextColor(Color.WHITE)
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
+            setTypeface(typeface, Typeface.BOLD)
+            gravity = android.view.Gravity.CENTER
+            setPadding(dp(20), dp(16), dp(20), dp(16))
+            setBackgroundColor(0xFF0FDE41.toInt())
+            visibility = View.GONE
+            setOnClickListener { pending?.let { (serverId, lpIndex) -> save(serverId, lpIndex) } }
+        }
         root.addView(titleView)
+        root.addView(previewContainer)
         root.addView(scroll)
+        root.addView(confirmButton)
         return root
     }
 
@@ -136,8 +164,33 @@ class LoadpointWidgetConfigActivity : Activity() {
                 setRows(listOf("No loadpoints reachable"), null)
                 return@launch
             }
-            setRows(titles) { index -> save(server.id, index) }
+            setRows(titles) { index -> preview(server, index) }
         }
+    }
+
+    /** Fetches the tapped loadpoint's live data and shows a preview of the real widget. */
+    private fun preview(server: StoredServer, lpIndex: Int) {
+        pending = null
+        confirmButton.visibility = View.GONE
+        showPreview(WidgetPreview.message(this, "Loading preview…", dark))
+        scope.launch {
+            val lp = withContext(Dispatchers.IO) {
+                (ApiClient.fetch(server, ".loadpoints[$lpIndex]") as? FetchOutcome.Success)?.json?.let { Loadpoint.parse(it) }
+            }
+            if (lp == null) {
+                showPreview(WidgetPreview.message(this@LoadpointWidgetConfigActivity, "Couldn't load a preview", dark))
+                return@launch
+            }
+            showPreview(WidgetPreview.loadpoint(this@LoadpointWidgetConfigActivity, lp, dark))
+            pending = server.id to lpIndex
+            confirmButton.visibility = View.VISIBLE
+        }
+    }
+
+    private fun showPreview(view: View) {
+        previewContainer.removeAllViews()
+        previewContainer.addView(view)
+        previewContainer.visibility = View.VISIBLE
     }
 
     private fun save(serverId: String, lpIndex: Int) {
