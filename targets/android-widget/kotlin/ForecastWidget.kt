@@ -25,6 +25,7 @@ import androidx.glance.layout.height
 import androidx.glance.layout.padding
 import androidx.glance.text.Text
 import androidx.glance.unit.ColorProvider
+import io.evcc.android.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -43,8 +44,17 @@ import org.json.JSONObject
  * reuse them for its live preview without duplicating the parsing logic.
  */
 // Titles mirror evcc's own forecast.type.*/widget.type.* strings (see Configuration.swift).
-enum class ForecastKind(val title: String) {
-    SOLAR("Solar Production"), PRICE("Grid import price"), CO2("CO₂ Emissions"), FEEDIN("Grid export price")
+enum class ForecastKind {
+    SOLAR, PRICE, CO2, FEEDIN;
+
+    fun title(context: Context): String = context.getString(
+        when (this) {
+            SOLAR -> R.string.widget_type_solar
+            PRICE -> R.string.widget_type_price
+            CO2 -> R.string.widget_type_co2
+            FEEDIN -> R.string.widget_type_feedin
+        },
+    )
 }
 
 data class FooterSide(val prefix: String? = null, val emphasis: String, val label: String? = null)
@@ -123,8 +133,14 @@ private fun solar(context: Context, server: StoredServer, adjust: Boolean): Fore
             value = value,
             unit = unit,
             chart = chart(context, ForecastKind.SOLAR, values, times, ChartKind.AREA),
-            footerLeft = FooterSide(emphasis = Format.fmtWh(today * scale), label = "remaining"),
-            footerRight = FooterSide(emphasis = Format.fmtWh(tomorrow * scale), label = "Tomorrow"),
+            footerLeft = FooterSide(
+                emphasis = Format.fmtWh(today * scale),
+                label = context.getString(R.string.widget_solar_remaining),
+            ),
+            footerRight = FooterSide(
+                emphasis = Format.fmtWh(tomorrow * scale),
+                label = context.getString(R.string.widget_solar_tomorrow),
+            ),
         )
     }.getOrDefault(ForecastState.NoData)
 }
@@ -221,11 +237,11 @@ abstract class ForecastWidget(private val kind: ForecastKind) : GlanceAppWidget(
             val server = SharedStore.server(context, serverId) ?: return@withContext ForecastState.NotConfigured
             loadForecastState(context, kind, server, adjust)
         }
-        provideContent { Content(state) }
+        provideContent { Content(context, state) }
     }
 
     @Composable
-    private fun Content(state: ForecastState) {
+    private fun Content(context: Context, state: ForecastState) {
         val notConfigured = state == ForecastState.NotConfigured
         Column(
             modifier = GlanceModifier.fillMaxSize()
@@ -234,18 +250,24 @@ abstract class ForecastWidget(private val kind: ForecastKind) : GlanceAppWidget(
             verticalAlignment = Alignment.Vertical.Top,
         ) {
             when (state) {
-                is ForecastState.Data -> DataBody(state)
-                ForecastState.NoData -> MessageBody("No data", "This server has no data of this type.")
-                ForecastState.Unreachable -> MessageBody("Server unreachable", "Could not load the evcc instance.")
-                ForecastState.NotConfigured -> NotConfiguredBody()
+                is ForecastState.Data -> DataBody(context, state)
+                ForecastState.NoData -> MessageBody(
+                    context.getString(R.string.widget_noData_title),
+                    context.getString(R.string.widget_noData_body),
+                )
+                ForecastState.Unreachable -> MessageBody(
+                    context.getString(R.string.widget_unreachable_title),
+                    context.getString(R.string.widget_unreachable_body),
+                )
+                ForecastState.NotConfigured -> NotConfiguredBody(context)
             }
         }
     }
 
     @Composable
-    private fun DataBody(state: ForecastState.Data) {
+    private fun DataBody(context: Context, state: ForecastState.Data) {
         val p = palette(kind)
-        Header(p, state.value, state.unit)
+        Header(context, p, state.value, state.unit)
         Spacer(GlanceModifier.height(4.dp))
         Image(
             provider = ImageProvider(state.chart),
@@ -258,16 +280,16 @@ abstract class ForecastWidget(private val kind: ForecastKind) : GlanceAppWidget(
     }
 
     @Composable
-    private fun Header(p: Palette, value: String, unit: String) {
+    private fun Header(context: Context, p: Palette, value: String, unit: String) {
         Row(modifier = GlanceModifier.fillMaxWidth(), verticalAlignment = Alignment.Vertical.Bottom) {
-            Text(kind.title, style = headerHeadlineStyle.copy(color = p.headline))
+            Text(kind.title(context), style = headerHeadlineStyle.copy(color = p.headline))
             Spacer(GlanceModifier.defaultWeight())
             Column(horizontalAlignment = Alignment.Horizontal.End) {
                 Row {
                     Text(value, style = headerHeadlineStyle.copy(color = p.headline))
                     Text(" $unit", style = headerHeadlineUnitStyle.copy(color = p.headline))
                 }
-                Text("now", style = headerSubStyle)
+                Text(context.getString(R.string.widget_now), style = headerSubStyle)
             }
         }
     }
@@ -303,14 +325,14 @@ abstract class ForecastWidget(private val kind: ForecastKind) : GlanceAppWidget(
     }
 
     @Composable
-    private fun NotConfiguredBody() {
+    private fun NotConfiguredBody(context: Context) {
         Column(
             modifier = GlanceModifier.fillMaxSize(),
             verticalAlignment = Alignment.Vertical.CenterVertically,
             horizontalAlignment = Alignment.Horizontal.CenterHorizontally,
         ) {
-            Text("Set up evcc", style = notConfiguredTitleStyle)
-            Text("Tap to connect a server and pick a data type.", style = notConfiguredBodyStyle)
+            Text(context.getString(R.string.widget_setup_title), style = notConfiguredTitleStyle)
+            Text(context.getString(R.string.widget_setup_body), style = notConfiguredBodyStyle)
         }
     }
 }

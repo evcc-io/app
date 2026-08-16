@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.compose.ui.graphics.toArgb
+import io.evcc.android.R
 
 /**
  * Builds a plain-Views mock of the Loadpoint/Forecast widgets for the config
@@ -82,7 +83,7 @@ object WidgetPreview {
         val dotColor = statusColorArgb(s.active, heating, dark)
 
         val root = card(context, cardBackgroundArgb(dark))
-        root.addView(text(context, title(lp), 14f, primary, bold = true))
+        root.addView(text(context, title(context, lp), 14f, primary, bold = true))
 
         val statusRow = LinearLayout(context).apply {
             orientation = LinearLayout.HORIZONTAL
@@ -96,7 +97,7 @@ object WidgetPreview {
             },
         )
         statusRow.addView(View(context).apply { layoutParams = LinearLayout.LayoutParams(d(5), 1) })
-        statusRow.addView(text(context, statusLabel(s, heating), 10f, dotColor, bold = true))
+        statusRow.addView(text(context, statusLabel(context, s, heating), 10f, dotColor, bold = true))
         root.addView(statusRow)
 
         root.addView(spacer(context, 6))
@@ -135,7 +136,7 @@ object WidgetPreview {
         val chipsRow = LinearLayout(context).apply { orientation = LinearLayout.HORIZONTAL }
         modes(lp).forEachIndexed { i, mode ->
             if (i > 0) chipsRow.addView(View(context).apply { layoutParams = LinearLayout.LayoutParams(d(4), 1) })
-            chipsRow.addView(chip(context, MODE_LABELS[mode] ?: mode, mode == lp.mode, dark))
+            chipsRow.addView(chip(context, modeLabel(context, mode), mode == lp.mode, dark))
         }
         root.addView(chipsRow)
 
@@ -160,7 +161,7 @@ object WidgetPreview {
 
         val headerRow = LinearLayout(context).apply { orientation = LinearLayout.HORIZONTAL; gravity = Gravity.BOTTOM }
         headerRow.addView(
-            text(context, kind.title, 15f, headlineArgb, bold = true).apply {
+            text(context, kind.title(context), 15f, headlineArgb, bold = true).apply {
                 layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
             },
         )
@@ -169,7 +170,7 @@ object WidgetPreview {
         valueRow.addView(text(context, data.value, 15f, headlineArgb, bold = true))
         valueRow.addView(text(context, " ${data.unit}", 10f, headlineArgb, bold = true))
         valueCol.addView(valueRow)
-        valueCol.addView(text(context, "now", 9f, secondary))
+        valueCol.addView(text(context, context.getString(R.string.widget_now), 9f, secondary))
         headerRow.addView(valueCol)
         root.addView(headerRow)
 

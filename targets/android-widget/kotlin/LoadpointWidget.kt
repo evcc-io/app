@@ -31,6 +31,7 @@ import androidx.glance.layout.height
 import androidx.glance.layout.padding
 import androidx.glance.layout.width
 import androidx.glance.text.Text
+import io.evcc.android.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -46,7 +47,13 @@ import kotlinx.coroutines.withContext
  * for this widget's only size), no reload button, no deep link.
  */
 // visible (not private) so the config activities can reuse them for previews
-val MODE_LABELS = mapOf("off" to "Off", "pv" to "Solar", "minpv" to "Min+Solar", "now" to "Fast")
+fun modeLabel(context: Context, mode: String): String = when (mode) {
+    "off" -> context.getString(R.string.widget_mode_off)
+    "pv" -> context.getString(R.string.widget_mode_pv)
+    "minpv" -> context.getString(R.string.widget_mode_minpv)
+    "now" -> context.getString(R.string.widget_mode_now)
+    else -> mode
+}
 
 enum class LpStatus(val active: Boolean) {
     DISCONNECTED(false), CONNECTED(false), WAIT_FOR_VEHICLE(false), FINISHED(false), CHARGING(true), HEATING(true),
@@ -75,15 +82,18 @@ fun status(lp: Loadpoint): LpStatus {
 }
 
 // mirrors LoadpointStatus.labelKey(heating:) resolved against evcc's own
-// main.vehicleStatus.* / main.heatingStatus.* English strings
-fun statusLabel(s: LpStatus, heating: Boolean): String = when (s) {
-    LpStatus.DISCONNECTED -> "Disconnected."
-    LpStatus.CONNECTED -> if (heating) "Standby." else "Connected."
-    LpStatus.WAIT_FOR_VEHICLE -> if (heating) "Ready to heat…" else "Ready. Waiting for vehicle…"
-    LpStatus.FINISHED -> "Finished."
-    LpStatus.CHARGING -> "Charging…"
-    LpStatus.HEATING -> "Heating…"
-}
+// main.vehicleStatus.* / main.heatingStatus.* translations
+fun statusLabel(context: Context, s: LpStatus, heating: Boolean): String = context.getString(
+    when (s) {
+        LpStatus.DISCONNECTED -> R.string.widget_lpstatus_disconnected
+        LpStatus.CONNECTED -> if (heating) R.string.widget_lpheat_connected else R.string.widget_lpstatus_connected
+        LpStatus.WAIT_FOR_VEHICLE ->
+            if (heating) R.string.widget_lpheat_waitForVehicle else R.string.widget_lpstatus_waitForVehicle
+        LpStatus.FINISHED -> R.string.widget_lpstatus_finished
+        LpStatus.CHARGING -> R.string.widget_lpstatus_charging
+        LpStatus.HEATING -> R.string.widget_lpheat_charging
+    },
+)
 
 // mirrors LoadpointVM.build's metricValue/metricUnit/fill derivation
 fun metric(lp: Loadpoint): Metric {
@@ -104,9 +114,9 @@ fun metric(lp: Loadpoint): Metric {
     }
 }
 
-fun title(lp: Loadpoint): String {
+fun title(context: Context, lp: Loadpoint): String {
     val vt = lp.vehicleTitle?.trim().orEmpty()
-    return vt.ifEmpty { lp.title ?: "Loadpoint" }
+    return vt.ifEmpty { lp.title ?: context.getString(R.string.widget_loadpoint_name) }
 }
 
 fun modes(lp: Loadpoint): List<String> =
@@ -149,9 +159,15 @@ class LoadpointWidget : GlanceAppWidget() {
         ) {
             when (state) {
                 is LoadpointState.Data -> LoadpointBody(context, state)
-                LoadpointState.NoData -> MessageBody("No data", "This server has no data of this type.")
-                LoadpointState.Unreachable -> MessageBody("Server unreachable", "Could not load the evcc instance.")
-                LoadpointState.NotConfigured -> NotConfiguredBody()
+                LoadpointState.NoData -> MessageBody(
+                    context.getString(R.string.widget_noData_title),
+                    context.getString(R.string.widget_noData_body),
+                )
+                LoadpointState.Unreachable -> MessageBody(
+                    context.getString(R.string.widget_unreachable_title),
+                    context.getString(R.string.widget_unreachable_body),
+                )
+                LoadpointState.NotConfigured -> NotConfiguredBody(context)
             }
         }
     }
@@ -163,12 +179,12 @@ class LoadpointWidget : GlanceAppWidget() {
         val m = metric(lp)
         val heating = lp.chargerFeatureHeating
 
-        Text(title(lp), style = titleStyle)
+        Text(title(context, lp), style = titleStyle)
 
         Row(modifier = GlanceModifier.padding(top = 3.dp), verticalAlignment = Alignment.Vertical.CenterVertically) {
             Box(modifier = GlanceModifier.width(7.dp).height(7.dp).background(statusColor(s.active, heating)).cornerRadius(4.dp)) {}
             Spacer(GlanceModifier.width(5.dp))
-            Text(statusLabel(s, heating), style = statusStyle.copy(color = statusColor(s.active, heating)))
+            Text(statusLabel(context, s, heating), style = statusStyle.copy(color = statusColor(s.active, heating)))
         }
 
         Spacer(GlanceModifier.height(6.dp))
@@ -210,13 +226,13 @@ class LoadpointWidget : GlanceAppWidget() {
         Row {
             modes(lp).forEachIndexed { i, mode ->
                 if (i > 0) Spacer(GlanceModifier.width(4.dp))
-                ModeChip(mode = mode, current = lp.mode, serverId = state.serverId, lpIndex = state.lpIndex)
+                ModeChip(context, mode = mode, current = lp.mode, serverId = state.serverId, lpIndex = state.lpIndex)
             }
         }
     }
 
     @Composable
-    private fun ModeChip(mode: String, current: String?, serverId: String, lpIndex: Int) {
+    private fun ModeChip(context: Context, mode: String, current: String?, serverId: String, lpIndex: Int) {
         val selected = mode == current
         Box(
             modifier = GlanceModifier
@@ -234,7 +250,7 @@ class LoadpointWidget : GlanceAppWidget() {
                 ),
         ) {
             Text(
-                text = MODE_LABELS[mode] ?: mode,
+                text = modeLabel(context, mode),
                 style = modeChipStyle.copy(color = if (selected) modeSelectedText else modeUnselectedText),
             )
         }
@@ -253,14 +269,14 @@ class LoadpointWidget : GlanceAppWidget() {
     }
 
     @Composable
-    private fun NotConfiguredBody() {
+    private fun NotConfiguredBody(context: Context) {
         Column(
             modifier = GlanceModifier.fillMaxSize(),
             verticalAlignment = Alignment.Vertical.CenterVertically,
             horizontalAlignment = Alignment.Horizontal.CenterHorizontally,
         ) {
-            Text("Set up evcc", style = notConfiguredTitleStyle)
-            Text("Tap to connect a server and pick a data type.", style = notConfiguredBodyStyle)
+            Text(context.getString(R.string.widget_setup_title), style = notConfiguredTitleStyle)
+            Text(context.getString(R.string.widget_setup_body), style = notConfiguredBodyStyle)
         }
     }
 }

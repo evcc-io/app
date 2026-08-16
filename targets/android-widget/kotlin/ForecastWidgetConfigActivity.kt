@@ -14,6 +14,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
+import io.evcc.android.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -92,7 +93,7 @@ class ForecastWidgetConfigActivity : Activity() {
             addView(container)
         }
         confirmButton = TextView(this).apply {
-            text = "Use this"
+            text = getString(R.string.widget_androidConfig_useThis)
             setTextColor(Color.WHITE)
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
             setTypeface(typeface, Typeface.BOLD)
@@ -145,10 +146,10 @@ class ForecastWidgetConfigActivity : Activity() {
     // --- flow ---
 
     private fun showServers() {
-        titleView.text = "Choose server"
+        titleView.text = getString(R.string.widget_androidConfig_chooseServer)
         val servers = SharedStore.servers(this)
         when {
-            servers.isEmpty() -> setRows(listOf("No servers — add one in the app first"), null)
+            servers.isEmpty() -> setRows(listOf(getString(R.string.widget_androidConfig_noServers)), null)
             servers.size == 1 -> onServer(servers[0])
             else -> setRows(servers.map { it.displayTitle }) { index -> onServer(servers[index]) }
         }
@@ -159,19 +160,30 @@ class ForecastWidgetConfigActivity : Activity() {
     }
 
     private fun showAdjust(server: StoredServer) {
-        titleView.text = "Adjust to real production?"
-        setRows(listOf("Yes (recommended)", "No")) { index -> preview(server, adjust = index == 0) }
+        titleView.text = getString(R.string.widget_androidConfig_adjustQuestion)
+        setRows(
+            listOf(
+                getString(R.string.widget_androidConfig_yesRecommended),
+                getString(R.string.widget_androidConfig_no),
+            ),
+        ) { index -> preview(server, adjust = index == 0) }
     }
 
     /** Fetches live data for the chosen server (+ adjust setting) and shows a preview of the real widget. */
     private fun preview(server: StoredServer, adjust: Boolean) {
         pending = null
         confirmButton.visibility = View.GONE
-        showPreview(WidgetPreview.message(this, "Loading preview…", dark))
+        showPreview(WidgetPreview.message(this, getString(R.string.widget_androidConfig_loadingPreview), dark))
         scope.launch {
             val state = withContext(Dispatchers.IO) { loadForecastState(this@ForecastWidgetConfigActivity, kind, server, adjust) }
             if (state !is ForecastState.Data) {
-                showPreview(WidgetPreview.message(this@ForecastWidgetConfigActivity, "Couldn't load a preview", dark))
+                showPreview(
+                    WidgetPreview.message(
+                        this@ForecastWidgetConfigActivity,
+                        getString(R.string.widget_androidConfig_previewError),
+                        dark,
+                    ),
+                )
                 return@launch
             }
             showPreview(WidgetPreview.forecast(this@ForecastWidgetConfigActivity, kind, state, dark))

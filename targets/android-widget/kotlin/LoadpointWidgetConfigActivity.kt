@@ -14,6 +14,7 @@ import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.glance.appwidget.GlanceAppWidgetManager
+import io.evcc.android.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -88,7 +89,7 @@ class LoadpointWidgetConfigActivity : Activity() {
             addView(container)
         }
         confirmButton = TextView(this).apply {
-            text = "Use this loadpoint"
+            text = getString(R.string.widget_androidConfig_useThisLoadpoint)
             setTextColor(Color.WHITE)
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
             setTypeface(typeface, Typeface.BOLD)
@@ -144,11 +145,11 @@ class LoadpointWidgetConfigActivity : Activity() {
     }
 
     private fun showServers() {
-        titleView.text = "Choose server"
+        titleView.text = getString(R.string.widget_androidConfig_chooseServer)
         val servers = SharedStore.servers(this)
         when {
             servers.isEmpty() ->
-                setRows(listOf("No servers — add one in the app first"), null)
+                setRows(listOf(getString(R.string.widget_androidConfig_noServers)), null)
             // only one server: nothing to choose, go straight to its loadpoints
             servers.size == 1 -> showLoadpoints(servers[0])
             else -> setRows(servers.map { it.displayTitle }) { index -> showLoadpoints(servers[index]) }
@@ -156,12 +157,12 @@ class LoadpointWidgetConfigActivity : Activity() {
     }
 
     private fun showLoadpoints(server: StoredServer) {
-        titleView.text = "Choose loadpoint"
-        setRows(listOf("Loading…"), null)
+        titleView.text = getString(R.string.widget_androidConfig_chooseLoadpoint)
+        setRows(listOf(getString(R.string.widget_androidConfig_loading)), null)
         scope.launch {
             val titles = withContext(Dispatchers.IO) { ApiClient.loadpointTitles(server) }
             if (titles.isEmpty()) {
-                setRows(listOf("No loadpoints reachable"), null)
+                setRows(listOf(getString(R.string.widget_androidConfig_noLoadpoints)), null)
                 return@launch
             }
             setRows(titles) { index -> preview(server, index) }
@@ -172,13 +173,19 @@ class LoadpointWidgetConfigActivity : Activity() {
     private fun preview(server: StoredServer, lpIndex: Int) {
         pending = null
         confirmButton.visibility = View.GONE
-        showPreview(WidgetPreview.message(this, "Loading preview…", dark))
+        showPreview(WidgetPreview.message(this, getString(R.string.widget_androidConfig_loadingPreview), dark))
         scope.launch {
             val lp = withContext(Dispatchers.IO) {
                 (ApiClient.fetch(server, ".loadpoints[$lpIndex]") as? FetchOutcome.Success)?.json?.let { Loadpoint.parse(it) }
             }
             if (lp == null) {
-                showPreview(WidgetPreview.message(this@LoadpointWidgetConfigActivity, "Couldn't load a preview", dark))
+                showPreview(
+                    WidgetPreview.message(
+                        this@LoadpointWidgetConfigActivity,
+                        getString(R.string.widget_androidConfig_previewError),
+                        dark,
+                    ),
+                )
                 return@launch
             }
             showPreview(WidgetPreview.loadpoint(this@LoadpointWidgetConfigActivity, lp, dark))
