@@ -83,6 +83,31 @@ Done:
   the widget, matching iOS. `widget.mode.pv`/`widget.mode.minpv` stay in the
   strings script as frozen (non-Weblate) translations since evcc removed them
   from its own i18n once the redesign shipped.
+- **Reload button + deep link + fixed resize bounds**, from Maschga's PR #255
+  review (evcc-io/app#255#issuecomment-5317470240): `LoadpointWidget`'s title
+  row now has a reload icon (`res/drawable/ic_reload.xml`, a Material "refresh"
+  glyph tinted via Glance's `ColorFilter.tint()`) wired to a new `ReloadAction`,
+  mirroring iOS's `ReloadIntent`. Both widget families are tappable end-to-end
+  and open the app to the right place (`evcc://loadpoint?server=…&lp=…` /
+  `evcc://forecast?server=…`, `evcc://server` when unconfigured), mirroring
+  `widgetURL` in `LoadpointViews.swift`/`Views.swift` via a shared
+  `deepLinkAction()` (`actionStartActivity` + `ACTION_VIEW`). The card-wide
+  clickable sits under the mode chips/reload button's own clickable regions,
+  which take priority within their bounds - same layering iOS gets for free
+  from SwiftUI's region-based hit testing.
+  `loadpoint_widget_info.xml`'s resize bounds are now pinned exactly to
+  `SizeMode.Responsive`'s two declared breakpoints
+  (`minResizeWidth`/`maxResizeWidth` 180-340dp, height locked at 110dp,
+  `resizeMode="horizontal"` only) instead of the previous open-ended
+  `horizontal|vertical`; `forecast_widget_info.xml` dropped `resizeMode`
+  entirely since those widgets have no size-variant layout to grow into. Both
+  changes close the gap where a launcher could hand the widget a real
+  container bigger than any size Glance was told to lay content out for,
+  leaving blank space the Composable had no way to fill - the likely cause
+  behind the "strange spacing" Maschga's screenshot showed, though this still
+  needs on-device confirmation (tracked as a live-device follow-up, along with
+  the mode-button highlight bug and the widget-reconfigure check from the same
+  review).
 
 Not done yet (follow-ups for parity with iOS): none currently tracked -
 remaining gaps (reload button, deep links, spline chart smoothing) are

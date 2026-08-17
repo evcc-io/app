@@ -1,13 +1,17 @@
 package io.evcc.android.widget
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import androidx.glance.ColorFilter
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.Image
 import androidx.glance.ImageProvider
+import androidx.glance.action.Action
 import androidx.glance.action.ActionParameters
 import androidx.glance.action.actionParametersOf
 import androidx.glance.action.clickable
@@ -16,6 +20,7 @@ import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import androidx.glance.appwidget.action.ActionCallback
 import androidx.glance.appwidget.action.actionRunCallback
+import androidx.glance.appwidget.action.actionStartActivity
 import androidx.glance.LocalSize
 import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.cornerRadius
@@ -40,6 +45,9 @@ import io.evcc.android.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+// visible (not private) so ForecastWidget.kt can reuse it for its own deep link
+fun deepLinkAction(uri: String): Action = actionStartActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri)))
+
 /**
  * Loadpoint home-screen widget (Android counterpart of LoadpointWidget.swift /
  * LoadpointViews.swift's LoadpointCard). Uses the default server and the first
@@ -51,8 +59,10 @@ import kotlinx.coroutines.withContext
  * current mode as text - keeping the chips interactive here instead of
  * dropping mode-switching entirely for the smallest size); wide shows a
  * vertical mode-selector column alongside, mirroring LoadpointCard's
- * `HStack { left; modeSelector }`. Deliberate simplifications vs. iOS: no
- * reload button, no deep link.
+ * `HStack { left; modeSelector }`. Tapping the card opens the app to the
+ * configured loadpoint (`evcc://loadpoint`, mirrors iOS's `widgetURL`); the
+ * reload button and mode chips have their own clickable regions that take
+ * priority over the card-wide deep link within their bounds.
  */
 private val SMALL_SIZE = DpSize(180.dp, 110.dp)
 private val WIDE_SIZE = DpSize(340.dp, 110.dp)
@@ -178,7 +188,7 @@ class LoadpointWidget : GlanceAppWidget() {
             val (serverId, lpIndex) = resolved
             load(context, serverId, lpIndex)
         }
-        provideContent { Content(context, state) }
+        provideContent { Content(context, state, resolved) }
     }
 
     private suspend fun load(context: Context, serverId: String?, lpIndex: Int): LoadpointState = withContext(Dispatchers.IO) {
@@ -193,11 +203,21 @@ class LoadpointWidget : GlanceAppWidget() {
     }
 
     @Composable
-    private fun Content(context: Context, state: LoadpointState) {
+    private fun Content(context: Context, state: LoadpointState, resolved: Pair<String?, Int>?) {
         val notConfigured = state == LoadpointState.NotConfigured
+        // mirrors LoadpointView.deepLink in LoadpointViews.swift: always the
+        // configured loadpoint (even in noData/unreachable, so the user can go
+        // fix things in-app), "evcc://server" only when never configured at all.
+        // A null serverId means the default server - the app resolves that on
+        // its own, so the query param is simply omitted (mirrors iOS's
+        // `if let id = entry.serverId`).
+        val deepLink = resolved?.let { (serverId, lpIndex) ->
+            "evcc://loadpoint?lp=$lpIndex" + (serverId?.let { "&server=$it" } ?: "")
+        } ?: "evcc://server"
         Column(
             modifier = GlanceModifier.fillMaxSize()
                 .background(if (notConfigured) notConfiguredBackground else cardBackground)
+                .clickable(deepLinkAction(deepLink))
                 .padding(12.dp),
             verticalAlignment = Alignment.Vertical.Top,
         ) {
@@ -244,7 +264,15 @@ class LoadpointWidget : GlanceAppWidget() {
         val m = metric(lp)
         val heating = lp.chargerFeatureHeating
 
-        Text(title(context, lp), style = titleStyle)
+        Row(verticalAlignment = Alignment.Vertical.CenterVertically) {
+            Text(title(context, lp), style = titleStyle, modifier = GlanceModifier.defaultWeight())
+            Image(
+                provider = ImageProvider(R.drawable.ic_reload),
+                contentDescription = null,
+                colorFilter = ColorFilter.tint(textSecondary),
+                modifier = GlanceModifier.width(13.dp).height(13.dp).clickable(actionRunCallback<ReloadAction>()),
+            )
+        }
 
         Row(modifier = GlanceModifier.padding(top = 3.dp), verticalAlignment = Alignment.Vertical.CenterVertically) {
             Box(modifier = GlanceModifier.width(7.dp).height(7.dp).background(statusColor(s.active, heating)).cornerRadius(4.dp)) {}
@@ -387,6 +415,13 @@ class ModeAction : ActionCallback {
         val serverKey = ActionParameters.Key<String>("serverId")
         val lpKey = ActionParameters.Key<Int>("lp")
         val modeKey = ActionParameters.Key<String>("mode")
+    }
+}
+
+/** Forces a fresh fetch, mirrors iOS's ReloadIntent (WidgetCenter.shared.reloadAllTimelines()). */
+class ReloadAction : ActionCallback {
+    override suspend fun onAction(context: Context, glanceId: GlanceId, parameters: ActionParameters) {
+        LoadpointWidget().updateAll(context)
     }
 }
 

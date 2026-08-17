@@ -9,6 +9,7 @@ import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.Image
 import androidx.glance.ImageProvider
+import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
@@ -237,15 +238,19 @@ abstract class ForecastWidget(private val kind: ForecastKind) : GlanceAppWidget(
             val server = SharedStore.server(context, serverId) ?: return@withContext ForecastState.NotConfigured
             loadForecastState(context, kind, server, adjust)
         }
-        provideContent { Content(context, state) }
+        provideContent { Content(context, state, serverId) }
     }
 
     @Composable
-    private fun Content(context: Context, state: ForecastState) {
+    private fun Content(context: Context, state: ForecastState, serverId: String?) {
         val notConfigured = state == ForecastState.NotConfigured
+        // mirrors ForecastWidgetView.deepLink in Views.swift: no `type` param -
+        // the app tab is fixed (forecast), only the server needs to be passed.
+        val deepLink = serverId?.let { "evcc://forecast?server=$it" } ?: "evcc://server"
         Column(
             modifier = GlanceModifier.fillMaxSize()
                 .background(if (notConfigured) notConfiguredBackground else cardBackground)
+                .clickable(deepLinkAction(deepLink))
                 .padding(12.dp),
             verticalAlignment = Alignment.Vertical.Top,
         ) {
