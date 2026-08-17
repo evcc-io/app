@@ -30,10 +30,14 @@
     <string name="widget_lpstatus_disconnected">切断済み。</string>
     <string name="widget_lpstatus_finished">充電完了。</string>
     <string name="widget_lpstatus_waitForVehicle">準備完了。車両の応答を待っています…</string>
+    <string name="widget_mode_boost">Boost</string>
     <string name="widget_mode_minpv">Min+太陽光</string>
+    <string name="widget_mode_normal">Normal</string>
     <string name="widget_mode_now">高速</string>
     <string name="widget_mode_off">オフ</string>
+    <string name="widget_mode_on">On</string>
     <string name="widget_mode_pv">太陽光</string>
+    <string name="widget_mode_smart">スマート</string>
     <string name="widget_name_co2">CO₂</string>
     <string name="widget_name_feedin">Grid export price</string>
     <string name="widget_name_price">Grid import price</string>

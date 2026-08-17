@@ -30,10 +30,14 @@
     <string name="widget_lpstatus_disconnected">Відключено.</string>
     <string name="widget_lpstatus_finished">Готово.</string>
     <string name="widget_lpstatus_waitForVehicle">Готовий. Очікування на транспортний засіб…</string>
+    <string name="widget_mode_boost">Boost</string>
     <string name="widget_mode_minpv">Мін+Сонце</string>
+    <string name="widget_mode_normal">Normal</string>
     <string name="widget_mode_now">Швидко</string>
     <string name="widget_mode_off">Вимк.</string>
+    <string name="widget_mode_on">On</string>
     <string name="widget_mode_pv">Сонячна</string>
+    <string name="widget_mode_smart">Розумний</string>
     <string name="widget_name_co2">CO₂</string>
     <string name="widget_name_feedin">Grid export price</string>
     <string name="widget_name_price">Grid import price</string>

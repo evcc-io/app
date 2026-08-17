@@ -30,10 +30,14 @@
     <string name="widget_lpstatus_disconnected">Irroitettu.</string>
     <string name="widget_lpstatus_finished">Valmis.</string>
     <string name="widget_lpstatus_waitForVehicle">Valmiina. Odotetaan ajoneuvoa…</string>
+    <string name="widget_mode_boost">Boost</string>
     <string name="widget_mode_minpv">Min+PV</string>
+    <string name="widget_mode_normal">Normal</string>
     <string name="widget_mode_now">Välitön</string>
     <string name="widget_mode_off">Seis</string>
+    <string name="widget_mode_on">On</string>
     <string name="widget_mode_pv">PV</string>
+    <string name="widget_mode_smart">Älykäs</string>
     <string name="widget_name_co2">CO₂</string>
     <string name="widget_name_feedin">Grid export price</string>
     <string name="widget_name_price">Grid import price</string>

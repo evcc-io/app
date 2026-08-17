@@ -30,10 +30,14 @@
     <string name="widget_lpstatus_disconnected">Αποσυνδεδεμένο.</string>
     <string name="widget_lpstatus_finished">Τελείωσε.</string>
     <string name="widget_lpstatus_waitForVehicle">Έτοιμο. Αναμονή για όχημα…</string>
+    <string name="widget_mode_boost">Boost</string>
     <string name="widget_mode_minpv">Ελαχ+Φ/Β</string>
+    <string name="widget_mode_normal">Normal</string>
     <string name="widget_mode_now">Ταχύ</string>
     <string name="widget_mode_off">Κλειστό</string>
+    <string name="widget_mode_on">On</string>
     <string name="widget_mode_pv">Φ/Β</string>
+    <string name="widget_mode_smart">Έξυπνο</string>
     <string name="widget_name_co2">CO₂</string>
     <string name="widget_name_feedin">Grid export price</string>
     <string name="widget_name_price">Grid import price</string>

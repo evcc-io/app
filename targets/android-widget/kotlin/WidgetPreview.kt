@@ -136,7 +136,7 @@ object WidgetPreview {
         val chipsRow = LinearLayout(context).apply { orientation = LinearLayout.HORIZONTAL }
         modes(lp).forEachIndexed { i, mode ->
             if (i > 0) chipsRow.addView(View(context).apply { layoutParams = LinearLayout.LayoutParams(d(4), 1) })
-            chipsRow.addView(chip(context, modeLabel(context, mode), mode == lp.mode, dark))
+            chipsRow.addView(chip(context, modeChipLabel(context, lp, mode), mode == lp.mode, dark))
         }
         root.addView(chipsRow)
 

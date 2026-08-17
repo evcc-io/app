@@ -30,10 +30,14 @@
     <string name="widget_lpstatus_disconnected">துண்டிக்கப்பட்டது.</string>
     <string name="widget_lpstatus_finished">முடிந்தது.</string>
     <string name="widget_lpstatus_waitForVehicle">ஆயத்தம். வாகனத்திற்காக காத்திருக்கிறது…</string>
+    <string name="widget_mode_boost">Boost</string>
     <string name="widget_mode_minpv">குறை+ஞாயிறு</string>
+    <string name="widget_mode_normal">Normal</string>
     <string name="widget_mode_now">வேகமாக</string>
     <string name="widget_mode_off">அணை</string>
+    <string name="widget_mode_on">On</string>
     <string name="widget_mode_pv">ஞாயிறு</string>
+    <string name="widget_mode_smart">அறிவாளி</string>
     <string name="widget_name_co2">CO₂</string>
     <string name="widget_name_feedin">Grid export price</string>
     <string name="widget_name_price">Grid import price</string>

@@ -198,13 +198,12 @@ for (const [key, src] of Object.entries(KEYS)) {
   translations[key] = byLocale;
 }
 
-for (const [iosKey, frozen] of Object.entries(FROZEN)) {
-  const localizations: Record<string, unknown> = {};
+for (const [key, frozen] of Object.entries(FROZEN)) {
+  const byLocale: Record<string, string> = {};
   for (const locale of locales) {
-    const value = frozen[locale] ?? frozen[locale.split("-")[0]] ?? frozen[SOURCE_LANG];
-    localizations[locale] = { stringUnit: { state: "translated", value } };
+    byLocale[locale] = frozen[locale] ?? frozen[locale.split("-")[0]] ?? frozen[SOURCE_LANG];
   }
-  strings[iosKey] = { extractionState: "manual", localizations };
+  translations[key] = byLocale;
 }
 
 if (missing.length) {

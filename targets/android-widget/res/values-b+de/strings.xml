@@ -30,10 +30,14 @@
     <string name="widget_lpstatus_disconnected">Nicht verbunden.</string>
     <string name="widget_lpstatus_finished">Abgeschlossen.</string>
     <string name="widget_lpstatus_waitForVehicle">Ladebereit. Warte auf Fahrzeug …</string>
+    <string name="widget_mode_boost">Boost</string>
     <string name="widget_mode_minpv">Min+PV</string>
+    <string name="widget_mode_normal">Normal</string>
     <string name="widget_mode_now">Schnell</string>
     <string name="widget_mode_off">Aus</string>
+    <string name="widget_mode_on">An</string>
     <string name="widget_mode_pv">PV</string>
+    <string name="widget_mode_smart">Smart</string>
     <string name="widget_name_co2">CO₂</string>
     <string name="widget_name_feedin">Einspeisevergütung</string>
     <string name="widget_name_price">Netzbezugspreis</string>

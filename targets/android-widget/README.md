@@ -74,6 +74,15 @@ Done:
   already resizable (`resizeMode="horizontal|vertical"`); this just makes the
   wider layout actually render something different once resized. The forecast
   widgets don't have an iOS size-variant precedent, so they stay single-size.
+- **Smart mode redesign** (mirrors iOS's `Loadpoint.swift`/#246): `Loadpoint`
+  gained `alwaysCharge`/`chargerFeatureContinuous`. Its presence detects
+  smart-mode servers (`off/smart/now`, with per-device-class labels - e.g.
+  continuous heat pumps get Normal/Boost, switchable devices get On) vs. old
+  servers (`off/pv/minpv/now`, unchanged). `modeChipLabel()` appends a
+  read-only "∞" to the Smart chip when Always charge is on/once - no toggle in
+  the widget, matching iOS. `widget.mode.pv`/`widget.mode.minpv` stay in the
+  strings script as frozen (non-Weblate) translations since evcc removed them
+  from its own i18n once the redesign shipped.
 
 Not done yet (follow-ups for parity with iOS): none currently tracked -
 remaining gaps (reload button, deep links, spline chart smoothing) are

@@ -30,10 +30,14 @@
     <string name="widget_lpstatus_disconnected">已断开连接。</string>
     <string name="widget_lpstatus_finished">已完成。</string>
     <string name="widget_lpstatus_waitForVehicle">准备就绪。等待车辆连接…</string>
+    <string name="widget_mode_boost">Boost</string>
     <string name="widget_mode_minpv">最少+太阳能</string>
+    <string name="widget_mode_normal">Normal</string>
     <string name="widget_mode_now">快速</string>
     <string name="widget_mode_off">关闭</string>
+    <string name="widget_mode_on">On</string>
     <string name="widget_mode_pv">太阳能</string>
+    <string name="widget_mode_smart">智能</string>
     <string name="widget_name_co2">CO₂</string>
     <string name="widget_name_feedin">Grid export price</string>
     <string name="widget_name_price">Grid import price</string>

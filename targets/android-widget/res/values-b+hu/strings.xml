@@ -30,10 +30,14 @@
     <string name="widget_lpstatus_disconnected">Lecsatlakoztatva.</string>
     <string name="widget_lpstatus_finished">Befejezve.</string>
     <string name="widget_lpstatus_waitForVehicle">Üzemkész. Járműre várakozás…</string>
+    <string name="widget_mode_boost">Boost</string>
     <string name="widget_mode_minpv">Min+Szolár</string>
+    <string name="widget_mode_normal">Normal</string>
     <string name="widget_mode_now">Gyors</string>
     <string name="widget_mode_off">Ki</string>
+    <string name="widget_mode_on">On</string>
     <string name="widget_mode_pv">Szolár</string>
+    <string name="widget_mode_smart">Okos</string>
     <string name="widget_name_co2">CO₂</string>
     <string name="widget_name_feedin">Grid export price</string>
     <string name="widget_name_price">Grid import price</string>

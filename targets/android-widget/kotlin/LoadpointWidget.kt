@@ -60,13 +60,38 @@ private val WIDE_SIZE = DpSize(340.dp, 110.dp)
 // Row measurements are unreliable right at a boundary on some launchers, so
 // the switch-over threshold sits well below WIDE_SIZE's width.
 private val WIDE_THRESHOLD = 260.dp
-// visible (not private) so the config activities can reuse them for previews
-fun modeLabel(context: Context, mode: String): String = when (mode) {
-    "off" -> context.getString(R.string.widget_mode_off)
-    "pv" -> context.getString(R.string.widget_mode_pv)
-    "minpv" -> context.getString(R.string.widget_mode_minpv)
-    "now" -> context.getString(R.string.widget_mode_now)
-    else -> mode
+// visible (not private) so the config activities can reuse them for previews.
+// mirrors Loadpoint.swift's `item()` closure: on smart-mode servers (detected
+// by the presence of `alwaysCharge`) the same raw mode can carry a
+// device-class-specific label (off->Normal, now->Boost/On) for continuous
+// heat pumps / switchable devices.
+fun modeLabel(context: Context, lp: Loadpoint, mode: String): String {
+    val smartModeServer = lp.alwaysCharge != null
+    if (smartModeServer) {
+        if (mode == "off" && lp.chargerFeatureContinuous) return context.getString(R.string.widget_mode_normal)
+        if (mode == "now") {
+            if (lp.chargerFeatureContinuous) return context.getString(R.string.widget_mode_boost)
+            if (lp.chargerFeatureSwitchDevice) return context.getString(R.string.widget_mode_on)
+        }
+    }
+    return when (mode) {
+        "off" -> context.getString(R.string.widget_mode_off)
+        "smart" -> context.getString(R.string.widget_mode_smart)
+        "pv" -> context.getString(R.string.widget_mode_pv)
+        "minpv" -> context.getString(R.string.widget_mode_minpv)
+        "now" -> context.getString(R.string.widget_mode_now)
+        else -> mode
+    }
+}
+
+fun alwaysChargeActive(lp: Loadpoint): Boolean = lp.alwaysCharge == "on" || lp.alwaysCharge == "once"
+
+// label plus a read-only "∞" marker on the Smart chip when Always charge is
+// on/once (mirrors the SF Symbol "infinity" shown next to Smart in
+// LoadpointViews.swift; no toggle in the widget for now, matches iOS)
+fun modeChipLabel(context: Context, lp: Loadpoint, mode: String): String {
+    val label = modeLabel(context, lp, mode)
+    return if (mode == "smart" && alwaysChargeActive(lp)) "$label ∞" else label
 }
 
 enum class LpStatus(val active: Boolean) {
@@ -133,8 +158,11 @@ fun title(context: Context, lp: Loadpoint): String {
     return vt.ifEmpty { lp.title ?: context.getString(R.string.widget_loadpoint_name) }
 }
 
-fun modes(lp: Loadpoint): List<String> =
-    if (lp.chargerFeatureSwitchDevice) listOf("off", "pv", "now") else listOf("off", "pv", "minpv", "now")
+fun modes(lp: Loadpoint): List<String> = when {
+    lp.alwaysCharge != null -> listOf("off", "smart", "now")
+    lp.chargerFeatureSwitchDevice -> listOf("off", "pv", "now")
+    else -> listOf("off", "pv", "minpv", "now")
+}
 
 class LoadpointWidget : GlanceAppWidget() {
     override val sizeMode = SizeMode.Responsive(setOf(SMALL_SIZE, WIDE_SIZE))
@@ -266,7 +294,7 @@ class LoadpointWidget : GlanceAppWidget() {
         Row {
             modes(state.lp).forEachIndexed { i, mode ->
                 if (i > 0) Spacer(GlanceModifier.width(4.dp))
-                ModeChip(context, mode = mode, current = state.lp.mode, serverId = state.serverId, lpIndex = state.lpIndex)
+                ModeChip(context, lp = state.lp, mode = mode, serverId = state.serverId, lpIndex = state.lpIndex)
             }
         }
     }
@@ -278,7 +306,7 @@ class LoadpointWidget : GlanceAppWidget() {
         modes(state.lp).forEachIndexed { i, mode ->
             if (i > 0) Spacer(GlanceModifier.height(6.dp))
             ModeChip(
-                context, mode = mode, current = state.lp.mode, serverId = state.serverId, lpIndex = state.lpIndex,
+                context, lp = state.lp, mode = mode, serverId = state.serverId, lpIndex = state.lpIndex,
                 modifier = GlanceModifier.fillMaxWidth().defaultWeight(),
             )
         }
@@ -287,13 +315,13 @@ class LoadpointWidget : GlanceAppWidget() {
     @Composable
     private fun ModeChip(
         context: Context,
+        lp: Loadpoint,
         mode: String,
-        current: String?,
         serverId: String,
         lpIndex: Int,
         modifier: GlanceModifier = GlanceModifier,
     ) {
-        val selected = mode == current
+        val selected = mode == lp.mode
         Box(
             modifier = modifier
                 .background(if (selected) modeSelectedBackground else modeUnselectedBackground)
@@ -311,7 +339,7 @@ class LoadpointWidget : GlanceAppWidget() {
             contentAlignment = Alignment.Center,
         ) {
             Text(
-                text = modeLabel(context, mode),
+                text = modeChipLabel(context, lp, mode),
                 style = modeChipStyle.copy(color = if (selected) modeSelectedText else modeUnselectedText),
             )
         }

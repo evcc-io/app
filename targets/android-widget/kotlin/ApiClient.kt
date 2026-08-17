@@ -100,11 +100,13 @@ data class Loadpoint(
     val sessionEnergy: Double?,
     val chargedEnergy: Double?,
     val mode: String?,
+    val alwaysCharge: String?,
     val charging: Boolean,
     val connected: Boolean,
     val enabled: Boolean,
     val chargerFeatureHeating: Boolean,
     val chargerFeatureSwitchDevice: Boolean,
+    val chargerFeatureContinuous: Boolean,
     val ui: LoadpointUi?,
 ) {
     companion object {
@@ -124,11 +126,13 @@ data class Loadpoint(
                 sessionEnergy = d("sessionEnergy"),
                 chargedEnergy = d("chargedEnergy"),
                 mode = o.optString("mode").takeIf { it.isNotEmpty() },
+                alwaysCharge = if (o.has("alwaysCharge") && !o.isNull("alwaysCharge")) o.optString("alwaysCharge") else null,
                 charging = o.optBoolean("charging", false),
                 connected = o.optBoolean("connected", false),
                 enabled = o.optBoolean("enabled", false),
                 chargerFeatureHeating = o.optBoolean("chargerFeatureHeating", false),
                 chargerFeatureSwitchDevice = o.optBoolean("chargerFeatureSwitchDevice", false),
+                chargerFeatureContinuous = o.optBoolean("chargerFeatureContinuous", false),
                 ui = ui,
             )
         }.getOrNull()

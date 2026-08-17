@@ -30,10 +30,14 @@
     <string name="widget_lpstatus_disconnected">Bağlantı kesildi.</string>
     <string name="widget_lpstatus_finished">Tamamlandı.</string>
     <string name="widget_lpstatus_waitForVehicle">Doldurmaya hazır. Araç bekleniyor…</string>
+    <string name="widget_mode_boost">Boost</string>
     <string name="widget_mode_minpv">Asg.+GES</string>
+    <string name="widget_mode_normal">Normal</string>
     <string name="widget_mode_now">Hızlı</string>
     <string name="widget_mode_off">Kapalı</string>
+    <string name="widget_mode_on">On</string>
     <string name="widget_mode_pv">GES</string>
+    <string name="widget_mode_smart">Akıllı</string>
     <string name="widget_name_co2">CO₂</string>
     <string name="widget_name_feedin">Grid export price</string>
     <string name="widget_name_price">Grid import price</string>

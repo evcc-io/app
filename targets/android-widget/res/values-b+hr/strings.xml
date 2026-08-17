@@ -30,10 +30,14 @@
     <string name="widget_lpstatus_disconnected">Nepovezano.</string>
     <string name="widget_lpstatus_finished">Završeno.</string>
     <string name="widget_lpstatus_waitForVehicle">Spremno. Čeka se vozilo …</string>
+    <string name="widget_mode_boost">Boost</string>
     <string name="widget_mode_minpv">Min+Solarno</string>
+    <string name="widget_mode_normal">Normal</string>
     <string name="widget_mode_now">Brzo</string>
     <string name="widget_mode_off">Isključeno</string>
+    <string name="widget_mode_on">On</string>
     <string name="widget_mode_pv">Solarno</string>
+    <string name="widget_mode_smart">Pametno</string>
     <string name="widget_name_co2">CO₂</string>
     <string name="widget_name_feedin">Grid export price</string>
     <string name="widget_name_price">Grid import price</string>

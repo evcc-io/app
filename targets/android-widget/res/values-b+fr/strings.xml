@@ -30,10 +30,14 @@
     <string name="widget_lpstatus_disconnected">Déconnecté.</string>
     <string name="widget_lpstatus_finished">Terminée.</string>
     <string name="widget_lpstatus_waitForVehicle">Prêt. Attente du véhicule…</string>
+    <string name="widget_mode_boost">Boost</string>
     <string name="widget_mode_minpv">Min+Solaire</string>
+    <string name="widget_mode_normal">Normal</string>
     <string name="widget_mode_now">Rapide</string>
     <string name="widget_mode_off">Arrêté</string>
+    <string name="widget_mode_on">On</string>
     <string name="widget_mode_pv">Solaire</string>
+    <string name="widget_mode_smart">Intelligent</string>
     <string name="widget_name_co2">CO₂</string>
     <string name="widget_name_feedin">Grid export price</string>
     <string name="widget_name_price">Grid import price</string>

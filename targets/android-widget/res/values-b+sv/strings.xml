@@ -30,10 +30,14 @@
     <string name="widget_lpstatus_disconnected">Frånkopplad.</string>
     <string name="widget_lpstatus_finished">Färdig.</string>
     <string name="widget_lpstatus_waitForVehicle">Redo. Väntar på fordon…</string>
+    <string name="widget_mode_boost">Boost</string>
     <string name="widget_mode_minpv">Min+Sol</string>
+    <string name="widget_mode_normal">Normal</string>
     <string name="widget_mode_now">Snabbt</string>
     <string name="widget_mode_off">Av</string>
+    <string name="widget_mode_on">On</string>
     <string name="widget_mode_pv">Sol</string>
+    <string name="widget_mode_smart">Smart</string>
     <string name="widget_name_co2">CO₂</string>
     <string name="widget_name_feedin">Grid export price</string>
     <string name="widget_name_price">Grid import price</string>

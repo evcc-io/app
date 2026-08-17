@@ -30,10 +30,14 @@
     <string name="widget_lpstatus_disconnected">Neprijungtas.</string>
     <string name="widget_lpstatus_finished">Baigta.</string>
     <string name="widget_lpstatus_waitForVehicle">Paruošta. Laukiama automobilio…</string>
+    <string name="widget_mode_boost">Boost</string>
     <string name="widget_mode_minpv">Min+Saulė</string>
+    <string name="widget_mode_normal">Normal</string>
     <string name="widget_mode_now">Greitas</string>
     <string name="widget_mode_off">Stop</string>
+    <string name="widget_mode_on">On</string>
     <string name="widget_mode_pv">Saulė</string>
+    <string name="widget_mode_smart">Išmanus</string>
     <string name="widget_name_co2">CO₂</string>
     <string name="widget_name_feedin">Grid export price</string>
     <string name="widget_name_price">Grid import price</string>
