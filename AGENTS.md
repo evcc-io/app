@@ -128,4 +128,4 @@ Avoid file paths, line numbers, or code listings reproduced from the diff. Inclu
 ## Git Workflow
 
 - Main branch: `main`
-- Conventional-ish prefixes are common in history: `feat:`, `fix:`, `chore:`, `test(e2e):`, `chore(deps):`. Keep messages short.
+- Commit and PR subjects: `prefix: short description`, no trailing period. Platform-specific changes use `Android: …` / `iOS: …`; everything else is prefixed with the affected part of the app (`onboarding: …`, `widget: …`) or `chore:` / `fix:` / `docs:` for non-feature changes. Same pattern as the main evcc repo. Keep messages short.
