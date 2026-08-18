@@ -50,7 +50,6 @@ function AddServerScreen({
 
   const serverSelected = useCallback(
     async (server: Server) => {
-      console.log("serverSelected");
       setInternalServer(server);
 
       // a freshly added server becomes the active one

@@ -32,7 +32,7 @@ export async function verifyEvccServer(server: Server) {
   try {
     response = await axios.get(server.url, options);
   } catch (error) {
-    console.log(error);
+    console.log(String(error));
     if (axios.isAxiosError(error) && error.response?.status === 401) {
       throw new Error(t("servers.manually.missingOrWrongAuthentication"));
     }
