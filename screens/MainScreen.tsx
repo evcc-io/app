@@ -1,6 +1,13 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { WebView, WebViewMessageEvent } from "react-native-webview";
-import { StyleSheet, Animated, View, Text } from "react-native";
+import {
+  StyleSheet,
+  Animated,
+  View,
+  Text,
+  Platform,
+  BackHandler,
+} from "react-native";
 import * as Linking from "expo-linking";
 import * as Haptics from "expo-haptics";
 import AppText from "components/AppText";
@@ -14,6 +21,7 @@ import {
   WebViewErrorEvent,
   WebViewHttpErrorEvent,
   WebViewTerminatedEvent,
+  WebViewNavigation,
 } from "react-native-webview/lib/WebViewTypes";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types";
@@ -32,6 +40,7 @@ export default function MainScreen({
   const insets = useSafeAreaInsets();
   const { activeServer, targetPath, clearTargetPath } = useAppContext();
   const webViewRef = useRef<WebView>(null);
+  const canGoBackRef = useRef(false);
   const [isConnected, setIsConnected] = useState(false);
   const [webViewKey, setWebViewKey] = useState(0);
   const [downloadedFile, setDownloadedFile] = useState<string | null>(null);
@@ -61,6 +70,22 @@ export default function MainScreen({
       clearTargetPath();
     }
   }, [targetPath, isConnected, clearTargetPath]);
+
+  // Android back button navigates the web UI's history instead of leaving the app
+  useEffect(() => {
+    if (Platform.OS !== "android") return;
+    const subscription = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => {
+        if (navigation.isFocused() && canGoBackRef.current) {
+          webViewRef.current?.goBack();
+          return true;
+        }
+        return false;
+      },
+    );
+    return () => subscription.remove();
+  }, [navigation]);
 
   // Reconnect if connection is lost
   useEffect(() => {
@@ -202,6 +227,13 @@ export default function MainScreen({
     setIsConnected(false);
   }, []);
 
+  const onNavigationStateChange = useCallback(
+    (navState: WebViewNavigation) => {
+      canGoBackRef.current = navState.canGoBack;
+    },
+    [],
+  );
+
   const LayoutMemoized = useMemo(
     () => (
       <View style={{ flex: 1, backgroundColor: colors.background }}>
@@ -239,6 +271,7 @@ export default function MainScreen({
             onContentProcessDidTerminate={onTerminate}
             onMessage={handleMessage}
             onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
+            onNavigationStateChange={onNavigationStateChange}
           />
         </Animated.View>
         <Animated.View
@@ -285,6 +318,7 @@ export default function MainScreen({
       isConnected,
       onError,
       onShouldStartLoadWithRequest,
+      onNavigationStateChange,
       onTerminate,
       handleMessage,
       openSettings,
