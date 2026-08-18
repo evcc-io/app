@@ -76,7 +76,7 @@ function SwitchServerStack() {
 }
 
 function AppNavigator() {
-  const { activeServer, isLoading, servers } = useAppContext();
+  const { isLoading, servers } = useAppContext();
 
   // Show splash/loading while determining initial route
   if (isLoading) {
@@ -87,9 +87,6 @@ function AppNavigator() {
     animation: "slide_from_bottom" as const,
     presentation: "modal" as const,
   };
-
-  console.log("activeServer", activeServer);
-  console.log("servers", servers);
 
   const linking: LinkingOptions<RootStackParamList> = {
     prefixes: [SCHEME + "://"],
