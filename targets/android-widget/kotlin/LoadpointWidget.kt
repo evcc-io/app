@@ -45,8 +45,7 @@ import io.evcc.android.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-// visible (not private) so ForecastWidget.kt can reuse it for its own deep link
-fun deepLinkAction(uri: String): Action = actionStartActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri)))
+private fun deepLinkAction(uri: String): Action = actionStartActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri)))
 
 /**
  * Loadpoint home-screen widget (Android counterpart of LoadpointWidget.swift /

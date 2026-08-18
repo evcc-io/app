@@ -80,15 +80,6 @@ const withGlanceComposeCompiler: ConfigPlugin = (config) =>
     return config;
   });
 
-// The forecast widgets (Solar/Price/CO₂/Feed-in) share one appwidget-provider
-// XML, but each gets a distinct android:label so the widget picker names them.
-const FORECAST_RECEIVERS = [
-  { name: "EvccSolarWidgetReceiver", label: "Solar" },
-  { name: "EvccPriceWidgetReceiver", label: "Price" },
-  { name: "EvccCo2WidgetReceiver", label: "CO₂" },
-  { name: "EvccFeedinWidgetReceiver", label: "Feed-in" },
-];
-
 // The manifest types don't model android:label or <meta-data> on <receiver>
 // (Expo's typings only add them for activities/applications), though the
 // manifest XML writer accepts both fine.
@@ -129,15 +120,11 @@ const withWidgetReceiver: ConfigPlugin = (config) =>
     const app = AndroidConfig.Manifest.getMainApplicationOrThrow(config.modResults);
 
     pushWidgetReceiver(app, "EvccLoadpointWidgetReceiver", "loadpoint_widget_info", "Loadpoint");
-    for (const r of FORECAST_RECEIVERS) pushWidgetReceiver(app, r.name, "forecast_widget_info", r.label);
 
-    // widget placement configuration Activities (loadpoint picker; forecast server + solar toggle)
+    // widget placement configuration Activity (server, then loadpoint picker)
     app.activity = app.activity ?? [];
-    for (const actName of [
-      `.${WIDGET_SUBDIR}.LoadpointWidgetConfigActivity`,
-      `.${WIDGET_SUBDIR}.ForecastWidgetConfigActivity`,
-    ]) {
-      if (app.activity.some((a) => a.$["android:name"] === actName)) continue;
+    const actName = `.${WIDGET_SUBDIR}.LoadpointWidgetConfigActivity`;
+    if (!app.activity.some((a) => a.$["android:name"] === actName)) {
       app.activity.push({
         $: { "android:name": actName, "android:exported": "true" },
         "intent-filter": [
@@ -174,36 +161,6 @@ const widgetInfoXml = (pkg: string) => `<?xml version="1.0" encoding="utf-8"?>
     android:previewLayout="@layout/loadpoint_widget_preview" />
 `;
 
-// Static preview image (vector) for the widget picker. Many OEM launchers
-// (Xiaomi/MIUI, Nova, …) ignore android:previewLayout and only honour a
-// previewImage drawable, so provide both.
-const vBar = (x: number, h: number, w = 16) =>
-  `<path android:fillColor="#0FDE41" android:pathData="M${x},${128 - h}h${w}v${h}h-${w}z" />`;
-const previewImageVector = `<?xml version="1.0" encoding="utf-8"?>
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="250dp" android:height="140dp"
-    android:viewportWidth="250" android:viewportHeight="140">
-    <path android:fillColor="#1B1B1B" android:pathData="M0,0h250v140h-250z" />
-    <path android:fillColor="#B3FFFFFF" android:pathData="M14,20h70v10h-70z" />
-    <path android:fillColor="#FFFFFF" android:pathData="M14,40h100v16h-100z" />
-    ${[
-      [14, 22],
-      [35, 40],
-      [56, 58],
-      [77, 78],
-      [98, 96],
-      [119, 100],
-      [140, 82],
-      [161, 60],
-      [182, 42],
-      [203, 26],
-      [224, 16],
-    ]
-      .map(([x, h]) => vBar(x, h))
-      .join("\n    ")}
-</vector>
-`;
-
 // Reload button icon (LoadpointWidget.kt only, mirrors iOS's "arrow.clockwise"
 // SF Symbol next to the title). Standard Material "refresh" glyph, tinted at
 // runtime via Glance's ColorFilter.tint() so it follows day/night like the
@@ -234,24 +191,8 @@ const loadpointPreviewImageVector = `<?xml version="1.0" encoding="utf-8"?>
 </vector>
 `;
 
-// Forecast widgets: one fixed size, no size-variant layout (unlike Loadpoint) -
-// no resizeMode, so the launcher can't grow the frame past the content and
-// leave blank space below the footer.
-const forecastInfoXml = (pkg: string) => `<?xml version="1.0" encoding="utf-8"?>
-<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:minWidth="250dp"
-    android:minHeight="110dp"
-    android:targetCellWidth="4"
-    android:targetCellHeight="2"
-    android:updatePeriodMillis="1800000"
-    android:widgetCategory="home_screen"
-    android:configure="${pkg}.${WIDGET_SUBDIR}.ForecastWidgetConfigActivity"
-    android:previewImage="@drawable/widget_preview"
-    android:previewLayout="@layout/forecast_widget_preview" />
-`;
-
-// Static preview layouts shown in the widget picker (the Glance content only
-// renders once placed). Kept representative of the real widgets.
+// Static preview layout shown in the widget picker (the Glance content only
+// renders once placed). Kept representative of the real widget.
 const loadpointPreviewXml = `<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -275,31 +216,6 @@ const loadpointPreviewXml = `<?xml version="1.0" encoding="utf-8"?>
             android:text="min+pv" android:textColor="#B3FFFFFF" android:textSize="12sp" android:paddingEnd="10dp" />
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="now" android:textColor="#B3FFFFFF" android:textSize="12sp" />
-    </LinearLayout>
-</LinearLayout>
-`;
-
-// A green bar in the preview sparkline (fixed height, equal weight).
-const bar = (h: number) =>
-  `<View android:layout_width="0dp" android:layout_height="${h}dp" android:layout_weight="1" ` +
-  `android:layout_marginHorizontal="1dp" android:background="#0FDE41" />`;
-
-const forecastPreviewXml = `<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#1B1B1B"
-    android:padding="12dp">
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:text="Solar" android:textColor="#B3FFFFFF" android:textSize="12sp" />
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:text="3.2 kW" android:textColor="#FFFFFF" android:textSize="20sp" />
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:text="today 24 kWh · tom. 31 kWh" android:textColor="#B3FFFFFF" android:textSize="11sp" />
-    <LinearLayout android:layout_width="match_parent" android:layout_height="44dp"
-        android:orientation="horizontal" android:gravity="bottom" android:paddingTop="8dp">
-        ${[6, 10, 16, 24, 34, 40, 44, 38, 30, 20, 12, 6].map(bar).join("\n        ")}
     </LinearLayout>
 </LinearLayout>
 `;
@@ -332,16 +248,13 @@ const withWidgetFiles: ConfigPlugin = (config) =>
       const xmlDir = path.join(main, "res", "xml");
       fs.mkdirSync(xmlDir, { recursive: true });
       fs.writeFileSync(path.join(xmlDir, "loadpoint_widget_info.xml"), widgetInfoXml(pkg));
-      fs.writeFileSync(path.join(xmlDir, "forecast_widget_info.xml"), forecastInfoXml(pkg));
 
       const layoutDir = path.join(main, "res", "layout");
       fs.mkdirSync(layoutDir, { recursive: true });
       fs.writeFileSync(path.join(layoutDir, "loadpoint_widget_preview.xml"), loadpointPreviewXml);
-      fs.writeFileSync(path.join(layoutDir, "forecast_widget_preview.xml"), forecastPreviewXml);
 
       const drawableDir = path.join(main, "res", "drawable");
       fs.mkdirSync(drawableDir, { recursive: true });
-      fs.writeFileSync(path.join(drawableDir, "widget_preview.xml"), previewImageVector);
       fs.writeFileSync(path.join(drawableDir, "widget_preview_loadpoint.xml"), loadpointPreviewImageVector);
       fs.writeFileSync(path.join(drawableDir, "ic_reload.xml"), reloadIconVector);
 

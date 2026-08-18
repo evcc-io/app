@@ -65,24 +65,6 @@ object WidgetConfig {
         return serverId to lpIndex
     }
 
-    // --- forecast widgets (server + solar "adjust to real production" toggle) ---
-    // These share the server_<id> key with the loadpoint config but have no
-    // loadpoint index, so they don't use the pending/resolve mechanism.
-
-    fun saveForecast(context: Context, appWidgetId: Int, serverId: String?, adjust: Boolean) {
-        prefs(context).edit()
-            .putString("server_$appWidgetId", serverId)
-            .putBoolean("adjust_$appWidgetId", adjust)
-            .commit()
-    }
-
-    fun forecastServerId(context: Context, appWidgetId: Int): String? =
-        prefs(context).getString("server_$appWidgetId", null)
-
-    /** Solar "adjust to real production" toggle; defaults to on (apply scale). */
-    fun forecastAdjust(context: Context, appWidgetId: Int): Boolean =
-        prefs(context).getBoolean("adjust_$appWidgetId", true)
-
     fun clear(context: Context, appWidgetId: Int) {
         prefs(context).edit()
             .remove("server_$appWidgetId")

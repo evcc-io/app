@@ -11,16 +11,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.compose.ui.graphics.toArgb
 import io.evcc.android.R
 
 /**
- * Builds a plain-Views mock of the Loadpoint/Forecast widgets for the config
- * screens' live preview. Glance content can't be embedded in a classic-Views
- * Activity without pulling in the full Compose UI stack (this repo is
- * deliberately Compose-free outside Glance itself), so this reuses the same
- * data plus the same ChartRenderer/ProgressBarRenderer bitmaps to approximate
- * the real widget closely rather than rendering it exactly.
+ * Builds a plain-Views mock of the Loadpoint widget for the config screen's
+ * live preview. Glance content can't be embedded in a classic-Views Activity
+ * without pulling in the full Compose UI stack (this repo is deliberately
+ * Compose-free outside Glance itself), so this reuses the same data plus the
+ * same ProgressBarRenderer bitmaps to approximate the real widget closely
+ * rather than rendering it exactly.
  */
 object WidgetPreview {
     private fun dp(context: Context, v: Int): Int = TypedValue.applyDimension(
@@ -139,59 +138,6 @@ object WidgetPreview {
             chipsRow.addView(chip(context, modeChipLabel(context, lp, mode), mode == lp.mode, dark))
         }
         root.addView(chipsRow)
-
-        return root
-    }
-
-    private fun footerSide(context: Context, side: FooterSide, emphasisColor: Int, secondary: Int): LinearLayout {
-        val row = LinearLayout(context).apply { orientation = LinearLayout.HORIZONTAL }
-        if (side.prefix != null) row.addView(text(context, side.prefix, 10f, secondary))
-        row.addView(text(context, side.emphasis, 10f, emphasisColor, bold = true))
-        if (side.label != null) row.addView(text(context, " ${side.label}", 10f, secondary))
-        return row
-    }
-
-    fun forecast(context: Context, kind: ForecastKind, data: ForecastState.Data, dark: Boolean): View {
-        val d = { v: Int -> dp(context, v) }
-        val p = palette(kind)
-        val headlineArgb = (if (dark) p.accentNight else p.accentDay).toArgb()
-        val secondary = textSecondaryArgb(dark)
-
-        val root = card(context, cardBackgroundArgb(dark))
-
-        val headerRow = LinearLayout(context).apply { orientation = LinearLayout.HORIZONTAL; gravity = Gravity.BOTTOM }
-        headerRow.addView(
-            text(context, kind.title(context), 15f, headlineArgb, bold = true).apply {
-                layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
-            },
-        )
-        val valueCol = LinearLayout(context).apply { orientation = LinearLayout.VERTICAL; gravity = Gravity.END }
-        val valueRow = LinearLayout(context).apply { orientation = LinearLayout.HORIZONTAL }
-        valueRow.addView(text(context, data.value, 15f, headlineArgb, bold = true))
-        valueRow.addView(text(context, " ${data.unit}", 10f, headlineArgb, bold = true))
-        valueCol.addView(valueRow)
-        valueCol.addView(text(context, context.getString(R.string.widget_now), 9f, secondary))
-        headerRow.addView(valueCol)
-        root.addView(headerRow)
-
-        root.addView(spacer(context, 4))
-        root.addView(
-            ImageView(context).apply {
-                setImageBitmap(data.chart)
-                scaleType = ImageView.ScaleType.FIT_XY
-                layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, d(52))
-            },
-        )
-        root.addView(spacer(context, 5))
-
-        val footerRow = LinearLayout(context).apply { orientation = LinearLayout.HORIZONTAL }
-        footerRow.addView(
-            footerSide(context, data.footerLeft, headlineArgb, secondary).apply {
-                layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
-            },
-        )
-        footerRow.addView(footerSide(context, data.footerRight, textPrimaryArgb(dark), secondary))
-        root.addView(footerRow)
 
         return root
     }

@@ -13,12 +13,7 @@ import androidx.glance.unit.ColorProvider
 // .dark` branches in LoadpointViews.swift/Views.swift/Theme.swift.
 private val evccDarkGreen = Color(0xFF0FDE41)
 private val evccDarkerGreen = Color(0xFF0BA631)
-private val evccYellow = Color(0xFFFAF000)
-private val evccDarkYellow = Color(0xFFF6BB0F)
 private val evccOrange = Color(0xFFFF9000)
-private val evccPrice = Color(0xFFFF912F)
-private val evccCo2 = Color(0xFF00916E)
-private val co2Dark = Color(0xFF1BB88F)
 
 private val bsGrayMedium = Color(0xFF93949E)
 private val bsGrayDeep = Color(0xFF010322)
@@ -56,11 +51,6 @@ val powerUnitStyle = TextStyle(color = textSecondary, fontSize = 11.sp, fontWeig
 val statusStyle = TextStyle(fontSize = 10.sp, fontWeight = FontWeight.Bold)
 val modeChipStyle = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Bold)
 
-val headerHeadlineStyle = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold)
-val headerHeadlineUnitStyle = TextStyle(fontSize = 11.sp, fontWeight = FontWeight.Bold)
-val headerSubStyle = TextStyle(color = textSecondary, fontSize = 10.sp, fontWeight = FontWeight.Medium)
-val footerStyle = TextStyle(color = textSecondary, fontSize = 11.sp, fontWeight = FontWeight.Medium)
-val footerEmphasisStyle = TextStyle(fontSize = 11.sp, fontWeight = FontWeight.Bold)
 val messageTitleStyle = TextStyle(color = textPrimary, fontSize = 13.sp, fontWeight = FontWeight.Bold)
 val messageBodyStyle = TextStyle(color = textSecondary, fontSize = 11.sp)
 val notConfiguredTitleStyle = TextStyle(color = ColorProvider(onGreen), fontSize = 15.sp, fontWeight = FontWeight.Bold)
@@ -129,29 +119,3 @@ fun modeSelectedBackgroundArgb(dark: Boolean): Int = if (dark) Color.White.toArg
 fun modeSelectedTextArgb(dark: Boolean): Int = if (dark) Color.Black.toArgb() else Color.White.toArgb()
 fun modeUnselectedBackgroundArgb(dark: Boolean): Int = if (dark) modeBgDarkArgb else modeBgLightArgb
 fun modeUnselectedTextArgb(dark: Boolean): Int = if (dark) modeTextDarkArgb else modeTextLightArgb
-
-// -- forecast per-type palette (mirrors Theme.swift's Palette.make) --
-
-data class Palette(val accent: ColorProvider, val headline: ColorProvider, val accentDay: Color, val accentNight: Color)
-
-fun palette(kind: ForecastKind): Palette = when (kind) {
-    ForecastKind.SOLAR -> Palette(
-        accent = ColorProvider(evccDarkGreen),
-        headline = ColorProvider(day = evccDarkerGreen, night = evccDarkGreen),
-        accentDay = evccDarkerGreen, accentNight = evccDarkGreen,
-    )
-    ForecastKind.PRICE -> Palette(
-        accent = ColorProvider(evccPrice), headline = ColorProvider(evccPrice),
-        accentDay = evccPrice, accentNight = evccPrice,
-    )
-    ForecastKind.CO2 -> Palette(
-        accent = ColorProvider(day = evccCo2, night = co2Dark),
-        headline = ColorProvider(day = evccCo2, night = co2Dark),
-        accentDay = evccCo2, accentNight = co2Dark,
-    )
-    ForecastKind.FEEDIN -> Palette(
-        accent = ColorProvider(day = evccDarkYellow, night = evccYellow),
-        headline = ColorProvider(day = evccDarkYellow, night = evccYellow),
-        accentDay = evccDarkYellow, accentNight = evccYellow,
-    )
-}
