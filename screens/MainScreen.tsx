@@ -13,7 +13,6 @@ import {
   ShouldStartLoadRequest,
   WebViewErrorEvent,
   WebViewHttpErrorEvent,
-  WebViewTerminatedEvent,
 } from "react-native-webview/lib/WebViewTypes";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types";
@@ -68,7 +67,6 @@ export default function MainScreen({
 
     if (!isConnected) {
       intervalId = setInterval(() => {
-        console.log("Attempting to reconnect...");
         setWebViewKey((prevKey) => prevKey + 1);
       }, 5000);
     }
@@ -188,17 +186,17 @@ export default function MainScreen({
   );
 
   const onError = useCallback((event: WebViewErrorEvent) => {
-    console.log("onError", event);
+    console.log("onError", event.nativeEvent.description);
     setIsConnected(false);
   }, []);
 
   const onHttpError = useCallback((event: WebViewHttpErrorEvent) => {
-    console.log("onHttpError", event);
+    console.log("onHttpError", event.nativeEvent.statusCode);
     setIsConnected(false);
   }, []);
 
-  const onTerminate = useCallback((event: WebViewTerminatedEvent) => {
-    console.log("onTerminate", event);
+  const onTerminate = useCallback(() => {
+    console.log("onTerminate");
     setIsConnected(false);
   }, []);
 
@@ -254,13 +252,12 @@ export default function MainScreen({
               flex: 1,
               justifyContent: "center",
               alignItems: "center",
+              gap: 24,
               backgroundColor: colors.background,
             }}
           >
+            <AppText color="hint">{t("servers.search.searching")}</AppText>
             <Spinner />
-            <AppText color="hint" style={{ marginTop: 24 }}>
-              {t("servers.search.searching")}
-            </AppText>
           </View>
           <View
             style={{
@@ -297,8 +294,6 @@ export default function MainScreen({
   if (!activeServer?.url) {
     return <View style={{ flex: 1, backgroundColor: colors.background }} />;
   }
-
-  console.log("serverUrl", activeServer.url, isConnected);
 
   return (
     <>
