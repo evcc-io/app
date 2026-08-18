@@ -49,6 +49,7 @@ struct LoadpointCard: View {
   let lp: Int
   @Environment(\.colorScheme) var scheme
   @Environment(\.widgetFamily) var family
+  @Environment(\.widgetRenderingMode) var renderingMode
 
   private var connected: Bool { vm.status != .disconnected }
 
@@ -133,23 +134,47 @@ struct LoadpointCard: View {
       ForEach(vm.modes, id: \.self) { mode in
         let selected = mode == vm.currentMode
         Button(intent: SetModeIntent(serverId: serverId, lp: lp, mode: mode.rawValue)) {
-          HStack(spacing: 4) {
-            Text(L.t(mode.labelKey)).font(.system(size: 12, weight: .bold))
-            if vm.alwaysChargeActive, mode.rawValue == ChargeMode.smart.rawValue {
-              Image(systemName: "infinity").font(.system(size: 10, weight: .bold))
-            }
-          }
-          .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .foregroundColor(selected ? (scheme == .dark ? .black : .white)
-                                      : (scheme == .dark ? Color.modeTextDark : Color.modeTextLight))
-            .background(selected ? AnyShapeStyle(.primary)
-                                 : AnyShapeStyle((scheme == .dark ? Color.modeBgDark : Color.modeBgLight)),
-                        in: RoundedRectangle(cornerRadius: 9, style: .continuous))
+          modeButtonLabel(mode, selected: selected)
         }
         .buttonStyle(.plain)
       }
     }
     .frame(maxHeight: .infinity)
+  }
+
+  // Tinted/transparent home screens (accented rendering) flatten every color to
+  // alpha-only white, so the full-color styling collapses to white-on-white.
+  // There: unselected uses opacity contrast, selected punches the label out of
+  // the pill via destinationOut (black text would render white too).
+  @ViewBuilder private func modeButtonLabel(_ mode: ModeItem, selected: Bool) -> some View {
+    let label = HStack(spacing: 4) {
+      Text(L.t(mode.labelKey)).font(.system(size: 12, weight: .bold))
+      if vm.alwaysChargeActive, mode.rawValue == ChargeMode.smart.rawValue {
+        Image(systemName: "infinity").font(.system(size: 10, weight: .bold))
+      }
+    }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    let shape = RoundedRectangle(cornerRadius: 9, style: .continuous)
+
+    if renderingMode != .fullColor {
+      if selected {
+        label
+          .blendMode(.destinationOut)
+          .background(.white, in: shape)
+          .compositingGroup()
+      } else {
+        label
+          .foregroundColor(.primary)
+          .background(Color.white.opacity(0.15), in: shape)
+      }
+    } else {
+      label
+        .foregroundColor(selected ? (scheme == .dark ? .black : .white)
+                                  : (scheme == .dark ? Color.modeTextDark : Color.modeTextLight))
+        .background(selected ? AnyShapeStyle(.primary)
+                             : AnyShapeStyle((scheme == .dark ? Color.modeBgDark : Color.modeBgLight)),
+                    in: shape)
+    }
   }
 }
 
