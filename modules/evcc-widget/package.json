@@ -1,0 +1,7 @@
+{
+  "name": "evcc-widget",
+  "version": "0.1.0",
+  "description": "Native Android widget refresh module for evcc",
+  "license": "MIT",
+  "platforms": ["android"]
+}

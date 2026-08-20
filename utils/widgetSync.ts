@@ -1,7 +1,14 @@
 import { Platform } from "react-native";
+import { File, Paths } from "expo-file-system";
 import { Server } from "types";
+import { refreshWidgets } from "./widgetRefresh";
 
 const APP_GROUP = "group.io.evcc.app";
+
+// Android: the Glance widget is part of the same app package, so it can read a
+// plain JSON file from the app's document directory directly (no App Group /
+// native module needed). Keep this filename in sync with SharedStore.kt.
+const ANDROID_SERVERS_FILE = "evcc-widget-servers.json";
 
 enum WidgetStorageKeys {
   SERVERS = "servers",
@@ -50,6 +57,19 @@ function getExtensionStorage() {
  * then ask WidgetKit to reload. Best-effort: failures are swallowed.
  */
 export function syncWidgetServers(servers: Server[], activeServer?: Server): void {
+  const activeIndex = activeServer
+    ? servers.findIndex((s) => s.url === activeServer.url)
+    : -1;
+  const activeServerId = activeIndex >= 0 ? widgetServerId(activeIndex) : undefined;
+
+  if (Platform.OS === "android") {
+    syncAndroidWidgetServers(servers, activeServerId);
+    return;
+  }
+  syncIosWidgetServers(servers, activeServerId);
+}
+
+function syncIosWidgetServers(servers: Server[], activeServerId?: string): void {
   const mod = getExtensionStorage();
   if (!mod) return;
   try {
@@ -58,15 +78,33 @@ export function syncWidgetServers(servers: Server[], activeServer?: Server): voi
       WidgetStorageKeys.SERVERS,
       JSON.stringify(servers.map(toWidgetServer)),
     );
-    const activeIndex = activeServer
-      ? servers.findIndex((s) => s.url === activeServer.url)
-      : -1;
-    if (activeIndex >= 0) {
-      storage.set(WidgetStorageKeys.ACTIVE_SERVER_ID, widgetServerId(activeIndex));
+    if (activeServerId !== undefined) {
+      storage.set(WidgetStorageKeys.ACTIVE_SERVER_ID, activeServerId);
     } else {
       storage.remove(WidgetStorageKeys.ACTIVE_SERVER_ID);
     }
     mod.ExtensionStorage.reloadWidget();
+  } catch {
+    // widget sync is non-critical
+  }
+}
+
+/**
+ * Android: write the server list to a JSON file the Glance widget reads, then
+ * ask the widgets to redraw immediately (via the local evcc-widget module) so a
+ * changed server list shows up without waiting for the periodic WorkManager tick.
+ */
+function syncAndroidWidgetServers(servers: Server[], activeServerId?: string): void {
+  try {
+    const payload = {
+      [WidgetStorageKeys.SERVERS]: servers.map(toWidgetServer),
+      [WidgetStorageKeys.ACTIVE_SERVER_ID]: activeServerId ?? null,
+    };
+    const file = new File(Paths.document, ANDROID_SERVERS_FILE);
+    if (file.exists) file.delete();
+    file.create();
+    file.write(JSON.stringify(payload));
+    refreshWidgets();
   } catch {
     // widget sync is non-critical
   }
