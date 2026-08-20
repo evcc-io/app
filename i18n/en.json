@@ -75,6 +75,20 @@
       "server": "Server",
       "loadpoint": "Loadpoint"
     },
+    "androidConfig": {
+      "chooseServer": "Choose server",
+      "chooseLoadpoint": "Choose loadpoint",
+      "noServers": "No servers — add one in the app first",
+      "noLoadpoints": "No loadpoints reachable",
+      "loading": "Loading…",
+      "loadingPreview": "Loading preview…",
+      "previewError": "Couldn't load a preview",
+      "useThisLoadpoint": "Use this loadpoint",
+      "useThis": "Use this",
+      "adjustQuestion": "Adjust to real production?",
+      "yesRecommended": "Yes (recommended)",
+      "no": "No"
+    },
     "loadpoint": {
       "name": "Loadpoint",
       "description": "Loadpoint status and charge mode."

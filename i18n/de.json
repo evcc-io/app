@@ -75,6 +75,20 @@
       "server": "Server",
       "loadpoint": "Ladepunkt"
     },
+    "androidConfig": {
+      "chooseServer": "Server auswählen",
+      "chooseLoadpoint": "Ladepunkt auswählen",
+      "noServers": "Keine Server — füge zuerst einen in der App hinzu",
+      "noLoadpoints": "Keine Ladepunkte erreichbar",
+      "loading": "Lädt…",
+      "loadingPreview": "Vorschau wird geladen…",
+      "previewError": "Vorschau konnte nicht geladen werden",
+      "useThisLoadpoint": "Diesen Ladepunkt verwenden",
+      "useThis": "Diesen verwenden",
+      "adjustQuestion": "An reale Erzeugung anpassen?",
+      "yesRecommended": "Ja (empfohlen)",
+      "no": "Nein"
+    },
     "loadpoint": {
       "name": "Ladepunkt",
       "description": "Ladepunkt-Status und Lademodus."
