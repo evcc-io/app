@@ -333,7 +333,7 @@ jobs:
   fdroid-build:
     name: F-Droid
     runs-on: depot-ubuntu-24.04-32
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -349,9 +349,9 @@ jobs:
 
       - name: Setup F-Droid
         run: |
-          sudo add-apt-repository ppa:fdroid/fdroidserver
-          sudo apt update
-          sudo apt install fdroidserver
+          # add-apt-repository already runs a full apt update; don't repeat it
+          sudo add-apt-repository -y ppa:fdroid/fdroidserver
+          sudo apt install -y fdroidserver
 
       - name: Setup Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
