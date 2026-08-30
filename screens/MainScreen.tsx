@@ -86,6 +86,9 @@ export default function MainScreen({
     return () => subscription.remove();
   }, [navigation]);
 
+  // Switching servers starts disconnected; the new WebView reports back
+  useEffect(() => setIsConnected(false), [activeServer?.url]);
+
   // Reconnect if connection is lost
   useEffect(() => {
     let intervalId: NodeJS.Timeout | undefined;

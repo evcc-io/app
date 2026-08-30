@@ -10,7 +10,6 @@ import {
 } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import { TouchableOpacity, View } from "react-native";
-import { delay } from "utils/delay";
 import { APP_VERSION, GITHUB_RELEASES_URL } from "../utils/constants";
 import Header from "components/Header";
 import AppText from "components/AppText";
@@ -29,7 +28,6 @@ export default function SwitchServerScreen({
     async (server: Server) => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
       await setActiveServer(server);
-      await delay(500);
       navigation.goBack();
     },
     [setActiveServer, navigation],

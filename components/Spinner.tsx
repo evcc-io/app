@@ -3,9 +3,10 @@ import Svg, { Circle } from "react-native-svg";
 import Animated, {
   Easing,
   useAnimatedProps,
+  useAnimatedStyle,
   useSharedValue,
-  withDelay,
   withRepeat,
+  withSequence,
   withTiming,
 } from "react-native-reanimated";
 import { useThemeColors } from "utils/theme";
@@ -13,74 +14,84 @@ import { testingEnvironment } from "helper/launchArguments";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
-const SIZE = 64;
-const DURATION = 1800;
-const RADIUS_EASING = Easing.bezier(0.165, 0.84, 0.44, 1);
-const OPACITY_EASING = Easing.bezier(0.3, 0.61, 0.355, 1);
+const SIZE = 48;
+const EASING = Easing.bezier(0.42, 0, 0.58, 1);
+// dash cycle: 1.5s in three keyframes (grow, travel, hold), rotation 2s linear
+const GROW = 712;
+const HOLD = 76;
 
-function PuffCircle({ delay, color }: { delay: number; color: string }) {
-  const radius = useSharedValue(1);
-  const opacity = useSharedValue(1);
-
-  useEffect(() => {
-    radius.value = withDelay(
-      delay,
-      withRepeat(
-        withTiming(20, { duration: DURATION, easing: RADIUS_EASING }),
-        -1,
-      ),
-    );
-    opacity.value = withDelay(
-      delay,
-      withRepeat(
-        withTiming(0, { duration: DURATION, easing: OPACITY_EASING }),
-        -1,
-      ),
-    );
-  }, [radius, opacity, delay]);
-
-  const animatedProps = useAnimatedProps(() => ({
-    r: radius.value,
-    strokeOpacity: opacity.value,
-  }));
-
-  return (
-    <AnimatedCircle
-      cx={22}
-      cy={22}
-      fill="none"
-      stroke={color}
-      strokeWidth={2}
-      animatedProps={animatedProps}
-    />
-  );
-}
-
-// "puff" loader by Sam Herbert (SVG-Loaders, MIT): two expanding, fading
-// rings. Static under Detox so the idle-sync doesn't hang.
+// "ring-resize" by Utkarsh Verma (svg-spinners, MIT): arc grows while
+// traveling around a ring. Static under Detox so the idle-sync doesn't hang.
 export default function Spinner() {
   const colors = useThemeColors();
+  const dash = useSharedValue(0);
+  const offset = useSharedValue(0);
+  const rotation = useSharedValue(0);
+
+  useEffect(() => {
+    if (testingEnvironment()) return;
+    dash.value = withRepeat(
+      withSequence(
+        withTiming(42, { duration: GROW, easing: EASING }),
+        withTiming(42, { duration: GROW + HOLD }),
+      ),
+      -1,
+    );
+    offset.value = withRepeat(
+      withSequence(
+        withTiming(-16, { duration: GROW, easing: EASING }),
+        withTiming(-59, { duration: GROW, easing: EASING }),
+        withTiming(-59, { duration: HOLD }),
+      ),
+      -1,
+    );
+    rotation.value = withRepeat(
+      withTiming(360, { duration: 2000, easing: Easing.linear }),
+      -1,
+    );
+  }, [dash, offset, rotation]);
+
+  const animatedProps = useAnimatedProps(() => ({
+    strokeDasharray: [dash.value, 150],
+    strokeDashoffset: offset.value,
+  }));
+
+  const rotationStyle = useAnimatedStyle(() => ({
+    transform: [{ rotate: `${rotation.value}deg` }],
+  }));
 
   if (testingEnvironment()) {
     return (
-      <Svg width={SIZE} height={SIZE} viewBox="0 0 44 44">
+      <Svg width={SIZE} height={SIZE} viewBox="0 0 24 24">
         <Circle
-          cx={22}
-          cy={22}
-          r={10}
+          cx={12}
+          cy={12}
+          r={9.5}
           fill="none"
           stroke={colors.primary}
-          strokeWidth={2}
-          strokeOpacity={0.5}
+          strokeWidth={2.5}
+          strokeLinecap="round"
+          strokeDasharray={[42, 150]}
+          strokeDashoffset={-16}
         />
       </Svg>
     );
   }
 
   return (
-    <Svg width={SIZE} height={SIZE} viewBox="0 0 44 44">
-      <PuffCircle delay={0} color={colors.primary} />
-      <PuffCircle delay={DURATION / 2} color={colors.primary} />
-    </Svg>
+    <Animated.View style={rotationStyle}>
+      <Svg width={SIZE} height={SIZE} viewBox="0 0 24 24">
+        <AnimatedCircle
+          cx={12}
+          cy={12}
+          r={9.5}
+          fill="none"
+          stroke={colors.primary}
+          strokeWidth={2.5}
+          strokeLinecap="round"
+          animatedProps={animatedProps}
+        />
+      </Svg>
+    </Animated.View>
   );
 }
