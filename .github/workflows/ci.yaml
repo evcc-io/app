@@ -58,7 +58,6 @@ jobs:
         run: |
           sudo xcode-select -s /Applications/Xcode_26.5.app/Contents/Developer
           xcodebuild -version
-          sudo xcodebuild -runFirstLaunch
           xcrun simctl list runtimes
 
           if ! xcrun simctl list runtimes | grep -q "iOS"; then
@@ -110,7 +109,6 @@ jobs:
       - name: Setup Xcode 26.5
         run: |
           sudo xcode-select -s /Applications/Xcode_26.5.app/Contents/Developer
-          sudo xcodebuild -runFirstLaunch
           xcrun simctl list runtimes
 
           if ! xcrun simctl list runtimes | grep -q "iOS"; then
@@ -209,6 +207,9 @@ jobs:
         uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
 
       - name: Build
+        # emulator only needs x86_64; skip the other three ABIs' native builds
+        env:
+          ORG_GRADLE_PROJECT_reactNativeArchitectures: x86_64
         run: npx detox build --configuration android.emu.release
 
       - name: Upload app apk
@@ -233,8 +234,9 @@ jobs:
     timeout-minutes: 30
     needs: android-build
     strategy:
+      fail-fast: false
       matrix:
-        api-level: [35]
+        shard: [1, 2]
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -296,10 +298,10 @@ jobs:
           chmod +x caddy
           ./caddy run &
 
-      - name: Test
+      - name: Test (shard ${{ matrix.shard }}/2)
         uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2.38.0
         with:
-          api-level: ${{ matrix.api-level }}
+          api-level: 35
           disk-size: 1G
           heap-size: 1G
           force-avd-creation: false
@@ -307,13 +309,13 @@ jobs:
           arch: x86_64
           disable-animations: true
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          script: npx detox test --configuration android.emu.release --cleanup --headless
+          script: npx detox test --configuration android.emu.release --cleanup --headless -- --shard=${{ matrix.shard }}/2
 
       - name: Upload artifacts on failure
         if: failure()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: android-detox-artifacts-api-level-${{ matrix.api-level }}
+          name: android-detox-artifacts-shard-${{ matrix.shard }}
           path: e2e/artifacts/
           retention-days: 7
 
