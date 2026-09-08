@@ -14,8 +14,11 @@ Native app wrapper for evcc UI based on [react-native](https://reactnative.dev/)
 
 ## Beta Testing
 
-- Apple Testflight https://testflight.apple.com/join/8Y4elMpv
-- Android: Download the APK from [GitHub Releases](https://github.com/evcc-io/app/releases)
+Want to try new features before release? Join the beta:
+
+- **iOS / macOS:** Apple TestFlight https://testflight.apple.com/join/8Y4elMpv
+- **Android (Play Store):** Send an email to [michael@evcc.io](mailto:michael@evcc.io) with the Google account you use for the Play Store to get added as a tester and receive beta versions.
+- **Android (APK):** Download the APK from [GitHub Releases](https://github.com/evcc-io/app/releases)
 
 ## Features
 
