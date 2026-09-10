@@ -36,7 +36,8 @@ describe("Manual entry", () => {
     await element(by.id("serverFormAuthUser")).replaceText("admin");
     await element(by.id("serverFormAuthPassword")).replaceText("secret");
 
-    await tapAfterWaitFor(element(by.id("serverFormCheckAndSave")));
+    // the keyboard covers the save button on iOS; submit via the return key
+    await element(by.id("serverFormAuthPassword")).tapReturnKey();
 
     await waitForWebview();
   });
