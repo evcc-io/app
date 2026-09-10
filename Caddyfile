@@ -16,6 +16,31 @@
 	reverse_proxy http://localhost:7070
 }
 
+# endpoints for external-auth app testing — :7090 plays an auth proxy that
+# bounces unauthenticated requests to a fake identity provider on :7091
+# (different origin, like a real SSO login page); logging in there sets a
+# session cookie and redirects back
+:7090 {
+	@authed header_regexp Cookie ".*session=ok.*"
+	handle @authed {
+		reverse_proxy http://localhost:7070
+	}
+	handle {
+		redir http://{http.request.host}:7091/login 302
+	}
+}
+
+:7091 {
+	handle /login {
+		header Content-Type "text/html"
+		respond "<html><body><a href='/callback' data-testid='fakeLogin'>Login</a></body></html>" 200
+	}
+	handle /callback {
+		header +Set-Cookie "session=ok; Path=/"
+		redir http://{http.request.host}:7090/ 302
+	}
+}
+
 # endpoint for cookie-protected app testing — mirrors evcc's HttpOnly auth
 # cookie so e2e can prove the webview's cookies are forwarded to downloads
 :7081 {

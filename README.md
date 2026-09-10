@@ -131,6 +131,8 @@ caddy run
 
 It will open a server on http://localhost:7080 with `admin:secret` as basic auth credentials and forward requests to your local evcc instance 7070.
 
+The same Caddyfile serves http://localhost:7090 as a stand-in for an SSO reverse proxy: it redirects to a fake login page on port 7091 and only forwards to evcc once the session cookie is set. Enable "Login via reverse proxy" in the server form to test it.
+
 ## Build Android APK without EAS
 
 This is how F-Droid builds the APK:

@@ -40,6 +40,11 @@ export default function MainScreen({
   const { activeServer, targetPath, clearTargetPath } = useAppContext();
   const webViewRef = useRef<WebView>(null);
   const canGoBackRef = useRef(false);
+  // external auth: the proxy's login flow (possibly on another origin) runs in
+  // the WebView until the evcc UI reports in; afterwards foreign links open
+  // externally as usual
+  const evccLoadedRef = useRef(false);
+  const loadFailedRef = useRef(false);
   const [isConnected, setIsConnected] = useState(false);
   const [webViewKey, setWebViewKey] = useState(0);
   const [downloadedFile, setDownloadedFile] = useState<string | null>(null);
@@ -88,6 +93,9 @@ export default function MainScreen({
 
   // Switching servers starts disconnected; the new WebView reports back
   useEffect(() => setIsConnected(false), [activeServer?.url]);
+  useEffect(() => {
+    evccLoadedRef.current = false;
+  }, [activeServer?.url, webViewKey]);
 
   // Reconnect if connection is lost
   useEffect(() => {
@@ -178,6 +186,7 @@ export default function MainScreen({
           setIsConnected(false);
           break;
         case "online":
+          evccLoadedRef.current = true;
           setIsConnected(true);
           break;
         case "settings":
@@ -205,35 +214,64 @@ export default function MainScreen({
       const cleanEventHost = new URL(event.url).host;
 
       if (!cleanEventHost.startsWith(cleanActiveServerHost)) {
+        if (activeServer?.externalAuth && !evccLoadedRef.current) {
+          return true;
+        }
         Linking.openURL(event.url);
         return false;
       }
       return true;
     },
-    [activeServer?.url],
+    [activeServer?.url, activeServer?.externalAuth],
   );
 
   const onError = useCallback((event: WebViewErrorEvent) => {
     console.log("onError", event.nativeEvent.description);
+    loadFailedRef.current = true;
     setIsConnected(false);
   }, []);
 
-  const onHttpError = useCallback((event: WebViewHttpErrorEvent) => {
-    console.log("onHttpError", event.nativeEvent.statusCode);
-    setIsConnected(false);
+  const onHttpError = useCallback(
+    (event: WebViewHttpErrorEvent) => {
+      const { statusCode } = event.nativeEvent;
+      console.log("onHttpError", statusCode);
+      // auth proxies serve their login page with 401/403
+      if (
+        activeServer?.externalAuth &&
+        (statusCode === 401 || statusCode === 403)
+      ) {
+        return;
+      }
+      loadFailedRef.current = true;
+      setIsConnected(false);
+    },
+    [activeServer?.externalAuth],
+  );
+
+  const onLoadStart = useCallback(() => {
+    loadFailedRef.current = false;
   }, []);
+
+  // show the proxy's login page instead of the loading overlay; the evcc UI
+  // reports online by itself once the login went through
+  const onLoadEnd = useCallback(() => {
+    if (
+      activeServer?.externalAuth &&
+      !evccLoadedRef.current &&
+      !loadFailedRef.current
+    ) {
+      setIsConnected(true);
+    }
+  }, [activeServer?.externalAuth]);
 
   const onTerminate = useCallback(() => {
     console.log("onTerminate");
     setIsConnected(false);
   }, []);
 
-  const onNavigationStateChange = useCallback(
-    (navState: WebViewNavigation) => {
-      canGoBackRef.current = navState.canGoBack;
-    },
-    [],
-  );
+  const onNavigationStateChange = useCallback((navState: WebViewNavigation) => {
+    canGoBackRef.current = navState.canGoBack;
+  }, []);
 
   const LayoutMemoized = useMemo(
     () => (
@@ -269,6 +307,8 @@ export default function MainScreen({
             applicationNameForUserAgent={USER_AGENT}
             onError={onError}
             onHttpError={onHttpError}
+            onLoadStart={onLoadStart}
+            onLoadEnd={onLoadEnd}
             onContentProcessDidTerminate={onTerminate}
             onMessage={handleMessage}
             onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
@@ -317,6 +357,9 @@ export default function MainScreen({
       loadScale,
       isConnected,
       onError,
+      onHttpError,
+      onLoadStart,
+      onLoadEnd,
       onShouldStartLoadWithRequest,
       onNavigationStateChange,
       onTerminate,
