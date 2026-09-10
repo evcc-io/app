@@ -228,9 +228,11 @@ export default function ServerForm({
           {t("servers.manually.externalAuth")}
         </AppText>
       </View>
-      <AppText variant="c1" style={{ marginBottom: 16 }} color="hint">
-        {t("servers.manually.externalAuthHint")}
-      </AppText>
+      {internalServer?.externalAuth && (
+        <AppText variant="c1" style={{ marginBottom: 16 }} color="hint">
+          {t("servers.manually.externalAuthHint")}
+        </AppText>
+      )}
 
       {error ? (
         <AppText style={{ marginBottom: 16 }} color="danger">
