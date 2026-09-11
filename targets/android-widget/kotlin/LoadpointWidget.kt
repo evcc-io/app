@@ -11,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -198,6 +199,19 @@ val SERVER_KEY = stringPreferencesKey("server") // absent = default server
 val LP_KEY = intPreferencesKey("lp") // absent = not configured yet
 private val REFRESH_KEY = longPreferencesKey("refresh")
 
+// Last-known-good cache, so a transient fetch failure (background update racing
+// a Wi-Fi handoff, Doze, etc.) doesn't blank out a working widget until the next
+// successful cycle - see load()'s Failure branch.
+private val LAST_LP_JSON_KEY = stringPreferencesKey("lastLoadpointJson")
+private val LAST_LP_TAG_KEY = stringPreferencesKey("lastLoadpointTag") // "<resolved server id>|<lpIndex>"
+
+// One-shot: set by an explicit user action (reload tap, mode change) so its
+// own failure is reported honestly instead of silently falling back to the
+// cache - consumed by the very next load() regardless of outcome.
+private val FORCE_UNREACHABLE_KEY = booleanPreferencesKey("forceUnreachable")
+
+private fun cacheTag(serverId: String, lpIndex: Int) = "$serverId|$lpIndex"
+
 class LoadpointWidget : GlanceAppWidget() {
     override val sizeMode = SizeMode.Exact
     override val stateDefinition = PreferencesGlanceStateDefinition
@@ -209,35 +223,73 @@ class LoadpointWidget : GlanceAppWidget() {
         // state (config or refresh nonce) changes.
         val initialPrefs = getAppWidgetState<Preferences>(context, id)
         val appWidgetId = GlanceAppWidgetManager(context).getAppWidgetId(id)
-        val initial = load(context, initialPrefs)
+        val initial = load(context, id, initialPrefs)
         provideContent {
             val prefs = currentState<Preferences>()
             var state by remember { mutableStateOf(initial) }
-            LaunchedEffect(prefs) {
-                if (prefs != initialPrefs) state = load(context, prefs)
+            // Keyed on just the fields that mean "please reload" (config, refresh
+            // nonce) rather than the whole Preferences blob - load() itself writes
+            // the last-known-good cache into that same blob on success, and a
+            // broader key would treat that write as "config changed", triggering
+            // another load in a loop.
+            LaunchedEffect(triggerKey(prefs)) {
+                if (triggerKey(prefs) != triggerKey(initialPrefs)) state = load(context, id, prefs)
             }
             Content(context, state, prefs[LP_KEY]?.let { prefs[SERVER_KEY] to it }, appWidgetId)
         }
     }
 
-    private suspend fun load(context: Context, prefs: Preferences): LoadpointState = withContext(Dispatchers.IO) {
+    private fun triggerKey(prefs: Preferences) = Triple(prefs[SERVER_KEY], prefs[LP_KEY], prefs[REFRESH_KEY])
+
+    private suspend fun load(context: Context, id: GlanceId, prefs: Preferences): LoadpointState = withContext(Dispatchers.IO) {
         val lpIndex = prefs[LP_KEY] ?: return@withContext LoadpointState.NotConfigured
         val server = SharedStore.server(context, prefs[SERVER_KEY]) ?: return@withContext LoadpointState.NotConfigured
+        val tag = cacheTag(server.id, lpIndex)
+
+        // consume the one-shot "explicit action" flag regardless of outcome, so
+        // it never leaks into a later, unrelated background refresh
+        val forceUnreachable = prefs[FORCE_UNREACHABLE_KEY] == true
+        if (forceUnreachable) updateAppWidgetState(context, id) { it.remove(FORCE_UNREACHABLE_KEY) }
+
         when (val out = ApiClient.fetch(server, ".loadpoints[$lpIndex]")) {
-            is FetchOutcome.Success ->
-                Loadpoint.parse(out.json)?.let { LoadpointState.Data(it, server.id, lpIndex) }
-                    ?: LoadpointState.NoData
+            is FetchOutcome.Success -> {
+                val parsed = Loadpoint.parse(out.json)
+                if (parsed != null) {
+                    updateAppWidgetState(context, id) {
+                        it[LAST_LP_TAG_KEY] = tag
+                        it[LAST_LP_JSON_KEY] = out.json
+                    }
+                    LoadpointState.Data(parsed, server.id, lpIndex)
+                } else {
+                    LoadpointState.NoData
+                }
+            }
             FetchOutcome.NoData -> LoadpointState.NoData
-            FetchOutcome.Failure -> LoadpointState.Unreachable
+            FetchOutcome.Failure -> {
+                val cached = if (!forceUnreachable && prefs[LAST_LP_TAG_KEY] == tag) {
+                    prefs[LAST_LP_JSON_KEY]?.let { Loadpoint.parse(it) }
+                } else {
+                    null
+                }
+                cached?.let { LoadpointState.Data(it, server.id, lpIndex) } ?: LoadpointState.Unreachable
+            }
         }
     }
 
     companion object {
-        /** Re-fetch every placed widget (mirrors iOS's reloadAllTimelines). */
-        suspend fun refreshAll(context: Context) {
+        /**
+         * Re-fetch every placed widget (mirrors iOS's reloadAllTimelines).
+         * explicit marks a user-initiated check (reload tap, mode change): its
+         * failure is reported as Unreachable rather than silently falling back
+         * to the last-known-good cache, since the user asked "what's true now".
+         */
+        suspend fun refreshAll(context: Context, explicit: Boolean = false) {
             val widget = LoadpointWidget()
             for (id in GlanceAppWidgetManager(context).getGlanceIds(LoadpointWidget::class.java)) {
-                updateAppWidgetState(context, id) { it[REFRESH_KEY] = System.currentTimeMillis() }
+                updateAppWidgetState(context, id) {
+                    it[REFRESH_KEY] = System.currentTimeMillis()
+                    if (explicit) it[FORCE_UNREACHABLE_KEY] = true
+                }
                 widget.update(context, id)
             }
         }
@@ -488,7 +540,7 @@ class ModeAction : ActionCallback {
         withContext(Dispatchers.IO) {
             ApiClient.post(server, "/api/loadpoints/$lp/mode/$mode")
         }
-        LoadpointWidget.refreshAll(context)
+        LoadpointWidget.refreshAll(context, explicit = true)
     }
 
     companion object {
@@ -501,7 +553,7 @@ class ModeAction : ActionCallback {
 /** Forces a fresh fetch, mirrors iOS's ReloadIntent. */
 class ReloadAction : ActionCallback {
     override suspend fun onAction(context: Context, glanceId: GlanceId, parameters: ActionParameters) {
-        LoadpointWidget.refreshAll(context)
+        LoadpointWidget.refreshAll(context, explicit = true)
     }
 }
 
