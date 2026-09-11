@@ -93,48 +93,75 @@ type LabeledManifestReceiver = ManifestReceiver & {
   "meta-data"?: AndroidConfig.Manifest.ManifestMetaData[];
 };
 
+// The forecast widgets (Solar/Price/CO₂/Feed-in) share one appwidget-provider
+// XML, but each gets a distinct android:label so the widget picker names them.
+const FORECAST_RECEIVERS = [
+  { name: "EvccSolarWidgetReceiver", label: "@string/widget_name_solar" },
+  { name: "EvccPriceWidgetReceiver", label: "@string/widget_name_price" },
+  { name: "EvccCo2WidgetReceiver", label: "@string/widget_name_co2" },
+  { name: "EvccFeedinWidgetReceiver", label: "@string/widget_name_feedin" },
+];
+
+const pushWidgetReceiver = (
+  app: AndroidConfig.Manifest.ManifestApplication,
+  shortName: string,
+  infoResource: string,
+  label: string,
+) => {
+  app.receiver = app.receiver ?? [];
+  const name = `.${WIDGET_SUBDIR}.${shortName}`;
+  if (app.receiver.some((r) => r.$["android:name"] === name)) return;
+  const receiver: LabeledManifestReceiver = {
+    $: { "android:name": name, "android:exported": "false", "android:label": label },
+    "intent-filter": [
+      {
+        action: [
+          {
+            $: {
+              "android:name": "android.appwidget.action.APPWIDGET_UPDATE",
+            },
+          },
+        ],
+      },
+    ],
+    "meta-data": [
+      {
+        $: {
+          "android:name": "android.appwidget.provider",
+          "android:resource": `@xml/${infoResource}`,
+        },
+      },
+    ],
+  };
+  app.receiver.push(receiver);
+};
+
 const withWidgetManifest: ConfigPlugin = (config) =>
   withAndroidManifest(config, (config) => {
     const app = AndroidConfig.Manifest.getMainApplicationOrThrow(
       config.modResults,
     );
 
-    app.receiver = app.receiver ?? [];
-    const receiverName = `.${WIDGET_SUBDIR}.EvccLoadpointWidgetReceiver`;
-    if (!app.receiver.some((r) => r.$["android:name"] === receiverName)) {
-      const receiver: LabeledManifestReceiver = {
-        $: {
-          "android:name": receiverName,
-          "android:exported": "false",
-          "android:label": "@string/widget_loadpoint_name",
-        },
-        "intent-filter": [
-          {
-            action: [
-              {
-                $: {
-                  "android:name": "android.appwidget.action.APPWIDGET_UPDATE",
-                },
-              },
-            ],
-          },
-        ],
-        "meta-data": [
-          {
-            $: {
-              "android:name": "android.appwidget.provider",
-              "android:resource": "@xml/loadpoint_widget_info",
-            },
-          },
-        ],
-      };
-      app.receiver.push(receiver);
+    pushWidgetReceiver(
+      app,
+      "EvccLoadpointWidgetReceiver",
+      "loadpoint_widget_info",
+      "@string/widget_loadpoint_name",
+    );
+    for (const r of FORECAST_RECEIVERS) {
+      pushWidgetReceiver(app, r.name, "forecast_widget_info", r.label);
     }
 
-    // widget placement configuration Activity (server, then loadpoint picker)
+    // widget placement configuration Activities (loadpoint picker; forecast
+    // server + adjust-toggle picker)
     app.activity = app.activity ?? [];
-    const activityName = `.${WIDGET_SUBDIR}.LoadpointWidgetConfigActivity`;
-    if (!app.activity.some((a) => a.$["android:name"] === activityName)) {
+    for (const activityName of [
+      `.${WIDGET_SUBDIR}.LoadpointWidgetConfigActivity`,
+      `.${WIDGET_SUBDIR}.ForecastWidgetConfigActivity`,
+    ]) {
+      if (app.activity.some((a) => a.$["android:name"] === activityName)) {
+        continue;
+      }
       app.activity.push({
         $: { "android:name": activityName, "android:exported": "true" },
         "intent-filter": [
@@ -173,6 +200,22 @@ const widgetInfoXml = `<?xml version="1.0" encoding="utf-8"?>
     android:previewLayout="@layout/loadpoint_widget_preview" />
 `;
 
+// Forecast widgets have one fixed size (no size-variant layout like Loadpoint's
+// responsive breakpoints) - no resizeMode, so the launcher can't grow the frame
+// past ForecastWidget.kt's content and leave blank space below the footer.
+const forecastInfoXml = `<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="250dp"
+    android:minHeight="110dp"
+    android:targetCellWidth="4"
+    android:targetCellHeight="2"
+    android:updatePeriodMillis="1800000"
+    android:widgetCategory="home_screen"
+    android:configure="${PACKAGE}.${WIDGET_SUBDIR}.ForecastWidgetConfigActivity"
+    android:previewImage="@drawable/widget_preview_forecast"
+    android:previewLayout="@layout/forecast_widget_preview" />
+`;
+
 // Material "refresh" glyph, tinted at runtime via Glance's ColorFilter.tint().
 const reloadIconVector = `<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
@@ -198,6 +241,41 @@ const loadpointPreviewImageVector = `<?xml version="1.0" encoding="utf-8"?>
     <path android:fillColor="#0FDE41" android:pathData="M0,64h126v6h-126z" />
     <path android:fillColor="#1A1B2E" android:pathData="M204,0h96v70h-96z" />
     <path android:fillColor="#FFFFFF" android:pathData="M204,24h96v22h-96z" />
+</vector>
+`;
+
+// Widget picker preview image for the forecast widgets: title, headline
+// value, and a sparkline bar chart - representative of ForecastWidget.kt's
+// actual Header/chart/Footer layout.
+const forecastBar = (x: number, h: number, w = 16) =>
+  `<path android:fillColor="#0FDE41" android:pathData="M${x},${110 - h}h${w}v${h}h-${w}z" />`;
+const forecastPreviewImageVector = `<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="300dp" android:height="140dp"
+    android:viewportWidth="300" android:viewportHeight="140">
+    <path android:fillColor="#1B1B1B" android:pathData="M0,0h300v140h-300z" />
+    <path android:fillColor="#0FDE41" android:pathData="M14,18h60v14h-60z" />
+    <path android:fillColor="#FFFFFF" android:pathData="M226,14h60v16h-60z" />
+    <path android:fillColor="#B3FFFFFF" android:pathData="M254,32h32v8h-32z" />
+    ${[
+      [14, 20],
+      [35, 28],
+      [56, 40],
+      [77, 52],
+      [98, 62],
+      [119, 68],
+      [140, 60],
+      [161, 46],
+      [182, 34],
+      [203, 24],
+      [224, 16],
+      [245, 12],
+      [266, 10],
+    ]
+      .map(([x, h]) => forecastBar(x, h))
+      .join("\n    ")}
+    <path android:fillColor="#B3FFFFFF" android:pathData="M14,122h100v10h-100z" />
+    <path android:fillColor="#FFFFFF" android:pathData="M186,122h100v10h-100z" />
 </vector>
 `;
 
@@ -282,6 +360,58 @@ const loadpointPreviewXml = `<?xml version="1.0" encoding="utf-8"?>
     ${previewButton("widget_mode_smart", true)}
     ${previewSeparator}
     ${previewButton("widget_mode_now", false)}
+  </LinearLayout>
+</LinearLayout>
+`;
+
+// Mirrors ForecastWidget.kt's DataBody: header row (title / value+unit / "now"),
+// chart, footer row (two stat pieces) - same rounded card as the Loadpoint preview.
+const forecastPreviewBar = (h: number) =>
+  `<View android:layout_width="0dp" android:layout_weight="1" android:layout_height="${h}dp"
+        android:layout_marginHorizontal="1dp" android:background="@color/widget_preview_status" />`;
+
+const forecastPreviewXml = `<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/widget_preview_card"
+    android:clipToOutline="true"
+    android:padding="12dp">
+  <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+      android:orientation="horizontal" android:gravity="bottom">
+    <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+        android:text="@string/widget_type_solar" android:textColor="@color/widget_preview_status" android:textSize="15sp" android:textStyle="bold" />
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="end">
+      <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="3.2" android:textColor="@color/widget_preview_status" android:textSize="15sp" android:textStyle="bold" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text=" kW" android:textColor="@color/widget_preview_status" android:textSize="10sp" android:textStyle="bold" />
+      </LinearLayout>
+      <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+          android:text="@string/widget_now" android:textColor="@color/widget_preview_text_secondary" android:textSize="9sp" />
+    </LinearLayout>
+  </LinearLayout>
+  <View android:layout_width="match_parent" android:layout_height="4dp" />
+  <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+      android:orientation="horizontal" android:gravity="bottom">
+    ${[6, 10, 16, 24, 34, 40, 44, 38, 30, 20, 12, 6].map(forecastPreviewBar).join("\n    ")}
+  </LinearLayout>
+  <View android:layout_width="match_parent" android:layout_height="5dp" />
+  <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+    <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="horizontal">
+      <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+          android:text="24 kWh" android:textColor="@color/widget_preview_status" android:textSize="10sp" android:textStyle="bold" />
+      <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="3dp"
+          android:text="@string/widget_solar_remaining" android:textColor="@color/widget_preview_text_secondary" android:textSize="10sp" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal">
+      <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+          android:text="31 kWh" android:textColor="@color/widget_preview_text" android:textSize="10sp" android:textStyle="bold" />
+      <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="3dp"
+          android:text="@string/widget_solar_tomorrow" android:textColor="@color/widget_preview_text_secondary" android:textSize="10sp" />
+    </LinearLayout>
   </LinearLayout>
 </LinearLayout>
 `;
@@ -431,8 +561,11 @@ const withWidgetFiles: ConfigPlugin = (config) =>
 
       const files: Record<string, string> = {
         "xml/loadpoint_widget_info.xml": widgetInfoXml,
+        "xml/forecast_widget_info.xml": forecastInfoXml,
         "layout/loadpoint_widget_preview.xml": loadpointPreviewXml,
+        "layout/forecast_widget_preview.xml": forecastPreviewXml,
         "drawable/widget_preview_loadpoint.xml": loadpointPreviewImageVector,
+        "drawable/widget_preview_forecast.xml": forecastPreviewImageVector,
         "drawable/ic_reload.xml": reloadIconVector,
         "drawable/widget_preview_dot.xml": roundedShape(
           "@color/widget_preview_status",

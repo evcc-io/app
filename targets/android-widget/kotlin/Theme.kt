@@ -13,7 +13,12 @@ import androidx.glance.unit.ColorProvider
 // .dark` branches in LoadpointViews.swift/Views.swift/Theme.swift.
 private val evccDarkGreen = Color(0xFF0FDE41)
 private val evccDarkerGreen = Color(0xFF0BA631)
+private val evccYellow = Color(0xFFFAF000)
+private val evccDarkYellow = Color(0xFFF6BB0F)
 private val evccOrange = Color(0xFFFF9000)
+private val evccPrice = Color(0xFFFF912F)
+private val evccCo2 = Color(0xFF00916E)
+private val co2Dark = Color(0xFF1BB88F)
 
 private val bsGrayMedium = Color(0xFF93949E)
 
@@ -128,3 +133,27 @@ fun statusColorArgb(active: Boolean, heating: Boolean, dark: Boolean): Int = whe
     else -> if (dark) evccDarkGreenArgb else evccDarkerGreenArgb
 }
 
+
+// -- forecast per-type accent (mirrors Theme.swift's Palette.make) -- only
+// headline + the raw day/night colors ChartRenderer needs are kept; the old
+// unused `accent` ColorProvider field is dropped, matching the four-sizes-
+// only trim the rest of this file already went through.
+
+data class ForecastPalette(val headline: ColorProvider, val accentDay: Color, val accentNight: Color)
+
+fun forecastPalette(kind: ForecastKind): ForecastPalette = when (kind) {
+    ForecastKind.SOLAR -> ForecastPalette(ColorProvider(day = evccDarkerGreen, night = evccDarkGreen), evccDarkerGreen, evccDarkGreen)
+    ForecastKind.PRICE -> ForecastPalette(ColorProvider(evccPrice), evccPrice, evccPrice)
+    ForecastKind.CO2 -> ForecastPalette(ColorProvider(day = evccCo2, night = co2Dark), evccCo2, co2Dark)
+    ForecastKind.FEEDIN -> ForecastPalette(ColorProvider(day = evccDarkYellow, night = evccYellow), evccDarkYellow, evccYellow)
+}
+
+// -- forecast header/footer text: title/body reuse titleStyle/secondaryStyle
+// and notConfiguredTitleStyle/notConfiguredBodyStyle directly (same role, same
+// look as Loadpoint's message states) - only the header value/unit and footer
+// stat rows are genuinely forecast-specific, so only those get new styles.
+
+val forecastHeaderStyle = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Bold) // colored per palette
+val forecastHeaderUnitStyle = TextStyle(fontSize = 10.sp, fontWeight = FontWeight.Bold) // colored per palette
+val forecastFooterStyle = TextStyle(color = textSecondary, fontSize = 10.sp, fontWeight = FontWeight.Medium)
+val forecastFooterEmphasisStyle = TextStyle(fontSize = 10.sp, fontWeight = FontWeight.Bold) // colored per side

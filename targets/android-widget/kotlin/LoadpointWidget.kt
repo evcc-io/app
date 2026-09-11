@@ -59,7 +59,8 @@ import io.evcc.android.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-private fun deepLinkAction(uri: String): Action = actionStartActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri)))
+// not private: ForecastWidget.kt uses the identical helper for its own deep link
+fun deepLinkAction(uri: String): Action = actionStartActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri)))
 
 /**
  * Loadpoint home-screen widget, Android counterpart of LoadpointWidget.swift /
@@ -85,7 +86,7 @@ private fun widthClass(width: Dp): WidthClass = when {
 val DOCK_WIDTH_3 = 96.dp // vertical stack
 val DOCK_WIDTH_4 = 150.dp // 2x2 grid, "Min+Solar" must fit
 private val STRIP_HEIGHT = 6.dp
-private val CARD_RADIUS = 20.dp
+val CARD_RADIUS = 20.dp // not private: ForecastWidget.kt's card uses the same radius
 val MAX_CARD_HEIGHT = 84.dp
 
 // alwaysCharge exists since the smart-mode redesign; its presence tells
