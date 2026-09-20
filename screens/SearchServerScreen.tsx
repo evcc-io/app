@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import * as ServiceDiscovery from "@inthepocket/react-native-service-discovery";
-import { Alert, Animated, Easing, View } from "react-native";
+import { Alert, Animated, Easing, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import IconHome from "@material-symbols/svg-400/rounded/home.svg";
 import IconSearchOff from "@material-symbols/svg-400/rounded/search_off.svg";
@@ -176,180 +176,189 @@ export default function SearchServerScreen({
       }}
     >
       <SafeAreaView style={{ flex: 1 }}>
-        {notPossible || (finished && !hasResult) ? (
-          <>
-            <View
-              style={{
-                flex: 1,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <StatusCircle color={colors.surface}>
-                <IconSearchOff width={60} height={60} fill={colors.textHint} />
-              </StatusCircle>
-              <AppText style={{ textAlign: "center" }}>
-                {t(
-                  notPossible
-                    ? "servers.search.notAvailable"
-                    : "servers.search.nothingFound",
-                )}
-              </AppText>
-            </View>
-            <View style={{ paddingBottom: 8, gap: 12 }}>
-              <Button onPress={manualEntry} testID="searchManualEntry">
-                {t("servers.manually.specify")}
-              </Button>
-              {!notPossible ? (
-                <Button
-                  variant="outline"
-                  onPress={scanNetwork}
-                  testID="searchRetry"
-                >
-                  {t("servers.search.tryAgain")}
-                </Button>
-              ) : null}
-              <TextLink onPress={goBack} testID="searchCancel">
-                {t("servers.search.cancel")}
-              </TextLink>
-            </View>
-          </>
-        ) : hasResult ? (
-          <>
-            <View
-              style={{
-                flex: 1,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-              testID="searchResult"
-            >
-              <Animated.View
-                style={{
-                  opacity: badgeProgress,
-                  transform: [
-                    {
-                      scale: badgeProgress.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [0.4, 1],
-                      }),
-                    },
-                  ],
-                }}
-              >
-                <StatusCircle color={colors.primary}>
-                  <IconCheck width={72} height={72} fill={colors.onPrimary} />
-                </StatusCircle>
-              </Animated.View>
-              <AppText variant="h3" style={{ textAlign: "center" }}>
-                {multi
-                  ? t("servers.search.foundMany", { count: found.length })
-                  : t("servers.search.foundOne")}
-              </AppText>
-              {multi ? (
-                <AppText
-                  color="hint"
-                  style={{ fontSize: 14, marginTop: 8, textAlign: "center" }}
-                >
-                  {t("servers.search.selectHelper")}
-                </AppText>
-              ) : null}
-              <View style={{ alignSelf: "stretch", marginTop: 28, gap: 10 }}>
-                {found.map((server, index) => {
-                  const isSelected = index === selectedIndex;
-                  return (
-                    <ServerCard
-                      key={server.url ?? `server-${index}`}
-                      selected={multi && isSelected}
-                    >
-                      <ServerEntry
-                        title={server.title}
-                        url={server.url}
-                        leftIcon={
-                          multi && isSelected ? (
-                            <IconCheckCircle
-                              width={24}
-                              height={24}
-                              fill={colors.primary}
-                            />
-                          ) : (
-                            <IconHome
-                              width={24}
-                              height={24}
-                              fill={colors.text}
-                            />
-                          )
-                        }
-                        onPress={
-                          multi ? () => setSelectedIndex(index) : undefined
-                        }
-                      />
-                    </ServerCard>
-                  );
-                })}
-              </View>
-            </View>
-            <View style={{ paddingBottom: 8 }}>
-              <Button
-                loading={connecting}
-                onPress={() => selected && connect(selected)}
-                testID="searchConnect"
-              >
-                {t("servers.search.connect")}
-              </Button>
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1 }}
+          showsVerticalScrollIndicator={false}
+        >
+          {notPossible || (finished && !hasResult) ? (
+            <>
               <View
                 style={{
-                  flexDirection: "row",
+                  flex: 1,
+                  alignItems: "center",
                   justifyContent: "center",
-                  gap: 20,
-                  marginTop: 12,
                 }}
               >
-                <TextLink onPress={scanNetwork} testID="searchRetry">
-                  {t("servers.search.tryAgain")}
-                </TextLink>
-                <TextLink onPress={manualEntry} testID="searchManualEntry">
+                <StatusCircle color={colors.surface}>
+                  <IconSearchOff
+                    width={60}
+                    height={60}
+                    fill={colors.textHint}
+                  />
+                </StatusCircle>
+                <AppText style={{ textAlign: "center" }}>
+                  {t(
+                    notPossible
+                      ? "servers.search.notAvailable"
+                      : "servers.search.nothingFound",
+                  )}
+                </AppText>
+              </View>
+              <View style={{ paddingBottom: 8, gap: 12 }}>
+                <Button onPress={manualEntry} testID="searchManualEntry">
                   {t("servers.manually.specify")}
+                </Button>
+                {!notPossible ? (
+                  <Button
+                    variant="outline"
+                    onPress={scanNetwork}
+                    testID="searchRetry"
+                  >
+                    {t("servers.search.tryAgain")}
+                  </Button>
+                ) : null}
+                <TextLink onPress={goBack} testID="searchCancel">
+                  {t("servers.search.cancel")}
                 </TextLink>
               </View>
-            </View>
-          </>
-        ) : (
-          <>
-            <View
-              style={{
-                flex: 1,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-              testID="searchInProgress"
-            >
-              <SearchPulse />
-              <AppText
-                variant="h3"
-                style={{ marginTop: 36, textAlign: "center" }}
+            </>
+          ) : hasResult ? (
+            <>
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                testID="searchResult"
               >
-                {t("servers.search.inProgress")}
-              </AppText>
-              <AppText
-                color="hint"
-                style={{ marginTop: 8, textAlign: "center" }}
+                <Animated.View
+                  style={{
+                    opacity: badgeProgress,
+                    transform: [
+                      {
+                        scale: badgeProgress.interpolate({
+                          inputRange: [0, 1],
+                          outputRange: [0.4, 1],
+                        }),
+                      },
+                    ],
+                  }}
+                >
+                  <StatusCircle color={colors.primary}>
+                    <IconCheck width={72} height={72} fill={colors.onPrimary} />
+                  </StatusCircle>
+                </Animated.View>
+                <AppText variant="h3" style={{ textAlign: "center" }}>
+                  {multi
+                    ? t("servers.search.foundMany", { count: found.length })
+                    : t("servers.search.foundOne")}
+                </AppText>
+                {multi ? (
+                  <AppText
+                    color="hint"
+                    style={{ fontSize: 14, marginTop: 8, textAlign: "center" }}
+                  >
+                    {t("servers.search.selectHelper")}
+                  </AppText>
+                ) : null}
+                <View style={{ alignSelf: "stretch", marginTop: 28, gap: 10 }}>
+                  {found.map((server, index) => {
+                    const isSelected = index === selectedIndex;
+                    return (
+                      <ServerCard
+                        key={server.url ?? `server-${index}`}
+                        selected={multi && isSelected}
+                      >
+                        <ServerEntry
+                          title={server.title}
+                          url={server.url}
+                          leftIcon={
+                            multi && isSelected ? (
+                              <IconCheckCircle
+                                width={24}
+                                height={24}
+                                fill={colors.primary}
+                              />
+                            ) : (
+                              <IconHome
+                                width={24}
+                                height={24}
+                                fill={colors.text}
+                              />
+                            )
+                          }
+                          onPress={
+                            multi ? () => setSelectedIndex(index) : undefined
+                          }
+                        />
+                      </ServerCard>
+                    );
+                  })}
+                </View>
+              </View>
+              <View style={{ paddingBottom: 8 }}>
+                <Button
+                  loading={connecting}
+                  onPress={() => selected && connect(selected)}
+                  testID="searchConnect"
+                >
+                  {t("servers.search.connect")}
+                </Button>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    gap: 20,
+                    marginTop: 12,
+                  }}
+                >
+                  <TextLink onPress={scanNetwork} testID="searchRetry">
+                    {t("servers.search.tryAgain")}
+                  </TextLink>
+                  <TextLink onPress={manualEntry} testID="searchManualEntry">
+                    {t("servers.manually.specify")}
+                  </TextLink>
+                </View>
+              </View>
+            </>
+          ) : (
+            <>
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                testID="searchInProgress"
               >
-                {t("servers.search.hint")}
-              </AppText>
-            </View>
-            <View style={{ paddingBottom: 8 }}>
-              <Button
-                variant="outline"
-                status="basic"
-                onPress={goBack}
-                testID="searchCancel"
-              >
-                {t("servers.search.cancel")}
-              </Button>
-            </View>
-          </>
-        )}
+                <SearchPulse />
+                <AppText
+                  variant="h3"
+                  style={{ marginTop: 36, textAlign: "center" }}
+                >
+                  {t("servers.search.inProgress")}
+                </AppText>
+                <AppText
+                  color="hint"
+                  style={{ marginTop: 8, textAlign: "center" }}
+                >
+                  {t("servers.search.hint")}
+                </AppText>
+              </View>
+              <View style={{ paddingBottom: 8 }}>
+                <Button
+                  variant="outline"
+                  status="basic"
+                  onPress={goBack}
+                  testID="searchCancel"
+                >
+                  {t("servers.search.cancel")}
+                </Button>
+              </View>
+            </>
+          )}
+        </ScrollView>
       </SafeAreaView>
     </View>
   );

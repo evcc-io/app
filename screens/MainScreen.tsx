@@ -241,12 +241,9 @@ export default function MainScreen({
     setIsConnected(false);
   }, []);
 
-  const onNavigationStateChange = useCallback(
-    (navState: WebViewNavigation) => {
-      canGoBackRef.current = navState.canGoBack;
-    },
-    [],
-  );
+  const onNavigationStateChange = useCallback((navState: WebViewNavigation) => {
+    canGoBackRef.current = navState.canGoBack;
+  }, []);
 
   const LayoutMemoized = useMemo(
     () => (
@@ -309,7 +306,10 @@ export default function MainScreen({
           </View>
           <View
             style={{
-              paddingVertical: 32,
+              paddingTop: 32,
+              paddingBottom: Math.max(insets.bottom, 32),
+              paddingLeft: insets.left,
+              paddingRight: insets.right,
               backgroundColor: colors.background,
             }}
           >
