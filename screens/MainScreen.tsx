@@ -263,7 +263,8 @@ export default function MainScreen({
             // Fresh WebView per server avoids leaking cookies/auth across servers.
             key={`${activeServer?.url}#${webViewKey}`}
             bounces={false}
-            decelerationRate="normal"
+            // Android passes the string to native unconverted and crashes
+            decelerationRate={Platform.OS === "ios" ? "normal" : undefined}
             ref={webViewRef}
             overScrollMode="never"
             setBuiltInZoomControls={false}
