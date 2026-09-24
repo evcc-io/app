@@ -1,5 +1,5 @@
 import "detox";
-import { byWebDataTestId, waitForWebview } from "./helper";
+import { byWebDataTestId, waitForWebview, launchWithDeepLink } from "./helper";
 import { expect } from "detox";
 
 async function expectServerForm() {
@@ -17,10 +17,9 @@ async function expectServerForm() {
 
 describe("QRCode (switch server)", () => {
   it("open and close", async () => {
-    await device.launchApp({
-      url: "evcc://server?url=localhost:7070&title=siteTitle",
-      resetAppState: true,
-    });
+    await launchWithDeepLink(
+      "evcc://server?url=localhost:7070&title=siteTitle",
+    );
 
     await element(by.id("serverFormCheckAndSave")).tap();
     await waitForWebview();
@@ -40,10 +39,9 @@ describe("QRCode (switch server)", () => {
   });
 
   it("add server by serverform button", async () => {
-    await device.launchApp({
-      url: "evcc://server?url=localhost:7070&title=siteTitle",
-      resetAppState: true,
-    });
+    await launchWithDeepLink(
+      "evcc://server?url=localhost:7070&title=siteTitle",
+    );
 
     await element(by.id("serverFormCheckAndSave")).tap();
     await waitForWebview();

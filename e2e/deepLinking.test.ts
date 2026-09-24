@@ -1,13 +1,12 @@
 import "detox";
 import { expect } from "detox";
-import { waitForWebview } from "./helper";
+import { waitForWebview, launchWithDeepLink } from "./helper";
 
 describe("Deep Linking", () => {
   it("open server", async () => {
-    await device.launchApp({
-      url: "evcc://server?url=localhost:7070&title=siteTitle",
-      resetAppState: true,
-    });
+    await launchWithDeepLink(
+      "evcc://server?url=localhost:7070&title=siteTitle",
+    );
 
     await expect(element(by.id("serverFormTitle"))).toHaveText(
       "siteTitle",
@@ -25,10 +24,9 @@ describe("Deep Linking", () => {
   });
 
   it("open server with basic auth", async () => {
-    await device.launchApp({
-      url: "evcc://server?url=http://localhost:7080&title=siteTitle&username=admin&password=secret",
-      resetAppState: true,
-    });
+    await launchWithDeepLink(
+      "evcc://server?url=http://localhost:7080&title=siteTitle&username=admin&password=secret",
+    );
 
     await expect(element(by.id("serverFormTitle"))).toHaveText(
       "siteTitle",

@@ -78,3 +78,17 @@ export async function tapWebAfterWaitFor(
   }
   throw lastError;
 }
+
+/**
+ * Fresh launch that opens a deep link. On iOS the URL is sent after launch:
+ * Detox injects launch URLs into the app delegate's launch options, which
+ * the UIScene lifecycle ignores.
+ */
+export async function launchWithDeepLink(url: string) {
+  if (device.getPlatform() === "ios") {
+    await device.launchApp({ resetAppState: true });
+    await device.openURL({ url });
+  } else {
+    await device.launchApp({ url, resetAppState: true });
+  }
+}
