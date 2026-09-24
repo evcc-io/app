@@ -76,6 +76,8 @@ export default ({ config }: ConfigContext) =>
             },
             ios: {
               deploymentTarget: "16.4",
+              // Xcode 27 SDK requires the UIScene lifecycle; template default from SDK 58
+              enableSceneSupport: true,
             },
           },
         ],

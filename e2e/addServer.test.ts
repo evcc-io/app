@@ -5,15 +5,13 @@ import {
   tapAfterWaitFor,
   tapWebAfterWaitFor,
   waitForWebview,
+  launchWithDeepLink,
 } from "./helper";
 import { expect } from "detox";
 
 describe("Add Server", () => {
   beforeEach(async () => {
-    await device.launchApp({
-      url: "evcc://server?url=localhost:7070&title=Local",
-      resetAppState: true,
-    });
+    await launchWithDeepLink("evcc://server?url=localhost:7070&title=Local");
   });
 
   it("two servers: add and switch", async () => {

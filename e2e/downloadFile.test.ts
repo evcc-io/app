@@ -1,5 +1,5 @@
 import "detox";
-import { byWebCss, waitForWebview } from "./helper";
+import { byWebCss, waitForWebview, launchWithDeepLink } from "./helper";
 
 /**
  * evcc core emits `{type: "download", url, headers}` over the message bridge
@@ -31,10 +31,7 @@ async function triggerWebviewDownload(
 
 describe("Download file", () => {
   it("downloads a file triggered from the webview", async () => {
-    await device.launchApp({
-      url: "evcc://server?url=localhost:7070&title=Local",
-      resetAppState: true,
-    });
+    await launchWithDeepLink("evcc://server?url=localhost:7070&title=Local");
     await element(by.id("serverFormCheckAndSave")).tap();
     await waitForWebview();
 
@@ -44,10 +41,9 @@ describe("Download file", () => {
   it("downloads a file from a server protected with basic auth", async () => {
     // localhost:7080 is the Caddy basic-auth reverse proxy (admin/secret).
     // Completes only if the stored credentials were attached to the request.
-    await device.launchApp({
-      url: "evcc://server?url=http://localhost:7080&title=siteTitle&username=admin&password=secret",
-      resetAppState: true,
-    });
+    await launchWithDeepLink(
+      "evcc://server?url=http://localhost:7080&title=siteTitle&username=admin&password=secret",
+    );
     await element(by.id("serverFormCheckAndSave")).tap();
     await waitForWebview();
 
@@ -59,10 +55,9 @@ describe("Download file", () => {
     // HttpOnly cookie the webview picks up on first load. /cookietest/file.csv
     // 401s without it — proof the cookie was extracted from the webview's
     // cookie store and attached to the native download.
-    await device.launchApp({
-      url: "evcc://server?url=http://localhost:7081&title=Local%20Cookie",
-      resetAppState: true,
-    });
+    await launchWithDeepLink(
+      "evcc://server?url=http://localhost:7081&title=Local%20Cookie",
+    );
     await element(by.id("serverFormCheckAndSave")).tap();
     await waitForWebview();
 
