@@ -183,6 +183,16 @@ const reloadIconVector = `<?xml version="1.0" encoding="utf-8"?>
 </vector>
 `;
 
+// Material "signal_wifi_off", replaces the reload icon while showing cached data
+const offlineIconVector = `<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+    <path android:fillColor="#FF000000"
+        android:pathData="M23.64,7c-0.45,-0.34 -4.93,-4 -11.64,-4 -1.5,0 -2.89,0.19 -4.15,0.48L18.18,13.8 23.64,7zM17.04,15.22L3.27,1.44 2,2.72l2.05,2.06C1.91,5.76 0.59,6.82 0.36,7l11.63,14.49 0.01,0.01 0.01,-0.01 3.9,-4.86 3.32,3.32 1.27,-1.27 -3.46,-3.46z" />
+</vector>
+`;
+
 // Widget picker preview image (4x1): name / status, SoC, power, docked mode buttons, bottom progress strip.
 const loadpointPreviewImageVector = `<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
@@ -434,6 +444,7 @@ const withWidgetFiles: ConfigPlugin = (config) =>
         "layout/loadpoint_widget_preview.xml": loadpointPreviewXml,
         "drawable/widget_preview_loadpoint.xml": loadpointPreviewImageVector,
         "drawable/ic_reload.xml": reloadIconVector,
+        "drawable/ic_offline.xml": offlineIconVector,
         "drawable/widget_preview_dot.xml": roundedShape(
           "@color/widget_preview_status",
           "4dp",

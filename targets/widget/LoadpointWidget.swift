@@ -2,7 +2,7 @@ import SwiftUI
 import WidgetKit
 
 enum LoadpointState {
-  case loadpoint(LoadpointVM)
+  case loadpoint(LoadpointVM, stale: Bool = false)
   case noData
   case unreachable
   case notConfigured
@@ -38,9 +38,13 @@ struct LoadpointProvider: AppIntentTimelineProvider {
     }
     let state: LoadpointState
     switch await ApiClient.fetch(server, jq: ".loadpoints[\(lp - 1)]", as: Loadpoint.self) {
-    case .success(let l): state = .loadpoint(LoadpointVM.build(from: l))
+    case .success(let l):
+      SharedStore.cacheLoadpoint(l, serverId: server.id, index: lp)
+      state = .loadpoint(LoadpointVM.build(from: l))
     case .noData: state = .noData
-    case .failure: state = .unreachable
+    case .failure:
+      state = SharedStore.cachedLoadpoint(serverId: server.id, index: lp)
+        .map { .loadpoint(LoadpointVM.build(from: $0), stale: true) } ?? .unreachable
     }
     return LoadpointEntry(date: .now, state: state, serverId: server.id, lp: lp)
   }

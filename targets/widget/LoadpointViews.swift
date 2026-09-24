@@ -37,8 +37,8 @@ struct LoadpointView: View {
     case .unreachable:
       MessageView(headerTitle: L.t("widget.loadpoint.name"), accent: Color.evccDarkerGreen,
                   symbol: "wifi.slash", title: L.t("widget.unreachable.title"), message: L.t("widget.unreachable.body"))
-    case .loadpoint(let vm):
-      LoadpointCard(vm: vm, serverId: entry.serverId ?? "", lp: entry.lp)
+    case .loadpoint(let vm, let stale):
+      LoadpointCard(vm: vm, serverId: entry.serverId ?? "", lp: entry.lp, stale: stale)
     }
   }
 }
@@ -47,6 +47,7 @@ struct LoadpointCard: View {
   let vm: LoadpointVM
   let serverId: String
   let lp: Int
+  let stale: Bool
   @Environment(\.colorScheme) var scheme
   @Environment(\.widgetFamily) var family
   @Environment(\.widgetRenderingMode) var renderingMode
@@ -83,7 +84,7 @@ struct LoadpointCard: View {
           .lineLimit(1).minimumScaleFactor(0.7)
         Spacer(minLength: 4)
         Button(intent: ReloadIntent()) {
-          Image(systemName: "arrow.clockwise")
+          Image(systemName: stale ? "wifi.slash" : "arrow.clockwise")
             .font(.system(size: 11, weight: .bold))
             .foregroundStyle(.secondary)
         }
