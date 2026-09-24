@@ -2,12 +2,12 @@ import Foundation
 
 // MARK: - API decodable (subset of /api/state .loadpoints[])
 
-struct LoadpointUI: Decodable {
+struct LoadpointUI: Codable {
   let minTemp: Double?
   let maxTemp: Double?
 }
 
-struct Loadpoint: Decodable {
+struct Loadpoint: Codable {
   let title: String?
   let vehicleTitle: String?
   let vehicleSoc: Double?

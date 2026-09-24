@@ -136,7 +136,7 @@ enum class LpStatus(val active: Boolean) {
 data class Metric(val value: String, val unit: String, val fill: Double?)
 
 private sealed interface LoadpointState {
-    data class Data(val lp: Loadpoint, val serverId: String, val lpIndex: Int) : LoadpointState
+    data class Data(val lp: Loadpoint, val serverId: String, val lpIndex: Int, val stale: Boolean = false) : LoadpointState
     object NoData : LoadpointState
     object Unreachable : LoadpointState
     object NotConfigured : LoadpointState
@@ -223,12 +223,17 @@ class LoadpointWidget : GlanceAppWidget() {
     private suspend fun load(context: Context, prefs: Preferences): LoadpointState = withContext(Dispatchers.IO) {
         val lpIndex = prefs[LP_KEY] ?: return@withContext LoadpointState.NotConfigured
         val server = SharedStore.server(context, prefs[SERVER_KEY]) ?: return@withContext LoadpointState.NotConfigured
+        // last successful fetch, shown (marked stale) instead of "unreachable" when a fetch fails
+        val cache = context.getSharedPreferences("loadpointCache", Context.MODE_PRIVATE)
+        val cacheKey = "${server.id}.$lpIndex"
         when (val out = ApiClient.fetch(server, ".loadpoints[$lpIndex]")) {
-            is FetchOutcome.Success ->
-                Loadpoint.parse(out.json)?.let { LoadpointState.Data(it, server.id, lpIndex) }
-                    ?: LoadpointState.NoData
+            is FetchOutcome.Success -> Loadpoint.parse(out.json)?.let {
+                cache.edit().putString(cacheKey, out.json).apply()
+                LoadpointState.Data(it, server.id, lpIndex)
+            } ?: LoadpointState.NoData
             FetchOutcome.NoData -> LoadpointState.NoData
-            FetchOutcome.Failure -> LoadpointState.Unreachable
+            FetchOutcome.Failure -> cache.getString(cacheKey, null)?.let(Loadpoint::parse)
+                ?.let { LoadpointState.Data(it, server.id, lpIndex, stale = true) } ?: LoadpointState.Unreachable
         }
     }
 
@@ -308,7 +313,7 @@ class LoadpointWidget : GlanceAppWidget() {
                         else -> InfoWide(context, lp)
                     }
                 }
-                if (w >= WidthClass.THREE) ReloadIcon()
+                if (w >= WidthClass.THREE) ReloadIcon(stale = state.stale)
                 // progress as a thin strip along the card's bottom edge; on 4x1 it ends at the mode dock
                 stripBitmap(lp)?.let { bitmap ->
                     Box(modifier = GlanceModifier.fillMaxSize(), contentAlignment = Alignment.BottomStart) {
@@ -444,10 +449,10 @@ class LoadpointWidget : GlanceAppWidget() {
     }
 
     @Composable
-    private fun ReloadIcon() {
+    private fun ReloadIcon(stale: Boolean = false) {
         Box(modifier = GlanceModifier.fillMaxSize().padding(top = 8.dp, end = 10.dp), contentAlignment = Alignment.TopEnd) {
             Image(
-                provider = ImageProvider(R.drawable.ic_reload),
+                provider = ImageProvider(if (stale) R.drawable.ic_offline else R.drawable.ic_reload),
                 contentDescription = null,
                 colorFilter = ColorFilter.tint(textSecondary),
                 modifier = GlanceModifier.width(15.dp).height(15.dp).clickable(actionRunCallback<ReloadAction>()),

@@ -56,6 +56,16 @@ enum SharedStore {
     defaults?.set(Date().timeIntervalSince1970, forKey: "lastModeChange")
   }
 
+  /// Last successful loadpoint fetch, shown (marked stale) when a fetch fails.
+  static func cacheLoadpoint(_ lp: Loadpoint, serverId: String, index: Int) {
+    defaults?.set(try? JSONEncoder().encode(lp), forKey: "loadpoint.\(serverId).\(index)")
+  }
+
+  static func cachedLoadpoint(serverId: String, index: Int) -> Loadpoint? {
+    guard let data = defaults?.data(forKey: "loadpoint.\(serverId).\(index)") else { return nil }
+    return try? JSONDecoder().decode(Loadpoint.self, from: data)
+  }
+
   static func secondsSinceModeChange() -> TimeInterval? {
     let t = defaults?.double(forKey: "lastModeChange") ?? 0
     return t > 0 ? Date().timeIntervalSince1970 - t : nil
