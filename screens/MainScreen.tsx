@@ -27,9 +27,17 @@ import { RootStackParamList } from "types";
 import CookieManager from "@preeternal/react-native-cookie-manager";
 import { encode } from "base-64";
 import { shareFileFromUrl } from "utils/shareFile";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { EdgeInsets, useSafeAreaInsets } from "react-native-safe-area-context";
 import Spinner from "components/Spinner";
 import { testingEnvironment } from "helper/launchArguments";
+
+// env(safe-area-inset-*) reads as 0 inside the WebView, so insets are pushed in as CSS variables
+const safeAreaJs = (i: EdgeInsets) => `
+  document.documentElement.style.setProperty("--safe-area-inset-top", "${i.top}px");
+  document.documentElement.style.setProperty("--safe-area-inset-bottom", "${i.bottom}px");
+  document.documentElement.style.setProperty("--safe-area-inset-left", "${i.left}px");
+  document.documentElement.style.setProperty("--safe-area-inset-right", "${i.right}px");
+  true;`;
 
 export default function MainScreen({
   navigation,
@@ -58,6 +66,11 @@ export default function MainScreen({
       required && username && password ? { username, password } : undefined,
     [required, username, password],
   );
+
+  // injectedJavaScript only runs on load; re-push insets on rotation
+  useEffect(() => {
+    webViewRef.current?.injectJavaScript(safeAreaJs(insets));
+  }, [insets]);
 
   // Tell the web UI to navigate to a deep-linked path (e.g. "/forecast") once
   // it's connected. The web UI handles the actual routing (added separately).
@@ -245,10 +258,7 @@ export default function MainScreen({
             source={{ uri: activeServer?.url || "" }}
             injectedJavaScript={`
               window.evccAppCapabilities = ["download"];
-              document.documentElement.style.setProperty("--safe-area-inset-top", "${insets.top}px");
-              document.documentElement.style.setProperty("--safe-area-inset-bottom", "${insets.bottom}px");
-              document.documentElement.style.setProperty("--safe-area-inset-left", "${insets.left}px");
-              document.documentElement.style.setProperty("--safe-area-inset-right", "${insets.right}px");
+              ${safeAreaJs(insets)}
               if (!navigator.vibrate) {
                 navigator.vibrate = function(pattern) {
                   if (pattern === 0 || (Array.isArray(pattern) && pattern.length === 0)) {
