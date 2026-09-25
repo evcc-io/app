@@ -13,6 +13,8 @@
       "authenticationRequired": "Authentication required",
       "checkAdress": "The server does not appear to be an evcc instance. Please check the address.",
       "checkAndSave": "Check and save",
+      "externalAuth": "Login via reverse proxy",
+      "externalAuthHint": "For SSO/OAuth proxies (e.g. Authentik, Authelia, oauth2-proxy). The login page opens inside the app. Google sign-in does not work in embedded browsers.",
       "missingOrWrongAuthentication": "Missing or incorrect authentication",
       "password": "Password",
       "serverIncompatible": "The evcc instance is not yet app-compatible. Update your installation.",

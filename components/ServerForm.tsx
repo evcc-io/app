@@ -71,27 +71,11 @@ export default function ServerForm({
   );
   React.useEffect(() => setInternalServer(server), [server]);
 
-  const setInternalTitle = (title: string) => {
-    setInternalServer({
-      title,
-      url: internalServer?.url || "",
-      basicAuth: internalServer?.basicAuth || {},
-    });
-  };
-  const setInternalUrl = (url: string) => {
-    setInternalServer({
-      title: internalServer?.title,
-      url,
-      basicAuth: internalServer?.basicAuth || {},
-    });
-  };
-  const setInternalAuth = (basicAuth: BasicAuth) => {
-    setInternalServer({
-      title: internalServer?.title,
-      url: internalServer?.url || "",
-      basicAuth,
-    });
-  };
+  const update = (patch: Partial<Server>) =>
+    setInternalServer({ url: "", basicAuth: {}, ...internalServer, ...patch });
+  const setInternalTitle = (title: string) => update({ title });
+  const setInternalUrl = (url: string) => update({ url });
+  const setInternalAuth = (basicAuth: BasicAuth) => update({ basicAuth });
 
   const validateAndSaveURL = async () => {
     if (inProgress) return;
@@ -107,12 +91,14 @@ export default function ServerForm({
       const finalUrl = await verifyEvccServer({
         url: cleanUrl,
         basicAuth: internalServer?.basicAuth || {},
+        externalAuth: internalServer?.externalAuth,
       });
 
       const server = {
         title: internalServer?.title,
         url: finalUrl,
         basicAuth: internalServer?.basicAuth || {},
+        externalAuth: internalServer?.externalAuth,
       };
 
       const sameServerCount = servers.filter((s) =>
@@ -223,6 +209,29 @@ export default function ServerForm({
             testID="serverFormAuthPassword"
           />
         </>
+      )}
+
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          marginBottom: 8,
+        }}
+      >
+        <Switch
+          value={!!internalServer?.externalAuth}
+          onValueChange={(externalAuth) => update({ externalAuth })}
+          trackColor={{ true: colors.primary }}
+          testID="serverFormExternalAuth"
+        />
+        <AppText style={{ marginLeft: 12, flex: 1 }}>
+          {t("servers.manually.externalAuth")}
+        </AppText>
+      </View>
+      {internalServer?.externalAuth && (
+        <AppText variant="c1" style={{ marginBottom: 16 }} color="hint">
+          {t("servers.manually.externalAuthHint")}
+        </AppText>
       )}
 
       {error ? (

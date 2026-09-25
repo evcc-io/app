@@ -25,7 +25,8 @@ describe("Add Server", () => {
     // replaceText, not typeText: the CI emulator's IME suggestions mangle typed input
     await element(by.id("serverFormTitle")).replaceText("Demo");
     await element(by.id("serverFormUrl")).replaceText("demo.evcc.io");
-    await tapAfterWaitFor(element(by.id("serverFormCheckAndSave")));
+    // the keyboard covers the save button on iOS; submit via the return key
+    await element(by.id("serverFormUrl")).tapReturnKey();
 
     await tapAfterWaitFor(element(by.id("selectServer1")));
     await waitForWebview();
@@ -44,7 +45,7 @@ describe("Add Server", () => {
 
     await element(by.id("serverFormTitle")).replaceText("Demo");
     await element(by.id("serverFormUrl")).replaceText("demo.evcc.io");
-    await tapAfterWaitFor(element(by.id("serverFormCheckAndSave")));
+    await element(by.id("serverFormUrl")).tapReturnKey();
 
     await tapAfterWaitFor(element(by.id("selectServer1")));
 
@@ -61,8 +62,7 @@ describe("Add Server", () => {
     await tapAfterWaitFor(element(by.id("serverFormAuth")));
     await element(by.id("serverFormAuthUser")).replaceText("admin");
     await element(by.id("serverFormAuthPassword")).replaceText("secret");
-
-    await tapAfterWaitFor(element(by.id("serverFormCheckAndSave")));
+    await element(by.id("serverFormAuthPassword")).tapReturnKey();
 
     // verify the 3rd server was added
     await waitFor(element(by.id("server2")))
