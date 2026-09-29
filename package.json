@@ -21,7 +21,7 @@
   "dependencies": {
     "@bacons/apple-targets": "^4.0.7",
     "@expo/metro-runtime": "~57.0.16",
-    "@expo/ui": "~57.0.20",
+    "@expo/ui": "~58.0.7",
     "@inthepocket/react-native-service-discovery": "^0.2.4",
     "@material-symbols/svg-400": "^0.45.4",
     "@preeternal/react-native-cookie-manager": "^6.3.2",
