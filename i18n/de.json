@@ -84,7 +84,12 @@
       "loadingPreview": "Vorschau wird geladen…",
       "previewError": "Vorschau konnte nicht geladen werden",
       "useThisLoadpoint": "Diesen Ladepunkt verwenden",
-      "setupBody": "Tippen, um Server und Ladepunkt zu wählen."
+      "setupBody": "Tippen, um Server und Ladepunkt zu wählen.",
+      "useThis": "Verwenden",
+      "adjustQuestion": "An reale Erzeugung anpassen?",
+      "yesRecommended": "Ja (empfohlen)",
+      "no": "Nein",
+      "forecastSetupBody": "Tippen, um Server und Datentyp zu wählen."
     },
     "loadpoint": {
       "name": "Ladepunkt",
