@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Alert, View } from "react-native";
+import { Alert, ScrollView, View } from "react-native";
 import Svg, { Path } from "react-native-svg";
 
 import { useAppContext } from "../components/AppContext";
@@ -64,43 +64,48 @@ export default function OnboardingScreen({
       }}
     >
       <SafeAreaView style={{ flex: 1 }}>
-        <View
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1 }}
+          showsVerticalScrollIndicator={false}
         >
-          <StatusCircle color={colors.primaryTint}>
-            <EvccBolt size={88} color={colors.onPrimaryTint} />
-          </StatusCircle>
-          <AppText
-            testID="serverScreenTitle"
-            variant="h2"
-            style={{ textAlign: "center" }}
+          <View
+            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
           >
-            {t("main.title")}
-          </AppText>
-          <AppText
-            color="hint"
-            style={{
-              fontSize: 17,
-              lineHeight: 25,
-              textAlign: "center",
-              marginTop: 12,
-            }}
-          >
-            {t("main.description")}
-          </AppText>
-        </View>
-        <View style={{ paddingBottom: 8, gap: 12 }}>
-          <Button onPress={startSearch} testID="serverSearchButton">
-            {t("servers.search.start")}
-          </Button>
-          <ScanQRCodeButton shown="Onboarding" />
-          <TextLink onPress={manualEntry} testID="manualEntry">
-            {t("servers.manually.specify")}
-          </TextLink>
-          <TextLink onPress={selectDemoServer} testID="useDemo">
-            {t("servers.useDemo")}
-          </TextLink>
-        </View>
+            <StatusCircle color={colors.primaryTint}>
+              <EvccBolt size={88} color={colors.onPrimaryTint} />
+            </StatusCircle>
+            <AppText
+              testID="serverScreenTitle"
+              variant="h2"
+              style={{ textAlign: "center" }}
+            >
+              {t("main.title")}
+            </AppText>
+            <AppText
+              color="hint"
+              style={{
+                fontSize: 17,
+                lineHeight: 25,
+                textAlign: "center",
+                marginTop: 12,
+              }}
+            >
+              {t("main.description")}
+            </AppText>
+          </View>
+          <View style={{ paddingBottom: 8, gap: 12 }}>
+            <Button onPress={startSearch} testID="serverSearchButton">
+              {t("servers.search.start")}
+            </Button>
+            <ScanQRCodeButton shown="Onboarding" />
+            <TextLink onPress={manualEntry} testID="manualEntry">
+              {t("servers.manually.specify")}
+            </TextLink>
+            <TextLink onPress={selectDemoServer} testID="useDemo">
+              {t("servers.useDemo")}
+            </TextLink>
+          </View>
+        </ScrollView>
       </SafeAreaView>
     </View>
   );
