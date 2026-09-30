@@ -28,6 +28,7 @@ import CookieManager from "@preeternal/react-native-cookie-manager";
 import { encode } from "base-64";
 import { shareFileFromUrl } from "utils/shareFile";
 import { EdgeInsets, useSafeAreaInsets } from "react-native-safe-area-context";
+import { isIosAppOnMac } from "modules/ios-app-on-mac";
 import Spinner from "components/Spinner";
 import { testingEnvironment } from "helper/launchArguments";
 
@@ -241,12 +242,9 @@ export default function MainScreen({
     setIsConnected(false);
   }, []);
 
-  const onNavigationStateChange = useCallback(
-    (navState: WebViewNavigation) => {
-      canGoBackRef.current = navState.canGoBack;
-    },
-    [],
-  );
+  const onNavigationStateChange = useCallback((navState: WebViewNavigation) => {
+    canGoBackRef.current = navState.canGoBack;
+  }, []);
 
   const LayoutMemoized = useMemo(
     () => (
@@ -273,6 +271,8 @@ export default function MainScreen({
             // Fresh WebView per server avoids leaking cookies/auth across servers.
             key={`${activeServer?.url}#${webViewKey}`}
             bounces={false}
+            // macOS has no software keyboard, so the form accessory bar only covers the nav
+            hideKeyboardAccessoryView={isIosAppOnMac}
             // Android passes the string to native unconverted and crashes
             decelerationRate={Platform.OS === "ios" ? "normal" : undefined}
             ref={webViewRef}
