@@ -4,6 +4,8 @@ export interface Server {
   title?: string;
   url: string;
   basicAuth: BasicAuth;
+  // login handled by a reverse proxy (SSO/OAuth); the login page renders in the WebView
+  externalAuth?: boolean;
 }
 
 export interface BasicAuth {

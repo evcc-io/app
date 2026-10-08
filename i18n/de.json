@@ -13,6 +13,8 @@
       "authenticationRequired": "Anmeldung erforderlich",
       "checkAdress": "Der Server scheint keine evcc Instanz zu sein. Bitte prüfe die Adresse.",
       "checkAndSave": "Prüfen und speichern",
+      "externalAuth": "Anmeldung über Reverse-Proxy",
+      "externalAuthHint": "Für SSO/OAuth-Proxys (z. B. Authentik, Authelia, oauth2-proxy). Die Anmeldeseite öffnet sich in der App. Google-Anmeldung funktioniert in eingebetteten Browsern nicht.",
       "missingOrWrongAuthentication": "Fehlende oder falsche Anmeldung",
       "password": "Passwort",
       "serverIncompatible": "Die evcc Instanz ist noch nicht App-kompatibel. Aktualisiere deine Installation.",

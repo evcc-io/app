@@ -28,6 +28,13 @@ export async function verifyEvccServer(server: Server) {
     }
   }
 
+  // an auth proxy answers with a login page (302 to the IdP, 401/403 or a
+  // same-host form) instead of evcc; without a browser session only
+  // reachability can be checked
+  if (server.externalAuth) {
+    options.validateStatus = () => true;
+  }
+
   let response;
   try {
     response = await axios.get(server.url, options);
@@ -42,6 +49,9 @@ export async function verifyEvccServer(server: Server) {
   // check if response is from evcc
   const finalUrl = response.request.responseURL;
   const { data } = response;
+  if (server.externalAuth && !String(data).includes("evcc-app-compatible")) {
+    return server.url;
+  }
   if (!data.includes("evcc-app-compatible")) {
     if (data.includes("evcc")) {
       throw new Error(t("servers.manually.serverIncompatible"));
