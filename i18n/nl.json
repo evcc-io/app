@@ -1,10 +1,10 @@
 {
   "main": {
-    "description": "Doorzoek jouw netwerk om jouw evcc installatie te vinden.",
-    "title": "Server instellen"
+    "description": "Laten we verbinding maken met jouw server.",
+    "title": "Welkom"
   },
   "servers": {
-    "changeServer": "Wijzig server",
+    "changeServer": "Wijzig Server",
     "editServer": "Server bewerken",
     "manually": {
       "authenticationRequired": "Authenticatie vereist",
@@ -48,8 +48,8 @@
     },
     "select": "Selecteren",
     "switchServer": {
-      "addServer": "Toevoegen server",
-      "title": "Wissel server"
+      "addServer": "Toevoegen Server",
+      "title": "Wissel Server"
     },
     "useDemo": "Demo server gebruiken"
   },
