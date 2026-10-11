@@ -1,10 +1,10 @@
 {
   "main": {
-    "description": "Cerca nella tua rete per trovare l'installazione di evcc.",
-    "title": "Configura il server"
+    "description": "Colleghiamoci al tuo server.",
+    "title": "Benvenuti"
   },
   "servers": {
-    "changeServer": "Cambia server",
+    "changeServer": "Cambia Server",
     "editServer": "Modifica server",
     "manually": {
       "authenticationRequired": "Autenticazione richiesta",
@@ -48,8 +48,8 @@
     },
     "select": "Selezionare",
     "switchServer": {
-      "addServer": "Aggiungi server",
-      "title": "Cambia server"
+      "addServer": "Aggiungi Server",
+      "title": "Cambia Server"
     },
     "useDemo": "Utilizza l'istanza demo"
   },
@@ -68,7 +68,7 @@
     "config": {
       "desc": "Server per le previsioni.",
       "loadpoint": "Punto di ricarica",
-      "server": "",
+      "server": "Server",
       "title": "Previsioni evcc"
     },
     "description": {
@@ -82,7 +82,7 @@
       "name": "Punto di ricarica"
     },
     "name": {
-      "co2": "",
+      "co2": "CO₂",
       "feedin": "Prezzo immissione in rete",
       "price": "Prezzo consumo dalla rete",
       "solar": "Previsioni solari"
