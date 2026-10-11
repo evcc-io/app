@@ -14,13 +14,13 @@
       "missingOrWrongAuthentication": "Autenticazione mancante o errata",
       "password": "Password",
       "qrcode": {
-        "invalid": "QR code evcc non valido.",
-        "permissionDenied": "Accesso alla fotocamera negato. Abilitalo nelle impostazioni per scansionare i QR code.",
-        "recognized": "QR code rilevato!",
-        "scan": "Scansiona QR code",
-        "scanOnboarding": "Configura via QR code",
-        "scanPrefill": "Compila tramite QR code",
-        "scanning": "rilevamento..."
+        "invalid": "Questo non è un codice QR evcc valido.",
+        "permissionDenied": "Accesso alla fotocamera negato. Abilitalo nelle impostazioni per scansionare i codici QR.",
+        "recognized": "Rilevato codice QR!",
+        "scan": "Scansiona codice QR",
+        "scanOnboarding": "Configura con codice QR",
+        "scanPrefill": "Compila tramite codice QR",
+        "scanning": "rilevamento in corso..."
       },
       "serverExistsAlready": "Questo server esiste già.",
       "serverIncompatible": "L'istanza evcc non è ancora compatibile con le app. Aggiorna la tua installazione.",
@@ -37,7 +37,7 @@
       "connect": "Connetti",
       "foundMany": "{{count}} server trovati",
       "foundOne": "Server trovato",
-      "hint": "Di solito ci vogliono pochi secondi.",
+      "hint": "Questo normalmente richiede pochi secondi.",
       "inProgress": "Ricerca in corso …",
       "notAvailable": "La funzione di ricerca non è disponibile su questo dispositivo. Utilizzare l'inserimento manuale.",
       "nothingFound": "Nessun server rilevato.",
@@ -49,13 +49,13 @@
     "select": "Selezionare",
     "switchServer": {
       "addServer": "Aggiungi Server",
-      "title": "Cambia Server"
+      "title": "Cambia server"
     },
     "useDemo": "Utilizza l'istanza demo"
   },
   "widget": {
     "androidConfig": {
-      "chooseLoadpoint": "Scegli punto di ricarica",
+      "chooseLoadpoint": "Scegli un punto di ricarica",
       "chooseServer": "Scegli server",
       "loading": "Caricamento…",
       "loadingPreview": "Caricamento anteprima…",
@@ -83,8 +83,8 @@
     },
     "name": {
       "co2": "CO₂",
-      "feedin": "Prezzo immissione in rete",
-      "price": "Prezzo prelievo dalla rete",
+      "feedin": "Prezzo di immissione in rete",
+      "price": "Prezzo di prelievo dalla rete",
       "solar": "Previsioni solari"
     },
     "noData": {
@@ -97,8 +97,8 @@
       "title": "Configura evcc"
     },
     "type": {
-      "feedin": "Prezzo immissione in rete",
-      "price": "Prezzo prelievo dalla rete"
+      "feedin": "Prezzo di immissione in rete",
+      "price": "Prezzo di prelievo dalla rete"
     },
     "unreachable": {
       "body": "Impossibile caricare l'istanza evcc.",
