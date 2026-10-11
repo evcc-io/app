@@ -1,7 +1,7 @@
 {
   "main": {
-    "description": "Wyszukaj instalację evcc w swojej sieci.",
-    "title": "Ustaw serwer"
+    "description": "Połączmy się z Twoim serwerem.",
+    "title": "Witamy"
   },
   "servers": {
     "changeServer": "Zmień serwer",
@@ -17,8 +17,8 @@
         "invalid": "To nie jest prawidłowy kod QR evcc.",
         "permissionDenied": "Odmówiono dostępu do aparatu. Włącz go w ustawieniach, aby skanować kody QR.",
         "recognized": "QR kod wykryty!",
-        "scan": "Zeskanuj QR kod",
-        "scanOnboarding": "Skonfiguruj przez kod QR",
+        "scan": "Zeskanuj kod QR",
+        "scanOnboarding": "Skonfiguruj poprzez kod QR",
         "scanPrefill": "Wypełnij przez kod QR",
         "scanning": "wykrywanie..."
       },
@@ -37,13 +37,13 @@
       "connect": "Połącz",
       "foundMany": "Znalezione serwery: {{count}}",
       "foundOne": "Znaleziono serwer",
-      "hint": "Zwykle trwa to kilka sekund.",
+      "hint": "Zwykle zajmuje to kilka sekund.",
       "inProgress": "Wyszukiwanie …",
       "notAvailable": "Wyszukiwanie nie jest możliwe na tym urządzeniu. Wprowadź ręcznie.",
-      "nothingFound": "Serwer evcc nie został wykryty.",
+      "nothingFound": "Nie znaleziono serwera.",
       "searching": "Wyszukaj połączenie ...",
       "selectHelper": "Wybierz ten, z którym chcesz się połączyć.",
-      "start": "Rozpocznij wyszukiwanie",
+      "start": "Wyszukaj serwer",
       "tryAgain": "Szukaj ponownie"
     },
     "select": "Wybierz",
@@ -60,14 +60,14 @@
       "loading": "Wczytywanie…",
       "loadingPreview": "Wczytywanie podglądu…",
       "noLoadpoints": "Brak dostępnych punktów ładowania",
-      "noServers": "Brak serwerów. Najpierw dodaj serwer w aplikacji.",
+      "noServers": "Brak serwerów. Należy najpierw dodać serwer w aplikacji.",
       "previewError": "Nie udało się wczytać podglądu",
       "setupBody": "Stuknij, aby wybrać serwer i punkt ładowania.",
       "useThisLoadpoint": "Użyj tego punktu ładowania"
     },
     "config": {
       "desc": "Serwer dla prognozy.",
-      "loadpoint": "Punkt ładowania",
+      "loadpoint": "Punkt obciążenia",
       "server": "Serwer",
       "title": "Prognoza evcc"
     },
@@ -82,7 +82,7 @@
       "name": "Punkt ładowania"
     },
     "name": {
-      "co2": "",
+      "co2": "CO₂",
       "feedin": "Cena do sieci",
       "price": "Cena z sieci",
       "solar": "Prognoza nasłonecznienia"
