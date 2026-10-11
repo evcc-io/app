@@ -73,7 +73,7 @@
     },
     "description": {
       "co2": "Voorspelling van de CO₂-uitstoot.",
-      "feedin": "Voorspelling van de netstroom prijs voor injectie.",
+      "feedin": "Voorspelling netexportprijs.",
       "price": "Voorspelling van de netstroom prijs voor import.",
       "solar": "Voorspelling van de zonne-energieproductie."
     },
@@ -94,14 +94,14 @@
     "now": "nu",
     "setup": {
       "body": "Tik om een server te verbinden en een datatype te kiezen.",
-      "title": "evcc instellen"
+      "title": "Configureer evcc"
     },
     "type": {
       "feedin": "Netstroom prijs voor injectie",
       "price": "Netstroom prijs voor import"
     },
     "unreachable": {
-      "body": "kan de evcc instance niet laden",
+      "body": "Kan de evcc instance niet laden.",
       "title": "Server onbereikbaar"
     }
   }
