@@ -13,8 +13,12 @@
       "missingOrWrongAuthentication": "Brak lub błędne uwierzytelnienie",
       "password": "Hasło",
       "qrcode": {
+        "invalid": "",
+        "permissionDenied": "",
         "recognized": "QR kod wykryty!",
         "scan": "Zeskanuj QR kod",
+        "scanOnboarding": "",
+        "scanPrefill": "",
         "scanning": "wykrywanie..."
       },
       "serverIncompatible": "Instancja evcc nie jest jeszcze kompatybilna z aplikacją. Zaktualizuj instalację.",
@@ -31,5 +35,46 @@
     },
     "select": "Wybierz",
     "useDemo": "Użyj instancji demonstracyjnej"
+  },
+  "widget": {
+    "config": {
+      "desc": "",
+      "loadpoint": "",
+      "server": "",
+      "title": ""
+    },
+    "description": {
+      "co2": "",
+      "feedin": "",
+      "price": "",
+      "solar": ""
+    },
+    "loadpoint": {
+      "description": "",
+      "name": ""
+    },
+    "name": {
+      "co2": "",
+      "feedin": "",
+      "price": "",
+      "solar": ""
+    },
+    "noData": {
+      "body": "",
+      "title": ""
+    },
+    "now": "",
+    "setup": {
+      "body": "",
+      "title": ""
+    },
+    "type": {
+      "feedin": "",
+      "price": ""
+    },
+    "unreachable": {
+      "body": "",
+      "title": ""
+    }
   }
 }

@@ -26,5 +26,46 @@
     },
     "select": "Välj",
     "useDemo": "Använd demo-installation"
+  },
+  "widget": {
+    "config": {
+      "desc": "",
+      "loadpoint": "",
+      "server": "",
+      "title": ""
+    },
+    "description": {
+      "co2": "",
+      "feedin": "",
+      "price": "",
+      "solar": ""
+    },
+    "loadpoint": {
+      "description": "",
+      "name": ""
+    },
+    "name": {
+      "co2": "",
+      "feedin": "",
+      "price": "",
+      "solar": ""
+    },
+    "noData": {
+      "body": "",
+      "title": ""
+    },
+    "now": "",
+    "setup": {
+      "body": "",
+      "title": ""
+    },
+    "type": {
+      "feedin": "",
+      "price": ""
+    },
+    "unreachable": {
+      "body": "",
+      "title": ""
+    }
   }
 }
