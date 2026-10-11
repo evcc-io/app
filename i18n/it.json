@@ -40,10 +40,10 @@
       "hint": "Di solito ci vogliono pochi secondi.",
       "inProgress": "Ricerca in corso …",
       "notAvailable": "La funzione di ricerca non è disponibile su questo dispositivo. Utilizzare l'inserimento manuale.",
-      "nothingFound": "Non è stato trovato alcun server evcc.",
+      "nothingFound": "Nessun server rilevato.",
       "searching": "Cerca connessione...",
       "selectHelper": "Seleziona quello a cui vuoi connetterti.",
-      "start": "Inizia la ricerca",
+      "start": "Cerca server",
       "tryAgain": "Cerca di nuovo"
     },
     "select": "Selezionare",
@@ -74,7 +74,7 @@
     "description": {
       "co2": "Previsione delle emissioni di CO₂.",
       "feedin": "Previsione del prezzo di immissione in rete.",
-      "price": "Previsione del prezzo di consumo dalla rete.",
+      "price": "Previsione del prezzo di prelievo dalla rete.",
       "solar": "Previsione della produzione solare."
     },
     "loadpoint": {
@@ -84,7 +84,7 @@
     "name": {
       "co2": "CO₂",
       "feedin": "Prezzo immissione in rete",
-      "price": "Prezzo consumo dalla rete",
+      "price": "Prezzo prelievo dalla rete",
       "solar": "Previsioni solari"
     },
     "noData": {
@@ -98,7 +98,7 @@
     },
     "type": {
       "feedin": "Prezzo immissione in rete",
-      "price": "Prezzo consumo dalla rete"
+      "price": "Prezzo prelievo dalla rete"
     },
     "unreachable": {
       "body": "Impossibile caricare l'istanza evcc.",
