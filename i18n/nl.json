@@ -68,8 +68,8 @@
     "config": {
       "desc": "Server voor de voorspelling.",
       "loadpoint": "Laadpunt",
-      "server": "",
-      "title": "evcc voorspelling"
+      "server": "Server",
+      "title": "evcc Voorspelling"
     },
     "description": {
       "co2": "Voorspelling van de CO₂-uitstoot.",
@@ -82,7 +82,7 @@
       "name": "Laadpunt"
     },
     "name": {
-      "co2": "",
+      "co2": "CO₂",
       "feedin": "Netstroom prijs voor injectie",
       "price": "Netstroom prijs voor import",
       "solar": "Voorspelling zonne-energie"
