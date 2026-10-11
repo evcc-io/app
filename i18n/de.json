@@ -19,7 +19,7 @@
         "scan": "QR-Code scannen",
         "scanOnboarding": "Mit QR-Code einrichten",
         "scanPrefill": "Daten aus QR-Code übernehmen",
-        "scanning": "erkennen..."
+        "scanning": "erkennung..."
       },
       "serverExistsAlready": "Dieser Server existiert bereits.",
       "serverIncompatible": "Die evcc Instanz ist noch nicht App-kompatibel. Aktualisiere deine Installation.",
