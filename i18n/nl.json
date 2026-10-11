@@ -101,7 +101,7 @@
       "price": "Netstroom prijs voor import"
     },
     "unreachable": {
-      "body": "Kon de evcc server niet laden.",
+      "body": "kan de evcc instance niet laden",
       "title": "Server onbereikbaar"
     }
   }
