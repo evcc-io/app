@@ -1,10 +1,11 @@
 {
   "main": {
-    "description": "Ieškokite savo tinkle, kad rastumėte įdiegtą evcc.",
-    "title": "Nustatyti serverį"
+    "description": "Prisijunkime prie jūsų serverio.",
+    "title": "Sveiki atvykę"
   },
   "servers": {
-    "changeServer": "Keisti serverį",
+    "changeServer": "Keisti Serverį",
+    "editServer": "Redaguoti serverį",
     "manually": {
       "authenticationRequired": "Reikalingas autentifikavimas",
       "checkAdress": "Atrodo, kad šis serveris nėra evcc serveris. Patikrinkite adresą.",
@@ -16,7 +17,7 @@
         "invalid": "Tai nėra tinkamas evcc QR kodas.",
         "permissionDenied": "Programėlės nustatymuose suteikite leidimą naudoti kamerą, kad nuskaityti QR kodą.",
         "recognized": "QR kodas aptiktas!",
-        "scan": "Nuskaityti QR kodą",
+        "scan": "Nuskaityti QR Kodą",
         "scanOnboarding": "Konfigūruoti naudojant QR kodą",
         "scanPrefill": "Užpildyti naudojant QR kodą",
         "scanning": "Tikrinama…"
@@ -28,21 +29,42 @@
       "title": "Pavadinimas",
       "user": "Vartotojas"
     },
+    "remove": "Pašalinti",
+    "removeConfirm": "Ar tikrai norite pašalinti {{title}}?",
     "removeServer": "Pašalinti serverį",
     "search": {
+      "cancel": "Atšaukti",
+      "connect": "Prisijungti",
+      "foundMany": "{{count}} serveriai surasti",
+      "foundOne": "Serveris surastas",
+      "hint": "Dažniausiai tai trunka kelias sekundes.",
+      "inProgress": "Ieškoma …",
       "notAvailable": "Paieška šiame įrenginyje negalima. Įveskite rankiniu būdu.",
-      "nothingFound": "Neradome evcc serverio.",
+      "nothingFound": "Serveris nerastas.",
       "searching": "Ieškoma sąsaja ...",
-      "start": "Pradėti paiešką"
+      "selectHelper": "Pasirinkite prie kurio jungtis.",
+      "start": "Rasti serverį",
+      "tryAgain": "Ieškoti dar kartą"
     },
     "select": "Pasirinkite",
     "switchServer": {
-      "addServer": "Pridėti serverį",
-      "title": "Pakeisti serverį"
+      "addServer": "Pridėti Serverį",
+      "title": "Pakeisti Serverį"
     },
     "useDemo": "Naudokite demonstracinę versiją"
   },
   "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "Pasirinkti įkroviklį",
+      "chooseServer": "Pasirinkti Serverį",
+      "loading": "Įkeliama…",
+      "loadingPreview": "Įkeliama peržiūra…",
+      "noLoadpoints": "Nėra pasiekiamų įkroviklių",
+      "noServers": "Nėra serverių. Pirmiau pridėkite jį programėlėje.",
+      "previewError": "Nepavyko įkelti peržiūros",
+      "setupBody": "Bakstelėkite, kad pasirinktumėte serverį ir įkroviklį.",
+      "useThisLoadpoint": "Naudoti šį įkroviklį"
+    },
     "config": {
       "desc": "Serveris prognozei.",
       "loadpoint": "Įkroviklis",
