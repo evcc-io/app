@@ -12,9 +12,20 @@
       "enterUrl": "URL beírása",
       "missingOrWrongAuthentication": "Hiányzó vagy helytelen hitelesítés",
       "password": "Jelszó",
+      "qrcode": {
+        "invalid": "",
+        "permissionDenied": "",
+        "recognized": "",
+        "scan": "",
+        "scanOnboarding": "",
+        "scanPrefill": "",
+        "scanning": ""
+      },
+      "serverExistsAlready": "",
       "serverIncompatible": "Az evcc példány még nem kompatibilis az alkalmazással. Frissítse a telepítést.",
       "serverNotAvailable": "A szerver nem elérhető. Kérjük, ellenőrizze a címet.",
       "specify": "Cím kézi beírása",
+      "title": "",
       "user": "Felhasználó"
     },
     "removeServer": "Szerver eltávolítása",
@@ -25,6 +36,51 @@
       "start": "Keresés indítása"
     },
     "select": "Válasszon",
+    "switchServer": {
+      "addServer": "",
+      "title": ""
+    },
     "useDemo": "Demo példa használata"
+  },
+  "widget": {
+    "config": {
+      "desc": "",
+      "loadpoint": "",
+      "server": "",
+      "title": ""
+    },
+    "description": {
+      "co2": "",
+      "feedin": "",
+      "price": "",
+      "solar": ""
+    },
+    "loadpoint": {
+      "description": "",
+      "name": ""
+    },
+    "name": {
+      "co2": "",
+      "feedin": "",
+      "price": "",
+      "solar": ""
+    },
+    "noData": {
+      "body": "",
+      "title": ""
+    },
+    "now": "",
+    "setup": {
+      "body": "",
+      "title": ""
+    },
+    "type": {
+      "feedin": "",
+      "price": ""
+    },
+    "unreachable": {
+      "body": "",
+      "title": ""
+    }
   }
 }

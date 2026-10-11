@@ -12,9 +12,20 @@
       "enterUrl": "输入 URL",
       "missingOrWrongAuthentication": "缺少或不正确的认证",
       "password": "密码",
+      "qrcode": {
+        "invalid": "",
+        "permissionDenied": "",
+        "recognized": "",
+        "scan": "",
+        "scanOnboarding": "",
+        "scanPrefill": "",
+        "scanning": ""
+      },
+      "serverExistsAlready": "",
       "serverIncompatible": "此 evcc 实例尚未兼容应用。请更新你的安装。",
       "serverNotAvailable": "服务器不可达。请检查地址。",
       "specify": "手动输入地址",
+      "title": "",
       "user": "用户"
     },
     "removeServer": "移除服务器",
@@ -25,6 +36,51 @@
       "start": "开始搜索"
     },
     "select": "选择",
+    "switchServer": {
+      "addServer": "",
+      "title": ""
+    },
     "useDemo": "使用演示实例"
+  },
+  "widget": {
+    "config": {
+      "desc": "",
+      "loadpoint": "",
+      "server": "",
+      "title": ""
+    },
+    "description": {
+      "co2": "",
+      "feedin": "",
+      "price": "",
+      "solar": ""
+    },
+    "loadpoint": {
+      "description": "",
+      "name": ""
+    },
+    "name": {
+      "co2": "",
+      "feedin": "",
+      "price": "",
+      "solar": ""
+    },
+    "noData": {
+      "body": "",
+      "title": ""
+    },
+    "now": "",
+    "setup": {
+      "body": "",
+      "title": ""
+    },
+    "type": {
+      "feedin": "",
+      "price": ""
+    },
+    "unreachable": {
+      "body": "",
+      "title": ""
+    }
   }
 }
