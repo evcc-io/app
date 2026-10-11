@@ -16,6 +16,7 @@ import it from "./it.json";
 import ja from "./ja.json";
 import lb from "./lb.json";
 import lt from "./lt.json";
+import lv from "./lv.json";
 import nbNO from "./nb-NO.json";
 import nl from "./nl.json";
 import pl from "./pl.json";
@@ -45,6 +46,7 @@ const translations: Resource = {
   ja: { translation: ja },
   lb: { translation: lb },
   lt: { translation: lt },
+  lv: { translation: lv },
   "nb-NO": { translation: nbNO },
   nl: { translation: nl },
   pl: { translation: pl },
