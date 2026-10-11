@@ -43,16 +43,43 @@
     "useDemo": "Demo server gebruiken"
   },
   "widget": {
+    "config": {
+      "desc": "",
+      "loadpoint": "",
+      "server": "",
+      "title": ""
+    },
+    "description": {
+      "co2": "",
+      "feedin": "",
+      "price": "",
+      "solar": ""
+    },
+    "loadpoint": {
+      "description": "",
+      "name": ""
+    },
+    "name": {
+      "co2": "",
+      "feedin": "",
+      "price": "",
+      "solar": ""
+    },
     "noData": {
       "body": "Deze server heeft geen data van dit type.",
       "title": "Geen data"
     },
     "now": "nu",
+    "setup": {
+      "body": "",
+      "title": ""
+    },
     "type": {
       "feedin": "Netstroom prijs voor injectie",
       "price": "Netstroom prijs voor import"
     },
     "unreachable": {
+      "body": "",
       "title": "Server onbereikbaar"
     }
   }

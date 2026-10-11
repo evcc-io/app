@@ -12,9 +12,20 @@
       "enterUrl": "Inserisci l'URL",
       "missingOrWrongAuthentication": "Autenticazione mancante o errata",
       "password": "Password",
+      "qrcode": {
+        "invalid": "",
+        "permissionDenied": "",
+        "recognized": "",
+        "scan": "",
+        "scanOnboarding": "",
+        "scanPrefill": "",
+        "scanning": ""
+      },
+      "serverExistsAlready": "",
       "serverIncompatible": "L'istanza evcc non è ancora compatibile con le app. Aggiorna la tua installazione.",
       "serverNotAvailable": "Server non disponibile. Si prega di verificare l'indirizzo.",
       "specify": "Inserisci l'indirizzo manualmente",
+      "title": "",
       "user": "Utente"
     },
     "removeServer": "Rimuovi server",
@@ -25,6 +36,51 @@
       "start": "Inizia la ricerca"
     },
     "select": "Selezionare",
+    "switchServer": {
+      "addServer": "",
+      "title": ""
+    },
     "useDemo": "Utilizza l'istanza demo"
+  },
+  "widget": {
+    "config": {
+      "desc": "",
+      "loadpoint": "",
+      "server": "",
+      "title": ""
+    },
+    "description": {
+      "co2": "",
+      "feedin": "",
+      "price": "",
+      "solar": ""
+    },
+    "loadpoint": {
+      "description": "",
+      "name": ""
+    },
+    "name": {
+      "co2": "",
+      "feedin": "",
+      "price": "",
+      "solar": ""
+    },
+    "noData": {
+      "body": "",
+      "title": ""
+    },
+    "now": "",
+    "setup": {
+      "body": "",
+      "title": ""
+    },
+    "type": {
+      "feedin": "",
+      "price": ""
+    },
+    "unreachable": {
+      "body": "",
+      "title": ""
+    }
   }
 }
