@@ -1,10 +1,11 @@
 {
   "main": {
-    "description": "Meklējiet savā tīklā evcc instalāciju.",
-    "title": "Iestatīt serveri"
+    "description": "Savienosimies ar jūsu serveri.",
+    "title": "Laipni lūdzam"
   },
   "servers": {
     "changeServer": "Mainīt serveri",
+    "editServer": "Rediģēt serveri",
     "manually": {
       "authenticationRequired": "Nepieciešama autentifikācija",
       "checkAdress": "Serveris nešķiet esam evcc instance. Lūdzu pārbaudiet adresi.",
@@ -27,20 +28,41 @@
       "title": "Nosaukums",
       "user": "Lietotājs"
     },
+    "remove": "Noņemt",
+    "removeConfirm": "Vai tiešām vēlaties noņemt {{title}}?",
     "removeServer": "Noņemt serveri",
     "search": {
+      "cancel": "Atcelt",
+      "connect": "Savienot",
+      "foundMany": "Atrasti {{count}} serveri",
+      "foundOne": "Serveris atrasts",
+      "hint": "Tas parasti aizņem dažas sekundes.",
+      "inProgress": "Notiek meklēšana…",
       "notAvailable": "Meklēšana šajā ierīcē nav iespējama. Izmantojiet manuālo ievadi.",
-      "nothingFound": "Nav atrasts neviens evcc serveris.",
+      "nothingFound": "Nav atrasts neviens serveris.",
       "searching": "Meklē savienojumu...",
-      "start": "Sākt meklēšanu"
+      "selectHelper": "Izvēlieties to, ar ko vēlaties savienoties.",
+      "start": "Meklēt serveri",
+      "tryAgain": "Meklēt vēlreiz"
     },
     "switchServer": {
       "addServer": "Pievienot serveri",
-      "title": "Pārslēgt serveri"
+      "title": "Mainīt serveri"
     },
     "useDemo": "Izmantot demo instanci"
   },
   "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "Izvēlēties uzlādes punktu",
+      "chooseServer": "Izvēlēties serveri",
+      "loading": "Ielādē…",
+      "loadingPreview": "Ielādē priekšskatījumu…",
+      "noLoadpoints": "Nav sasniedzamu uzlādes punktu",
+      "noServers": "Nav serveru. Vispirms pievienojiet vienu lietotnē.",
+      "previewError": "Neizdevās ielādēt priekšskatījumu",
+      "setupBody": "Pieskarieties, lai izvēlētos serveri un uzlādes punktu.",
+      "useThisLoadpoint": "Izmantot šo uzlādes punktu"
+    },
     "config": {
       "desc": "Prognozes serveris.",
       "loadpoint": "Slodzes punkts",
@@ -55,7 +77,7 @@
     },
     "loadpoint": {
       "description": "Slodzes punkta statuss un uzlādes režīms.",
-      "name": "Slodzes punkts"
+      "name": "Uzlādes punkts"
     },
     "name": {
       "co2": "CO₂",
