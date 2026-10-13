@@ -5,6 +5,7 @@
   },
   "servers": {
     "changeServer": "Zmeniť server",
+    "editServer": "Upraviť server",
     "manually": {
       "authenticationRequired": "Potrebná autorizácia",
       "checkAdress": "Server pravdepodobne nieje instanciou evcc. Prosím skontrolujte adresu.",
@@ -27,12 +28,22 @@
       "title": "Názov",
       "user": "Užívateľ"
     },
+    "remove": "Odstrániť",
+    "removeConfirm": "Naozaj chcete odstrániť {{title}}?",
     "removeServer": "Odstrániť server",
     "search": {
+      "cancel": "Zrušiť",
+      "connect": "Pripojiť",
+      "foundMany": "Nájdené servery: {{count}}",
+      "foundOne": "Server nájdený",
+      "hint": "Zvyčajne to trvá niekoľko sekúnd.",
+      "inProgress": "Hľadá sa …",
       "notAvailable": "Hľadanie nie je možné na tomto zariadení. Použite manuálny vstup.",
       "nothingFound": "Nebol nájdený žiadny server evcc.",
       "searching": "Hľadať pripojenie ...",
-      "start": "Spustiť vyhľadávanie"
+      "selectHelper": "Vyberte ten, ku ktorému sa chcete pripojiť.",
+      "start": "Spustiť vyhľadávanie",
+      "tryAgain": "Hľadať znova"
     },
     "switchServer": {
       "addServer": "Pridať server",
@@ -41,6 +52,17 @@
     "useDemo": "Použiť demo inštanciu"
   },
   "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "Vyberte nabíjací bod",
+      "chooseServer": "Vyberte server",
+      "loading": "Načítava sa…",
+      "loadingPreview": "Načítava sa ukážka…",
+      "noLoadpoints": "Žiadne dostupné nabíjacie body",
+      "noServers": "Žiadne servery. Najprv jeden pridajte v aplikácii.",
+      "previewError": "Ukážku sa nepodarilo načítať",
+      "setupBody": "Ťuknite a vyberte server a nabíjací bod.",
+      "useThisLoadpoint": "Použiť tento nabíjací bod"
+    },
     "config": {
       "desc": "Server pre predpoveď.",
       "loadpoint": "Nabíjací bod",
