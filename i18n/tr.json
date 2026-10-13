@@ -5,6 +5,7 @@
   },
   "servers": {
     "changeServer": "Sunucu değiştir",
+    "editServer": "Sunucuyu Düzenle",
     "manually": {
       "authenticationRequired": "Doğrulama gerekli",
       "checkAdress": "Sunucu bir evcc örneği gibi görünmüyor. Lütfen adresi kontrol edin.",
@@ -28,12 +29,22 @@
       "title": "Başlık",
       "user": "Kullanıcı"
     },
+    "remove": "Kaldır",
+    "removeConfirm": "{{title}} gerçekten kaldırılsın mı?",
     "removeServer": "Sunucuyu sil",
     "search": {
+      "cancel": "İptal",
+      "connect": "Bağlan",
+      "foundMany": "{{count}} sunucu bulundu",
+      "foundOne": "Sunucu bulundu",
+      "hint": "Bu genellikle birkaç saniye sürer.",
+      "inProgress": "Aranıyor …",
       "notAvailable": "Bu cihazda arama mümkün değil. Manuel girin.",
       "nothingFound": "Evcc sunucusu bulunamadı.",
       "searching": "Aranıyor ...",
-      "start": "Aramaya başla"
+      "selectHelper": "Bağlanmak istediğiniz sunucuyu seçin.",
+      "start": "Aramaya başla",
+      "tryAgain": "Tekrar ara"
     },
     "select": "Seç",
     "switchServer": {
@@ -43,44 +54,55 @@
     "useDemo": "Demo örnek kullan"
   },
   "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "Doldurma noktası seçin",
+      "chooseServer": "Sunucu seçin",
+      "loading": "Yükleniyor…",
+      "loadingPreview": "Önizleme yükleniyor…",
+      "noLoadpoints": "Ulaşılabilir doldurma noktası yok",
+      "noServers": "Sunucu yok. Önce uygulamada bir tane ekleyin.",
+      "previewError": "Önizleme yüklenemedi",
+      "setupBody": "Sunucu ve doldurma noktası seçmek için dokunun.",
+      "useThisLoadpoint": "Bu doldurma noktasını kullan"
+    },
     "config": {
-      "desc": "",
-      "loadpoint": "",
-      "server": "",
-      "title": ""
+      "desc": "Tahmin için sunucu.",
+      "loadpoint": "Doldurma noktası",
+      "server": "Sunucu",
+      "title": "evcc Tahmini"
     },
     "description": {
-      "co2": "",
-      "feedin": "",
-      "price": "",
-      "solar": ""
+      "co2": "CO₂ emisyonları tahmini.",
+      "feedin": "Şebekeye satış fiyatı tahmini.",
+      "price": "Şebekeden alım fiyatı tahmini.",
+      "solar": "Güneş enerjisi üretim tahmini."
     },
     "loadpoint": {
-      "description": "",
-      "name": ""
+      "description": "Doldurma noktası durumu ve doldurma modu.",
+      "name": "Doldurma noktası"
     },
     "name": {
       "co2": "",
-      "feedin": "",
-      "price": "",
-      "solar": ""
+      "feedin": "Şebekeye satış fiyatı",
+      "price": "Şebekeden alım fiyatı",
+      "solar": "Güneş tahmini"
     },
     "noData": {
-      "body": "",
-      "title": ""
+      "body": "Bu sunucuda bu türde veri yok.",
+      "title": "Veri yok"
     },
-    "now": "",
+    "now": "şimdi",
     "setup": {
-      "body": "",
-      "title": ""
+      "body": "Bir sunucu bağlamak ve veri türü seçmek için dokunun.",
+      "title": "evcc'yi kur"
     },
     "type": {
-      "feedin": "",
-      "price": ""
+      "feedin": "Şebekeye satış fiyatı",
+      "price": "Şebekeden alım fiyatı"
     },
     "unreachable": {
-      "body": "",
-      "title": ""
+      "body": "evcc örneği yüklenemedi.",
+      "title": "Sunucuya ulaşılamıyor"
     }
   }
 }
