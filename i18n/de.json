@@ -4,7 +4,7 @@
     "title": "Willkommen"
   },
   "servers": {
-    "changeServer": "Server ändern",
+    "changeServer": "Server wechseln",
     "editServer": "Server bearbeiten",
     "manually": {
       "authenticationRequired": "Anmeldung erforderlich",
