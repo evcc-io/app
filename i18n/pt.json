@@ -5,6 +5,7 @@
   },
   "servers": {
     "changeServer": "Mudar o servidor",
+    "editServer": "Editar servidor",
     "manually": {
       "authenticationRequired": "Necessário Autenticação",
       "checkAdress": "O servidor não parece ser uma instalação do evcc. Por favor, verifique o endereço.",
@@ -28,12 +29,22 @@
       "title": "Título",
       "user": "Utilizador"
     },
+    "remove": "Remover",
+    "removeConfirm": "Pretende mesmo remover {{title}}?",
     "removeServer": "Apagar servidor",
     "search": {
+      "cancel": "Cancelar",
+      "connect": "Ligar",
+      "foundMany": "{{count}} servidores encontrados",
+      "foundOne": "Servidor encontrado",
+      "hint": "Normalmente demora alguns segundos.",
+      "inProgress": "A procurar …",
       "notAvailable": "A pesquisa não é possível neste dispositivo. Utilize a entrada manual.",
       "nothingFound": "Não foi encontrado nenhum servidor evcc.",
       "searching": "A procurar ...",
-      "start": "Iniciar a pesquisa"
+      "selectHelper": "Selecione aquele a que se pretende ligar.",
+      "start": "Iniciar a pesquisa",
+      "tryAgain": "Procurar de novo"
     },
     "select": "Selecionar",
     "switchServer": {
@@ -43,6 +54,17 @@
     "useDemo": "Usar modo de demonstração"
   },
   "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "Escolher ponto de carga",
+      "chooseServer": "Escolher servidor",
+      "loading": "A carregar…",
+      "loadingPreview": "A carregar pré-visualização…",
+      "noLoadpoints": "Nenhum ponto de carga acessível",
+      "noServers": "Sem servidores. Adicione um primeiro na aplicação.",
+      "previewError": "Não foi possível carregar a pré-visualização",
+      "setupBody": "Toque para escolher um servidor e um ponto de carga.",
+      "useThisLoadpoint": "Usar este ponto de carga"
+    },
     "config": {
       "desc": "Servidor para as previsões.",
       "loadpoint": "Ponto de carga",
