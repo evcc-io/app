@@ -5,6 +5,7 @@
   },
   "servers": {
     "changeServer": "Skift server",
+    "editServer": "Rediger server",
     "manually": {
       "authenticationRequired": "Godkendelse påkrævet",
       "checkAdress": "Serveren ser ikke ud til at være en evcc-instans. Tjek venligst adressen.",
@@ -28,12 +29,22 @@
       "title": "Titel",
       "user": "Bruger"
     },
+    "remove": "Fjern",
+    "removeConfirm": "Vil du virkelig fjerne {{title}}?",
     "removeServer": "Fjern server",
     "search": {
+      "cancel": "Afbryd",
+      "connect": "Forbind",
+      "foundMany": "{{count}} servere fundet",
+      "foundOne": "Server fundet",
+      "hint": "Det tager normalt et par sekunder.",
+      "inProgress": "Søger …",
       "notAvailable": "Søgningen er ikke mulig på enheden. Brug manuel indtastning.",
       "nothingFound": "Ingen evcc-server blev fundet.",
       "searching": "Søg efter forbindelse ...",
-      "start": "Start søgning"
+      "selectHelper": "Vælg den, du vil forbinde til.",
+      "start": "Start søgning",
+      "tryAgain": "Søg igen"
     },
     "select": "Vælg",
     "switchServer": {
@@ -43,44 +54,55 @@
     "useDemo": "Brug demo installation"
   },
   "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "Vælg ladepunkt",
+      "chooseServer": "Vælg server",
+      "loading": "Indlæser…",
+      "loadingPreview": "Indlæser forhåndsvisning…",
+      "noLoadpoints": "Ingen ladepunkter tilgængelige",
+      "noServers": "Ingen servere. Tilføj en i appen først.",
+      "previewError": "Kunne ikke indlæse forhåndsvisning",
+      "setupBody": "Tryk for at vælge en server og et ladepunkt.",
+      "useThisLoadpoint": "Brug dette ladepunkt"
+    },
     "config": {
-      "desc": "",
-      "loadpoint": "",
+      "desc": "Server til prognosen.",
+      "loadpoint": "Ladepunkt",
       "server": "",
-      "title": ""
+      "title": "evcc-prognose"
     },
     "description": {
-      "co2": "",
-      "feedin": "",
-      "price": "",
-      "solar": ""
+      "co2": "Prognose for CO₂-emissioner.",
+      "feedin": "Prognose for indfødningstariffen.",
+      "price": "Prognose for strømprisen.",
+      "solar": "Prognose for solenergiproduktion."
     },
     "loadpoint": {
-      "description": "",
-      "name": ""
+      "description": "Ladepunktets status og ladetilstand.",
+      "name": "Ladepunkt"
     },
     "name": {
       "co2": "",
-      "feedin": "",
-      "price": "",
-      "solar": ""
+      "feedin": "Indfødningstarif",
+      "price": "Strømpris",
+      "solar": "Sol prognose"
     },
     "noData": {
-      "body": "",
-      "title": ""
+      "body": "Denne server har ingen data af denne type.",
+      "title": "Ingen data"
     },
-    "now": "",
+    "now": "nu",
     "setup": {
-      "body": "",
-      "title": ""
+      "body": "Tryk for at forbinde en server og vælge en datatype.",
+      "title": "Opsæt evcc"
     },
     "type": {
-      "feedin": "",
-      "price": ""
+      "feedin": "Indfødningstarif",
+      "price": "Strømpris"
     },
     "unreachable": {
-      "body": "",
-      "title": ""
+      "body": "Kunne ikke indlæse evcc-instansen.",
+      "title": "Server ikke tilgængelig"
     }
   }
 }
