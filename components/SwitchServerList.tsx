@@ -36,7 +36,11 @@ export default function SwitchServerList({
 
   return (
     <View style={{ flex: 1, paddingHorizontal: 8 }}>
-      <ScrollView style={{ flex: 1 }}>
+      <ScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={{ paddingBottom: 20 }}
+        showsVerticalScrollIndicator
+      >
         <View
           style={{
             flexDirection: "row",

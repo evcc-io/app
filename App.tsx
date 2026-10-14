@@ -19,6 +19,7 @@ import SwitchServerScreen from "screens/SwitchServerScreen";
 import EditServerScreen from "screens/EditServerScreen";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import QRCodeCameraScreen from "screens/QRCodeCameraScreen";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -148,11 +149,11 @@ function AppNavigator() {
 
 export default function App() {
   return (
-    <>
+    <SafeAreaProvider>
       <AppProvider>
         <AppNavigator />
       </AppProvider>
       <StatusBar style="auto" />
-    </>
+    </SafeAreaProvider>
   );
 }
