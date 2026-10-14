@@ -7,6 +7,8 @@ Related agent files in sibling repos:
 - [evcc-io/evcc AGENTS.md](https://github.com/evcc-io/evcc/blob/main/AGENTS.md) — main evcc daemon (Go + Vue web UI)
 - [evcc-io/docs AGENTS.md](https://github.com/evcc-io/docs/blob/main/AGENTS.md) — documentation site
 
+Paths starting with `../evcc/` refer to a local checkout of the main repository (https://github.com/evcc-io/evcc) next to this one; clone it there if it is missing.
+
 ## Project Overview
 
 - Native mobile app wrapper around the evcc web UI, built with [Expo](https://expo.dev/) + [React Native](https://reactnative.dev/).
@@ -67,6 +69,7 @@ Most folders are self-explanatory (`screens/`, `components/`, `utils/`, `i18n/`,
 - `i18n/index.ts` is **generated** by `scripts/load-translations.mts`. Edit per-locale JSON (`en.json`, `de.json`, …), then run `npm run translations`.
 - Translations are managed via [Weblate](https://hosted.weblate.org/projects/evcc/app/) — translation PRs come in automatically. Only edit `en.json` (source) and `de.json` (maintained in-house) manually; other locales come from Weblate.
 - Use `useTranslation()` / `t()` for user-facing strings. Keys are nested by screen/section (e.g. `servers.manually.checkAndSave`).
+- **Use the shared glossary** — agreed terms per language with explanations live in `../evcc/i18n/glossary/` (`en.json` + `de.json`, rules in `README.md`). Check it before wording anything user-facing; if a concept is missing there, fall back to the UI strings in `../evcc/i18n/en.json` and `de.json`.
 
 ## Coding Conventions
 
