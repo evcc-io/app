@@ -1,10 +1,10 @@
 {
   "main": {
-    "description": "Durchsuche dein Netzwerk, um deine evcc Installation zu finden.",
-    "title": "Server einrichten"
+    "description": "Lass uns deinen Server anschließen.",
+    "title": "Willkommen"
   },
   "servers": {
-    "changeServer": "Server ändern",
+    "changeServer": "Server wechseln",
     "editServer": "Server bearbeiten",
     "manually": {
       "authenticationRequired": "Anmeldung erforderlich",
@@ -39,10 +39,10 @@
       "hint": "Das dauert normalerweise nur wenige Sekunden.",
       "inProgress": "Suche läuft …",
       "notAvailable": "Die Suche ist auf diesem Gerät nicht möglich. Nutze die manuelle Eingabe.",
-      "nothingFound": "Es wurde kein evcc Server gefunden.",
+      "nothingFound": "Es wurde kein Server gefunden.",
       "searching": "Suche nach Verbindung ...",
       "selectHelper": "Wähle aus, womit du dich verbinden möchtest.",
-      "start": "Suche starten",
+      "start": "Server suchen",
       "tryAgain": "Erneut suchen"
     },
     "switchServer": {

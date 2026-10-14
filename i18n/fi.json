@@ -5,6 +5,7 @@
   },
   "servers": {
     "changeServer": "Vaihda palvelinta",
+    "editServer": "Muokkaa palvelinta",
     "manually": {
       "authenticationRequired": "Todennus vaaditaan",
       "checkAdress": "Määritetty palvelin ei näytä olevan evcc-palvelin. Tarkista osoite.",
@@ -28,12 +29,22 @@
       "title": "Nimi",
       "user": "Käyttäjä"
     },
+    "remove": "Poista",
+    "removeConfirm": "Haluatko varmasti poistaa palvelimen {{title}}?",
     "removeServer": "Poista palvelin",
     "search": {
+      "cancel": "Peruuta",
+      "connect": "Yhdistä",
+      "foundMany": "{{count}} palvelinta löytyi",
+      "foundOne": "Palvelin löytyi",
+      "hint": "Tämä kestää yleensä muutaman sekunnin.",
+      "inProgress": "Haetaan …",
       "notAvailable": "Haku ei ole mahdollista tällä laitteella. Käytä manuaalista osoitetta.",
       "nothingFound": "Evcc-palvelinta ei löytynyt.",
       "searching": "Etsi yhteyttä ...",
-      "start": "Aloita haku"
+      "selectHelper": "Valitse palvelin, johon haluat yhdistää.",
+      "start": "Aloita haku",
+      "tryAgain": "Hae uudelleen"
     },
     "select": "Valitse",
     "switchServer": {
@@ -43,44 +54,55 @@
     "useDemo": "Käytä demo-näkymää"
   },
   "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "Valitse latauspiste",
+      "chooseServer": "Valitse palvelin",
+      "loading": "Ladataan…",
+      "loadingPreview": "Ladataan esikatselua…",
+      "noLoadpoints": "Latauspisteitä ei tavoitettavissa",
+      "noServers": "Ei palvelimia. Lisää ensin palvelin sovelluksessa.",
+      "previewError": "Esikatselua ei voitu ladata",
+      "setupBody": "Napauta valitaksesi palvelimen ja latauspisteen.",
+      "useThisLoadpoint": "Käytä tätä latauspistettä"
+    },
     "config": {
-      "desc": "",
-      "loadpoint": "",
-      "server": "",
-      "title": ""
+      "desc": "Ennusteen palvelin.",
+      "loadpoint": "Latauspiste",
+      "server": "Palvelin",
+      "title": "evcc-ennuste"
     },
     "description": {
-      "co2": "",
-      "feedin": "",
-      "price": "",
-      "solar": ""
+      "co2": "CO₂-päästöjen ennuste.",
+      "feedin": "Sähkön myyntihinnan ennuste.",
+      "price": "Sähkön ostohinnan ennuste.",
+      "solar": "Aurinkotuotannon ennuste."
     },
     "loadpoint": {
-      "description": "",
-      "name": ""
+      "description": "Latauspisteen tila ja lataustila.",
+      "name": "Latauspiste"
     },
     "name": {
       "co2": "",
-      "feedin": "",
-      "price": "",
-      "solar": ""
+      "feedin": "Sähkön myyntihinta",
+      "price": "Sähkön ostohinta",
+      "solar": "Aurinkoennuste"
     },
     "noData": {
-      "body": "",
-      "title": ""
+      "body": "Tällä palvelimella ei ole tämän tyyppisiä tietoja.",
+      "title": "Ei tietoja"
     },
-    "now": "",
+    "now": "nyt",
     "setup": {
-      "body": "",
-      "title": ""
+      "body": "Napauta yhdistääksesi palvelimen ja valitaksesi tietotyypin.",
+      "title": "Määritä evcc"
     },
     "type": {
-      "feedin": "",
-      "price": ""
+      "feedin": "Sähkön myyntihinta",
+      "price": "Sähkön ostohinta"
     },
     "unreachable": {
-      "body": "",
-      "title": ""
+      "body": "evcc-palvelinta ei voitu ladata.",
+      "title": "Palvelin ei tavoitettavissa"
     }
   }
 }

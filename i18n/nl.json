@@ -1,10 +1,11 @@
 {
   "main": {
-    "description": "Doorzoek jouw netwerk om jouw evcc installatie te vinden.",
-    "title": "Server instellen"
+    "description": "Laten we verbinding maken met jouw server.",
+    "title": "Welkom"
   },
   "servers": {
-    "changeServer": "Wijzig server",
+    "changeServer": "Wijzig Server",
+    "editServer": "Server bewerken",
     "manually": {
       "authenticationRequired": "Authenticatie vereist",
       "checkAdress": "De server lijkt geen evcc server te zijn. Controleer het adres.",
@@ -28,42 +29,63 @@
       "title": "Titel",
       "user": "Gebruiker"
     },
+    "remove": "Verwijderen",
+    "removeConfirm": "Wilt u {{title}} echt verwijderen?",
     "removeServer": "Server verwijderen",
     "search": {
+      "cancel": "Annuleren",
+      "connect": "Verbinden",
+      "foundMany": "{{count}} servers gevonden",
+      "foundOne": "Server gevonden",
+      "hint": "Dit duurt meestal enkele seconden.",
+      "inProgress": "Zoeken …",
       "notAvailable": "De zoekfunctie is niet beschikbaar op dit apparaat. Gebruik de handmatige invoer.",
       "nothingFound": "Er is geen evcc server gevonden.",
       "searching": "Zoeken naar verbinding ...",
-      "start": "Zoeken starten"
+      "selectHelper": "Selecteer de server waarmee u wilt verbinden.",
+      "start": "Zoeken starten",
+      "tryAgain": "Opnieuw zoeken"
     },
     "select": "Selecteren",
     "switchServer": {
-      "addServer": "Toevoegen server",
-      "title": "Wissel server"
+      "addServer": "Toevoegen Server",
+      "title": "Wissel Server"
     },
     "useDemo": "Demo server gebruiken"
   },
   "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "Laadpunt kiezen",
+      "chooseServer": "Server kiezen",
+      "loading": "Laden…",
+      "loadingPreview": "Voorbeeld laden…",
+      "noLoadpoints": "Geen laadpunten bereikbaar",
+      "noServers": "Geen servers. Voeg er eerst een toe in de app.",
+      "previewError": "Kon geen voorbeeld laden",
+      "setupBody": "Tik om een server en laadpunt te kiezen.",
+      "useThisLoadpoint": "Dit laadpunt gebruiken"
+    },
     "config": {
-      "desc": "",
-      "loadpoint": "",
-      "server": "",
-      "title": ""
+      "desc": "Server voor de voorspelling.",
+      "loadpoint": "Laadpunt",
+      "server": "Server",
+      "title": "evcc Voorspelling"
     },
     "description": {
-      "co2": "",
-      "feedin": "",
-      "price": "",
-      "solar": ""
+      "co2": "Voorspelling van de CO₂-uitstoot.",
+      "feedin": "Voorspelling netexportprijs.",
+      "price": "Voorspelling van de netstroom prijs voor import.",
+      "solar": "Voorspelling van de zonne-energieproductie."
     },
     "loadpoint": {
-      "description": "",
-      "name": ""
+      "description": "Status en laadmodus van het laadpunt.",
+      "name": "Laadpunt"
     },
     "name": {
-      "co2": "",
-      "feedin": "",
-      "price": "",
-      "solar": ""
+      "co2": "CO₂",
+      "feedin": "Netstroom prijs voor injectie",
+      "price": "Netstroom prijs voor import",
+      "solar": "Voorspelling zonne-energie"
     },
     "noData": {
       "body": "Deze server heeft geen data van dit type.",
@@ -71,15 +93,15 @@
     },
     "now": "nu",
     "setup": {
-      "body": "",
-      "title": ""
+      "body": "Tik om een server te verbinden en een datatype te kiezen.",
+      "title": "Configureer evcc"
     },
     "type": {
       "feedin": "Netstroom prijs voor injectie",
       "price": "Netstroom prijs voor import"
     },
     "unreachable": {
-      "body": "",
+      "body": "Kan de evcc instance niet laden.",
       "title": "Server onbereikbaar"
     }
   }

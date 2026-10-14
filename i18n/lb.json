@@ -5,6 +5,7 @@
   },
   "servers": {
     "changeServer": "Server änneren",
+    "editServer": "Server beaarbechten",
     "manually": {
       "authenticationRequired": "Umellung néideg",
       "checkAdress": "De Server schéngt keng evcc Instanz ze sinn. Iwwerpréif wgl. d'Adress.",
@@ -28,12 +29,22 @@
       "title": "Titel",
       "user": "Benotzer"
     },
+    "remove": "Ewechhuelen",
+    "removeConfirm": "Wëlls du {{title}} wierklech ewechhuelen?",
     "removeServer": "Server ewechhuelen",
     "search": {
+      "cancel": "Ofbriechen",
+      "connect": "Verbannen",
+      "foundMany": "{{count}} Serveren fonnt",
+      "foundOne": "Server fonnt",
+      "hint": "Dat dauert normalerweis e puer Sekonnen.",
+      "inProgress": "Sichen …",
       "notAvailable": "D'Sich ass op auf dësem Gerät net méiglech. Benotz de manuellen Input.",
       "nothingFound": "Et gouf keen evcc Server fonnt.",
       "searching": "Siche no enger Verbindung ...",
-      "start": "Sich starten"
+      "selectHelper": "Wiel deen aus, mat deem s du dech verbanne wëlls.",
+      "start": "Sich starten",
+      "tryAgain": "Nei sichen"
     },
     "select": "Auswielen",
     "switchServer": {
@@ -43,6 +54,17 @@
     "useDemo": "Demoinstanz verwennen"
   },
   "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "Opluedpunkt auswielen",
+      "chooseServer": "Server auswielen",
+      "loading": "Gëtt gelueden…",
+      "loadingPreview": "Virschau gëtt gelueden…",
+      "noLoadpoints": "Keng Opluedpunkten erreechbar",
+      "noServers": "Keng Serveren. Füüg fir d'éischt een an der App derbäi.",
+      "previewError": "Virschau konnt net geluede ginn",
+      "setupBody": "Tippt fir e Server an en Opluedpunkt auszewielen.",
+      "useThisLoadpoint": "Dësen Opluedpunkt benotzen"
+    },
     "config": {
       "desc": "Server fir d'Viraussoen.",
       "loadpoint": "Opluedpunkt",

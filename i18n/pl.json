@@ -1,10 +1,11 @@
 {
   "main": {
-    "description": "Wyszukaj instalację evcc w swojej sieci.",
-    "title": "Ustaw serwer"
+    "description": "Połączmy się z Twoim serwerem.",
+    "title": "Witamy"
   },
   "servers": {
     "changeServer": "Zmień serwer",
+    "editServer": "Edytuj serwer",
     "manually": {
       "authenticationRequired": "Uwierzytelnienie wymagane",
       "checkAdress": "Wygląda na to że na serwerze evcc nie występuje. Proszę sprawdzić adres.",
@@ -13,12 +14,12 @@
       "missingOrWrongAuthentication": "Brak lub błędne uwierzytelnienie",
       "password": "Hasło",
       "qrcode": {
-        "invalid": "",
-        "permissionDenied": "",
+        "invalid": "To nie jest prawidłowy kod QR evcc.",
+        "permissionDenied": "Odmówiono dostępu do aparatu. Włącz go w ustawieniach, aby skanować kody QR.",
         "recognized": "QR kod wykryty!",
-        "scan": "Zeskanuj QR kod",
-        "scanOnboarding": "",
-        "scanPrefill": "",
+        "scan": "Zeskanuj kod QR",
+        "scanOnboarding": "Skonfiguruj poprzez kod QR",
+        "scanPrefill": "Wypełnij przez kod QR",
         "scanning": "wykrywanie..."
       },
       "serverExistsAlready": "Ten serwer już istnieje.",
@@ -28,12 +29,22 @@
       "title": "Tytuł",
       "user": "Użytkownik"
     },
+    "remove": "Usuń",
+    "removeConfirm": "Czy na pewno chcesz usunąć {{title}}?",
     "removeServer": "Usuń serwer",
     "search": {
+      "cancel": "Anuluj",
+      "connect": "Połącz",
+      "foundMany": "Znalezione serwery: {{count}}",
+      "foundOne": "Znaleziono serwer",
+      "hint": "Zwykle zajmuje to kilka sekund.",
+      "inProgress": "Wyszukiwanie …",
       "notAvailable": "Wyszukiwanie nie jest możliwe na tym urządzeniu. Wprowadź ręcznie.",
-      "nothingFound": "Serwer evcc nie został wykryty.",
+      "nothingFound": "Nie znaleziono serwera.",
       "searching": "Wyszukaj połączenie ...",
-      "start": "Rozpocznij wyszukiwanie"
+      "selectHelper": "Wybierz ten, z którym chcesz się połączyć.",
+      "start": "Wyszukaj serwer",
+      "tryAgain": "Szukaj ponownie"
     },
     "select": "Wybierz",
     "switchServer": {
@@ -43,44 +54,55 @@
     "useDemo": "Użyj instancji demonstracyjnej"
   },
   "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "Wybierz punkt ładowania",
+      "chooseServer": "Wybierz serwer",
+      "loading": "Wczytywanie…",
+      "loadingPreview": "Wczytywanie podglądu…",
+      "noLoadpoints": "Brak dostępnych punktów ładowania",
+      "noServers": "Brak serwerów. Należy najpierw dodać serwer w aplikacji.",
+      "previewError": "Nie udało się wczytać podglądu",
+      "setupBody": "Stuknij, aby wybrać serwer i punkt ładowania.",
+      "useThisLoadpoint": "Użyj tego punktu ładowania"
+    },
     "config": {
-      "desc": "",
-      "loadpoint": "",
-      "server": "",
-      "title": ""
+      "desc": "Serwer dla prognozy.",
+      "loadpoint": "Punkt obciążenia",
+      "server": "Serwer",
+      "title": "Prognoza evcc"
     },
     "description": {
-      "co2": "",
-      "feedin": "",
-      "price": "",
-      "solar": ""
+      "co2": "Prognoza emisji CO₂.",
+      "feedin": "Prognoza ceny energii oddawanej do sieci.",
+      "price": "Prognoza ceny energii z sieci.",
+      "solar": "Prognoza produkcji energii słonecznej."
     },
     "loadpoint": {
-      "description": "",
-      "name": ""
+      "description": "Stan punktu ładowania i tryb ładowania.",
+      "name": "Punkt ładowania"
     },
     "name": {
-      "co2": "",
-      "feedin": "",
-      "price": "",
-      "solar": ""
+      "co2": "CO₂",
+      "feedin": "Cena do sieci",
+      "price": "Cena z sieci",
+      "solar": "Prognoza nasłonecznienia"
     },
     "noData": {
-      "body": "",
-      "title": ""
+      "body": "Ten serwer nie ma danych tego typu.",
+      "title": "Brak danych"
     },
-    "now": "",
+    "now": "teraz",
     "setup": {
-      "body": "",
-      "title": ""
+      "body": "Stuknij, aby połączyć serwer i wybrać typ danych.",
+      "title": "Skonfiguruj evcc"
     },
     "type": {
-      "feedin": "",
-      "price": ""
+      "feedin": "Cena do sieci",
+      "price": "Cena z sieci"
     },
     "unreachable": {
-      "body": "",
-      "title": ""
+      "body": "Nie udało się wczytać instancji evcc.",
+      "title": "Serwer niedostępny"
     }
   }
 }

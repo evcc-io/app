@@ -5,6 +5,7 @@
   },
   "servers": {
     "changeServer": "Byt server",
+    "editServer": "Ändra server",
     "manually": {
       "authenticationRequired": "Registrering krävs",
       "checkAdress": "Servern verkar inte vara en evcc-instans. Vänligen kolla adressen.",
@@ -28,12 +29,22 @@
       "title": "Titel",
       "user": "Användare"
     },
+    "remove": "Ta bort",
+    "removeConfirm": "Vill du verkligen ta bort {{title}}?",
     "removeServer": "Ta bort server",
     "search": {
+      "cancel": "Avbryt",
+      "connect": "Anslut",
+      "foundMany": "{{count}} servrar hittade",
+      "foundOne": "Server hittad",
+      "hint": "Detta tar vanligtvis några sekunder.",
+      "inProgress": "Söker …",
       "notAvailable": "Sökning är inte möjligt på denna enhet. Skriv in manuellt.",
       "nothingFound": "Ingen evcc-server hittades.",
       "searching": "Sök efter förbindelse...",
-      "start": "Starta sök"
+      "selectHelper": "Välj den du vill ansluta till.",
+      "start": "Starta sök",
+      "tryAgain": "Sök igen"
     },
     "select": "Välj",
     "switchServer": {
@@ -43,44 +54,55 @@
     "useDemo": "Använd demo-installation"
   },
   "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "Välj laddplats",
+      "chooseServer": "Välj server",
+      "loading": "Laddar…",
+      "loadingPreview": "Laddar förhandsvisning…",
+      "noLoadpoints": "Inga laddplatser nåbara",
+      "noServers": "Inga servrar. Lägg först till en i appen.",
+      "previewError": "Kunde inte ladda förhandsvisning",
+      "setupBody": "Tryck för att välja server och laddplats.",
+      "useThisLoadpoint": "Använd denna laddplats"
+    },
     "config": {
-      "desc": "",
-      "loadpoint": "",
+      "desc": "Server för prognosen.",
+      "loadpoint": "Laddplats",
       "server": "",
-      "title": ""
+      "title": "evcc-prognos"
     },
     "description": {
-      "co2": "",
-      "feedin": "",
-      "price": "",
-      "solar": ""
+      "co2": "Prognos för CO₂-utsläpp.",
+      "feedin": "Prognos för exportpris till elnät.",
+      "price": "Prognos för importpris från elnät.",
+      "solar": "Prognos för solproduktion."
     },
     "loadpoint": {
-      "description": "",
-      "name": ""
+      "description": "Laddplatsens status och laddläge.",
+      "name": "Laddplats"
     },
     "name": {
       "co2": "",
-      "feedin": "",
-      "price": "",
-      "solar": ""
+      "feedin": "Exportpris till elnät",
+      "price": "Importpris från elnät",
+      "solar": "Solprognos"
     },
     "noData": {
-      "body": "",
-      "title": ""
+      "body": "Servern har inga data av denna typ.",
+      "title": "Inga data"
     },
-    "now": "",
+    "now": "nu",
     "setup": {
-      "body": "",
-      "title": ""
+      "body": "Tryck för att ansluta en server och välja en datatyp.",
+      "title": "Konfigurera evcc"
     },
     "type": {
-      "feedin": "",
-      "price": ""
+      "feedin": "Exportpris till elnät",
+      "price": "Importpris från elnät"
     },
     "unreachable": {
-      "body": "",
-      "title": ""
+      "body": "Kunde inte ladda evcc-instansen.",
+      "title": "Servern kan inte nås"
     }
   }
 }
