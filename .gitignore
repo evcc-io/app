@@ -6,7 +6,8 @@ node_modules/
 !fastlane/metadata/ios
 caddy*.*
 tsconfig.tsbuildinfo
-.claude/
+.claude/*
+!.claude/skills/
 e2e/artifacts
 evcc*.*
 
