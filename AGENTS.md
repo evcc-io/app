@@ -126,9 +126,19 @@ Structure PR descriptions in this order. No headlines. Be concise.
    - [ ] item b
    ```
 
-Avoid file paths, line numbers, or code listings reproduced from the diff. Include a code snippet only when it conveys the contract (event shape, API signature) more clearly than prose. No testing checklists, no co-author footers, no generator footers.
+Avoid file paths, line numbers, or code listings reproduced from the diff. Include a code snippet only when it conveys the contract (event shape, API signature) more clearly than prose. No testing checklists, no co-author footers.
 
 ## Git Workflow
 
 - Main branch: `main`
 - Commit and PR subjects: `prefix: short description`, no trailing period. Platform-specific changes use `Android: …` / `iOS: …`; everything else is prefixed with the affected part of the app (`onboarding: …`, `widget: …`) or `chore:` / `fix:` / `docs:` for non-feature changes. Same pattern as the main evcc repo. Keep messages short.
+
+## AI Attribution
+
+Work produced by an AI agent must be attributable as such on GitHub. Append the tool's attribution footer to every PR description, issue body, review, and comment written by an agent, for example:
+
+```
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+```
+
+Commit messages are the exception: no footer, and no `Co-Authored-By` trailer. Never dress agent work up as human review (e.g. "PR by an agent but looks good to me") in place of the footer.
