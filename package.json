@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@bacons/apple-targets": "^4.0.7",
-    "@expo/metro-runtime": "~57.0.17",
+    "@expo/metro-runtime": "~58.0.14",
     "@expo/ui": "~57.0.24",
     "@inthepocket/react-native-service-discovery": "^0.2.4",
     "@material-symbols/svg-400": "^0.45.4",
