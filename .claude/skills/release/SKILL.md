@@ -50,23 +50,24 @@ Steps are marked 🤖 (agent runs it) or 👤 (human does it). Stop and wait at 
 
 ## Release notes
 
-Target style is 1.5.0 (`gh release view 1.5.0`), but with `###` subheads instead of bold lines. Older releases were raw `--generate-notes` output; don't copy those.
+Structure from 1.5.0 (`gh release view 1.5.0`) with `###` subheads; terse bullets like the releases before it.
 
 ```markdown
 ## What's Changed
 
 ### Highlights
 
-- iOS Widget: support for the new smart charging modes (Off / Smart / Fast) … in https://github.com/evcc-io/app/pull/246
+- Android: add loadpoint widget by @webalexeu in https://github.com/evcc-io/app/pull/255
 
 ### Improvements & Fixes
 
-- New loading animation, faster server switching, instant feedback for unreachable servers in https://github.com/evcc-io/app/pull/269
+- iOS: use native scroll deceleration rate in WebView in https://github.com/evcc-io/app/pull/292
+- Translations: added Latvian
 
 ### Under the Hood
 
 - Faster Detox CI pipeline in https://github.com/evcc-io/app/pull/270
-- Dependency updates by @dependabot in https://github.com/evcc-io/app/pull/250, https://github.com/evcc-io/app/pull/249
+- Dependency updates in https://github.com/evcc-io/app/pull/250, https://github.com/evcc-io/app/pull/249
 
 ## New Contributors
 
@@ -75,7 +76,7 @@ Target style is 1.5.0 (`gh release view 1.5.0`), but with `###` subheads instead
 **Full Changelog**: https://github.com/evcc-io/app/compare/<prev>...<ver>
 ```
 
-- Bullets describe the user-visible outcome, not the PR title. Keep platform prefixes (`iOS:`, `Android:`, `macOS:`, `iOS Widget:`). End with `in <PR url>`.
+- Bullet = the PR title, lightly cleaned (drop `fix:`/`feat:`, fix typos, keep platform prefixes like `iOS:`, `Android:`, `macOS:`), then `in <PR url>`. One short line: no before/after explanations ("instead of …", "no more …"), no parentheticals. Only rephrase when the title is unreadable for users.
 - Credit external contributors with `by @handle`, but not maintainers (@naltatis / Michael Geers).
 - **Highlights**: 1–3 new features. **Improvements & Fixes**: smaller visible changes, fixes, translations as one line naming only what stands out, e.g. a new language ("Translations: added Latvian"), no PR links, no list of updated languages. **Under the Hood**: notable CI/tooling, plus one "Dependency updates" line that also folds in "chore: update dependencies" PRs.
 - Keep `## New Contributors` from the generated notes if it's non-empty. Drop empty sections.
