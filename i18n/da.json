@@ -1,10 +1,10 @@
 {
   "main": {
-    "description": "Søg på netværket for at finde din evcc installation.",
-    "title": "Konfigurer serveren"
+    "description": "Lad os forbinde til din server.",
+    "title": "Velkommen"
   },
   "servers": {
-    "changeServer": "Skift server",
+    "changeServer": "Skift Server",
     "editServer": "Rediger server",
     "manually": {
       "authenticationRequired": "Godkendelse påkrævet",
@@ -17,7 +17,7 @@
         "invalid": "Det er ikke en gyldig evcc QR kode.",
         "permissionDenied": "Kamera ikke tilgængelig. Aktivér kamera i indstillinger for at scanne QR-koder.",
         "recognized": "QR code fundet!",
-        "scan": "Scan QR koden",
+        "scan": "Scan QR Kode",
         "scanOnboarding": "Opsætning via QR-kode",
         "scanPrefill": "Udfyld via QR-kode",
         "scanning": "Scanner..."
@@ -40,16 +40,16 @@
       "hint": "Det tager normalt et par sekunder.",
       "inProgress": "Søger …",
       "notAvailable": "Søgningen er ikke mulig på enheden. Brug manuel indtastning.",
-      "nothingFound": "Ingen evcc-server blev fundet.",
+      "nothingFound": "Ingen server fundet.",
       "searching": "Søg efter forbindelse ...",
       "selectHelper": "Vælg den, du vil forbinde til.",
-      "start": "Start søgning",
+      "start": "Find server",
       "tryAgain": "Søg igen"
     },
     "select": "Vælg",
     "switchServer": {
-      "addServer": "Tilføj server",
-      "title": "Skift server"
+      "addServer": "Tilføj Server",
+      "title": "Skift Server"
     },
     "useDemo": "Brug demo installation"
   },
@@ -68,13 +68,13 @@
     "config": {
       "desc": "Server til prognosen.",
       "loadpoint": "Ladepunkt",
-      "server": "",
+      "server": "Server",
       "title": "evcc-prognose"
     },
     "description": {
       "co2": "Prognose for CO₂-emissioner.",
-      "feedin": "Prognose for indfødningstariffen.",
-      "price": "Prognose for strømprisen.",
+      "feedin": "Prognose for elnet eksport pris.",
+      "price": "Prognose for elnet import pris.",
       "solar": "Prognose for solenergiproduktion."
     },
     "loadpoint": {
@@ -82,9 +82,9 @@
       "name": "Ladepunkt"
     },
     "name": {
-      "co2": "",
-      "feedin": "Indfødningstarif",
-      "price": "Strømpris",
+      "co2": "CO₂",
+      "feedin": "Elnet eksport pris",
+      "price": "Elnet import pris",
       "solar": "Sol prognose"
     },
     "noData": {
@@ -97,8 +97,8 @@
       "title": "Opsæt evcc"
     },
     "type": {
-      "feedin": "Indfødningstarif",
-      "price": "Strømpris"
+      "feedin": "Elnet eksport pris",
+      "price": "Elnet import pris"
     },
     "unreachable": {
       "body": "Kunne ikke indlæse evcc-instansen.",
