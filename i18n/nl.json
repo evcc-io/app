@@ -69,7 +69,7 @@
       "desc": "Server voor de voorspelling.",
       "loadpoint": "Laadpunt",
       "server": "Server",
-      "title": "ecvv voorspelling"
+      "title": "evcc voorspelling"
     },
     "description": {
       "co2": "Voorspelling van de CO₂-uitstoot.",
@@ -85,7 +85,7 @@
       "co2": "CO₂",
       "feedin": "Netstroom prijs voor injectie",
       "price": "Netstroom prijs voor import",
-      "solar": "Verwachte zonne energie"
+      "solar": "Verwachte zonne-energie"
     },
     "noData": {
       "body": "Deze server heeft geen data van dit type.",
