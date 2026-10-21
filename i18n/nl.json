@@ -74,7 +74,7 @@
     "description": {
       "co2": "Voorspelling CO₂-emissies.",
       "feedin": "Voorspelling netexportprijs.",
-      "price": "Voorspelling netimportprijs",
+      "price": "Voorspelling netimportprijs.",
       "solar": "Voorspelling PV-productie."
     },
     "loadpoint": {
