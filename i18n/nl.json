@@ -15,11 +15,11 @@
       "password": "Wachtwoord",
       "qrcode": {
         "invalid": "Ongeldige evcc QR-code.",
-        "permissionDenied": "Camera toegang geweigerd. Zet deze aan in instellingen om de QR code te scannen.",
+        "permissionDenied": "Camera toegang geweigerd. Zet deze aan in instellingen om de QR-code te scannen.",
         "recognized": "QR-code gedetecteerd!",
         "scan": "Scan QR-code",
-        "scanOnboarding": "Configuratie via QR code",
-        "scanPrefill": "Invullen via QR code",
+        "scanOnboarding": "Configuratie via QR-code",
+        "scanPrefill": "Invullen via QR-code",
         "scanning": "detecteren..."
       },
       "serverExistsAlready": "Deze server is al aanwezig.",
@@ -40,16 +40,16 @@
       "hint": "Dit duurt meestal enkele seconden.",
       "inProgress": "Zoeken …",
       "notAvailable": "De zoekfunctie is niet beschikbaar op dit apparaat. Gebruik de handmatige invoer.",
-      "nothingFound": "Er is geen evcc server gevonden.",
+      "nothingFound": "Geen evcc server gevonden.",
       "searching": "Zoeken naar verbinding ...",
       "selectHelper": "Selecteer de server waarmee u wilt verbinden.",
-      "start": "Zoeken starten",
+      "start": "Server zoeken",
       "tryAgain": "Opnieuw zoeken"
     },
     "select": "Selecteren",
     "switchServer": {
-      "addServer": "Toevoegen Server",
-      "title": "Wissel Server"
+      "addServer": "Server toevoegen",
+      "title": "Server wijzigen"
     },
     "useDemo": "Demo server gebruiken"
   },
@@ -69,13 +69,13 @@
       "desc": "Server voor de voorspelling.",
       "loadpoint": "Laadpunt",
       "server": "Server",
-      "title": "evcc Voorspelling"
+      "title": "Evcc voorspelling"
     },
     "description": {
       "co2": "Voorspelling van de CO₂-uitstoot.",
       "feedin": "Voorspelling netexportprijs.",
       "price": "Voorspelling van de netstroom prijs voor import.",
-      "solar": "Voorspelling van de zonne-energieproductie."
+      "solar": "Voorspelling van zonne-energieproductie."
     },
     "loadpoint": {
       "description": "Status en laadmodus van het laadpunt.",
@@ -93,7 +93,7 @@
     },
     "now": "nu",
     "setup": {
-      "body": "Tik om een server te verbinden en een datatype te kiezen.",
+      "body": "Tik op verbinden en kies een data type.",
       "title": "Configureer evcc"
     },
     "type": {
@@ -101,7 +101,7 @@
       "price": "Netstroom prijs voor import"
     },
     "unreachable": {
-      "body": "Kan de evcc instance niet laden.",
+      "body": "Kan de evcc instantie niet laden.",
       "title": "Server onbereikbaar"
     }
   }
