@@ -68,7 +68,7 @@
     "config": {
       "desc": "Server för prognosen.",
       "loadpoint": "Laddplats",
-      "server": "",
+      "server": "Server",
       "title": "evcc-prognos"
     },
     "description": {
@@ -82,7 +82,7 @@
       "name": "Laddplats"
     },
     "name": {
-      "co2": "",
+      "co2": "CO₂",
       "feedin": "Exportpris till elnät",
       "price": "Importpris från elnät",
       "solar": "Solprognos"
