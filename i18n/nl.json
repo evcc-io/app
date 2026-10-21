@@ -84,7 +84,7 @@
     "name": {
       "co2": "CO₂",
       "feedin": "Netexportprijs",
-      "price": "Netimportprijs",
+      "price": "Net import prijs",
       "solar": "PV-voorspelling"
     },
     "noData": {
