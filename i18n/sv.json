@@ -1,7 +1,7 @@
 {
   "main": {
     "description": "Sök på nätverket för att hitta din evcc installation.",
-    "title": "Konfigurera servern"
+    "title": "Hej"
   },
   "servers": {
     "changeServer": "Byt server",
