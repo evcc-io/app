@@ -1,6 +1,6 @@
 {
   "main": {
-    "description": "Sök på nätverket för att hitta din evcc installation.",
+    "description": "Låt oss ansluta till din server.",
     "title": "Hej"
   },
   "servers": {
@@ -40,10 +40,10 @@
       "hint": "Detta tar vanligtvis några sekunder.",
       "inProgress": "Söker …",
       "notAvailable": "Sökning är inte möjligt på denna enhet. Skriv in manuellt.",
-      "nothingFound": "Ingen evcc-server hittades.",
+      "nothingFound": "Ingen server hittades.",
       "searching": "Sök efter förbindelse...",
       "selectHelper": "Välj den du vill ansluta till.",
-      "start": "Starta sök",
+      "start": "Hitta server",
       "tryAgain": "Sök igen"
     },
     "select": "Välj",
@@ -88,7 +88,7 @@
       "solar": "Solprognos"
     },
     "noData": {
-      "body": "Servern har inga data av denna typ.",
+      "body": "Servern har ingen data av denna typ.",
       "title": "Inga data"
     },
     "now": "nu",
