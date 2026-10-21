@@ -72,20 +72,20 @@
       "title": "evcc voorspelling"
     },
     "description": {
-      "co2": "Voorspelling van de CO₂-uitstoot.",
+      "co2": "Voorspelling CO₂-emissies.",
       "feedin": "Voorspelling netexportprijs.",
-      "price": "Voorspelling van de netstroom prijs voor import.",
-      "solar": "Voorspelling van zonne-energieproductie."
+      "price": "Voorspelling netimportprijs",
+      "solar": "Voorspelling PV-productie."
     },
     "loadpoint": {
-      "description": "Status en laadmodus van het laadpunt.",
+      "description": "Laadpuntstatus en laadmodus.",
       "name": "Laadpunt"
     },
     "name": {
       "co2": "CO₂",
-      "feedin": "Netstroom prijs voor injectie",
-      "price": "Netstroom prijs voor import",
-      "solar": "Verwachte zonne-energie"
+      "feedin": "Netexportprijs",
+      "price": "Netimportprijs",
+      "solar": "PV-voorspelling"
     },
     "noData": {
       "body": "Deze server heeft geen data van dit type.",
@@ -93,7 +93,7 @@
     },
     "now": "nu",
     "setup": {
-      "body": "Tik op verbinden en kies een data type.",
+      "body": "Tik om te verbinden met een server en een datatype te kiezen.",
       "title": "Configureer evcc"
     },
     "type": {
