@@ -5,6 +5,7 @@
   },
   "servers": {
     "changeServer": "Szerver váltás",
+    "editServer": "Szerver szerkesztése",
     "manually": {
       "authenticationRequired": "Hitelesítés szükséges",
       "checkAdress": "A szerver nem tűnik evcc példánynak. Kérjük, ellenőrizze a címet.",
@@ -13,74 +14,95 @@
       "missingOrWrongAuthentication": "Hiányzó vagy helytelen hitelesítés",
       "password": "Jelszó",
       "qrcode": {
-        "invalid": "",
-        "permissionDenied": "",
-        "recognized": "",
-        "scan": "",
-        "scanOnboarding": "",
-        "scanPrefill": "",
-        "scanning": ""
+        "invalid": "Érvénytelen evcc QR-kód.",
+        "permissionDenied": "A kamerához való hozzáférés megtagadva. A QR-kódok beolvasásához engedélyezze a beállításokban.",
+        "recognized": "QR-kód felismerve!",
+        "scan": "QR-kód beolvasása",
+        "scanOnboarding": "Beállítás QR-kóddal",
+        "scanPrefill": "Kitöltés QR-kóddal",
+        "scanning": "felismerés..."
       },
-      "serverExistsAlready": "",
+      "serverExistsAlready": "Ez a szerver már létezik.",
       "serverIncompatible": "Az evcc példány még nem kompatibilis az alkalmazással. Frissítse a telepítést.",
       "serverNotAvailable": "A szerver nem elérhető. Kérjük, ellenőrizze a címet.",
       "specify": "Cím kézi beírása",
-      "title": "",
+      "title": "Megnevezés",
       "user": "Felhasználó"
     },
+    "remove": "Eltávolítás",
+    "removeConfirm": "Biztosan el szeretné távolítani a(z) {{title}} szervert?",
     "removeServer": "Szerver eltávolítása",
     "search": {
+      "cancel": "Mégse",
+      "connect": "Csatlakozás",
+      "foundMany": "{{count}} szerver megtalálva",
+      "foundOne": "Szerver megtalálva",
+      "hint": "Ez általában néhány másodpercet vesz igénybe.",
+      "inProgress": "Keresés …",
       "notAvailable": "A keresés ezen az eszközön nem lehetséges. Használja a kézi bevitelt.",
       "nothingFound": "Nem található evcc szerver.",
       "searching": "Kapcsolat keresése ...",
-      "start": "Keresés indítása"
+      "selectHelper": "Válassza ki, amelyikhez csatlakozni szeretne.",
+      "start": "Keresés indítása",
+      "tryAgain": "Újra keresés"
     },
     "select": "Válasszon",
     "switchServer": {
-      "addServer": "",
-      "title": ""
+      "addServer": "Szerver hozzáadása",
+      "title": "Szerver váltása"
     },
     "useDemo": "Demo példa használata"
   },
   "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "Válasszon töltőpontot",
+      "chooseServer": "Válasszon szervert",
+      "loading": "Betöltés…",
+      "loadingPreview": "Előnézet betöltése…",
+      "noLoadpoints": "Nem érhető el töltőpont",
+      "noServers": "Nincs szerver. Először adjon hozzá egyet az alkalmazásban.",
+      "previewError": "Az előnézet nem tölthető be",
+      "setupBody": "Koppintson a szerver és a töltőpont kiválasztásához.",
+      "useThisLoadpoint": "Ezen töltőpont használata"
+    },
     "config": {
-      "desc": "",
-      "loadpoint": "",
-      "server": "",
-      "title": ""
+      "desc": "Az előrejelzéshez használt szerver.",
+      "loadpoint": "Töltőpont",
+      "server": "Szerver",
+      "title": "evcc előrejelzés"
     },
     "description": {
-      "co2": "",
-      "feedin": "",
-      "price": "",
-      "solar": ""
+      "co2": "CO₂-kibocsátás előrejelzése.",
+      "feedin": "Hálózati betáplálási ár előrejelzése.",
+      "price": "Hálózati vételezési ár előrejelzése.",
+      "solar": "Napenergia-termelés előrejelzése."
     },
     "loadpoint": {
-      "description": "",
-      "name": ""
+      "description": "Töltőpont állapota és töltési mód.",
+      "name": "Töltőpont"
     },
     "name": {
       "co2": "",
-      "feedin": "",
-      "price": "",
-      "solar": ""
+      "feedin": "Hálózati betáplálási ár",
+      "price": "Hálózati vételezési ár",
+      "solar": "Napenergia előrejelzés"
     },
     "noData": {
-      "body": "",
-      "title": ""
+      "body": "Ezen a szerveren nincs ilyen típusú adat.",
+      "title": "Nincs adat"
     },
-    "now": "",
+    "now": "most",
     "setup": {
-      "body": "",
-      "title": ""
+      "body": "Koppintson a szerver csatlakoztatásához és az adattípus kiválasztásához.",
+      "title": "evcc beállítása"
     },
     "type": {
-      "feedin": "",
-      "price": ""
+      "feedin": "Hálózati betáplálási ár",
+      "price": "Hálózati vételezési ár"
     },
     "unreachable": {
-      "body": "",
-      "title": ""
+      "body": "Az evcc példány nem tölthető be.",
+      "title": "A szerver nem elérhető"
     }
   }
 }

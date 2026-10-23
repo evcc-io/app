@@ -1,7 +1,7 @@
 {
   "main": {
-    "description": "Hae lähiverkosta evcc-asennuksesi.",
-    "title": "Asenna palvelin"
+    "description": "Yhdistetään palvelimellesi.",
+    "title": "Tervetuloa"
   },
   "servers": {
     "changeServer": "Vaihda palvelinta",
@@ -40,10 +40,10 @@
       "hint": "Tämä kestää yleensä muutaman sekunnin.",
       "inProgress": "Haetaan …",
       "notAvailable": "Haku ei ole mahdollista tällä laitteella. Käytä manuaalista osoitetta.",
-      "nothingFound": "Evcc-palvelinta ei löytynyt.",
+      "nothingFound": "Palvelinta ei löytynyt.",
       "searching": "Etsi yhteyttä ...",
       "selectHelper": "Valitse palvelin, johon haluat yhdistää.",
-      "start": "Aloita haku",
+      "start": "Etsi palvelin",
       "tryAgain": "Hae uudelleen"
     },
     "select": "Valitse",
@@ -82,10 +82,10 @@
       "name": "Latauspiste"
     },
     "name": {
-      "co2": "",
+      "co2": "CO₂",
       "feedin": "Sähkön myyntihinta",
       "price": "Sähkön ostohinta",
-      "solar": "Aurinkoennuste"
+      "solar": "Aurinkotuotannon ennuste"
     },
     "noData": {
       "body": "Tällä palvelimella ei ole tämän tyyppisiä tietoja.",
@@ -101,7 +101,7 @@
       "price": "Sähkön ostohinta"
     },
     "unreachable": {
-      "body": "evcc-palvelinta ei voitu ladata.",
+      "body": "evcc-palvelua ei voitu ladata.",
       "title": "Palvelin ei tavoitettavissa"
     }
   }
