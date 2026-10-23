@@ -65,7 +65,12 @@ export default function OnboardingScreen({
     >
       <SafeAreaView style={{ flex: 1 }}>
         <ScrollView
-          contentContainerStyle={{ flexGrow: 1 }}
+          contentContainerStyle={{
+            flexGrow: 1,
+            width: "100%",
+            maxWidth: 480,
+            alignSelf: "center",
+          }}
           showsVerticalScrollIndicator={false}
         >
           <View

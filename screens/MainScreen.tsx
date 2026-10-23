@@ -40,6 +40,7 @@ const safeAreaJs = (i: EdgeInsets) => `
   document.documentElement.style.setProperty("--safe-area-inset-bottom", "${i.bottom}px");
   document.documentElement.style.setProperty("--safe-area-inset-left", "${i.left}px");
   document.documentElement.style.setProperty("--safe-area-inset-right", "${i.right}px");
+  document.documentElement.classList.toggle("safe-area-side", ${i.left > 0 || i.right > 0});
   true;`;
 
 export default function MainScreen({
@@ -338,6 +339,9 @@ export default function MainScreen({
             opacity: loadFade,
             transform: [{ scale: loadScale }],
             pointerEvents: isConnected ? "none" : "auto",
+            paddingLeft: insets.left,
+            paddingRight: insets.right,
+            backgroundColor: colors.background,
           }}
         >
           <View
@@ -346,7 +350,6 @@ export default function MainScreen({
               justifyContent: "center",
               alignItems: "center",
               gap: 24,
-              backgroundColor: colors.background,
             }}
           >
             <AppText color="hint">{t("servers.search.searching")}</AppText>
@@ -356,9 +359,6 @@ export default function MainScreen({
             style={{
               paddingTop: 32,
               paddingBottom: Math.max(insets.bottom, 32),
-              paddingLeft: insets.left,
-              paddingRight: insets.right,
-              backgroundColor: colors.background,
             }}
           >
             <TextLink onPress={openSettings}>

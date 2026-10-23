@@ -20,12 +20,7 @@ export function CloseIcon({ testID = "headerCloseIcon" }: { testID?: string }) {
           scheme === "dark" ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.08)",
       }}
     >
-      <IconClose
-        width={20}
-        height={20}
-        fill={colors.textHint}
-        testID={testID}
-      />
+      <IconClose width={20} height={20} fill={colors.textHint} testID={testID} />
     </View>
   );
 }
@@ -66,15 +61,22 @@ export default function Header({
         height: 44,
         flexDirection: "row",
         alignItems: "center",
+        justifyContent: "space-between",
       }}
     >
       <View
-        style={{
-          width: 60,
-          alignItems: "flex-start",
-          justifyContent: "center",
-        }}
+        pointerEvents="none"
+        style={{ position: "absolute", left: 64, right: 64, alignItems: "center" }}
       >
+        <AppText
+          variant="s1"
+          numberOfLines={1}
+          style={{ fontSize: 17 }}
+        >
+          {title}
+        </AppText>
+      </View>
+      <View>
         {showBack ? (
           <Pressable
             onPress={onBack}
@@ -84,21 +86,7 @@ export default function Header({
           </Pressable>
         ) : null}
       </View>
-      <View
-        pointerEvents="none"
-        style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-      >
-        <AppText variant="s1" numberOfLines={1} style={{ fontSize: 17 }}>
-          {title}
-        </AppText>
-      </View>
-      <View
-        style={{
-          width: 60,
-          alignItems: "flex-end",
-          justifyContent: "center",
-        }}
-      >
+      <View>
         {showDone ? (
           <Pressable
             onPress={onDone}

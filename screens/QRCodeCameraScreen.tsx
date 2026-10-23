@@ -93,11 +93,7 @@ export default function QRCodeCameraScreen({
     <View style={{ flex: 1, backgroundColor: colors.background }}>
       {memoizedHeader}
       <SafeAreaView
-        style={{
-          flex: 1,
-          paddingHorizontal: 16,
-          paddingBottom: 32,
-        }}
+        style={{ flex: 1, paddingHorizontal: 16, paddingBottom: 32 }}
       >
         {testingEnvironment() ? (
           <Button
