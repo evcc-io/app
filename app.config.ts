@@ -9,7 +9,7 @@ export default ({ config }: ConfigContext) =>
       name: "evcc",
       slug: "evcc",
       scheme: SCHEME,
-      description: "open source solar charging",
+      description: "smart charging",
       version: "1.6.1",
       orientation: "default",
       icon: "./assets/icon-light.png",
