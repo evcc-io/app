@@ -5,6 +5,7 @@
   },
   "servers": {
     "changeServer": "サーバー変更",
+    "editServer": "サーバーを編集",
     "manually": {
       "authenticationRequired": "認証が必要です",
       "checkAdress": "指定されたアドレスはevccサーバーではないようです。アドレスを確認してください。",
@@ -28,12 +29,22 @@
       "title": "タイトル",
       "user": "ユーザー"
     },
+    "remove": "削除",
+    "removeConfirm": "{{title}}を削除してもよろしいですか？",
     "removeServer": "サーバーを削除",
     "search": {
+      "cancel": "取消",
+      "connect": "接続",
+      "foundMany": "{{count}}台のサーバーが見つかりました",
+      "foundOne": "サーバーが見つかりました",
+      "hint": "通常、数秒で完了します。",
+      "inProgress": "検索中 …",
       "notAvailable": "このデバイスでは検索できません。手動で入力してください。",
       "nothingFound": "evccサーバーが検出されませんでした。",
       "searching": "接続先を探しています…",
-      "start": "検索開始"
+      "selectHelper": "接続するサーバーを選択してください。",
+      "start": "検索開始",
+      "tryAgain": "再検索"
     },
     "select": "選択",
     "switchServer": {
@@ -41,5 +52,57 @@
       "title": "サーバー切り替え"
     },
     "useDemo": "デモモードを使用する"
+  },
+  "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "充電ポイントを選択",
+      "chooseServer": "サーバーを選択",
+      "loading": "読み込み中…",
+      "loadingPreview": "プレビューを読み込み中…",
+      "noLoadpoints": "接続可能な充電ポイントがありません",
+      "noServers": "サーバーがありません。先にアプリで追加してください。",
+      "previewError": "プレビューを読み込めませんでした",
+      "setupBody": "タップしてサーバーと充電ポイントを選択します。",
+      "useThisLoadpoint": "この充電ポイントを使用"
+    },
+    "config": {
+      "desc": "予測を取得するサーバー。",
+      "loadpoint": "充電ポイント",
+      "server": "サーバー",
+      "title": "evcc予測"
+    },
+    "description": {
+      "co2": "CO₂排出量を予測します。",
+      "feedin": "売電単価を予測します。",
+      "price": "買電単価を予測します。",
+      "solar": "太陽光発電量を予測します。"
+    },
+    "loadpoint": {
+      "description": "充電ポイントのステータスと充電モード。",
+      "name": "充電ポイント"
+    },
+    "name": {
+      "co2": "",
+      "feedin": "売電単価",
+      "price": "買電単価",
+      "solar": "太陽光発電予測"
+    },
+    "noData": {
+      "body": "このサーバーにはこの種類のデータがありません。",
+      "title": "データなし"
+    },
+    "now": "現在",
+    "setup": {
+      "body": "タップしてサーバーを接続し、データの種類を選択します。",
+      "title": "evccを設定"
+    },
+    "type": {
+      "feedin": "売電単価",
+      "price": "買電単価"
+    },
+    "unreachable": {
+      "body": "evccインスタンスを読み込めませんでした。",
+      "title": "サーバーに接続できません"
+    }
   }
 }

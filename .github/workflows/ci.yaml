@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: "26"
           cache: "npm"
@@ -65,7 +65,7 @@ jobs:
           fi
 
       - name: Setup Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: "26"
           cache: "npm"
@@ -90,7 +90,7 @@ jobs:
         run: npx detox build --configuration ios.sim.release
 
       - name: Upload app artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: ios-evcc-app
           path: ios/build/Build/Products/Release-iphonesimulator/evcc.app
@@ -120,7 +120,7 @@ jobs:
           fi
 
       - name: Setup Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: "26"
           cache: "npm"
@@ -140,7 +140,7 @@ jobs:
           brew tap wix/brew && brew trust wix/brew && brew install applesimutils
 
       - name: Download app artifact
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: ios-evcc-app
           path: ios/build/Build/Products/Release-iphonesimulator/evcc.app
@@ -169,7 +169,7 @@ jobs:
 
       - name: Upload artifacts on failure
         if: failure()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: ios-detox-artifacts-shard-${{ matrix.shard }}
           path: e2e/artifacts/
@@ -187,7 +187,7 @@ jobs:
         run: touch android-detox-build
 
       - name: Setup Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: "26"
           cache: "npm"
@@ -202,13 +202,13 @@ jobs:
         run: npx expo prebuild --platform android --clean
 
       - name: Setup Java
-        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
         with:
           distribution: "temurin"
           java-version: "17"
 
       - name: Gradle cache
-        uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
+        uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6 # v6.4.0
 
       - name: Build
         # emulator only needs x86_64; skip the other three ABIs' native builds
@@ -217,7 +217,7 @@ jobs:
         run: npx detox build --configuration android.emu.release
 
       - name: Upload app apk
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: android-detox-app.apk
           path: android/app/build/outputs/apk/release/app-release.apk
@@ -225,7 +225,7 @@ jobs:
           retention-days: 7
 
       - name: Upload detox apk
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: android-detox-runner.apk
           path: android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk
@@ -234,7 +234,7 @@ jobs:
 
   android-test:
     name: "Android Detox (test)"
-    runs-on: ubuntu-latest
+    runs-on: depot-ubuntu-24.04-8
     timeout-minutes: 30
     needs: android-build
     strategy:
@@ -246,7 +246,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: "26"
           cache: "npm"
@@ -261,13 +261,13 @@ jobs:
         run: npx expo prebuild --platform android --clean
 
       - name: Download app apk
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: android-detox-app.apk
           path: android/app/build/outputs/apk/release
 
       - name: Download detox apk
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: android-detox-runner.apk
           path: android/app/build/outputs/apk/androidTest/release
@@ -319,7 +319,7 @@ jobs:
 
       - name: Upload artifacts on failure
         if: failure()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: android-detox-artifacts-shard-${{ matrix.shard }}
           path: e2e/artifacts/
@@ -362,7 +362,7 @@ jobs:
           sudo apt install -y fdroidserver
 
       - name: Setup Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: "26"
           cache: "npm"
@@ -379,13 +379,13 @@ jobs:
         run: npx expo prebuild --platform android --clean
 
       - name: Setup Java
-        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
         with:
           distribution: "temurin"
           java-version: "17"
 
       - name: Gradle cache
-        uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
+        uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6 # v6.4.0
 
       - name: Build
         run: |
@@ -396,7 +396,7 @@ jobs:
         run: fdroid scanner --verbose --exit-code android/app/build/outputs/apk/release/app-release.apk
 
       - name: Upload apk
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: evcc-${{ steps.version.outputs.version }}-fdroid.apk
           path: android/app/build/outputs/apk/release/app-release.apk

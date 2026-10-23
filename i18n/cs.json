@@ -5,6 +5,7 @@
   },
   "servers": {
     "changeServer": "Změnit server",
+    "editServer": "Upravit server",
     "manually": {
       "authenticationRequired": "Vyžaduje se autentifikace",
       "checkAdress": "Server se nezdá být instancí evcc. Zkontrolujte prosím adresu.",
@@ -28,12 +29,22 @@
       "title": "Nadpis",
       "user": "Uživatel"
     },
+    "remove": "Odebrat",
+    "removeConfirm": "Opravdu chcete odebrat {{title}}?",
     "removeServer": "Odebrat server",
     "search": {
+      "cancel": "Zrušit",
+      "connect": "Připojit",
+      "foundMany": "Nalezené servery: {{count}}",
+      "foundOne": "Server nalezen",
+      "hint": "Obvykle to trvá několik sekund.",
+      "inProgress": "Hledání …",
       "notAvailable": "Vyhledávání není na tomto zařízení možné. Použijte ruční zadání.",
       "nothingFound": "Žádný server evcc nebyl nalezen.",
       "searching": "Hledání připojení ...",
-      "start": "Spustit vyhledávání"
+      "selectHelper": "Vyberte ten, ke kterému se chcete připojit.",
+      "start": "Spustit vyhledávání",
+      "tryAgain": "Hledat znovu"
     },
     "select": "Vybrat",
     "switchServer": {
@@ -41,5 +52,57 @@
       "title": "Přepnout server"
     },
     "useDemo": "Použít ukázkovou instanci"
+  },
+  "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "Zvolte nabíjecí bod",
+      "chooseServer": "Zvolte server",
+      "loading": "Načítání…",
+      "loadingPreview": "Načítání náhledu…",
+      "noLoadpoints": "Žádné dostupné nabíjecí body",
+      "noServers": "Žádné servery. Nejprve jeden přidejte v aplikaci.",
+      "previewError": "Náhled se nepodařilo načíst",
+      "setupBody": "Klepnutím zvolíte server a nabíjecí bod.",
+      "useThisLoadpoint": "Použít tento nabíjecí bod"
+    },
+    "config": {
+      "desc": "Server pro předpověď.",
+      "loadpoint": "Nabíjecí bod",
+      "server": "",
+      "title": "evcc předpověď"
+    },
+    "description": {
+      "co2": "Předpověď emisí CO₂.",
+      "feedin": "Předpověď výkupní ceny.",
+      "price": "Předpověď ceny odběru ze sítě.",
+      "solar": "Předpověď solární výroby."
+    },
+    "loadpoint": {
+      "description": "Stav nabíjecího bodu a režim nabíjení.",
+      "name": "Nabíjecí bod"
+    },
+    "name": {
+      "co2": "",
+      "feedin": "Výkupní cena",
+      "price": "Cena odběru ze sítě",
+      "solar": "Solární předpověď"
+    },
+    "noData": {
+      "body": "Tento server nemá data tohoto typu.",
+      "title": "Žádná data"
+    },
+    "now": "nyní",
+    "setup": {
+      "body": "Klepnutím připojíte server a zvolíte typ dat.",
+      "title": "Nastavit evcc"
+    },
+    "type": {
+      "feedin": "Výkupní cena",
+      "price": "Cena odběru ze sítě"
+    },
+    "unreachable": {
+      "body": "Instanci evcc se nepodařilo načíst.",
+      "title": "Server nedostupný"
+    }
   }
 }

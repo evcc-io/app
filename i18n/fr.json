@@ -5,6 +5,7 @@
   },
   "servers": {
     "changeServer": "Modifier le serveur",
+    "editServer": "Modifier le serveur",
     "manually": {
       "authenticationRequired": "Authentification requise",
       "checkAdress": "Le serveur ne semble pas être une instance evcc. Veuillez vérifier l'adresse.",
@@ -12,19 +13,96 @@
       "enterUrl": "Entrez l'URL",
       "missingOrWrongAuthentication": "Authentification manquante ou incorrecte",
       "password": "Mot de passe",
+      "qrcode": {
+        "invalid": "Ce QR code EVCC n'est pas valide.",
+        "permissionDenied": "Accès à l'appareil photo refusé. Activez-le dans les paramètres pour scanner les QR codes.",
+        "recognized": "QR code détecté !",
+        "scan": "Scannez le QR code",
+        "scanOnboarding": "Configuration via un QR code",
+        "scanPrefill": "Remplir via le QR code",
+        "scanning": "détection en cours..."
+      },
+      "serverExistsAlready": "Ce serveur existe déjà.",
       "serverIncompatible": "L'instance evcc n'est pas encore compatible avec l'application. Mettez à jour votre installation.",
       "serverNotAvailable": "Le serveur n'est pas disponible. Veuillez vérifier l'adresse.",
       "specify": "Entrer l'adresse manuellement",
+      "title": "Titre",
       "user": "Utilisateur"
     },
+    "remove": "Supprimer",
+    "removeConfirm": "Voulez-vous vraiment supprimer {{title}} ?",
     "removeServer": "Supprimer le serveur",
     "search": {
+      "cancel": "Annuler",
+      "connect": "Connecter",
+      "foundMany": "{{count}} serveurs trouvés",
+      "foundOne": "Serveur trouvé",
+      "hint": "Cela prend généralement quelques secondes.",
+      "inProgress": "Recherche …",
       "notAvailable": "La recherche n'est pas possible sur cet appareil. Utiliser l'entrée manuelle.",
       "nothingFound": "Aucun serveur evcc n'a été trouvé.",
       "searching": "Recherche de connexion ...",
-      "start": "Commencer la recherche"
+      "selectHelper": "Sélectionnez celui auquel vous souhaitez vous connecter.",
+      "start": "Commencer la recherche",
+      "tryAgain": "Relancer"
     },
     "select": "Sélectionner",
+    "switchServer": {
+      "addServer": "Ajouter un serveur",
+      "title": "Changer de serveur"
+    },
     "useDemo": "Utiliser une instance de démonstration"
+  },
+  "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "Choisir le point de charge",
+      "chooseServer": "Choisir le serveur",
+      "loading": "Chargement…",
+      "loadingPreview": "Chargement de l'aperçu…",
+      "noLoadpoints": "Aucun point de charge accessible",
+      "noServers": "Aucun serveur. Ajoutez-en d'abord un dans l'application.",
+      "previewError": "Impossible de charger un aperçu",
+      "setupBody": "Touchez pour choisir un serveur et un point de charge.",
+      "useThisLoadpoint": "Utiliser ce point de charge"
+    },
+    "config": {
+      "desc": "Serveur fournissant les prévisions.",
+      "loadpoint": "Point de charge",
+      "server": "Serveur",
+      "title": "Prévisions evcc"
+    },
+    "description": {
+      "co2": "Prévision des émissions de CO₂.",
+      "feedin": "Prévision du prix d’export vers le réseau.",
+      "price": "Prévision du prix d’import du réseau.",
+      "solar": "Prévisions de la production solaire."
+    },
+    "loadpoint": {
+      "description": "Statut et mode du point de charge.",
+      "name": "Point de charge"
+    },
+    "name": {
+      "co2": "CO₂",
+      "feedin": "Prix d’export vers le réseau",
+      "price": "Prix d’import du réseau",
+      "solar": "Prévisions solaires"
+    },
+    "noData": {
+      "body": "Le serveur n’a pas de données de ce type.",
+      "title": "Aucune donnée"
+    },
+    "now": "maintenant",
+    "setup": {
+      "body": "Cliquez pour se connecter à un serveur et choisir un type de données.",
+      "title": "Configuration evcc"
+    },
+    "type": {
+      "feedin": "Prix d’export vers le réseau",
+      "price": "Prix d’import du réseau"
+    },
+    "unreachable": {
+      "body": "Impossible de charger l’instance d’evcc.",
+      "title": "Serveur indisponible"
+    }
   }
 }

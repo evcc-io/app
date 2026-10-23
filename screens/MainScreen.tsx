@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import * as Linking from "expo-linking";
 import * as Haptics from "expo-haptics";
+import * as WebBrowser from "expo-web-browser";
 import AppText from "components/AppText";
 import TextLink from "components/TextLink";
 import { useThemeColors } from "utils/theme";
@@ -21,6 +22,7 @@ import {
   WebViewErrorEvent,
   WebViewHttpErrorEvent,
   WebViewNavigation,
+  WebViewOpenWindowEvent,
 } from "react-native-webview/lib/WebViewTypes";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types";
@@ -28,6 +30,7 @@ import CookieManager from "@preeternal/react-native-cookie-manager";
 import { encode } from "base-64";
 import { shareFileFromUrl } from "utils/shareFile";
 import { EdgeInsets, useSafeAreaInsets } from "react-native-safe-area-context";
+import { isIosAppOnMac } from "modules/ios-app-on-mac";
 import Spinner from "components/Spinner";
 import { testingEnvironment } from "helper/launchArguments";
 
@@ -212,18 +215,58 @@ export default function MainScreen({
     [openSettings, handleDownload],
   );
 
+  const isServerUrl = useCallback(
+    (url: string) =>
+      new URL(url).host === new URL(activeServer?.url || "").host,
+    [activeServer?.url],
+  );
+
+  // web pages open in an in-app browser sheet, everything else (mailto:, tel:,
+  // evcc://) is handed to the OS
+  const openExternal = useCallback(
+    (url: string) => {
+      const { protocol } = new URL(url);
+      const inAppBrowser =
+        (protocol === "http:" || protocol === "https:") && !isIosAppOnMac;
+
+      if (!inAppBrowser) {
+        Linking.openURL(url);
+        return;
+      }
+      WebBrowser.openBrowserAsync(url, {
+        presentationStyle: WebBrowser.WebBrowserPresentationStyle.PAGE_SHEET,
+        controlsColor: colors.primary,
+        toolbarColor: colors.background,
+        dismissButtonStyle: "done",
+        enableBarCollapsing: true,
+        showTitle: true,
+      }).catch(() => Linking.openURL(url)); // Android without Custom Tabs support
+    },
+    [colors],
+  );
+
   const onShouldStartLoadWithRequest = useCallback(
     (event: ShouldStartLoadRequest) => {
-      const cleanActiveServerHost = new URL(activeServer?.url || "").host;
-      const cleanEventHost = new URL(event.url).host;
-
-      if (!cleanEventHost.startsWith(cleanActiveServerHost)) {
-        Linking.openURL(event.url);
-        return false;
-      }
-      return true;
+      if (event.isTopFrame === false || isServerUrl(event.url)) return true;
+      openExternal(event.url);
+      return false;
     },
-    [activeServer?.url],
+    [isServerUrl, openExternal],
+  );
+
+  // target="_blank" links; same-origin ones stay in the WebView to keep its
+  // session cookie (e.g. /providerauth/login redirecting to a vendor login)
+  const onOpenWindow = useCallback(
+    ({ nativeEvent: { targetUrl } }: WebViewOpenWindowEvent) => {
+      if (isServerUrl(targetUrl)) {
+        webViewRef.current?.injectJavaScript(
+          `window.location.href = ${JSON.stringify(targetUrl)}; true;`,
+        );
+      } else {
+        openExternal(targetUrl);
+      }
+    },
+    [isServerUrl, openExternal],
   );
 
   const onError = useCallback((event: WebViewErrorEvent) => {
@@ -270,6 +313,8 @@ export default function MainScreen({
             // Fresh WebView per server avoids leaking cookies/auth across servers.
             key={`${activeServer?.url}#${webViewKey}`}
             bounces={false}
+            // macOS has no software keyboard, so the form accessory bar only covers the nav
+            hideKeyboardAccessoryView={isIosAppOnMac}
             // Android passes the string to native unconverted and crashes
             decelerationRate={Platform.OS === "ios" ? "normal" : undefined}
             ref={webViewRef}
@@ -281,6 +326,9 @@ export default function MainScreen({
             onContentProcessDidTerminate={onTerminate}
             onMessage={handleMessage}
             onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
+            onOpenWindow={onOpenWindow}
+            // web UI opens windows after async work too, all routed through onOpenWindow
+            javaScriptCanOpenWindowsAutomatically
             onNavigationStateChange={onNavigationStateChange}
           />
         </Animated.View>
@@ -330,6 +378,7 @@ export default function MainScreen({
       isConnected,
       onError,
       onShouldStartLoadWithRequest,
+      onOpenWindow,
       onNavigationStateChange,
       onTerminate,
       handleMessage,

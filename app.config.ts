@@ -9,8 +9,8 @@ export default ({ config }: ConfigContext) =>
       name: "evcc",
       slug: "evcc",
       scheme: SCHEME,
-      description: "open source solar charging",
-      version: "1.6.0",
+      description: "smart charging",
+      version: "1.6.1",
       orientation: "default",
       icon: "./assets/icon-light.png",
       userInterfaceStyle: "automatic",
@@ -40,7 +40,7 @@ export default ({ config }: ConfigContext) =>
         config: {
           usesNonExemptEncryption: false,
         },
-        buildNumber: "50",
+        buildNumber: "51",
       },
       android: {
         permissions: [
@@ -53,7 +53,7 @@ export default ({ config }: ConfigContext) =>
           foregroundImage: "./assets/adaptive-icon.png",
           backgroundColor: "#010322",
         },
-        versionCode: 50,
+        versionCode: 51,
       },
       web: {
         favicon: "./assets/favicon.png",

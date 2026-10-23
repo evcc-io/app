@@ -6,6 +6,16 @@ updates:
       interval: weekly
     open-pull-requests-limit: 10
     groups:
+      # native modules are coupled to the react-native version; keep them apart so a break
+      # there doesn't block plain JS updates
+      npm-native:
+        patterns:
+          - "react-native-*"
+          - "@react-native-*"
+          - "@inthepocket/*"
+        update-types:
+          - minor
+          - patch
       npm-minor-patch:
         update-types:
           - minor
@@ -14,11 +24,17 @@ updates:
       # Expo SDK pins these — upgrade via `npx expo install --fix`, not Dependabot.
       - dependency-name: "expo"
       - dependency-name: "expo-*"
+      - dependency-name: "@expo/*"
       - dependency-name: "react-native"
       - dependency-name: "react-native-*"
         update-types: ["version-update:semver-major"]
       - dependency-name: "react"
       - dependency-name: "react-dom"
+      # babel-preset-expo targets Babel 7
+      - dependency-name: "@babel/*"
+        update-types: ["version-update:semver-major"]
+      # pinned: newer versions break JSX types under React 19 until 16.x (New Arch only)
+      - dependency-name: "react-native-webview"
 
   - package-ecosystem: github-actions
     directory: /

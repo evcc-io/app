@@ -12,9 +12,20 @@
       "enterUrl": "Unesite URL",
       "missingOrWrongAuthentication": "Izostavljena ili netačna autentifikacija",
       "password": "Lozinka",
+      "qrcode": {
+        "invalid": "",
+        "permissionDenied": "",
+        "recognized": "",
+        "scan": "",
+        "scanOnboarding": "",
+        "scanPrefill": "",
+        "scanning": ""
+      },
+      "serverExistsAlready": "",
       "serverIncompatible": "Instanca evcc-a još nije kompatibilna s aplikacijom. Ažurirajte svoju instalaciju.",
       "serverNotAvailable": "Server nije dostupan. Molimo provjerite adresu.",
       "specify": "Unesite adresu ručno",
+      "title": "",
       "user": "korisnik"
     },
     "removeServer": "Ukloni server",
@@ -25,6 +36,51 @@
       "start": "Pokreni pretragu"
     },
     "select": "Odaberi",
+    "switchServer": {
+      "addServer": "",
+      "title": ""
+    },
     "useDemo": "Koristite demo instancu"
+  },
+  "widget": {
+    "config": {
+      "desc": "",
+      "loadpoint": "",
+      "server": "",
+      "title": ""
+    },
+    "description": {
+      "co2": "",
+      "feedin": "",
+      "price": "",
+      "solar": ""
+    },
+    "loadpoint": {
+      "description": "",
+      "name": ""
+    },
+    "name": {
+      "co2": "",
+      "feedin": "",
+      "price": "",
+      "solar": ""
+    },
+    "noData": {
+      "body": "",
+      "title": ""
+    },
+    "now": "",
+    "setup": {
+      "body": "",
+      "title": ""
+    },
+    "type": {
+      "feedin": "",
+      "price": ""
+    },
+    "unreachable": {
+      "body": "",
+      "title": ""
+    }
   }
 }

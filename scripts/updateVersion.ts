@@ -11,14 +11,21 @@ const APP_CONFIG = "app.config.ts";
   const currentVersion = cfg.expo.version;
   const currentBuild = cfg.expo.ios?.buildNumber;
 
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
-
-  const version = (await rl.question(`New App Version (current ${currentVersion}): `)).trim();
-  const code = (await rl.question(`New App Code (current ${currentBuild}): `)).trim();
-  rl.close();
+  // non-interactive: npm run bump -- <version> <code>
+  let [version, code] = process.argv.slice(2);
+  if (!version || !code) {
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+    version = (
+      await rl.question(`New App Version (current ${currentVersion}): `)
+    ).trim();
+    code = (
+      await rl.question(`New App Code (current ${currentBuild}): `)
+    ).trim();
+    rl.close();
+  }
 
   if (!/^\d+\.\d+\.\d+$/.test(version)) {
     throw new Error(`invalid version (expected x.y.z): ${version}`);
@@ -28,7 +35,9 @@ const APP_CONFIG = "app.config.ts";
   }
 
   if (version !== currentVersion) {
-    execSync(`npm version --no-git-tag-version ${version}`, { stdio: "inherit" });
+    execSync(`npm version --no-git-tag-version ${version}`, {
+      stdio: "inherit",
+    });
   }
 
   const updated = fs

@@ -1,10 +1,11 @@
 {
   "main": {
-    "description": "Otsi oma kohtvõrgust elektrisõiduki sidekontrollerit.",
-    "title": "Seadista serverit"
+    "description": "Ühendame sinu serveriga.",
+    "title": "Tere tulemast"
   },
   "servers": {
     "changeServer": "Vaheta serverit",
+    "editServer": "Muuda serverit",
     "manually": {
       "authenticationRequired": "Autentimine on vajalik",
       "checkAdress": "See server ei tundu olema elektrisõiduki sidekontroller. Palun kontrolli aadressi.",
@@ -28,12 +29,22 @@
       "title": "Nimi",
       "user": "Kasutaja"
     },
+    "remove": "Eemalda",
+    "removeConfirm": "Kas sa kindlasti soovid „{{title}}“ serveri eemaldada?",
     "removeServer": "Eemalda server",
     "search": {
+      "cancel": "Katkesta",
+      "connect": "Ühenda",
+      "foundMany": "Leidus {{count}} serverit",
+      "foundOne": "Server leidus",
+      "hint": "Tavaliselt kulub selleks mõni sekund.",
+      "inProgress": "Otsin…",
       "notAvailable": "Selle seadmega otsing ei õnnestu. Proovi käsitsi sisestamist.",
-      "nothingFound": "Ühtegi elektrisõiduki sidekontrolleri serverit ei leidunud.",
+      "nothingFound": "Ühtegi serverit ei leidunud.",
       "searching": "Otsi ühendust...",
-      "start": "Alusta otsingut"
+      "selectHelper": "Vali see, millega tahad ühendada.",
+      "start": "Otsi serverit",
+      "tryAgain": "Otsi uuesti"
     },
     "select": "Vali",
     "switchServer": {
@@ -41,5 +52,57 @@
       "title": "Vaheta serverit"
     },
     "useDemo": "Kasuta demo-vaadet"
+  },
+  "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "Vali laadimispunkt",
+      "chooseServer": "Vali server",
+      "loading": "Laadin…",
+      "loadingPreview": "Laadin eelvaadet…",
+      "noLoadpoints": "Ühtegi laadimispunkti pole kättesaadavad",
+      "noServers": "Servereid pole. Esmalt lisa rakendusest vähemalt üks.",
+      "previewError": "Eelvaate laadimine ei õnnestunud",
+      "setupBody": "Klõpsa serveri ja laadimispunkti valimiseks.",
+      "useThisLoadpoint": "Kasuta seda laadimispunkti"
+    },
+    "config": {
+      "desc": "Server ennustuse jaoks.",
+      "loadpoint": "Laadimispunkt",
+      "server": "Server",
+      "title": "evcc ennustus"
+    },
+    "description": {
+      "co2": "CO₂ heitmete ennustus.",
+      "feedin": "Võrku eksportimise hinna ennustus.",
+      "price": "Võrgust importimise hinna ennustus.",
+      "solar": "Päikeseenergia tootmise ennustus."
+    },
+    "loadpoint": {
+      "description": "Laadimispunkti olek ja laadimisviis.",
+      "name": "Laadimispunkt"
+    },
+    "name": {
+      "co2": "CO₂",
+      "feedin": "Võrku eksportimise hind",
+      "price": "Võrgust importimise hind",
+      "solar": "Päikeseenergia ennustus"
+    },
+    "noData": {
+      "body": "Selles serveris pole antud tüüpi andmeid.",
+      "title": "Andmeid pole"
+    },
+    "now": "praegu",
+    "setup": {
+      "body": "Klõpsa ühendamaks serveriga ja andmetüübi valimiseks.",
+      "title": "Seadista evcc-ühendus"
+    },
+    "type": {
+      "feedin": "Võrku eksportimise hind",
+      "price": "Võrgust importimise hind"
+    },
+    "unreachable": {
+      "body": "evcc serveri laadimine ei õnnestunud.",
+      "title": "Server pole leitav"
+    }
   }
 }

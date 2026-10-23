@@ -1,106 +1,106 @@
 {
   "main": {
-    "description": "Verbinden wir uns mit deinem Server.",
+    "description": "Lass uns deinen Server anschließen.",
     "title": "Willkommen"
   },
   "servers": {
-    "changeServer": "Server ändern",
-    "switchServer": {
-      "title": "Server wechseln",
-      "addServer": "Server hinzufügen"
-    },
+    "changeServer": "Server wechseln",
+    "editServer": "Server bearbeiten",
     "manually": {
       "authenticationRequired": "Anmeldung erforderlich",
       "checkAdress": "Der Server scheint keine evcc Instanz zu sein. Bitte prüfe die Adresse.",
       "checkAndSave": "Prüfen und speichern",
       "missingOrWrongAuthentication": "Fehlende oder falsche Anmeldung",
       "password": "Passwort",
-      "serverIncompatible": "Die evcc Instanz ist noch nicht App-kompatibel. Aktualisiere deine Installation.",
-      "serverNotAvailable": "Server nicht erreichbar. Bitte prüfe die Adresse.",
-      "specify": "Adresse manuell eingeben",
-      "user": "Benutzer",
       "qrcode": {
+        "invalid": "Kein gültiger evcc QR-Code.",
+        "permissionDenied": "Kamerazugriff verweigert. Aktiviere ihn in den Einstellungen, um QR-Codes zu scannen.",
+        "recognized": "QR-Code erkannt!",
         "scan": "QR-Code scannen",
         "scanOnboarding": "Mit QR-Code einrichten",
         "scanPrefill": "Daten aus QR-Code übernehmen",
-        "recognized": "QR-Code erkannt!",
-        "invalid": "Kein gültiger evcc QR-Code.",
-        "permissionDenied": "Kamerazugriff verweigert. Aktiviere ihn in den Einstellungen, um QR-Codes zu scannen.",
-        "scanning": "erkennen..."
+        "scanning": "erkennung..."
       },
+      "serverExistsAlready": "Dieser Server existiert bereits.",
+      "serverIncompatible": "Die evcc Instanz ist noch nicht App-kompatibel. Aktualisiere deine Installation.",
+      "serverNotAvailable": "Server nicht erreichbar. Bitte prüfe die Adresse.",
+      "specify": "Adresse manuell eingeben",
       "title": "Titel",
-      "serverExistsAlready": "Dieser Server existiert bereits."
+      "user": "Benutzer"
     },
-    "removeServer": "Server entfernen",
-    "search": {
-      "inProgress": "Suche läuft …",
-      "connect": "Verbinden",
-      "tryAgain": "Erneut suchen",
-      "notAvailable": "Die Suche ist auf diesem Gerät nicht möglich. Nutze die manuelle Eingabe.",
-      "nothingFound": "Kein Server gefunden.",
-      "searching": "Suche nach Verbindung ...",
-      "start": "Server suchen",
-      "hint": "Das dauert normalerweise nur wenige Sekunden.",
-      "foundOne": "Server gefunden",
-      "foundMany": "{{count}} Server gefunden",
-      "selectHelper": "Wähle aus, womit du dich verbinden möchtest.",
-      "cancel": "Abbrechen"
-    },
-    "useDemo": "Demoinstanz verwenden",
     "remove": "Entfernen",
     "removeConfirm": "Möchtest du {{title}} wirklich entfernen?",
-    "editServer": "Server bearbeiten"
+    "removeServer": "Server entfernen",
+    "search": {
+      "cancel": "Abbrechen",
+      "connect": "Verbinden",
+      "foundMany": "{{count}} Server gefunden",
+      "foundOne": "Server gefunden",
+      "hint": "Das dauert normalerweise nur wenige Sekunden.",
+      "inProgress": "Suche läuft …",
+      "notAvailable": "Die Suche ist auf diesem Gerät nicht möglich. Nutze die manuelle Eingabe.",
+      "nothingFound": "Es wurde kein Server gefunden.",
+      "searching": "Suche nach Verbindung ...",
+      "selectHelper": "Wähle aus, womit du dich verbinden möchtest.",
+      "start": "Server suchen",
+      "tryAgain": "Erneut suchen"
+    },
+    "switchServer": {
+      "addServer": "Server hinzufügen",
+      "title": "Server wechseln"
+    },
+    "useDemo": "Demoinstanz verwenden"
   },
   "widget": {
-    "type": {
-      "price": "Netzbezugspreis",
-      "feedin": "Einspeisevergütung"
-    },
-    "now": "jetzt",
-    "noData": {
-      "title": "Keine Daten",
-      "body": "Dieser Server liefert keine Daten dieses Typs."
-    },
-    "unreachable": {
-      "title": "Server nicht erreichbar",
-      "body": "evcc-Instanz konnte nicht geladen werden."
-    },
-    "setup": {
-      "title": "evcc einrichten",
-      "body": "Tippen, um Server zu verbinden und einen Datentyp zu wählen."
-    },
-    "config": {
-      "title": "evcc Vorhersage",
-      "desc": "Server der Vorhersage.",
-      "server": "Server",
-      "loadpoint": "Ladepunkt"
-    },
     "androidConfig": {
-      "chooseServer": "Server auswählen",
       "chooseLoadpoint": "Ladepunkt auswählen",
-      "noServers": "Keine Server. Füge zuerst einen in der App hinzu.",
-      "noLoadpoints": "Keine Ladepunkte erreichbar",
+      "chooseServer": "Server auswählen",
       "loading": "Lädt…",
       "loadingPreview": "Vorschau wird geladen…",
+      "noLoadpoints": "Keine Ladepunkte erreichbar",
+      "noServers": "Keine Server. Füge zuerst einen in der App hinzu.",
       "previewError": "Vorschau konnte nicht geladen werden",
-      "useThisLoadpoint": "Diesen Ladepunkt verwenden",
-      "setupBody": "Tippen, um Server und Ladepunkt zu wählen."
+      "setupBody": "Tippen, um Server und Ladepunkt zu wählen.",
+      "useThisLoadpoint": "Diesen Ladepunkt verwenden"
     },
-    "loadpoint": {
-      "name": "Ladepunkt",
-      "description": "Ladepunkt-Status und Lademodus."
-    },
-    "name": {
-      "solar": "Solarprognose",
-      "price": "Netzbezugspreis",
-      "co2": "CO₂",
-      "feedin": "Einspeisevergütung"
+    "config": {
+      "desc": "Server der Vorhersage.",
+      "loadpoint": "Ladepunkt",
+      "server": "Server",
+      "title": "evcc Vorhersage"
     },
     "description": {
-      "solar": "Vorhergesagte Solarproduktion.",
-      "price": "Vorhergesagter Netzbezugspreis.",
       "co2": "Vorhergesagte CO₂-Emissionen.",
-      "feedin": "Vorhergesagte Einspeisevergütung."
+      "feedin": "Vorhergesagte Einspeisevergütung.",
+      "price": "Vorhergesagter Netzbezugspreis.",
+      "solar": "Vorhergesagte Solarproduktion."
+    },
+    "loadpoint": {
+      "description": "Ladepunkt-Status und Lademodus.",
+      "name": "Ladepunkt"
+    },
+    "name": {
+      "co2": "CO₂",
+      "feedin": "Einspeisevergütung",
+      "price": "Netzbezugspreis",
+      "solar": "Solarprognose"
+    },
+    "noData": {
+      "body": "Dieser Server liefert keine Daten dieses Typs.",
+      "title": "Keine Daten"
+    },
+    "now": "jetzt",
+    "setup": {
+      "body": "Tippen, um Server zu verbinden und einen Datentyp zu wählen.",
+      "title": "evcc einrichten"
+    },
+    "type": {
+      "feedin": "Einspeisevergütung",
+      "price": "Netzbezugspreis"
+    },
+    "unreachable": {
+      "body": "evcc-Instanz konnte nicht geladen werden.",
+      "title": "Server nicht erreichbar"
     }
   }
 }

@@ -7,6 +7,8 @@ Related agent files in sibling repos:
 - [evcc-io/evcc AGENTS.md](https://github.com/evcc-io/evcc/blob/main/AGENTS.md) — main evcc daemon (Go + Vue web UI)
 - [evcc-io/docs AGENTS.md](https://github.com/evcc-io/docs/blob/main/AGENTS.md) — documentation site
 
+Paths starting with `../evcc/` refer to a local checkout of the main repository (https://github.com/evcc-io/evcc) next to this one; clone it there if it is missing.
+
 ## Project Overview
 
 - Native mobile app wrapper around the evcc web UI, built with [Expo](https://expo.dev/) + [React Native](https://reactnative.dev/).
@@ -67,6 +69,7 @@ Most folders are self-explanatory (`screens/`, `components/`, `utils/`, `i18n/`,
 - `i18n/index.ts` is **generated** by `scripts/load-translations.mts`. Edit per-locale JSON (`en.json`, `de.json`, …), then run `npm run translations`.
 - Translations are managed via [Weblate](https://hosted.weblate.org/projects/evcc/app/) — translation PRs come in automatically. Only edit `en.json` (source) and `de.json` (maintained in-house) manually; other locales come from Weblate.
 - Use `useTranslation()` / `t()` for user-facing strings. Keys are nested by screen/section (e.g. `servers.manually.checkAndSave`).
+- **Use the shared glossary** — agreed terms per language with explanations live in `../evcc/i18n/glossary/` (`en.json` + `de.json`, rules in `README.md`). Check it before wording anything user-facing; if a concept is missing there, fall back to the UI strings in `../evcc/i18n/en.json` and `de.json`.
 
 ## Coding Conventions
 
@@ -94,7 +97,7 @@ Most folders are self-explanatory (`screens/`, `components/`, `utils/`, `i18n/`,
 
 - `android/` and `ios/` are produced by `npx expo prebuild --platform <ios|android> --clean`. They are gitignored — never hand-edit them; regenerate instead. To inject native-level config, write or extend an Expo config plugin under `scripts/` and register it in `app.config.ts`.
 - F-Droid is a reproducible-build target. The plugins in `scripts/fdroid/` strip non-reproducible bits (DK build IDs, dependency metadata). The README documents the exact F-Droid recipe (`npx expo prebuild` → `sed` out `signingConfig` → `./gradlew :app:assembleRelease`); keep it working.
-- Bumping `version` in `package.json` should also bump `ios.buildNumber` and `android.versionCode` in `app.config.ts` (kept in sync, currently both `38`). `USER_AGENT` / `APP_VERSION` / `GITHUB_RELEASES_URL` in `utils/constants.ts` derive from `package.json#version` automatically.
+- Never hand-edit versions; run `npm run bump -- <version> <buildNumber>` (keeps `package.json`, `app.config.ts` and the derived constants in `utils/constants.ts` in sync). Release flow: `.claude/skills/release/SKILL.md`.
 - `app.config.ts` sets `NSAllowsArbitraryLoads: true` and Android `usesCleartextTraffic: true` on purpose — users run evcc on plain-HTTP local IPs. Don't tighten these without a migration plan.
 
 ## CI
@@ -123,9 +126,19 @@ Structure PR descriptions in this order. No headlines. Be concise.
    - [ ] item b
    ```
 
-Avoid file paths, line numbers, or code listings reproduced from the diff. Include a code snippet only when it conveys the contract (event shape, API signature) more clearly than prose. No testing checklists, no co-author footers, no generator footers.
+Avoid file paths, line numbers, or code listings reproduced from the diff. Include a code snippet only when it conveys the contract (event shape, API signature) more clearly than prose. No testing checklists, no co-author footers.
 
 ## Git Workflow
 
 - Main branch: `main`
 - Commit and PR subjects: `prefix: short description`, no trailing period. Platform-specific changes use `Android: …` / `iOS: …`; everything else is prefixed with the affected part of the app (`onboarding: …`, `widget: …`) or `chore:` / `fix:` / `docs:` for non-feature changes. Same pattern as the main evcc repo. Keep messages short.
+
+## AI Attribution
+
+Work produced by an AI agent must be attributable as such on GitHub. Append the tool's attribution footer to every PR description, issue body, review, and comment written by an agent, for example:
+
+```
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+```
+
+Commit messages are the exception: no footer, and no `Co-Authored-By` trailer. Never dress agent work up as human review (e.g. "PR by an agent but looks good to me") in place of the footer.

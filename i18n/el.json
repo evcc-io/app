@@ -12,9 +12,20 @@
       "enterUrl": "Εισάγετε διεύθυνση URL",
       "missingOrWrongAuthentication": "Ο έλεγχος ταυτότητας λείπει ή είναι εσφαλμένος",
       "password": "Κωδικός",
+      "qrcode": {
+        "invalid": "",
+        "permissionDenied": "",
+        "recognized": "",
+        "scan": "",
+        "scanOnboarding": "",
+        "scanPrefill": "",
+        "scanning": ""
+      },
+      "serverExistsAlready": "",
       "serverIncompatible": "Η εγκατάσταση του evcc δεν είναι ακόμη συμβατή με την εφαρμογή. Ενημερώστε την εγκατάστασή σας.",
       "serverNotAvailable": "Ο διακομιστής δεν είναι διαθέσιμος. Ελέγξτε τη διεύθυνση.",
       "specify": "Εισάγετε τη διεύθυνση χειροκίνητα",
+      "title": "",
       "user": "Χρήστης"
     },
     "removeServer": "Κατάργηση διακομιστή",
@@ -25,6 +36,51 @@
       "start": "Έναρξη αναζήτησης"
     },
     "select": "Επιλέξτε",
+    "switchServer": {
+      "addServer": "",
+      "title": ""
+    },
     "useDemo": "Χρήση παρουσίασης επίδειξης"
+  },
+  "widget": {
+    "config": {
+      "desc": "",
+      "loadpoint": "",
+      "server": "",
+      "title": ""
+    },
+    "description": {
+      "co2": "",
+      "feedin": "",
+      "price": "",
+      "solar": ""
+    },
+    "loadpoint": {
+      "description": "",
+      "name": ""
+    },
+    "name": {
+      "co2": "",
+      "feedin": "",
+      "price": "",
+      "solar": ""
+    },
+    "noData": {
+      "body": "",
+      "title": ""
+    },
+    "now": "",
+    "setup": {
+      "body": "",
+      "title": ""
+    },
+    "type": {
+      "feedin": "",
+      "price": ""
+    },
+    "unreachable": {
+      "body": "",
+      "title": ""
+    }
   }
 }

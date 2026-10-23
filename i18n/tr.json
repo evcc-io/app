@@ -5,6 +5,7 @@
   },
   "servers": {
     "changeServer": "Sunucu değiştir",
+    "editServer": "Sunucuyu Düzenle",
     "manually": {
       "authenticationRequired": "Doğrulama gerekli",
       "checkAdress": "Sunucu bir evcc örneği gibi görünmüyor. Lütfen adresi kontrol edin.",
@@ -12,19 +13,96 @@
       "enterUrl": "URL girin",
       "missingOrWrongAuthentication": "Eksik veya yanlış kimlik doğrulaması",
       "password": "Şifre",
+      "qrcode": {
+        "invalid": "Geçerli bir evcc QR kodu değil.",
+        "permissionDenied": "Kamera erişimi reddedildi. QR kodlarını tarayabilmek için ayarlardan etkinleştirin.",
+        "recognized": "QR kodu algılandı!",
+        "scan": "QR kodu tara",
+        "scanOnboarding": "QR koduyla kur",
+        "scanPrefill": "QR koduyla doldur",
+        "scanning": "algılanıyor..."
+      },
+      "serverExistsAlready": "Bu sunucu zaten var.",
       "serverIncompatible": "evcc örneği henüz uygulamayla uyumlu değil. Kurulumunuzu güncelleyin.",
       "serverNotAvailable": "Sunucu mevcut değil. Lütfen adressi kontrol edin.",
       "specify": "Adresi manuel gir",
+      "title": "Başlık",
       "user": "Kullanıcı"
     },
+    "remove": "Kaldır",
+    "removeConfirm": "{{title}} gerçekten kaldırılsın mı?",
     "removeServer": "Sunucuyu sil",
     "search": {
+      "cancel": "İptal",
+      "connect": "Bağlan",
+      "foundMany": "{{count}} sunucu bulundu",
+      "foundOne": "Sunucu bulundu",
+      "hint": "Bu genellikle birkaç saniye sürer.",
+      "inProgress": "Aranıyor …",
       "notAvailable": "Bu cihazda arama mümkün değil. Manuel girin.",
       "nothingFound": "Evcc sunucusu bulunamadı.",
       "searching": "Aranıyor ...",
-      "start": "Aramaya başla"
+      "selectHelper": "Bağlanmak istediğiniz sunucuyu seçin.",
+      "start": "Aramaya başla",
+      "tryAgain": "Tekrar ara"
     },
     "select": "Seç",
+    "switchServer": {
+      "addServer": "Sunucu ekle",
+      "title": "Sunucuyu değiştir"
+    },
     "useDemo": "Demo örnek kullan"
+  },
+  "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "Doldurma noktası seçin",
+      "chooseServer": "Sunucu seçin",
+      "loading": "Yükleniyor…",
+      "loadingPreview": "Önizleme yükleniyor…",
+      "noLoadpoints": "Ulaşılabilir doldurma noktası yok",
+      "noServers": "Sunucu yok. Önce uygulamada bir tane ekleyin.",
+      "previewError": "Önizleme yüklenemedi",
+      "setupBody": "Sunucu ve doldurma noktası seçmek için dokunun.",
+      "useThisLoadpoint": "Bu doldurma noktasını kullan"
+    },
+    "config": {
+      "desc": "Tahmin için sunucu.",
+      "loadpoint": "Doldurma noktası",
+      "server": "Sunucu",
+      "title": "evcc Tahmini"
+    },
+    "description": {
+      "co2": "CO₂ emisyonları tahmini.",
+      "feedin": "Şebekeye satış fiyatı tahmini.",
+      "price": "Şebekeden alım fiyatı tahmini.",
+      "solar": "Güneş enerjisi üretim tahmini."
+    },
+    "loadpoint": {
+      "description": "Doldurma noktası durumu ve doldurma modu.",
+      "name": "Doldurma noktası"
+    },
+    "name": {
+      "co2": "",
+      "feedin": "Şebekeye satış fiyatı",
+      "price": "Şebekeden alım fiyatı",
+      "solar": "Güneş tahmini"
+    },
+    "noData": {
+      "body": "Bu sunucuda bu türde veri yok.",
+      "title": "Veri yok"
+    },
+    "now": "şimdi",
+    "setup": {
+      "body": "Bir sunucu bağlamak ve veri türü seçmek için dokunun.",
+      "title": "evcc'yi kur"
+    },
+    "type": {
+      "feedin": "Şebekeye satış fiyatı",
+      "price": "Şebekeden alım fiyatı"
+    },
+    "unreachable": {
+      "body": "evcc örneği yüklenemedi.",
+      "title": "Sunucuya ulaşılamıyor"
+    }
   }
 }
