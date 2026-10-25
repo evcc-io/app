@@ -5,6 +5,7 @@ import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
+import java.util.concurrent.ConcurrentHashMap
 
 sealed interface FetchOutcome {
     data class Success(val json: String) : FetchOutcome
@@ -22,6 +23,23 @@ object ApiClient {
 
     private fun base(server: StoredServer): String = server.url.trimEnd('/')
 
+    // evcc blocks remote logins after 10 failures per minute: after a 401/429,
+    // pause requests to that server for a minute instead of adding to it
+    private val backoffUntil = ConcurrentHashMap<String, Long>()
+
+    private fun backoffKey(server: StoredServer) = "${base(server)}|${server.username}"
+
+    private fun backedOff(server: StoredServer) =
+        System.currentTimeMillis() < (backoffUntil[backoffKey(server)] ?: 0L)
+
+    private fun status(conn: HttpURLConnection, server: StoredServer): Int {
+        val code = conn.responseCode
+        if (code == 401 || code == 429) {
+            backoffUntil[backoffKey(server)] = System.currentTimeMillis() + 60_000
+        }
+        return code
+    }
+
     private fun authorize(conn: HttpURLConnection, server: StoredServer) {
         if (server.authRequired && !server.username.isNullOrEmpty() && server.password != null) {
             val token = Base64.encodeToString(
@@ -34,6 +52,7 @@ object ApiClient {
 
     /** GET /api/state?jq=<jq>. Returns the raw response body on success. */
     fun fetch(server: StoredServer, jq: String): FetchOutcome {
+        if (backedOff(server)) return FetchOutcome.Failure
         val url = "${base(server)}/api/state?jq=" + URLEncoder.encode(jq, "UTF-8")
         return runCatching {
             val conn = (URL(url).openConnection() as HttpURLConnection).apply {
@@ -43,7 +62,7 @@ object ApiClient {
                 authorize(this, server)
             }
             try {
-                if (conn.responseCode !in 200..299) return FetchOutcome.Failure
+                if (status(conn, server) !in 200..299) return FetchOutcome.Failure
                 val body = conn.inputStream.bufferedReader().use { it.readText() }.trim()
                 if (body.isEmpty() || body == "null" || body == "[]" || body == "{}") {
                     FetchOutcome.NoData
@@ -70,6 +89,7 @@ object ApiClient {
 
     /** POST to an API path, e.g. "/api/loadpoints/1/mode/pv". Returns success. */
     fun post(server: StoredServer, path: String): Boolean {
+        if (backedOff(server)) return false
         val p = if (path.startsWith("/")) path else "/$path"
         return runCatching {
             val conn = (URL(base(server) + p).openConnection() as HttpURLConnection).apply {
@@ -79,7 +99,7 @@ object ApiClient {
                 authorize(this, server)
             }
             try {
-                conn.responseCode in 200..299
+                status(conn, server) in 200..299
             } finally {
                 conn.disconnect()
             }

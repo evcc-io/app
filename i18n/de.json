@@ -1,4 +1,39 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "Benutzername oder Passwort falsch. Aktualisiere die Zugangsdaten über „Server wechseln“.",
+      "title": "Anmeldung fehlgeschlagen"
+    },
+    "httpError": {
+      "hint": "Der Server hat unerwartet geantwortet.",
+      "title": "Serverfehler (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "Dein Gerät ist offline. Verbinde dich mit WLAN oder mobilen Daten.",
+      "title": "Kein Netzwerk"
+    },
+    "rateLimited": {
+      "hint": "Der Server blockiert Anfragen vorübergehend.",
+      "title": "Zu viele Versuche"
+    },
+    "remoteOffline": {
+      "hint": "Deine evcc-Instanz ist nicht verbunden.",
+      "title": "evcc ist offline"
+    },
+    "retry": "Erneut versuchen",
+    "timeout": {
+      "hint": "Keine Antwort vom Server.",
+      "title": "Server antwortet nicht"
+    },
+    "unreachable": {
+      "hint": "Prüfe dein Netzwerk und ob deine evcc-Instanz läuft.",
+      "title": "Server nicht erreichbar"
+    },
+    "websocket": {
+      "hint": "Die Seite lädt, aber der WebSocket verbindet sich nicht. Prüfe die Einstellungen deines Reverse Proxys.",
+      "title": "WebSocket-Verbindung fehlgeschlagen"
+    }
+  },
   "main": {
     "description": "Lass uns deinen Server anschließen.",
     "title": "Willkommen"

@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { t } from "i18next";
+import { getNetworkStateAsync } from "expo-network";
 import { USER_AGENT } from "./constants";
 import { Server } from "types";
 
@@ -19,7 +20,7 @@ export function cleanServerUrl(url: string) {
   return result;
 }
 
-export async function verifyEvccServer(server: Server) {
+function requestOptions(server: Server): AxiosRequestConfig {
   const options: AxiosRequestConfig = { ...AXIOS_OPTIONS };
   if (server.basicAuth) {
     const { username, password } = server.basicAuth;
@@ -27,6 +28,68 @@ export async function verifyEvccServer(server: Server) {
       options.auth = { username, password };
     }
   }
+  return options;
+}
+
+export type ConnectionProblem =
+  | {
+      type:
+        | "offline" // device has no network at all
+        | "unreachable"
+        | "timeout"
+        | "auth"
+        | "rateLimited"
+        | "remoteOffline"
+        | "websocket"; // page loads, live connection doesn't
+    }
+  | { type: "httpError"; status: number };
+
+// Single request to explain why the web UI can't connect. Basic auth is sent
+// upfront, so a wrong password costs one failed login, not a WebView retry loop.
+export async function probeServer(
+  server: Server,
+): Promise<ConnectionProblem | undefined> {
+  if ((await getNetworkStateAsync()).isConnected === false) {
+    return { type: "offline" };
+  }
+  const start = Date.now();
+  let response;
+  try {
+    response = await axios.get<string>(server.url, {
+      ...requestOptions(server),
+      validateStatus: () => true,
+    });
+  } catch {
+    // Android reports timeouts as generic network errors, so measure instead
+    const timeout = Date.now() - start >= 0.9 * AXIOS_OPTIONS.timeout!;
+    return { type: timeout ? "timeout" : "unreachable" };
+  }
+
+  const { status, data } = response;
+  if (status < 400) return undefined;
+  if (status === 401) return { type: "auth" };
+  if (status === 429) return { type: "rateLimited" };
+  // evcc.cloud: no tunnel from the evcc instance
+  if (status === 502 && String(data).includes("instance offline")) {
+    return { type: "remoteOffline" };
+  }
+  return { type: "httpError", status };
+}
+
+// undefined: don't retry automatically, wait for the user
+export function retryDelay(
+  problem: ConnectionProblem | undefined,
+  attempt: number,
+): number | undefined {
+  if (problem?.type === "auth") return undefined;
+  // evcc blocks remote logins for a minute after too many failures
+  const min = problem?.type === "rateLimited" ? 60_000 : 5_000;
+  const delay = Math.max(min, Math.min(5_000 * 2 ** attempt, 60_000));
+  return delay * (0.8 + Math.random() * 0.4); // jitter, avoid synchronized retries
+}
+
+export async function verifyEvccServer(server: Server) {
+  const options = requestOptions(server);
 
   let response;
   try {

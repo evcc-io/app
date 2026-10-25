@@ -40,6 +40,7 @@
     "expo-haptics": "~57.0.3",
     "expo-linking": "~57.0.13",
     "expo-localization": "~57.0.2",
+    "expo-network": "~57.0.3",
     "expo-sharing": "~57.0.23",
     "expo-splash-screen": "~57.0.10",
     "expo-status-bar": "~57.0.1",

@@ -22,6 +22,24 @@ enum ApiClient {
     }
   }
 
+  /// evcc blocks remote logins after 10 failures per minute: after a 401/429,
+  /// pause requests to that server for a minute instead of adding to it.
+  private static func backoffKey(_ server: StoredServer) -> String {
+    "backoff.\(base(server))|\(server.username ?? "")"
+  }
+
+  private static func backedOff(_ server: StoredServer) -> Bool {
+    Date().timeIntervalSince1970 < UserDefaults.standard.double(forKey: backoffKey(server))
+  }
+
+  private static func status(_ response: URLResponse, _ server: StoredServer) -> Int {
+    let code = (response as? HTTPURLResponse)?.statusCode ?? 0
+    if code == 401 || code == 429 {
+      UserDefaults.standard.set(Date().timeIntervalSince1970 + 60, forKey: backoffKey(server))
+    }
+    return code
+  }
+
   static func request(_ server: StoredServer, jq: String) -> URLRequest? {
     guard var comps = URLComponents(string: base(server) + "/api/state") else { return nil }
     comps.queryItems = [URLQueryItem(name: "jq", value: jq)]
@@ -33,12 +51,10 @@ enum ApiClient {
   }
 
   static func fetch<T: Decodable>(_ server: StoredServer, jq: String, as type: T.Type) async -> FetchOutcome<T> {
-    guard let req = request(server, jq: jq) else { return .failure }
+    guard !backedOff(server), let req = request(server, jq: jq) else { return .failure }
     do {
       let (data, response) = try await URLSession.shared.data(for: req)
-      guard let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode) else {
-        return .failure
-      }
+      guard (200..<300).contains(status(response, server)) else { return .failure }
       if let s = String(data: data, encoding: .utf8)?
         .trimmingCharacters(in: .whitespacesAndNewlines),
         s.isEmpty || s == "null" || s == "[]" || s == "{}" {
@@ -55,13 +71,13 @@ enum ApiClient {
   @discardableResult
   static func post(_ server: StoredServer, path: String) async -> Bool {
     let p = path.hasPrefix("/") ? path : "/" + path
-    guard let url = URL(string: base(server) + p) else { return false }
+    guard !backedOff(server), let url = URL(string: base(server) + p) else { return false }
     var req = URLRequest(url: url, timeoutInterval: 15)
     req.httpMethod = "POST"
     authorize(&req, server)
     do {
       let (_, response) = try await URLSession.shared.data(for: req)
-      return (response as? HTTPURLResponse).map { (200..<300).contains($0.statusCode) } ?? false
+      return (200..<300).contains(status(response, server))
     } catch {
       return false
     }

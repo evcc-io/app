@@ -7,20 +7,21 @@ import {
   Text,
   Platform,
   BackHandler,
+  AppState,
 } from "react-native";
 import * as Linking from "expo-linking";
 import * as Haptics from "expo-haptics";
 import * as WebBrowser from "expo-web-browser";
+import { addNetworkStateListener } from "expo-network";
 import AppText from "components/AppText";
 import TextLink from "components/TextLink";
+import { ConnectionProblem, probeServer, retryDelay } from "utils/server";
 import { useThemeColors } from "utils/theme";
 import { useAppContext } from "../components/AppContext";
 import { useTranslation } from "react-i18next";
 import { USER_AGENT } from "../utils/constants";
 import {
   ShouldStartLoadRequest,
-  WebViewErrorEvent,
-  WebViewHttpErrorEvent,
   WebViewNavigation,
   WebViewOpenWindowEvent,
 } from "react-native-webview/lib/WebViewTypes";
@@ -53,7 +54,22 @@ export default function MainScreen({
   const webViewRef = useRef<WebView>(null);
   const canGoBackRef = useRef(false);
   const [isConnected, setIsConnected] = useState(false);
+  // the spinner would otherwise animate behind the web UI all session
+  const [overlayHidden, setOverlayHidden] = useState(false);
+  // 0 = not mounted; the WebView only loads once the server answered a probe
   const [webViewKey, setWebViewKey] = useState(0);
+  const [problem, setProblem] = useState<ConnectionProblem>();
+  const [probing, setProbing] = useState(false);
+  const checkingRef = useRef(false);
+  const connectedRef = useRef(false);
+  const attemptRef = useRef(0);
+  const generationRef = useRef(0);
+  const checkTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const loadRef = useRef({
+    mounted: false,
+    loading: false,
+    endedAt: 0,
+  });
   const [downloadedFile, setDownloadedFile] = useState<string | null>(null);
 
   const contFade = useRef(new Animated.Value(isConnected ? 1 : 0)).current;
@@ -103,21 +119,97 @@ export default function MainScreen({
     return () => subscription.remove();
   }, [navigation]);
 
-  // Switching servers starts disconnected; the new WebView reports back
-  useEffect(() => setIsConnected(false), [activeServer?.url]);
+  // Probes the server while disconnected and (re)loads the web UI once it
+  // answers. Reschedules itself with backoff until the web UI reports online.
+  const check = useCallback(async () => {
+    if (!activeServer?.url || checkingRef.current) return;
+    clearTimeout(checkTimerRef.current);
+    const generation = generationRef.current;
+    checkingRef.current = true;
+    setProbing(true);
+    let result = await probeServer(activeServer);
+    if (generation !== generationRef.current) return; // server switched meanwhile
+    checkingRef.current = false;
+    setProbing(false);
+    if (connectedRef.current) return;
 
-  // Reconnect if connection is lost
-  useEffect(() => {
-    let intervalId: NodeJS.Timeout | undefined;
-
-    if (!isConnected) {
-      intervalId = setInterval(() => {
-        setWebViewKey((prevKey) => prevKey + 1);
-      }, 5000);
+    const attempt = attemptRef.current++;
+    const load = loadRef.current;
+    if (result) {
+      // unmounting also stops the web UI's own reconnect attempts
+      load.mounted = false;
+      setWebViewKey(0);
+    } else if (!load.mounted) {
+      load.mounted = true;
+      load.loading = true;
+      setWebViewKey((k) => k + 1);
+    } else if (!load.loading && Date.now() - load.endedAt > 5000) {
+      // page loaded, but its websocket didn't connect
+      result = { type: "websocket" };
+      load.loading = true;
+      setWebViewKey((k) => k + 1);
     }
+    setProblem(result);
 
-    return () => clearInterval(intervalId);
-  }, [isConnected]);
+    clearTimeout(checkTimerRef.current);
+    const delay = retryDelay(result, attempt);
+    if (delay !== undefined) checkTimerRef.current = setTimeout(check, delay);
+  }, [activeServer]);
+
+  const retry = useCallback(() => {
+    attemptRef.current = 0;
+    check();
+  }, [check]);
+
+  // Switching servers starts disconnected; the WebView mounts once the server answers
+  useEffect(() => {
+    generationRef.current++;
+    checkingRef.current = false;
+    connectedRef.current = false;
+    attemptRef.current = 0;
+    loadRef.current.mounted = false;
+    setIsConnected(false);
+    setProblem(undefined);
+    setWebViewKey(0);
+    check();
+    return () => clearTimeout(checkTimerRef.current);
+  }, [check]);
+
+  const setOnline = useCallback(() => {
+    clearTimeout(checkTimerRef.current);
+    connectedRef.current = true;
+    attemptRef.current = 0;
+    setIsConnected(true);
+    setProblem(undefined);
+  }, []);
+
+  const setOffline = useCallback(() => {
+    setIsConnected(false);
+    if (!connectedRef.current) return; // check loop already running
+    connectedRef.current = false;
+    // the web UI retries brief drops itself, give it a moment
+    checkTimerRef.current = setTimeout(check, 5000);
+  }, [check]);
+
+  // A new network (back online, WiFi <-> mobile) may reach the server, try
+  // right away. Only on actual changes, so a chatty listener can't hammer.
+  useEffect(() => {
+    let last = "";
+    const sub = addNetworkStateListener(({ type, isConnected }) => {
+      const state = `${type}|${isConnected}`;
+      if (state !== last && !connectedRef.current) retry();
+      last = state;
+    });
+    return () => sub.remove();
+  }, [retry]);
+
+  // Timers don't run in background, check right away when coming back
+  useEffect(() => {
+    const sub = AppState.addEventListener("change", (state) => {
+      if (state === "active" && !connectedRef.current) check();
+    });
+    return () => sub.remove();
+  }, [check]);
 
   useEffect(() => {
     const duration = 400;
@@ -127,8 +219,11 @@ export default function MainScreen({
     const showDelay = 2000;
     const stagger = duration * 0.3;
 
+    if (!isConnected) setOverlayHidden(false);
+
     // snap straight to final state when running tests
     if (testingEnvironment()) {
+      setOverlayHidden(isConnected);
       contFade.setValue(isConnected ? 1 : 0);
       loadFade.setValue(isConnected ? 0 : 1);
       loadScale.setValue(isConnected ? 1.2 : 1);
@@ -147,7 +242,9 @@ export default function MainScreen({
       delay: isConnected ? hideDelay : showDelay + stagger,
       duration,
       useNativeDriver: true,
-    }).start();
+    }).start(({ finished }) => {
+      if (finished && isConnected) setOverlayHidden(true);
+    });
 
     Animated.timing(loadScale, {
       toValue: isConnected ? 1.2 : 1,
@@ -192,10 +289,10 @@ export default function MainScreen({
       const data = JSON.parse(event.nativeEvent.data);
       switch (data.type) {
         case "offline":
-          setIsConnected(false);
+          setOffline();
           break;
         case "online":
-          setIsConnected(true);
+          setOnline();
           break;
         case "settings":
           openSettings();
@@ -213,7 +310,7 @@ export default function MainScreen({
         }
       }
     },
-    [openSettings, handleDownload],
+    [openSettings, handleDownload, setOnline, setOffline],
   );
 
   const isServerUrl = useCallback(
@@ -270,19 +367,12 @@ export default function MainScreen({
     [isServerUrl, openExternal],
   );
 
-  const onError = useCallback((event: WebViewErrorEvent) => {
-    console.log("onError", event.nativeEvent.description);
-    setIsConnected(false);
+  const onLoadStart = useCallback(() => {
+    loadRef.current.loading = true;
   }, []);
 
-  const onHttpError = useCallback((event: WebViewHttpErrorEvent) => {
-    console.log("onHttpError", event.nativeEvent.statusCode);
-    setIsConnected(false);
-  }, []);
-
-  const onTerminate = useCallback(() => {
-    console.log("onTerminate");
-    setIsConnected(false);
+  const onLoadEnd = useCallback(() => {
+    Object.assign(loadRef.current, { loading: false, endedAt: Date.now() });
   }, []);
 
   const onNavigationStateChange = useCallback((navState: WebViewNavigation) => {
@@ -293,11 +383,12 @@ export default function MainScreen({
     () => (
       <View style={{ flex: 1, backgroundColor: colors.background }}>
         <Animated.View style={{ flex: 1, opacity: contFade }}>
-          <WebView
-            testID="mainWebView"
-            basicAuthCredential={basicAuthCredential}
-            source={{ uri: activeServer?.url || "" }}
-            injectedJavaScript={`
+          {webViewKey > 0 && (
+            <WebView
+              testID="mainWebView"
+              basicAuthCredential={basicAuthCredential}
+              source={{ uri: activeServer?.url || "" }}
+              injectedJavaScript={`
               window.evccAppCapabilities = ["download"];
               ${safeAreaJs(insets)}
               if (!navigator.vibrate) {
@@ -310,28 +401,31 @@ export default function MainScreen({
                 };
               }
             `}
-            style={{ flex: 1 }}
-            // Fresh WebView per server avoids leaking cookies/auth across servers.
-            key={`${activeServer?.url}#${webViewKey}`}
-            bounces={false}
-            // macOS has no software keyboard, so the form accessory bar only covers the nav
-            hideKeyboardAccessoryView={isIosAppOnMac}
-            // Android passes the string to native unconverted and crashes
-            decelerationRate={Platform.OS === "ios" ? "normal" : undefined}
-            ref={webViewRef}
-            overScrollMode="never"
-            setBuiltInZoomControls={false}
-            applicationNameForUserAgent={USER_AGENT}
-            onError={onError}
-            onHttpError={onHttpError}
-            onContentProcessDidTerminate={onTerminate}
-            onMessage={handleMessage}
-            onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
-            onOpenWindow={onOpenWindow}
-            // web UI opens windows after async work too, all routed through onOpenWindow
-            javaScriptCanOpenWindowsAutomatically
-            onNavigationStateChange={onNavigationStateChange}
-          />
+              style={{ flex: 1 }}
+              // Fresh WebView per server avoids leaking cookies/auth across servers.
+              key={`${activeServer?.url}#${webViewKey}`}
+              bounces={false}
+              // macOS has no software keyboard, so the form accessory bar only covers the nav
+              hideKeyboardAccessoryView={isIosAppOnMac}
+              // Android passes the string to native unconverted and crashes
+              decelerationRate={Platform.OS === "ios" ? "normal" : undefined}
+              ref={webViewRef}
+              overScrollMode="never"
+              setBuiltInZoomControls={false}
+              applicationNameForUserAgent={USER_AGENT}
+              onLoadStart={onLoadStart}
+              onLoadEnd={onLoadEnd}
+              onError={setOffline}
+              onHttpError={setOffline}
+              onContentProcessDidTerminate={setOffline}
+              onMessage={handleMessage}
+              onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
+              onOpenWindow={onOpenWindow}
+              // web UI opens windows after async work too, all routed through onOpenWindow
+              javaScriptCanOpenWindowsAutomatically
+              onNavigationStateChange={onNavigationStateChange}
+            />
+          )}
         </Animated.View>
         <Animated.View
           style={{
@@ -350,10 +444,35 @@ export default function MainScreen({
               justifyContent: "center",
               alignItems: "center",
               gap: 24,
+              paddingHorizontal: 32,
             }}
           >
-            <AppText color="hint">{t("servers.search.searching")}</AppText>
-            <Spinner />
+            {problem ? (
+              <View style={{ gap: 8 }}>
+                <AppText
+                  testID={`connectionProblem-${problem.type}`}
+                  variant="s1"
+                  style={{ textAlign: "center" }}
+                >
+                  {t(`connection.${problem.type}.title`, problem)}
+                </AppText>
+                <AppText color="hint" style={{ textAlign: "center" }}>
+                  {t(`connection.${problem.type}.hint`)}
+                </AppText>
+              </View>
+            ) : (
+              <AppText color="hint">{t("servers.search.searching")}</AppText>
+            )}
+            {/* failed logins aren't retried automatically */}
+            <View
+              style={{ opacity: problem?.type === "auth" && !probing ? 0 : 1 }}
+            >
+              {!overlayHidden && <Spinner />}
+            </View>
+            {/* retrying early doesn't lift a rate limit */}
+            {problem && problem.type !== "rateLimited" && (
+              <RetryLink visible={!probing} onPress={retry} />
+            )}
           </View>
           <View
             style={{
@@ -376,11 +495,16 @@ export default function MainScreen({
       loadFade,
       loadScale,
       isConnected,
-      onError,
+      overlayHidden,
+      problem,
+      probing,
+      retry,
+      onLoadStart,
+      onLoadEnd,
+      setOffline,
       onShouldStartLoadWithRequest,
       onOpenWindow,
       onNavigationStateChange,
-      onTerminate,
       handleMessage,
       openSettings,
       colors,
@@ -402,6 +526,47 @@ export default function MainScreen({
         </Text>
       ) : null}
     </>
+  );
+}
+
+// Fades in a while after each attempt, so the user sees retries happen and
+// isn't invited to hammer the server. Keeps its space to avoid layout jumps.
+function RetryLink({
+  visible,
+  onPress,
+}: {
+  visible: boolean;
+  onPress: () => void;
+}) {
+  const { t } = useTranslation();
+  const [shown, setShown] = useState(false);
+  const opacity = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    setShown(false);
+    opacity.setValue(0);
+    if (!visible) return;
+    const id = setTimeout(() => {
+      setShown(true);
+      Animated.timing(opacity, {
+        toValue: 1,
+        duration: 400,
+        useNativeDriver: true,
+      }).start();
+    }, 5000);
+    return () => clearTimeout(id);
+  }, [visible, opacity]);
+  return (
+    <Animated.View
+      style={{ alignSelf: "stretch", opacity }}
+      pointerEvents={shown ? "auto" : "none"}
+    >
+      <TextLink
+        testID={shown ? "connectionRetry" : undefined}
+        onPress={onPress}
+      >
+        {t("connection.retry")}
+      </TextLink>
+    </Animated.View>
   );
 }
 
