@@ -31,7 +31,11 @@ describe("Manual entry", () => {
     await expect(element(by.id("serverFormAuthUser"))).not.toExist();
     await expect(element(by.id("serverFormAuthPassword"))).not.toExist();
 
-    await tapAfterWaitFor(element(by.id("serverFormAuth")));
+    // the server asks for a login, so the form reveals the fields
+    await element(by.id("serverFormCheckAndSave")).tap();
+    await waitFor(element(by.id("serverFormAuthUser")))
+      .toExist()
+      .withTimeout(10000);
 
     await element(by.id("serverFormAuthUser")).replaceText("admin");
     await element(by.id("serverFormAuthPassword")).replaceText("secret");

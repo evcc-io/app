@@ -48,6 +48,7 @@
       "authenticationRequired": "Authentication required",
       "checkAdress": "The server does not appear to be an evcc instance. Please check the address.",
       "checkAndSave": "Check and save",
+      "loginRequired": "Server requires login.",
       "missingOrWrongAuthentication": "Missing or incorrect authentication",
       "password": "Password",
       "serverIncompatible": "The evcc instance is not yet app-compatible. Update your installation.",

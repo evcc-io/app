@@ -97,6 +97,11 @@ export async function verifyEvccServer(server: Server) {
   } catch (error) {
     console.log(String(error));
     if (axios.isAxiosError(error) && error.response?.status === 401) {
+      if (!options.auth) {
+        throw Object.assign(new Error(t("servers.manually.loginRequired")), {
+          loginRequired: true,
+        });
+      }
       throw new Error(t("servers.manually.missingOrWrongAuthentication"));
     }
     throw new Error(t("servers.manually.serverNotAvailable"));

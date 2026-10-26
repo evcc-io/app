@@ -45,6 +45,7 @@
       "authenticationRequired": "Anmeldung erforderlich",
       "checkAdress": "Der Server scheint keine evcc Instanz zu sein. Bitte prüfe die Adresse.",
       "checkAndSave": "Prüfen und speichern",
+      "loginRequired": "Server erfordert Anmeldung.",
       "missingOrWrongAuthentication": "Fehlende oder falsche Anmeldung",
       "password": "Passwort",
       "qrcode": {
