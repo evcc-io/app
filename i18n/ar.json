@@ -12,74 +12,8 @@
       "enterUrl": "أدخل عنوان URL",
       "missingOrWrongAuthentication": "المصادقة مفقودة أو غير صحيحة",
       "password": "كلمة السر",
-      "qrcode": {
-        "invalid": "",
-        "permissionDenied": "",
-        "recognized": "",
-        "scan": "",
-        "scanOnboarding": "",
-        "scanPrefill": "",
-        "scanning": ""
-      },
-      "serverExistsAlready": "",
       "serverIncompatible": "نسخة evcc ليست متوافقة مع التطبيق حتى الآن. يرجى تحديث التثبيت.",
-      "serverNotAvailable": "الخادم غير متاح. يرجى التحقق من العنوان.",
-      "specify": "",
-      "title": "",
-      "user": ""
-    },
-    "removeServer": "",
-    "search": {
-      "notAvailable": "",
-      "nothingFound": "",
-      "searching": "",
-      "start": ""
-    },
-    "switchServer": {
-      "addServer": "",
-      "title": ""
-    },
-    "useDemo": ""
-  },
-  "widget": {
-    "config": {
-      "desc": "",
-      "loadpoint": "",
-      "server": "",
-      "title": ""
-    },
-    "description": {
-      "co2": "",
-      "feedin": "",
-      "price": "",
-      "solar": ""
-    },
-    "loadpoint": {
-      "description": "",
-      "name": ""
-    },
-    "name": {
-      "co2": "",
-      "feedin": "",
-      "price": "",
-      "solar": ""
-    },
-    "noData": {
-      "body": "",
-      "title": ""
-    },
-    "now": "",
-    "setup": {
-      "body": "",
-      "title": ""
-    },
-    "type": {
-      "feedin": "",
-      "price": ""
-    },
-    "unreachable": {
-      "body": "",
-      "title": ""
+      "serverNotAvailable": "الخادم غير متاح. يرجى التحقق من العنوان."
     }
   }
 }

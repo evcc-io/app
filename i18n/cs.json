@@ -68,7 +68,6 @@
     "config": {
       "desc": "Server pro předpověď.",
       "loadpoint": "Nabíjecí bod",
-      "server": "",
       "title": "evcc předpověď"
     },
     "description": {
@@ -82,7 +81,6 @@
       "name": "Nabíjecí bod"
     },
     "name": {
-      "co2": "",
       "feedin": "Výkupní cena",
       "price": "Cena odběru ze sítě",
       "solar": "Solární předpověď"
