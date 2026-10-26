@@ -305,8 +305,10 @@ jobs:
           ./caddy run &
 
       - name: Test (shard ${{ matrix.shard }}/2)
+        id: test
+        continue-on-error: true
         uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2.38.0
-        with:
+        with: &emulator
           api-level: 35
           disk-size: 1G
           heap-size: 1G
@@ -316,6 +318,13 @@ jobs:
           disable-animations: true
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           script: npx detox test --configuration android.emu.release --cleanup --headless -- --shard=${{ matrix.shard }}/2
+
+      # The emulator sometimes never assigns window focus after first boot (GMS
+      # startup load), which fails every test. Retry once on a fresh boot.
+      - name: Retry test (shard ${{ matrix.shard }}/2)
+        if: steps.test.outcome == 'failure'
+        uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2.38.0
+        with: *emulator
 
       - name: Upload artifacts on failure
         if: failure()
