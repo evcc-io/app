@@ -10,7 +10,6 @@
       "authenticationRequired": "認証が必要です",
       "checkAdress": "指定されたアドレスはevccサーバーではないようです。アドレスを確認してください。",
       "checkAndSave": "確認して保存",
-      "enterUrl": "URLを入力",
       "missingOrWrongAuthentication": "認証情報が不足しているか、正しくありません",
       "password": "パスワード",
       "qrcode": {
@@ -46,7 +45,6 @@
       "start": "検索開始",
       "tryAgain": "再検索"
     },
-    "select": "選択",
     "switchServer": {
       "addServer": "サーバーを追加",
       "title": "サーバー切り替え"

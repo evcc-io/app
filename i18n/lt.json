@@ -10,7 +10,6 @@
       "authenticationRequired": "Reikalingas autentifikavimas",
       "checkAdress": "Atrodo, kad šis serveris nėra evcc serveris. Patikrinkite adresą.",
       "checkAndSave": "Patikrinti ir išsaugoti",
-      "enterUrl": "Įveskite URL",
       "missingOrWrongAuthentication": "Nėra autentifikavimo arba jis neteisingas",
       "password": "Slaptažodis",
       "qrcode": {
@@ -46,7 +45,6 @@
       "start": "Rasti serverį",
       "tryAgain": "Ieškoti dar kartą"
     },
-    "select": "Pasirinkite",
     "switchServer": {
       "addServer": "Pridėti Serverį",
       "title": "Pakeisti Serverį"

@@ -32,6 +32,11 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Check generated translations index
+        run: |
+          npm run translations
+          git diff --exit-code i18n/index.ts || (echo "::error::Run 'npm run translations' and commit." && exit 1)
+
   fastlane-validate:
     name: Fastlane Metadata
     runs-on: ubuntu-latest

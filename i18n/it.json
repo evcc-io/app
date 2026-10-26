@@ -10,7 +10,6 @@
       "authenticationRequired": "Autenticazione richiesta",
       "checkAdress": "Il server non sembra essere un'istanza evcc. Si prega di verificare l'indirizzo.",
       "checkAndSave": "Controlla e salva",
-      "enterUrl": "Inserisci l'URL",
       "missingOrWrongAuthentication": "Autenticazione mancante o errata",
       "password": "Password",
       "qrcode": {
@@ -46,7 +45,6 @@
       "start": "Cerca server",
       "tryAgain": "Cerca di nuovo"
     },
-    "select": "Selezionare",
     "switchServer": {
       "addServer": "Aggiungi Server",
       "title": "Cambia server"

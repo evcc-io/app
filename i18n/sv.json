@@ -10,7 +10,6 @@
       "authenticationRequired": "Registrering krävs",
       "checkAdress": "Servern verkar inte vara en evcc-instans. Vänligen kolla adressen.",
       "checkAndSave": "Kolla och spara",
-      "enterUrl": "Ange URL",
       "missingOrWrongAuthentication": "Saknad eller inkorrekt registrering",
       "password": "Lösenord",
       "qrcode": {
@@ -46,7 +45,6 @@
       "start": "Hitta server",
       "tryAgain": "Sök igen"
     },
-    "select": "Välj",
     "switchServer": {
       "addServer": "Lägg till server",
       "title": "Byt server"

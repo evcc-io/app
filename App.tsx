@@ -36,8 +36,10 @@ const SwitchServerStackNav =
 
 i18n.use(initReactI18next).init({
   resources: translations,
-  lng: getLocales()[0].languageCode ?? undefined,
-  fallbackLng: "en",
+  // full tag so script/region locales (zh-Hans, nb-NO) resolve
+  lng: getLocales()[0].languageTag,
+  fallbackLng: { zh: ["zh-Hans", "en"], default: ["en"] },
+  returnEmptyString: false,
 });
 
 const hideSplash = () => {

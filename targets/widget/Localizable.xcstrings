@@ -13,7 +13,7 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Solar Production"
+            "value": "Solarna proizvodnja"
           }
         },
         "cs": {
@@ -31,7 +31,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Solarproduktion"
+            "value": "PV-Erzeugung"
           }
         },
         "el": {
@@ -98,6 +98,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Saulės Gamyba"
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saules enerģijas ražošana"
           }
         },
         "nb-NO": {
@@ -180,7 +186,7 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "CO₂ Emissions"
+            "value": "Emisije CO₂"
           }
         },
         "cs": {
@@ -267,6 +273,12 @@
             "value": "CO₂ Išmetimai"
           }
         },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CO₂ Emisijas (kopā)"
+          }
+        },
         "nb-NO": {
           "stringUnit": {
             "state": "translated",
@@ -347,7 +359,7 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "remaining"
+            "value": "preostalo"
           }
         },
         "cs": {
@@ -434,6 +446,12 @@
             "value": "likę"
           }
         },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "atlikusī"
+          }
+        },
         "nb-NO": {
           "stringUnit": {
             "state": "translated",
@@ -514,7 +532,7 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tomorrow"
+            "value": "Sutra"
           }
         },
         "cs": {
@@ -601,6 +619,12 @@
             "value": "Rytoj"
           }
         },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rīt"
+          }
+        },
         "nb-NO": {
           "stringUnit": {
             "state": "translated",
@@ -681,7 +705,7 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Off"
+            "value": "Isključeno"
           }
         },
         "cs": {
@@ -765,7 +789,13 @@
         "lt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Stop"
+            "value": "Išjungta"
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Izslēgts"
           }
         },
         "nb-NO": {
@@ -848,7 +878,7 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Smart"
+            "value": "Pametno"
           }
         },
         "cs": {
@@ -935,6 +965,12 @@
             "value": "Išmanus"
           }
         },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Viedā"
+          }
+        },
         "nb-NO": {
           "stringUnit": {
             "state": "translated",
@@ -1015,7 +1051,7 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Fast"
+            "value": "Brzo"
           }
         },
         "cs": {
@@ -1102,6 +1138,12 @@
             "value": "Greitas"
           }
         },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ātrā"
+          }
+        },
         "nb-NO": {
           "stringUnit": {
             "state": "translated",
@@ -1182,31 +1224,31 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "On"
+            "value": "Uključeno"
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "On"
+            "value": "Zapnuto"
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "On"
+            "value": "Aktiveret"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "An"
+            "value": "Ein"
           }
         },
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "On"
+            "value": "Ανοιχτό"
           }
         },
         "en": {
@@ -1230,19 +1272,19 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "On"
+            "value": "Enclenché"
           }
         },
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "On"
+            "value": "Uključeno"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "On"
+            "value": "Be"
           }
         },
         "it": {
@@ -1254,19 +1296,25 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "On"
+            "value": "オン"
           }
         },
         "lb": {
           "stringUnit": {
             "state": "translated",
-            "value": "On"
+            "value": "Un"
           }
         },
         "lt": {
           "stringUnit": {
             "state": "translated",
-            "value": "On"
+            "value": "Įjungta"
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ieslēgts (darbojas)"
           }
         },
         "nb-NO": {
@@ -1278,61 +1326,61 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "On"
+            "value": "Aan"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "On"
+            "value": "Włączone"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "On"
+            "value": "Ligado"
           }
         },
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "On"
+            "value": "Zapnuté"
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "On"
+            "value": "Vklop"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "On"
+            "value": "På"
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "On"
+            "value": "ஆன்"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "On"
+            "value": "Açık"
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "On"
+            "value": "Увімк."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "On"
+            "value": "开启"
           }
         }
       }
@@ -1349,13 +1397,13 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Normal"
+            "value": "Normalno"
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Normal"
+            "value": "Normální"
           }
         },
         "da": {
@@ -1373,7 +1421,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Normal"
+            "value": "Κανονικό"
           }
         },
         "en": {
@@ -1403,25 +1451,25 @@
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Normal"
+            "value": "Normalno"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Normal"
+            "value": "Normál"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Normal"
+            "value": "Normale"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Normal"
+            "value": "通常"
           }
         },
         "lb": {
@@ -1433,7 +1481,13 @@
         "lt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Normal"
+            "value": "Normalus"
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Standarta uzlāde"
           }
         },
         "nb-NO": {
@@ -1445,13 +1499,13 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Normal"
+            "value": "Normaal"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Normal"
+            "value": "Normalny"
           }
         },
         "pt": {
@@ -1463,13 +1517,13 @@
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Normal"
+            "value": "Normálne"
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Normal"
+            "value": "Normalno"
           }
         },
         "sv": {
@@ -1481,7 +1535,7 @@
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "Normal"
+            "value": "இயல்பு"
           }
         },
         "tr": {
@@ -1493,13 +1547,13 @@
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Normal"
+            "value": "Звичайний"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Normal"
+            "value": "正常"
           }
         }
       }
@@ -1516,7 +1570,7 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Boost"
+            "value": "Pojačano"
           }
         },
         "cs": {
@@ -1540,7 +1594,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Boost"
+            "value": "Ενίσχυση"
           }
         },
         "en": {
@@ -1570,13 +1624,13 @@
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Boost"
+            "value": "Ubrzanje"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Boost"
+            "value": "Rásegítés"
           }
         },
         "it": {
@@ -1588,7 +1642,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Boost"
+            "value": "ブースト"
           }
         },
         "lb": {
@@ -1600,7 +1654,13 @@
         "lt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Boost"
+            "value": "Padidinti"
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paātrināta uzlāde"
           }
         },
         "nb-NO": {
@@ -1618,7 +1678,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Boost"
+            "value": "Turbo"
           }
         },
         "pt": {
@@ -1636,7 +1696,7 @@
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Boost"
+            "value": "Pospešeno"
           }
         },
         "sv": {
@@ -1648,13 +1708,13 @@
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "Boost"
+            "value": "பூஸ்ட்"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Boost"
+            "value": "Hızlandırma"
           }
         },
         "uk": {
@@ -1666,7 +1726,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Boost"
+            "value": "强化"
           }
         }
       }
@@ -1683,7 +1743,7 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Disconnected."
+            "value": "Odspojeno."
           }
         },
         "cs": {
@@ -1770,6 +1830,12 @@
             "value": "Neprijungtas."
           }
         },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Atvienots."
+          }
+        },
         "nb-NO": {
           "stringUnit": {
             "state": "translated",
@@ -1850,7 +1916,7 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Connected."
+            "value": "Povezano."
           }
         },
         "cs": {
@@ -1937,6 +2003,12 @@
             "value": "Prijungtas."
           }
         },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pievienots."
+          }
+        },
         "nb-NO": {
           "stringUnit": {
             "state": "translated",
@@ -2017,7 +2089,7 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ready. Waiting for vehicle…"
+            "value": "Spremno. Čekanje na vozilo…"
           }
         },
         "cs": {
@@ -2104,6 +2176,12 @@
             "value": "Paruošta. Laukiama automobilio…"
           }
         },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gatavs. Gaida transportlīdzekli…"
+          }
+        },
         "nb-NO": {
           "stringUnit": {
             "state": "translated",
@@ -2184,7 +2262,7 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Finished."
+            "value": "Završeno."
           }
         },
         "cs": {
@@ -2271,6 +2349,12 @@
             "value": "Baigta."
           }
         },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pabeigts."
+          }
+        },
         "nb-NO": {
           "stringUnit": {
             "state": "translated",
@@ -2351,7 +2435,7 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Charging…"
+            "value": "Punjenje…"
           }
         },
         "cs": {
@@ -2438,6 +2522,12 @@
             "value": "Įkraunama…"
           }
         },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uzlādējas…"
+          }
+        },
         "nb-NO": {
           "stringUnit": {
             "state": "translated",
@@ -2518,7 +2608,7 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Heating…"
+            "value": "Grijanje…"
           }
         },
         "cs": {
@@ -2605,6 +2695,12 @@
             "value": "Šildoma…"
           }
         },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Silda…"
+          }
+        },
         "nb-NO": {
           "stringUnit": {
             "state": "translated",
@@ -2685,7 +2781,7 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Standby."
+            "value": "Pripravnost."
           }
         },
         "cs": {
@@ -2772,6 +2868,12 @@
             "value": "Budėjimo režimas."
           }
         },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gaidīšanas režīms."
+          }
+        },
         "nb-NO": {
           "stringUnit": {
             "state": "translated",
@@ -2852,7 +2954,7 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ready to heat…"
+            "value": "Spremno za grijanje…"
           }
         },
         "cs": {
@@ -2918,7 +3020,7 @@
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pronto. In attesa del calorifero…"
+            "value": "Pronto per il riscaldamento…"
           }
         },
         "ja": {
@@ -2937,6 +3039,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Paruošta šildyti…"
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gatavs sildīšanai…"
           }
         },
         "nb-NO": {
@@ -3019,19 +3127,19 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Cijena uvoza iz mreže"
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Cena odběru ze sítě"
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Elnet import pris"
           }
         },
         "de": {
@@ -3043,7 +3151,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Τιμή εισαγωγής από δίκτυο"
           }
         },
         "en": {
@@ -3055,55 +3163,61 @@
         "et": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Võrgust importimise hind"
           }
         },
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Sähkön ostohinta"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Prix d’import du réseau"
           }
         },
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Cijena uvoza iz mreže"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Hálózati vételezési ár"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Prezzo di prelievo dalla rete"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "買電単価"
           }
         },
         "lb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Käschte vum Import vum Netz"
           }
         },
         "lt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Tinklo importo kaina"
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tīkla iepirkuma cena"
           }
         },
         "nb-NO": {
@@ -3115,61 +3229,61 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Netstroom prijs voor import"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Cena z sieci"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Preço de importação da rede"
           }
         },
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Cena za odber zo siete"
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Cena odjema iz omrežja"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Importpris från elnät"
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "கிரிட் இறக்குமதி விலை"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Şebekeden alım fiyatı"
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Ціна імпорту з мережі"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "电网购电价格"
           }
         }
       }
@@ -3186,19 +3300,19 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Cijena izvoza u mrežu"
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Výkupní cena"
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Elnet eksport pris"
           }
         },
         "de": {
@@ -3210,7 +3324,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Τιμή εξαγωγής προς δίκτυο"
           }
         },
         "en": {
@@ -3222,55 +3336,61 @@
         "et": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Võrku eksportimise hind"
           }
         },
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Sähkön myyntihinta"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Prix d’export vers le réseau"
           }
         },
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Cijena izvoza u mrežu"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Hálózati betáplálási ár"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Prezzo di immissione in rete"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "売電単価"
           }
         },
         "lb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Käschte vum Export an d'Netz"
           }
         },
         "lt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Tinklo eksporto kaina"
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tīkla pārdošanas cena"
           }
         },
         "nb-NO": {
@@ -3282,61 +3402,61 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Netstroom prijs voor injectie"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Cena do sieci"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Preço de exportação da rede"
           }
         },
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Cena exportu do siete"
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Cena dovajanja v omrežje"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Exportpris till elnät"
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "கிரிட் ஏற்றுமதி விலை"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Şebekeye satış fiyatı"
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Ціна експорту в мережу"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "电网售电价格"
           }
         }
       }
@@ -3353,19 +3473,19 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "now"
+            "value": "sada"
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "now"
+            "value": "nyní"
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "now"
+            "value": "nu"
           }
         },
         "de": {
@@ -3377,7 +3497,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "now"
+            "value": "τώρα"
           }
         },
         "en": {
@@ -3389,55 +3509,61 @@
         "et": {
           "stringUnit": {
             "state": "translated",
-            "value": "now"
+            "value": "praegu"
           }
         },
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "now"
+            "value": "nyt"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "now"
+            "value": "maintenant"
           }
         },
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "now"
+            "value": "sada"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "now"
+            "value": "most"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "now"
+            "value": "ora"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "now"
+            "value": "現在"
           }
         },
         "lb": {
           "stringUnit": {
             "state": "translated",
-            "value": "now"
+            "value": "elo"
           }
         },
         "lt": {
           "stringUnit": {
             "state": "translated",
-            "value": "now"
+            "value": "dabar"
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "tagad"
           }
         },
         "nb-NO": {
@@ -3449,61 +3575,61 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "now"
+            "value": "nu"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "now"
+            "value": "teraz"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "now"
+            "value": "agora"
           }
         },
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "now"
+            "value": "teraz"
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "now"
+            "value": "zdaj"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "now"
+            "value": "nu"
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "now"
+            "value": "இப்போது"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "now"
+            "value": "şimdi"
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "now"
+            "value": "зараз"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "now"
+            "value": "现在"
           }
         }
       }
@@ -3520,19 +3646,19 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "No data"
+            "value": "Nema podataka"
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "No data"
+            "value": "Žádná data"
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "No data"
+            "value": "Ingen data"
           }
         },
         "de": {
@@ -3544,7 +3670,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "No data"
+            "value": "Δεν υπάρχουν δεδομένα"
           }
         },
         "en": {
@@ -3556,55 +3682,61 @@
         "et": {
           "stringUnit": {
             "state": "translated",
-            "value": "No data"
+            "value": "Andmeid pole"
           }
         },
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "No data"
+            "value": "Ei tietoja"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "No data"
+            "value": "Aucune donnée"
           }
         },
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "No data"
+            "value": "Nema podataka"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "No data"
+            "value": "Nincs adat"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "No data"
+            "value": "Nessun dato"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "No data"
+            "value": "データなし"
           }
         },
         "lb": {
           "stringUnit": {
             "state": "translated",
-            "value": "No data"
+            "value": "Keng Donnéeën"
           }
         },
         "lt": {
           "stringUnit": {
             "state": "translated",
-            "value": "No data"
+            "value": "Nėra duomenų"
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nav datu"
           }
         },
         "nb-NO": {
@@ -3616,61 +3748,61 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "No data"
+            "value": "Geen data"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "No data"
+            "value": "Brak danych"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "No data"
+            "value": "Sem dados"
           }
         },
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "No data"
+            "value": "Žiadne údaje"
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "No data"
+            "value": "Ni podatkov"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "No data"
+            "value": "Inga data"
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "No data"
+            "value": "தரவு இல்லை"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "No data"
+            "value": "Veri yok"
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "No data"
+            "value": "Немає даних"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "No data"
+            "value": "无数据"
           }
         }
       }
@@ -3687,19 +3819,19 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "This server has no data of this type."
+            "value": "Ovaj server nema podataka ovog tipa."
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "This server has no data of this type."
+            "value": "Tento server nemá data tohoto typu."
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "This server has no data of this type."
+            "value": "Denne server har ingen data af denne type."
           }
         },
         "de": {
@@ -3711,7 +3843,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "This server has no data of this type."
+            "value": "Αυτός ο διακομιστής δεν έχει δεδομένα αυτού του τύπου."
           }
         },
         "en": {
@@ -3723,55 +3855,61 @@
         "et": {
           "stringUnit": {
             "state": "translated",
-            "value": "This server has no data of this type."
+            "value": "Selles serveris pole antud tüüpi andmeid."
           }
         },
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "This server has no data of this type."
+            "value": "Tällä palvelimella ei ole tämän tyyppisiä tietoja."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "This server has no data of this type."
+            "value": "Le serveur n’a pas de données de ce type."
           }
         },
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "This server has no data of this type."
+            "value": "Ovaj poslužitelj nema podataka ove vrste."
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "This server has no data of this type."
+            "value": "Ezen a szerveren nincs ilyen típusú adat."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "This server has no data of this type."
+            "value": "Questo server non ha dati di questo tipo."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "This server has no data of this type."
+            "value": "このサーバーにはこの種類のデータがありません。"
           }
         },
         "lb": {
           "stringUnit": {
             "state": "translated",
-            "value": "This server has no data of this type."
+            "value": "Dëse Server huet keng Donnéeën vun dësem Typ."
           }
         },
         "lt": {
           "stringUnit": {
             "state": "translated",
-            "value": "This server has no data of this type."
+            "value": "Šiame serveryje nėra tokio tipo duomenų."
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Šim serverim nav šāda veida datu."
           }
         },
         "nb-NO": {
@@ -3783,61 +3921,61 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "This server has no data of this type."
+            "value": "Deze server heeft geen data van dit type."
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "This server has no data of this type."
+            "value": "Ten serwer nie ma danych tego typu."
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "This server has no data of this type."
+            "value": "Este servidor não possui dados deste tipo."
           }
         },
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "This server has no data of this type."
+            "value": "Tento server nemá žiadne údaje tohto typu."
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "This server has no data of this type."
+            "value": "Ta strežnik nima podatkov te vrste."
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "This server has no data of this type."
+            "value": "Servern har ingen data av denna typ."
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "This server has no data of this type."
+            "value": "இந்தச் சேவையகத்தில் இந்த வகை தரவு இல்லை."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "This server has no data of this type."
+            "value": "Bu sunucuda bu türde veri yok."
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "This server has no data of this type."
+            "value": "Цей сервер не має даних такого типу."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "This server has no data of this type."
+            "value": "此服务器没有此类型的数据。"
           }
         }
       }
@@ -3854,19 +3992,19 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server unreachable"
+            "value": "Server nedostupan"
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server unreachable"
+            "value": "Server nedostupný"
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server unreachable"
+            "value": "Server ikke tilgængelig"
           }
         },
         "de": {
@@ -3878,7 +4016,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server unreachable"
+            "value": "Διακομιστής μη προσβάσιμος"
           }
         },
         "en": {
@@ -3890,55 +4028,61 @@
         "et": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server unreachable"
+            "value": "Server pole leitav"
           }
         },
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server unreachable"
+            "value": "Palvelin ei tavoitettavissa"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server unreachable"
+            "value": "Serveur indisponible"
           }
         },
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server unreachable"
+            "value": "Poslužitelj nije dostupan"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server unreachable"
+            "value": "A szerver nem elérhető"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server unreachable"
+            "value": "Server non raggiungibile"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server unreachable"
+            "value": "サーバーに接続できません"
           }
         },
         "lb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server unreachable"
+            "value": "De Server ass net erreechbar"
           }
         },
         "lt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server unreachable"
+            "value": "Serveris nepasiekiamas"
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Serveris nav sasniedzams"
           }
         },
         "nb-NO": {
@@ -3950,61 +4094,61 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server unreachable"
+            "value": "Server onbereikbaar"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server unreachable"
+            "value": "Serwer niedostępny"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server unreachable"
+            "value": "Servidor inacessível"
           }
         },
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server unreachable"
+            "value": "Server nedostupný"
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server unreachable"
+            "value": "Strežnik ni dosegljiv"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server unreachable"
+            "value": "Servern kan inte nås"
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server unreachable"
+            "value": "சேவையகத்தை அடைய முடியவில்லை"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server unreachable"
+            "value": "Sunucuya ulaşılamıyor"
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server unreachable"
+            "value": "Сервер недоступний"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server unreachable"
+            "value": "服务器不可达"
           }
         }
       }
@@ -4021,19 +4165,19 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Could not load the evcc instance."
+            "value": "Nije moguće učitati evcc instancu."
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Could not load the evcc instance."
+            "value": "Instanci evcc se nepodařilo načíst."
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Could not load the evcc instance."
+            "value": "Kunne ikke indlæse evcc-instansen."
           }
         },
         "de": {
@@ -4045,7 +4189,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Could not load the evcc instance."
+            "value": "Δεν ήταν δυνατή η φόρτωση της εγκατάστασης evcc."
           }
         },
         "en": {
@@ -4057,55 +4201,61 @@
         "et": {
           "stringUnit": {
             "state": "translated",
-            "value": "Could not load the evcc instance."
+            "value": "evcc serveri laadimine ei õnnestunud."
           }
         },
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Could not load the evcc instance."
+            "value": "evcc-palvelua ei voitu ladata."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Could not load the evcc instance."
+            "value": "Impossible de charger l’instance d’evcc."
           }
         },
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Could not load the evcc instance."
+            "value": "Nije moguće učitati evcc instancu."
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Could not load the evcc instance."
+            "value": "Az evcc példány nem tölthető be."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Could not load the evcc instance."
+            "value": "Impossibile caricare l'istanza evcc."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Could not load the evcc instance."
+            "value": "evccインスタンスを読み込めませんでした。"
           }
         },
         "lb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Could not load the evcc instance."
+            "value": "Et war net méiglech, d'evcc-Instanz ze lueden."
           }
         },
         "lt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Could not load the evcc instance."
+            "value": "Nepavyko įkelti evcc."
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neizdevās ielādēt evcc instanci."
           }
         },
         "nb-NO": {
@@ -4117,61 +4267,61 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Could not load the evcc instance."
+            "value": "Kan de evcc instantie niet laden."
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Could not load the evcc instance."
+            "value": "Nie udało się wczytać instancji evcc."
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Could not load the evcc instance."
+            "value": "Não foi possível carregar a instância do evcc."
           }
         },
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Could not load the evcc instance."
+            "value": "Nemohol načítať evcc inštanciu."
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Could not load the evcc instance."
+            "value": "Instance evcc ni bilo mogoče naložiti."
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Could not load the evcc instance."
+            "value": "Kunde inte ladda evcc-instansen."
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "Could not load the evcc instance."
+            "value": "evcc நிகழ்வை ஏற்ற முடியவில்லை."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Could not load the evcc instance."
+            "value": "evcc örneği yüklenemedi."
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Could not load the evcc instance."
+            "value": "Не вдалося завантажити екземпляр evcc."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Could not load the evcc instance."
+            "value": "无法加载 evcc 实例。"
           }
         }
       }
@@ -4188,19 +4338,19 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Set up evcc"
+            "value": "Postavi evcc"
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Set up evcc"
+            "value": "Nastavit evcc"
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Set up evcc"
+            "value": "Opsæt evcc"
           }
         },
         "de": {
@@ -4212,7 +4362,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Set up evcc"
+            "value": "Ρύθμιση evcc"
           }
         },
         "en": {
@@ -4224,55 +4374,61 @@
         "et": {
           "stringUnit": {
             "state": "translated",
-            "value": "Set up evcc"
+            "value": "Seadista evcc-ühendus"
           }
         },
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Set up evcc"
+            "value": "Määritä evcc"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Set up evcc"
+            "value": "Configuration evcc"
           }
         },
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Set up evcc"
+            "value": "Postavi evcc"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Set up evcc"
+            "value": "evcc beállítása"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Set up evcc"
+            "value": "Configura evcc"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Set up evcc"
+            "value": "evccを設定"
           }
         },
         "lb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Set up evcc"
+            "value": "evcc astellen"
           }
         },
         "lt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Set up evcc"
+            "value": "Nustatyti evcc"
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Iestatīt evcc"
           }
         },
         "nb-NO": {
@@ -4284,61 +4440,61 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Set up evcc"
+            "value": "Configureer evcc"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Set up evcc"
+            "value": "Skonfiguruj evcc"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Set up evcc"
+            "value": "Configurar o evcc"
           }
         },
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Set up evcc"
+            "value": "Nastaviť evcc"
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Set up evcc"
+            "value": "Nastavite evcc"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Set up evcc"
+            "value": "Konfigurera evcc"
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "Set up evcc"
+            "value": "evcc ஐ அமைக்கவும்"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Set up evcc"
+            "value": "evcc'yi kur"
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Set up evcc"
+            "value": "Налаштувати evcc"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Set up evcc"
+            "value": "设置 evcc"
           }
         }
       }
@@ -4355,19 +4511,19 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tap to connect a server and pick a data type."
+            "value": "Dodirnite da povežete server i odaberete tip podataka."
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tap to connect a server and pick a data type."
+            "value": "Klepnutím připojíte server a zvolíte typ dat."
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tap to connect a server and pick a data type."
+            "value": "Tryk for at forbinde en server og vælge en datatype."
           }
         },
         "de": {
@@ -4379,7 +4535,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tap to connect a server and pick a data type."
+            "value": "Πατήστε για να συνδέσετε ένα διακομιστή και να επιλέξετε τύπο δεδομένων."
           }
         },
         "en": {
@@ -4391,55 +4547,61 @@
         "et": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tap to connect a server and pick a data type."
+            "value": "Klõpsa ühendamaks serveriga ja andmetüübi valimiseks."
           }
         },
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tap to connect a server and pick a data type."
+            "value": "Napauta yhdistääksesi palvelimen ja valitaksesi tietotyypin."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tap to connect a server and pick a data type."
+            "value": "Cliquez pour se connecter à un serveur et choisir un type de données."
           }
         },
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tap to connect a server and pick a data type."
+            "value": "Dodirnite za povezivanje poslužitelja i odabir vrste podataka."
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tap to connect a server and pick a data type."
+            "value": "Koppintson a szerver csatlakoztatásához és az adattípus kiválasztásához."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tap to connect a server and pick a data type."
+            "value": "Tocca per collegare un server e scegliere un tipo di dati."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tap to connect a server and pick a data type."
+            "value": "タップしてサーバーを接続し、データの種類を選択します。"
           }
         },
         "lb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tap to connect a server and pick a data type."
+            "value": "Tippt fir e Server ze verbannen an e Datentyp auszewielen."
           }
         },
         "lt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tap to connect a server and pick a data type."
+            "value": "Palieskite, kad prisijungtumėte prie serverio ir pasirinktumėte duomenų tipą."
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pieskarieties, lai izveidotu savienojumu ar serveri un izvēlētos datu tipu."
           }
         },
         "nb-NO": {
@@ -4451,61 +4613,61 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tap to connect a server and pick a data type."
+            "value": "Tik om te verbinden met een server en een datatype te kiezen."
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tap to connect a server and pick a data type."
+            "value": "Stuknij, aby połączyć serwer i wybrać typ danych."
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tap to connect a server and pick a data type."
+            "value": "Toque para ligar a um servidor e selecionar um tipo de dados."
           }
         },
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tap to connect a server and pick a data type."
+            "value": "Kliknite na pripojenie servera a vyberte dátový typ."
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tap to connect a server and pick a data type."
+            "value": "Tapnite za povezavo strežnika in izbiro vrste podatkov."
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tap to connect a server and pick a data type."
+            "value": "Tryck för att ansluta en server och välja en datatyp."
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tap to connect a server and pick a data type."
+            "value": "சேவையகத்தை இணைத்து தரவு வகையைத் தேர்ந்தெடுக்கத் தட்டவும்."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tap to connect a server and pick a data type."
+            "value": "Bir sunucu bağlamak ve veri türü seçmek için dokunun."
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tap to connect a server and pick a data type."
+            "value": "Торкніться, щоб підключити сервер і вибрати тип даних."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tap to connect a server and pick a data type."
+            "value": "点击以连接服务器并选择数据类型。"
           }
         }
       }
@@ -4522,19 +4684,19 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "evcc Forecast"
+            "value": "evcc prognoza"
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "evcc Forecast"
+            "value": "evcc předpověď"
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "evcc Forecast"
+            "value": "evcc-prognose"
           }
         },
         "de": {
@@ -4546,7 +4708,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "evcc Forecast"
+            "value": "Πρόγνωση evcc"
           }
         },
         "en": {
@@ -4558,55 +4720,61 @@
         "et": {
           "stringUnit": {
             "state": "translated",
-            "value": "evcc Forecast"
+            "value": "evcc ennustus"
           }
         },
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "evcc Forecast"
+            "value": "evcc-ennuste"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "evcc Forecast"
+            "value": "Prévisions evcc"
           }
         },
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "evcc Forecast"
+            "value": "evcc prognoza"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "evcc Forecast"
+            "value": "evcc előrejelzés"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "evcc Forecast"
+            "value": "Previsioni evcc"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "evcc Forecast"
+            "value": "evcc予測"
           }
         },
         "lb": {
           "stringUnit": {
             "state": "translated",
-            "value": "evcc Forecast"
+            "value": "evcc Viraussoen"
           }
         },
         "lt": {
           "stringUnit": {
             "state": "translated",
-            "value": "evcc Forecast"
+            "value": "evcc Prognozė"
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "evcc Prognoze"
           }
         },
         "nb-NO": {
@@ -4618,61 +4786,61 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "evcc Forecast"
+            "value": "evcc voorspelling"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "evcc Forecast"
+            "value": "Prognoza evcc"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "evcc Forecast"
+            "value": "Previsões do evcc"
           }
         },
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "evcc Forecast"
+            "value": "predpoveď evcc"
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "evcc Forecast"
+            "value": "Napoved evcc"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "evcc Forecast"
+            "value": "evcc-prognos"
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "evcc Forecast"
+            "value": "evcc முன்னறிவிப்பு"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "evcc Forecast"
+            "value": "evcc Tahmini"
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "evcc Forecast"
+            "value": "Прогноз evcc"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "evcc Forecast"
+            "value": "evcc 预测"
           }
         }
       }
@@ -4689,19 +4857,19 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server for the forecast."
+            "value": "Server za prognozu."
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server for the forecast."
+            "value": "Server pro předpověď."
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server for the forecast."
+            "value": "Server til prognosen."
           }
         },
         "de": {
@@ -4713,7 +4881,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server for the forecast."
+            "value": "Διακομιστής για την πρόγνωση."
           }
         },
         "en": {
@@ -4725,55 +4893,61 @@
         "et": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server for the forecast."
+            "value": "Server ennustuse jaoks."
           }
         },
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server for the forecast."
+            "value": "Ennusteen palvelin."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server for the forecast."
+            "value": "Serveur fournissant les prévisions."
           }
         },
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server for the forecast."
+            "value": "Poslužitelj za prognozu."
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server for the forecast."
+            "value": "Az előrejelzéshez használt szerver."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server for the forecast."
+            "value": "Server per le previsioni."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server for the forecast."
+            "value": "予測を取得するサーバー。"
           }
         },
         "lb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server for the forecast."
+            "value": "Server fir d'Viraussoen."
           }
         },
         "lt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server for the forecast."
+            "value": "Serveris prognozei."
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prognozes serveris."
           }
         },
         "nb-NO": {
@@ -4785,61 +4959,61 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server for the forecast."
+            "value": "Server voor de voorspelling."
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server for the forecast."
+            "value": "Serwer dla prognozy."
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server for the forecast."
+            "value": "Servidor para as previsões."
           }
         },
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server for the forecast."
+            "value": "Server pre predpoveď."
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server for the forecast."
+            "value": "Strežnik za napoved."
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server for the forecast."
+            "value": "Server för prognosen."
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server for the forecast."
+            "value": "முன்னறிவிப்புக்கான சேவையகம்."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server for the forecast."
+            "value": "Tahmin için sunucu."
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server for the forecast."
+            "value": "Сервер для прогнозу."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server for the forecast."
+            "value": "用于预测的服务器。"
           }
         }
       }
@@ -4880,7 +5054,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server"
+            "value": "Διακομιστής"
           }
         },
         "en": {
@@ -4898,25 +5072,25 @@
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server"
+            "value": "Palvelin"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server"
+            "value": "Serveur"
           }
         },
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server"
+            "value": "Poslužitelj"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server"
+            "value": "Szerver"
           }
         },
         "it": {
@@ -4928,7 +5102,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server"
+            "value": "サーバー"
           }
         },
         "lb": {
@@ -4940,7 +5114,13 @@
         "lt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server"
+            "value": "Serveris"
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Serveris"
           }
         },
         "nb-NO": {
@@ -4958,13 +5138,13 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server"
+            "value": "Serwer"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server"
+            "value": "Servidor"
           }
         },
         "sk": {
@@ -4976,7 +5156,7 @@
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server"
+            "value": "Strežnik"
           }
         },
         "sv": {
@@ -4988,25 +5168,25 @@
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server"
+            "value": "சேவையகம்"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server"
+            "value": "Sunucu"
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server"
+            "value": "Сервер"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server"
+            "value": "服务器"
           }
         }
       }
@@ -5023,19 +5203,19 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint"
+            "value": "Tačka punjenja"
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint"
+            "value": "Nabíjecí bod"
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint"
+            "value": "Ladepunkt"
           }
         },
         "de": {
@@ -5047,7 +5227,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint"
+            "value": "Σημείο φόρτισης"
           }
         },
         "en": {
@@ -5059,55 +5239,61 @@
         "et": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint"
+            "value": "Laadimispunkt"
           }
         },
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint"
+            "value": "Latauspiste"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint"
+            "value": "Point de charge"
           }
         },
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint"
+            "value": "Mjesto punjenja"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint"
+            "value": "Töltőpont"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint"
+            "value": "Punto di ricarica"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint"
+            "value": "充電ポイント"
           }
         },
         "lb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint"
+            "value": "Opluedpunkt"
           }
         },
         "lt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint"
+            "value": "Įkroviklis"
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slodzes punkts"
           }
         },
         "nb-NO": {
@@ -5119,61 +5305,61 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint"
+            "value": "Laadpunt"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint"
+            "value": "Punkt obciążenia"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint"
+            "value": "Ponto de carga"
           }
         },
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint"
+            "value": "Nabíjací bod"
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint"
+            "value": "Polnilna točka"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint"
+            "value": "Laddplats"
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint"
+            "value": "சார்சிங் புள்ளி"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint"
+            "value": "Doldurma noktası"
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint"
+            "value": "Точка заряджання"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint"
+            "value": "充电点"
           }
         }
       }
@@ -5190,19 +5376,19 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Charging point"
+            "value": "Tačka punjenja"
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Charging point"
+            "value": "Nabíjecí bod"
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Charging point"
+            "value": "Ladepunkt"
           }
         },
         "de": {
@@ -5214,7 +5400,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Charging point"
+            "value": "Σημείο φόρτισης"
           }
         },
         "en": {
@@ -5226,55 +5412,61 @@
         "et": {
           "stringUnit": {
             "state": "translated",
-            "value": "Charging point"
+            "value": "Laadimispunkt"
           }
         },
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Charging point"
+            "value": "Latauspiste"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Charging point"
+            "value": "Point de charge"
           }
         },
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Charging point"
+            "value": "Mjesto punjenja"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Charging point"
+            "value": "Töltőpont"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Charging point"
+            "value": "Punto di ricarica"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Charging point"
+            "value": "充電ポイント"
           }
         },
         "lb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Charging point"
+            "value": "Opluedpunkt"
           }
         },
         "lt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Charging point"
+            "value": "Įkroviklis"
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uzlādes punkts"
           }
         },
         "nb-NO": {
@@ -5286,61 +5478,61 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Charging point"
+            "value": "Laadpunt"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Charging point"
+            "value": "Punkt ładowania"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Charging point"
+            "value": "Ponto de carga"
           }
         },
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Charging point"
+            "value": "Nabíjací bod"
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Charging point"
+            "value": "Polnilna točka"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Charging point"
+            "value": "Laddplats"
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "Charging point"
+            "value": "சார்சிங் புள்ளி"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Charging point"
+            "value": "Doldurma noktası"
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Charging point"
+            "value": "Точка заряджання"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Charging point"
+            "value": "充电点"
           }
         }
       }
@@ -5357,19 +5549,19 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint status and charge mode."
+            "value": "Status tačke punjenja i način punjenja."
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint status and charge mode."
+            "value": "Stav nabíjecího bodu a režim nabíjení."
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint status and charge mode."
+            "value": "Ladepunktets status og ladetilstand."
           }
         },
         "de": {
@@ -5381,7 +5573,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint status and charge mode."
+            "value": "Κατάσταση σημείου φόρτισης και λειτουργία φόρτισης."
           }
         },
         "en": {
@@ -5393,55 +5585,61 @@
         "et": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint status and charge mode."
+            "value": "Laadimispunkti olek ja laadimisviis."
           }
         },
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint status and charge mode."
+            "value": "Latauspisteen tila ja lataustila."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint status and charge mode."
+            "value": "Statut et mode du point de charge."
           }
         },
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint status and charge mode."
+            "value": "Stanje mjesta punjenja i način punjenja."
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint status and charge mode."
+            "value": "Töltőpont állapota és töltési mód."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint status and charge mode."
+            "value": "Stato del punto di ricarica e modalità di ricarica."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint status and charge mode."
+            "value": "充電ポイントのステータスと充電モード。"
           }
         },
         "lb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint status and charge mode."
+            "value": "Status vum Opluedpunkt a Luedmodus."
           }
         },
         "lt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint status and charge mode."
+            "value": "Įkroviklio būsena ir įkrovimo režimas."
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slodzes punkta statuss un uzlādes režīms."
           }
         },
         "nb-NO": {
@@ -5453,61 +5651,61 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint status and charge mode."
+            "value": "Laadpuntstatus en laadmodus."
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint status and charge mode."
+            "value": "Stan punktu ładowania i tryb ładowania."
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint status and charge mode."
+            "value": "Estado do ponto de carga e modo de carga."
           }
         },
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint status and charge mode."
+            "value": "Stav nabíjacieho bodu a režim nabíjania."
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint status and charge mode."
+            "value": "Stanje polnilne točke in način polnjenja."
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint status and charge mode."
+            "value": "Laddplatsens status och laddläge."
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint status and charge mode."
+            "value": "சார்சிங் புள்ளி நிலை மற்றும் சார்ஜ் பயன்முறை."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint status and charge mode."
+            "value": "Doldurma noktası durumu ve doldurma modu."
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint status and charge mode."
+            "value": "Стан точки заряджання та режим заряджання."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loadpoint status and charge mode."
+            "value": "充电点状态和充电模式。"
           }
         }
       }
@@ -5524,19 +5722,19 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Solar forecast"
+            "value": "Solarna prognoza"
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Solar forecast"
+            "value": "Solární předpověď"
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Solar forecast"
+            "value": "Sol prognose"
           }
         },
         "de": {
@@ -5548,7 +5746,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Solar forecast"
+            "value": "Ηλιακή πρόγνωση"
           }
         },
         "en": {
@@ -5560,55 +5758,61 @@
         "et": {
           "stringUnit": {
             "state": "translated",
-            "value": "Solar forecast"
+            "value": "Päikeseenergia ennustus"
           }
         },
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Solar forecast"
+            "value": "Aurinkotuotannon ennuste"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Solar forecast"
+            "value": "Prévisions solaires"
           }
         },
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Solar forecast"
+            "value": "Solarna prognoza"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Solar forecast"
+            "value": "Napenergia előrejelzés"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Solar forecast"
+            "value": "Previsioni solari"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Solar forecast"
+            "value": "太陽光発電予測"
           }
         },
         "lb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Solar forecast"
+            "value": "Solarprognos"
           }
         },
         "lt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Solar forecast"
+            "value": "Saulės prognozė"
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saules prognoze"
           }
         },
         "nb-NO": {
@@ -5620,61 +5824,61 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Solar forecast"
+            "value": "PV-voorspelling"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Solar forecast"
+            "value": "Prognoza nasłonecznienia"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Solar forecast"
+            "value": "Previsão solar"
           }
         },
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Solar forecast"
+            "value": "Solárna predpoveď"
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Solar forecast"
+            "value": "Napoved sončne energije"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Solar forecast"
+            "value": "Solprognos"
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "Solar forecast"
+            "value": "சூரிய முன்னறிவிப்பு"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Solar forecast"
+            "value": "Güneş tahmini"
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Solar forecast"
+            "value": "Сонячний прогноз"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Solar forecast"
+            "value": "太阳能预测"
           }
         }
       }
@@ -5691,19 +5895,19 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Cijena uvoza iz mreže"
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Cena odběru ze sítě"
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Elnet import pris"
           }
         },
         "de": {
@@ -5715,7 +5919,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Τιμή εισαγωγής από δίκτυο"
           }
         },
         "en": {
@@ -5727,55 +5931,61 @@
         "et": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Võrgust importimise hind"
           }
         },
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Sähkön ostohinta"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Prix d’import du réseau"
           }
         },
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Cijena uvoza iz mreže"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Hálózati vételezési ár"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Prezzo di prelievo dalla rete"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "買電単価"
           }
         },
         "lb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Käschte vum Netz-Import"
           }
         },
         "lt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Tinklo importo kaina"
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tīkla iepirkuma cena"
           }
         },
         "nb-NO": {
@@ -5787,61 +5997,61 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Net import prijs"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Cena z sieci"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Preço de importação da rede"
           }
         },
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Cena za odber zo siete"
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Cena odjema iz omrežja"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Importpris från elnät"
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "கிரிட் இறக்குமதி விலை"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Şebekeden alım fiyatı"
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "Ціна імпорту з мережі"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid import price"
+            "value": "电网购电价格"
           }
         }
       }
@@ -5945,6 +6155,12 @@
             "value": "CO₂"
           }
         },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CO₂"
+          }
+        },
         "nb-NO": {
           "stringUnit": {
             "state": "translated",
@@ -6025,19 +6241,19 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Cijena izvoza u mrežu"
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Výkupní cena"
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Elnet eksport pris"
           }
         },
         "de": {
@@ -6049,7 +6265,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Τιμή εξαγωγής προς δίκτυο"
           }
         },
         "en": {
@@ -6061,55 +6277,61 @@
         "et": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Võrku eksportimise hind"
           }
         },
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Sähkön myyntihinta"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Prix d’export vers le réseau"
           }
         },
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Cijena izvoza u mrežu"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Hálózati betáplálási ár"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Prezzo di immissione in rete"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "売電単価"
           }
         },
         "lb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Präis vum Netz-Export"
           }
         },
         "lt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Tinklo eksporto kaina"
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tīkla atdeves cena"
           }
         },
         "nb-NO": {
@@ -6121,61 +6343,61 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Netexportprijs"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Cena do sieci"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Preço de exportação para a rede"
           }
         },
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Cena exportu do siete"
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Cena dovajanja v omrežje"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Exportpris till elnät"
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "கிரிட் ஏற்றுமதி விலை"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Şebekeye satış fiyatı"
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "Ціна експорту в мережу"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Grid export price"
+            "value": "电网售电价格"
           }
         }
       }
@@ -6192,19 +6414,19 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast solar production."
+            "value": "Prognoza solarne proizvodnje."
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast solar production."
+            "value": "Předpověď solární výroby."
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast solar production."
+            "value": "Prognose for solenergiproduktion."
           }
         },
         "de": {
@@ -6216,7 +6438,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast solar production."
+            "value": "Πρόγνωση ηλιακής παραγωγής."
           }
         },
         "en": {
@@ -6228,55 +6450,61 @@
         "et": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast solar production."
+            "value": "Päikeseenergia tootmise ennustus."
           }
         },
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast solar production."
+            "value": "Aurinkotuotannon ennuste."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast solar production."
+            "value": "Prévisions de la production solaire."
           }
         },
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast solar production."
+            "value": "Prognoza solarne proizvodnje."
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast solar production."
+            "value": "Napenergia-termelés előrejelzése."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast solar production."
+            "value": "Previsione della produzione solare."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast solar production."
+            "value": "太陽光発電量を予測します。"
           }
         },
         "lb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast solar production."
+            "value": "Prognose fir d'Solarproduktioun."
           }
         },
         "lt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast solar production."
+            "value": "Prognozuojama saulės energijos gamyba."
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prognozēt saules enerģijas ražošanu."
           }
         },
         "nb-NO": {
@@ -6288,61 +6516,61 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast solar production."
+            "value": "Voorspelling PV-productie."
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast solar production."
+            "value": "Prognoza produkcji energii słonecznej."
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast solar production."
+            "value": "Previsão da produção solar."
           }
         },
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast solar production."
+            "value": "Predpoveď slnečnej výroby."
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast solar production."
+            "value": "Napoved sončne proizvodnje."
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast solar production."
+            "value": "Prognos för solproduktion."
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast solar production."
+            "value": "சூரிய உற்பத்தி முன்னறிவிப்பு."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast solar production."
+            "value": "Güneş enerjisi üretim tahmini."
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast solar production."
+            "value": "Прогноз сонячного виробництва."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast solar production."
+            "value": "预测太阳能发电。"
           }
         }
       }
@@ -6359,19 +6587,19 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid import price."
+            "value": "Prognoza cijene uvoza iz mreže."
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid import price."
+            "value": "Předpověď ceny odběru ze sítě."
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid import price."
+            "value": "Prognose for elnet import pris."
           }
         },
         "de": {
@@ -6383,7 +6611,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid import price."
+            "value": "Πρόγνωση τιμής εισαγωγής από δίκτυο."
           }
         },
         "en": {
@@ -6395,55 +6623,61 @@
         "et": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid import price."
+            "value": "Võrgust importimise hinna ennustus."
           }
         },
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid import price."
+            "value": "Sähkön ostohinnan ennuste."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid import price."
+            "value": "Prévision du prix d’import du réseau."
           }
         },
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid import price."
+            "value": "Prognoza cijene uvoza iz mreže."
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid import price."
+            "value": "Hálózati vételezési ár előrejelzése."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid import price."
+            "value": "Previsione del prezzo di prelievo dalla rete."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid import price."
+            "value": "買電単価を予測します。"
           }
         },
         "lb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid import price."
+            "value": "Virausgesote Kaafpräis vum Netz."
           }
         },
         "lt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid import price."
+            "value": "Prognozuojama tinklo importo kaina."
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prognozēt tīkla iepirkuma cenu."
           }
         },
         "nb-NO": {
@@ -6455,61 +6689,61 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid import price."
+            "value": "Voorspelling netimportprijs."
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid import price."
+            "value": "Prognoza ceny energii z sieci."
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid import price."
+            "value": "Preço de importação previsto da rede."
           }
         },
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid import price."
+            "value": "Predpovedaná cena importu zo siete."
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid import price."
+            "value": "Napoved cene odjema iz omrežja."
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid import price."
+            "value": "Prognos för importpris från elnät."
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid import price."
+            "value": "கிரிட் இறக்குமதி விலை முன்னறிவிப்பு."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid import price."
+            "value": "Şebekeden alım fiyatı tahmini."
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid import price."
+            "value": "Прогноз ціни імпорту з мережі."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid import price."
+            "value": "预测电网购电价格。"
           }
         }
       }
@@ -6526,19 +6760,19 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast CO₂ emissions."
+            "value": "Prognoza emisija CO₂."
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast CO₂ emissions."
+            "value": "Předpověď emisí CO₂."
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast CO₂ emissions."
+            "value": "Prognose for CO₂-emissioner."
           }
         },
         "de": {
@@ -6550,7 +6784,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast CO₂ emissions."
+            "value": "Πρόγνωση εκπομπών CO₂."
           }
         },
         "en": {
@@ -6562,55 +6796,61 @@
         "et": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast CO₂ emissions."
+            "value": "CO₂ heitmete ennustus."
           }
         },
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast CO₂ emissions."
+            "value": "CO₂-päästöjen ennuste."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast CO₂ emissions."
+            "value": "Prévision des émissions de CO₂."
           }
         },
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast CO₂ emissions."
+            "value": "Prognoza emisija CO₂."
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast CO₂ emissions."
+            "value": "CO₂-kibocsátás előrejelzése."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast CO₂ emissions."
+            "value": "Previsione delle emissioni di CO₂."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast CO₂ emissions."
+            "value": "CO₂排出量を予測します。"
           }
         },
         "lb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast CO₂ emissions."
+            "value": "Virausgesote CO₂-Emissiounen."
           }
         },
         "lt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast CO₂ emissions."
+            "value": "Prognozuojami CO₂ išmetimai."
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prognozēt CO₂ emisijas."
           }
         },
         "nb-NO": {
@@ -6622,61 +6862,61 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast CO₂ emissions."
+            "value": "Voorspelling CO₂-emissies."
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast CO₂ emissions."
+            "value": "Prognoza emisji CO₂."
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast CO₂ emissions."
+            "value": "Previsão das emissões de CO₂."
           }
         },
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast CO₂ emissions."
+            "value": "Predpoveď emisií CO2."
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast CO₂ emissions."
+            "value": "Napoved emisij CO₂."
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast CO₂ emissions."
+            "value": "Prognos för CO₂-utsläpp."
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast CO₂ emissions."
+            "value": "CO₂ உமிழ்வு முன்னறிவிப்பு."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast CO₂ emissions."
+            "value": "CO₂ emisyonları tahmini."
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast CO₂ emissions."
+            "value": "Прогноз викидів CO₂."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast CO₂ emissions."
+            "value": "预测 CO₂ 排放。"
           }
         }
       }
@@ -6693,19 +6933,19 @@
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid export price."
+            "value": "Prognoza cijene izvoza u mrežu."
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid export price."
+            "value": "Předpověď výkupní ceny."
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid export price."
+            "value": "Prognose for elnet eksport pris."
           }
         },
         "de": {
@@ -6717,7 +6957,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid export price."
+            "value": "Πρόγνωση τιμής εξαγωγής προς δίκτυο."
           }
         },
         "en": {
@@ -6729,55 +6969,61 @@
         "et": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid export price."
+            "value": "Võrku eksportimise hinna ennustus."
           }
         },
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid export price."
+            "value": "Sähkön myyntihinnan ennuste."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid export price."
+            "value": "Prévision du prix d’export vers le réseau."
           }
         },
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid export price."
+            "value": "Prognoza cijene izvoza u mrežu."
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid export price."
+            "value": "Hálózati betáplálási ár előrejelzése."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid export price."
+            "value": "Previsione del prezzo di immissione in rete."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid export price."
+            "value": "売電単価を予測します。"
           }
         },
         "lb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid export price."
+            "value": "Virausgesote Präis vum Netz-Export."
           }
         },
         "lt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid export price."
+            "value": "Prognozuojama tinklo eksporto kaina."
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prognozēt tīkla atdeves cenu."
           }
         },
         "nb-NO": {
@@ -6789,61 +7035,61 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid export price."
+            "value": "Voorspelling netexportprijs."
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid export price."
+            "value": "Prognoza ceny energii oddawanej do sieci."
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid export price."
+            "value": "Preço de exportação previsto da rede."
           }
         },
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid export price."
+            "value": "Predpovedaná cena exportu do siete."
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid export price."
+            "value": "Napoved cene dovajanja v omrežje."
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid export price."
+            "value": "Prognos för exportpris till elnät."
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid export price."
+            "value": "கிரிட் ஏற்றுமதி விலை முன்னறிவிப்பு."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid export price."
+            "value": "Şebekeye satış fiyatı tahmini."
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid export price."
+            "value": "Прогноз ціни експорту в мережу."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forecast grid export price."
+            "value": "预测电网售电价格。"
           }
         }
       }
@@ -6945,6 +7191,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Saulė"
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solar"
           }
         },
         "nb-NO": {
@@ -7112,6 +7364,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Min+Saulė"
+          }
+        },
+        "lv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Min+Solar"
           }
         },
         "nb-NO": {

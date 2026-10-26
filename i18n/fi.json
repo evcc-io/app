@@ -10,7 +10,6 @@
       "authenticationRequired": "Todennus vaaditaan",
       "checkAdress": "Määritetty palvelin ei näytä olevan evcc-palvelin. Tarkista osoite.",
       "checkAndSave": "Tarkista ja tallenna",
-      "enterUrl": "Anna URL-osoite",
       "missingOrWrongAuthentication": "Todennus puuttuu tai virheellinen",
       "password": "Salasana",
       "qrcode": {
@@ -46,7 +45,6 @@
       "start": "Etsi palvelin",
       "tryAgain": "Hae uudelleen"
     },
-    "select": "Valitse",
     "switchServer": {
       "addServer": "Lisää palvelin",
       "title": "Vaihda palvelinta"

@@ -10,7 +10,6 @@
       "authenticationRequired": "Potrebna je autentifikacija",
       "checkAdress": "Čini se da server nije evcc instanca. Molimo provjerite adresu.",
       "checkAndSave": "Provjeri i sačuvaj",
-      "enterUrl": "Unesite URL",
       "missingOrWrongAuthentication": "Izostavljena ili netačna autentifikacija",
       "password": "Lozinka",
       "qrcode": {
@@ -46,7 +45,6 @@
       "start": "Pokreni pretragu",
       "tryAgain": "Traži ponovo"
     },
-    "select": "Odaberi",
     "switchServer": {
       "addServer": "Dodaj server",
       "title": "Promijeni server"

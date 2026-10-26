@@ -10,7 +10,6 @@
       "authenticationRequired": "Necessário Autenticação",
       "checkAdress": "O servidor não parece ser uma instalação do evcc. Por favor, verifique o endereço.",
       "checkAndSave": "Verificar e guardar",
-      "enterUrl": "Inserir URL",
       "missingOrWrongAuthentication": "Autenticação inexistente ou incorreta",
       "password": "Password",
       "qrcode": {
@@ -46,7 +45,6 @@
       "start": "Iniciar a pesquisa",
       "tryAgain": "Procurar de novo"
     },
-    "select": "Selecionar",
     "switchServer": {
       "addServer": "Adicionar um servidor",
       "title": "Mudar de servidor"

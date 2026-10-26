@@ -10,7 +10,6 @@
       "authenticationRequired": "Uwierzytelnienie wymagane",
       "checkAdress": "Wygląda na to że na serwerze evcc nie występuje. Proszę sprawdzić adres.",
       "checkAndSave": "Sprawdź i zachowaj",
-      "enterUrl": "Wprowadź adres URL",
       "missingOrWrongAuthentication": "Brak lub błędne uwierzytelnienie",
       "password": "Hasło",
       "qrcode": {
@@ -46,7 +45,6 @@
       "start": "Wyszukaj serwer",
       "tryAgain": "Szukaj ponownie"
     },
-    "select": "Wybierz",
     "switchServer": {
       "addServer": "Dodaj serwer",
       "title": "Zmiana serwera"

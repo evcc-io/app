@@ -10,7 +10,6 @@
       "authenticationRequired": "需要认证",
       "checkAdress": "此服务器不是 evcc 实例。请检查地址。",
       "checkAndSave": "检查并保存",
-      "enterUrl": "输入 URL",
       "missingOrWrongAuthentication": "缺少或不正确的认证",
       "password": "密码",
       "qrcode": {
@@ -46,7 +45,6 @@
       "start": "开始搜索",
       "tryAgain": "重新搜索"
     },
-    "select": "选择",
     "switchServer": {
       "addServer": "添加服务器",
       "title": "切换服务器"

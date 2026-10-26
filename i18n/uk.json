@@ -10,7 +10,6 @@
       "authenticationRequired": "Потрібна автентифікація",
       "checkAdress": "Схоже, що сервер не є екземпляром evcc. Перевірте адресу.",
       "checkAndSave": "Перевірте та зберегти",
-      "enterUrl": "Введіть URL-адресу",
       "missingOrWrongAuthentication": "Відсутня або неправильна автентифікація",
       "password": "Пароль",
       "qrcode": {
@@ -46,7 +45,6 @@
       "start": "Розпочати пошук",
       "tryAgain": "Шукати знову"
     },
-    "select": "Виберіть",
     "switchServer": {
       "addServer": "Додати сервер",
       "title": "Змінити сервер"
