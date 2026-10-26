@@ -1,4 +1,39 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "Nome utente o password errati. Aggiorna le credenziali tramite Cambia server.",
+      "title": "Accesso non riuscito"
+    },
+    "httpError": {
+      "hint": "Il server ha risposto in modo imprevisto.",
+      "title": "Errore del server (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "Il tuo dispositivo è offline. Connettiti al WiFi o ai dati mobili.",
+      "title": "Nessuna rete"
+    },
+    "rateLimited": {
+      "hint": "Il server sta bloccando temporaneamente le richieste.",
+      "title": "Troppi tentativi"
+    },
+    "remoteOffline": {
+      "hint": "La tua istanza evcc non è connessa.",
+      "title": "evcc è offline"
+    },
+    "retry": "Riprova",
+    "timeout": {
+      "hint": "Nessuna risposta dal server.",
+      "title": "Il server non risponde"
+    },
+    "unreachable": {
+      "hint": "Controlla la rete e che la tua istanza evcc sia in esecuzione.",
+      "title": "Server non raggiungibile"
+    },
+    "websocket": {
+      "hint": "La pagina si carica, ma il WebSocket non si connette. Controlla le impostazioni del reverse proxy.",
+      "title": "Connessione WebSocket non riuscita"
+    }
+  },
   "main": {
     "description": "Colleghiamoci al tuo server.",
     "title": "Benvenuti"
@@ -11,6 +46,7 @@
       "checkAdress": "Il server non sembra essere un'istanza evcc. Si prega di verificare l'indirizzo.",
       "checkAndSave": "Controlla e salva",
       "enterUrl": "Inserisci l'URL",
+      "loginRequired": "Il server richiede l'accesso.",
       "missingOrWrongAuthentication": "Autenticazione mancante o errata",
       "password": "Password",
       "qrcode": {
