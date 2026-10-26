@@ -1,6 +1,6 @@
 import "detox";
 import { expect } from "detox";
-import { tapAfterWaitFor, waitForWebview } from "./helper";
+import { waitForWebview } from "./helper";
 
 describe("Manual entry", () => {
   beforeEach(async () => {
@@ -40,7 +40,8 @@ describe("Manual entry", () => {
     await element(by.id("serverFormAuthUser")).replaceText("admin");
     await element(by.id("serverFormAuthPassword")).replaceText("secret");
 
-    await tapAfterWaitFor(element(by.id("serverFormCheckAndSave")));
+    // the keyboard covers the save button, submit via return key
+    await element(by.id("serverFormAuthPassword")).tapReturnKey();
 
     await waitForWebview();
   });
