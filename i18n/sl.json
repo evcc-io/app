@@ -5,6 +5,7 @@
   },
   "servers": {
     "changeServer": "Spremenite strežnik",
+    "editServer": "Uredi strežnik",
     "manually": {
       "authenticationRequired": "Potrebna je avtentikacija",
       "checkAdress": "Na strežniku ni najdene evcc instance. Prosim, preverite naslov strežnika.",
@@ -13,74 +14,95 @@
       "missingOrWrongAuthentication": "Manjkajoča ali nepravilna avtentikacija",
       "password": "Geslo",
       "qrcode": {
-        "invalid": "",
-        "permissionDenied": "",
-        "recognized": "",
-        "scan": "",
-        "scanOnboarding": "",
-        "scanPrefill": "",
-        "scanning": ""
+        "invalid": "To ni veljavna koda QR za evcc.",
+        "permissionDenied": "Dostop do kamere zavrnjen. Omogočite ga v nastavitvah za skeniranje kod QR.",
+        "recognized": "Koda QR zaznana!",
+        "scan": "Skeniranje kode QR",
+        "scanOnboarding": "Nastavi prek kode QR",
+        "scanPrefill": "Izpolni prek kode QR",
+        "scanning": "zaznavanje..."
       },
-      "serverExistsAlready": "",
+      "serverExistsAlready": "Ta strežnik že obstaja.",
       "serverIncompatible": "Instanca evcc še ni združljiva z aplikacijo. Prosim posodobite verzijo.",
       "serverNotAvailable": "Strežnik ni na voljo. Preverite naslov.",
       "specify": "Ročni vnos naslova",
-      "title": "",
+      "title": "Naziv",
       "user": "Uporabnik"
     },
+    "remove": "Odstrani",
+    "removeConfirm": "Ali res želite odstraniti {{title}}?",
     "removeServer": "Odstranite strežnik",
     "search": {
+      "cancel": "Prekliči",
+      "connect": "Poveži",
+      "foundMany": "Najdenih strežnikov: {{count}}",
+      "foundOne": "Strežnik najden",
+      "hint": "To običajno traja nekaj sekund.",
+      "inProgress": "Iskanje …",
       "notAvailable": "Iskanje na tej napravi ni mogoče. Uporabite ročni vnos.",
       "nothingFound": "Najden ni bil noben strežnik z evcc.",
       "searching": "Iskanje povezave ...",
-      "start": "Začnite iskanje"
+      "selectHelper": "Izberite tistega, s katerim se želite povezati.",
+      "start": "Začnite iskanje",
+      "tryAgain": "Išči znova"
     },
     "select": "Izberite",
     "switchServer": {
-      "addServer": "",
-      "title": ""
+      "addServer": "Dodaj strežnik",
+      "title": "Zamenjava strežnika"
     },
     "useDemo": "Uporaba demo verzije"
   },
   "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "Izberite polnilno točko",
+      "chooseServer": "Izberite strežnik",
+      "loading": "Nalaganje…",
+      "loadingPreview": "Nalaganje predogleda…",
+      "noLoadpoints": "Nobena polnilna točka ni dosegljiva",
+      "noServers": "Ni strežnikov. Najprej ga dodajte v aplikaciji.",
+      "previewError": "Predogleda ni bilo mogoče naložiti",
+      "setupBody": "Tapnite za izbiro strežnika in polnilne točke.",
+      "useThisLoadpoint": "Uporabi to polnilno točko"
+    },
     "config": {
-      "desc": "",
-      "loadpoint": "",
-      "server": "",
-      "title": ""
+      "desc": "Strežnik za napoved.",
+      "loadpoint": "Polnilna točka",
+      "server": "Strežnik",
+      "title": "Napoved evcc"
     },
     "description": {
-      "co2": "",
-      "feedin": "",
-      "price": "",
-      "solar": ""
+      "co2": "Napoved emisij CO₂.",
+      "feedin": "Napoved cene dovajanja v omrežje.",
+      "price": "Napoved cene odjema iz omrežja.",
+      "solar": "Napoved sončne proizvodnje."
     },
     "loadpoint": {
-      "description": "",
-      "name": ""
+      "description": "Stanje polnilne točke in način polnjenja.",
+      "name": "Polnilna točka"
     },
     "name": {
       "co2": "",
-      "feedin": "",
-      "price": "",
-      "solar": ""
+      "feedin": "Cena dovajanja v omrežje",
+      "price": "Cena odjema iz omrežja",
+      "solar": "Napoved sončne energije"
     },
     "noData": {
-      "body": "",
-      "title": ""
+      "body": "Ta strežnik nima podatkov te vrste.",
+      "title": "Ni podatkov"
     },
-    "now": "",
+    "now": "zdaj",
     "setup": {
-      "body": "",
-      "title": ""
+      "body": "Tapnite za povezavo strežnika in izbiro vrste podatkov.",
+      "title": "Nastavite evcc"
     },
     "type": {
-      "feedin": "",
-      "price": ""
+      "feedin": "Cena dovajanja v omrežje",
+      "price": "Cena odjema iz omrežja"
     },
     "unreachable": {
-      "body": "",
-      "title": ""
+      "body": "Instance evcc ni bilo mogoče naložiti.",
+      "title": "Strežnik ni dosegljiv"
     }
   }
 }

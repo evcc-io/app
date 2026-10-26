@@ -40,7 +40,11 @@ object ApiClient {
         return code
     }
 
-    private fun authorize(conn: HttpURLConnection, server: StoredServer) {
+    // Same UA suffix as the app's WebView (utils/constants.ts)
+    private val USER_AGENT = "evcc/${io.evcc.android.BuildConfig.VERSION_NAME}"
+
+    private fun applyHeaders(conn: HttpURLConnection, server: StoredServer) {
+        conn.setRequestProperty("User-Agent", USER_AGENT)
         if (server.authRequired && !server.username.isNullOrEmpty() && server.password != null) {
             val token = Base64.encodeToString(
                 "${server.username}:${server.password}".toByteArray(),
@@ -59,7 +63,7 @@ object ApiClient {
                 connectTimeout = TIMEOUT_MS
                 readTimeout = TIMEOUT_MS
                 requestMethod = "GET"
-                authorize(this, server)
+                applyHeaders(this, server)
             }
             try {
                 if (status(conn, server) !in 200..299) return FetchOutcome.Failure
@@ -96,7 +100,7 @@ object ApiClient {
                 connectTimeout = TIMEOUT_MS
                 readTimeout = TIMEOUT_MS
                 requestMethod = "POST"
-                authorize(this, server)
+                applyHeaders(this, server)
             }
             try {
                 status(conn, server) in 200..299

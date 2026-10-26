@@ -5,6 +5,7 @@
   },
   "servers": {
     "changeServer": "Promijeni poslužitelj",
+    "editServer": "Uredi poslužitelj",
     "manually": {
       "authenticationRequired": "Potrebna je prijava",
       "checkAdress": "Na poslužitelju nije pronađen evcc. Provjerite adresu.",
@@ -13,74 +14,95 @@
       "missingOrWrongAuthentication": "Nepostojeća ili netočna prijava",
       "password": "Lozinka",
       "qrcode": {
-        "invalid": "",
-        "permissionDenied": "",
-        "recognized": "",
-        "scan": "",
-        "scanOnboarding": "",
-        "scanPrefill": "",
-        "scanning": ""
+        "invalid": "Nije valjani evcc QR kod.",
+        "permissionDenied": "Pristup kameri je odbijen. Omogućite ga u postavkama za skeniranje QR kodova.",
+        "recognized": "QR kod je prepoznat!",
+        "scan": "Skeniraj QR kod",
+        "scanOnboarding": "Postavi putem QR koda",
+        "scanPrefill": "Ispuni putem QR koda",
+        "scanning": "prepoznavanje..."
       },
-      "serverExistsAlready": "",
+      "serverExistsAlready": "Ovaj poslužitelj već postoji.",
       "serverIncompatible": "Ova evcc instanca ne podržava aplikaciju. Ažurirajte svoju evcc instalaciju.",
       "serverNotAvailable": "Poslužitelj nije dostupan. Provjerite adresu.",
       "specify": "Ručno unesite adresu",
-      "title": "",
+      "title": "Naziv",
       "user": "Korisnik"
     },
+    "remove": "Ukloni",
+    "removeConfirm": "Želite li zaista ukloniti {{title}}?",
     "removeServer": "Ukloni poslužitelj",
     "search": {
+      "cancel": "Odustani",
+      "connect": "Poveži",
+      "foundMany": "Pronađeno poslužitelja: {{count}}",
+      "foundOne": "Poslužitelj je pronađen",
+      "hint": "Ovo obično traje nekoliko sekundi.",
+      "inProgress": "Pretraživanje …",
       "notAvailable": "Pretraživanje nije moguće na ovom uređaju. Upotrijebite ručni unos.",
       "nothingFound": "Evcc poslužitelj nije pronađen.",
       "searching": "Traženje točke za povezivanje...",
-      "start": "Pokreni traženje"
+      "selectHelper": "Odaberite onaj na koji se želite povezati.",
+      "start": "Pokreni traženje",
+      "tryAgain": "Traži ponovno"
     },
     "select": "Odaberi",
     "switchServer": {
-      "addServer": "",
-      "title": ""
+      "addServer": "Dodaj poslužitelj",
+      "title": "Promijeni poslužitelj"
     },
     "useDemo": "Koristi demo verziju"
   },
   "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "Odaberite mjesto punjenja",
+      "chooseServer": "Odaberite poslužitelj",
+      "loading": "Učitavanje…",
+      "loadingPreview": "Učitavanje pregleda…",
+      "noLoadpoints": "Nijedno mjesto punjenja nije dostupno",
+      "noServers": "Nema poslužitelja. Najprije dodajte jedan u aplikaciji.",
+      "previewError": "Nije moguće učitati pregled",
+      "setupBody": "Dodirnite za odabir poslužitelja i mjesta punjenja.",
+      "useThisLoadpoint": "Koristi ovo mjesto punjenja"
+    },
     "config": {
-      "desc": "",
-      "loadpoint": "",
-      "server": "",
-      "title": ""
+      "desc": "Poslužitelj za prognozu.",
+      "loadpoint": "Mjesto punjenja",
+      "server": "Poslužitelj",
+      "title": "evcc prognoza"
     },
     "description": {
-      "co2": "",
-      "feedin": "",
-      "price": "",
-      "solar": ""
+      "co2": "Prognoza emisija CO₂.",
+      "feedin": "Prognoza cijene izvoza u mrežu.",
+      "price": "Prognoza cijene uvoza iz mreže.",
+      "solar": "Prognoza solarne proizvodnje."
     },
     "loadpoint": {
-      "description": "",
-      "name": ""
+      "description": "Stanje mjesta punjenja i način punjenja.",
+      "name": "Mjesto punjenja"
     },
     "name": {
       "co2": "",
-      "feedin": "",
-      "price": "",
-      "solar": ""
+      "feedin": "Cijena izvoza u mrežu",
+      "price": "Cijena uvoza iz mreže",
+      "solar": "Solarna prognoza"
     },
     "noData": {
-      "body": "",
-      "title": ""
+      "body": "Ovaj poslužitelj nema podataka ove vrste.",
+      "title": "Nema podataka"
     },
-    "now": "",
+    "now": "sada",
     "setup": {
-      "body": "",
-      "title": ""
+      "body": "Dodirnite za povezivanje poslužitelja i odabir vrste podataka.",
+      "title": "Postavi evcc"
     },
     "type": {
-      "feedin": "",
-      "price": ""
+      "feedin": "Cijena izvoza u mrežu",
+      "price": "Cijena uvoza iz mreže"
     },
     "unreachable": {
-      "body": "",
-      "title": ""
+      "body": "Nije moguće učitati evcc instancu.",
+      "title": "Poslužitelj nije dostupan"
     }
   }
 }

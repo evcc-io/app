@@ -1,7 +1,7 @@
 {
   "main": {
-    "description": "Parcourir le réseau pour trouver ton installation evcc.",
-    "title": "Configurer le serveur"
+    "description": "Connectons-nous à votre serveur.",
+    "title": "Bienvenue"
   },
   "servers": {
     "changeServer": "Modifier le serveur",
@@ -29,22 +29,22 @@
       "title": "Titre",
       "user": "Utilisateur"
     },
-    "remove": "Supprimer",
-    "removeConfirm": "Voulez-vous vraiment supprimer {{title}} ?",
+    "remove": "Enlever",
+    "removeConfirm": "Voulez-vous vraiment enlever {{title}} ?",
     "removeServer": "Supprimer le serveur",
     "search": {
       "cancel": "Annuler",
-      "connect": "Connecter",
+      "connect": "Se connecter",
       "foundMany": "{{count}} serveurs trouvés",
       "foundOne": "Serveur trouvé",
       "hint": "Cela prend généralement quelques secondes.",
-      "inProgress": "Recherche …",
+      "inProgress": "Recherche en cours…",
       "notAvailable": "La recherche n'est pas possible sur cet appareil. Utiliser l'entrée manuelle.",
-      "nothingFound": "Aucun serveur evcc n'a été trouvé.",
+      "nothingFound": "Aucun serveur n'a été trouvé.",
       "searching": "Recherche de connexion ...",
       "selectHelper": "Sélectionnez celui auquel vous souhaitez vous connecter.",
-      "start": "Commencer la recherche",
-      "tryAgain": "Relancer"
+      "start": "Chercher un serveur",
+      "tryAgain": "Chercher à nouveau"
     },
     "select": "Sélectionner",
     "switchServer": {
@@ -61,7 +61,7 @@
       "loadingPreview": "Chargement de l'aperçu…",
       "noLoadpoints": "Aucun point de charge accessible",
       "noServers": "Aucun serveur. Ajoutez-en d'abord un dans l'application.",
-      "previewError": "Impossible de charger un aperçu",
+      "previewError": "Impossible de charger l’aperçu",
       "setupBody": "Touchez pour choisir un serveur et un point de charge.",
       "useThisLoadpoint": "Utiliser ce point de charge"
     },

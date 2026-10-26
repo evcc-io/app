@@ -5,6 +5,7 @@
   },
   "servers": {
     "changeServer": "Promijeni server",
+    "editServer": "Uredi server",
     "manually": {
       "authenticationRequired": "Potrebna je autentifikacija",
       "checkAdress": "Čini se da server nije evcc instanca. Molimo provjerite adresu.",
@@ -13,74 +14,95 @@
       "missingOrWrongAuthentication": "Izostavljena ili netačna autentifikacija",
       "password": "Lozinka",
       "qrcode": {
-        "invalid": "",
-        "permissionDenied": "",
-        "recognized": "",
-        "scan": "",
-        "scanOnboarding": "",
-        "scanPrefill": "",
-        "scanning": ""
+        "invalid": "Nije važeći evcc QR kod.",
+        "permissionDenied": "Pristup kameri odbijen. Omogućite ga u postavkama da skenirate QR kodove.",
+        "recognized": "QR kod otkriven!",
+        "scan": "Skeniraj QR kod",
+        "scanOnboarding": "Postavi putem QR koda",
+        "scanPrefill": "Popuni putem QR koda",
+        "scanning": "otkrivanje..."
       },
-      "serverExistsAlready": "",
+      "serverExistsAlready": "Ovaj server već postoji.",
       "serverIncompatible": "Instanca evcc-a još nije kompatibilna s aplikacijom. Ažurirajte svoju instalaciju.",
       "serverNotAvailable": "Server nije dostupan. Molimo provjerite adresu.",
       "specify": "Unesite adresu ručno",
-      "title": "",
+      "title": "Naslov",
       "user": "korisnik"
     },
+    "remove": "Ukloni",
+    "removeConfirm": "Želite li zaista ukloniti {{title}}?",
     "removeServer": "Ukloni server",
     "search": {
+      "cancel": "Otkaži",
+      "connect": "Poveži",
+      "foundMany": "Pronađeno servera: {{count}}",
+      "foundOne": "Server pronađen",
+      "hint": "Ovo obično traje nekoliko sekundi.",
+      "inProgress": "Pretraživanje …",
       "notAvailable": "Pretraga nije moguća na ovom uređaju. Koristite ručni unos.",
       "nothingFound": "Nije pronađen nijedan evcc server.",
       "searching": "Traženje veze...",
-      "start": "Pokreni pretragu"
+      "selectHelper": "Odaberite onaj na koji se želite povezati.",
+      "start": "Pokreni pretragu",
+      "tryAgain": "Traži ponovo"
     },
     "select": "Odaberi",
     "switchServer": {
-      "addServer": "",
-      "title": ""
+      "addServer": "Dodaj server",
+      "title": "Promijeni server"
     },
     "useDemo": "Koristite demo instancu"
   },
   "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "Odaberi tačku punjenja",
+      "chooseServer": "Odaberi server",
+      "loading": "Učitavanje…",
+      "loadingPreview": "Učitavanje pregleda…",
+      "noLoadpoints": "Nijedna tačka punjenja nije dostupna",
+      "noServers": "Nema servera. Prvo dodajte jedan u aplikaciji.",
+      "previewError": "Nije moguće učitati pregled",
+      "setupBody": "Dodirnite da odaberete server i tačku punjenja.",
+      "useThisLoadpoint": "Koristi ovu tačku punjenja"
+    },
     "config": {
-      "desc": "",
-      "loadpoint": "",
+      "desc": "Server za prognozu.",
+      "loadpoint": "Tačka punjenja",
       "server": "",
-      "title": ""
+      "title": "evcc prognoza"
     },
     "description": {
-      "co2": "",
-      "feedin": "",
-      "price": "",
-      "solar": ""
+      "co2": "Prognoza emisija CO₂.",
+      "feedin": "Prognoza cijene izvoza u mrežu.",
+      "price": "Prognoza cijene uvoza iz mreže.",
+      "solar": "Prognoza solarne proizvodnje."
     },
     "loadpoint": {
-      "description": "",
-      "name": ""
+      "description": "Status tačke punjenja i način punjenja.",
+      "name": "Tačka punjenja"
     },
     "name": {
       "co2": "",
-      "feedin": "",
-      "price": "",
-      "solar": ""
+      "feedin": "Cijena izvoza u mrežu",
+      "price": "Cijena uvoza iz mreže",
+      "solar": "Solarna prognoza"
     },
     "noData": {
-      "body": "",
-      "title": ""
+      "body": "Ovaj server nema podataka ovog tipa.",
+      "title": "Nema podataka"
     },
-    "now": "",
+    "now": "sada",
     "setup": {
-      "body": "",
-      "title": ""
+      "body": "Dodirnite da povežete server i odaberete tip podataka.",
+      "title": "Postavi evcc"
     },
     "type": {
-      "feedin": "",
-      "price": ""
+      "feedin": "Cijena izvoza u mrežu",
+      "price": "Cijena uvoza iz mreže"
     },
     "unreachable": {
-      "body": "",
-      "title": ""
+      "body": "Nije moguće učitati evcc instancu.",
+      "title": "Server nedostupan"
     }
   }
 }

@@ -5,6 +5,7 @@
   },
   "servers": {
     "changeServer": "更改服务器",
+    "editServer": "编辑服务器",
     "manually": {
       "authenticationRequired": "需要认证",
       "checkAdress": "此服务器不是 evcc 实例。请检查地址。",
@@ -13,74 +14,95 @@
       "missingOrWrongAuthentication": "缺少或不正确的认证",
       "password": "密码",
       "qrcode": {
-        "invalid": "",
-        "permissionDenied": "",
-        "recognized": "",
-        "scan": "",
-        "scanOnboarding": "",
-        "scanPrefill": "",
-        "scanning": ""
+        "invalid": "不是有效的 evcc 二维码。",
+        "permissionDenied": "相机访问被拒绝。请在设置中启用以扫描二维码。",
+        "recognized": "已检测到二维码！",
+        "scan": "扫描二维码",
+        "scanOnboarding": "通过二维码设置",
+        "scanPrefill": "通过二维码填写",
+        "scanning": "检测中..."
       },
-      "serverExistsAlready": "",
+      "serverExistsAlready": "此服务器已存在。",
       "serverIncompatible": "此 evcc 实例尚未兼容应用。请更新你的安装。",
       "serverNotAvailable": "服务器不可达。请检查地址。",
       "specify": "手动输入地址",
-      "title": "",
+      "title": "标题",
       "user": "用户"
     },
+    "remove": "移除",
+    "removeConfirm": "确定要移除 {{title}} 吗？",
     "removeServer": "移除服务器",
     "search": {
+      "cancel": "取消",
+      "connect": "连接",
+      "foundMany": "找到 {{count}} 个服务器",
+      "foundOne": "找到服务器",
+      "hint": "这通常需要几秒钟。",
+      "inProgress": "搜索中 …",
       "notAvailable": "此设备上无法搜索。请使用手动输入。",
       "nothingFound": "未找到服务器。",
       "searching": "搜索连接...",
-      "start": "开始搜索"
+      "selectHelper": "选择你要连接的服务器。",
+      "start": "开始搜索",
+      "tryAgain": "重新搜索"
     },
     "select": "选择",
     "switchServer": {
-      "addServer": "",
-      "title": ""
+      "addServer": "添加服务器",
+      "title": "切换服务器"
     },
     "useDemo": "使用演示实例"
   },
   "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "选择充电点",
+      "chooseServer": "选择服务器",
+      "loading": "加载中…",
+      "loadingPreview": "正在加载预览…",
+      "noLoadpoints": "没有可达的充电点",
+      "noServers": "没有服务器。请先在应用中添加一个。",
+      "previewError": "无法加载预览",
+      "setupBody": "点击以选择服务器和充电点。",
+      "useThisLoadpoint": "使用此充电点"
+    },
     "config": {
-      "desc": "",
-      "loadpoint": "",
-      "server": "",
-      "title": ""
+      "desc": "用于预测的服务器。",
+      "loadpoint": "充电点",
+      "server": "服务器",
+      "title": "evcc 预测"
     },
     "description": {
-      "co2": "",
-      "feedin": "",
-      "price": "",
-      "solar": ""
+      "co2": "预测 CO₂ 排放。",
+      "feedin": "预测电网售电价格。",
+      "price": "预测电网购电价格。",
+      "solar": "预测太阳能发电。"
     },
     "loadpoint": {
-      "description": "",
-      "name": ""
+      "description": "充电点状态和充电模式。",
+      "name": "充电点"
     },
     "name": {
       "co2": "",
-      "feedin": "",
-      "price": "",
-      "solar": ""
+      "feedin": "电网售电价格",
+      "price": "电网购电价格",
+      "solar": "太阳能预测"
     },
     "noData": {
-      "body": "",
-      "title": ""
+      "body": "此服务器没有此类型的数据。",
+      "title": "无数据"
     },
-    "now": "",
+    "now": "现在",
     "setup": {
-      "body": "",
-      "title": ""
+      "body": "点击以连接服务器并选择数据类型。",
+      "title": "设置 evcc"
     },
     "type": {
-      "feedin": "",
-      "price": ""
+      "feedin": "电网售电价格",
+      "price": "电网购电价格"
     },
     "unreachable": {
-      "body": "",
-      "title": ""
+      "body": "无法加载 evcc 实例。",
+      "title": "服务器不可达"
     }
   }
 }
