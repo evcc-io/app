@@ -1,4 +1,39 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "用户名或密码错误。请通过“更改服务器”更新凭据。",
+      "title": "登录失败"
+    },
+    "httpError": {
+      "hint": "服务器返回了意外响应。",
+      "title": "服务器错误 (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "您的设备已离线。请连接 WiFi 或移动数据。",
+      "title": "无网络"
+    },
+    "rateLimited": {
+      "hint": "服务器暂时拦截了请求。",
+      "title": "尝试次数过多"
+    },
+    "remoteOffline": {
+      "hint": "您的 evcc 实例未连接。",
+      "title": "evcc 已离线"
+    },
+    "retry": "重试",
+    "timeout": {
+      "hint": "服务器没有响应。",
+      "title": "服务器无响应"
+    },
+    "unreachable": {
+      "hint": "请检查网络以及 evcc 实例是否正在运行。",
+      "title": "无法访问服务器"
+    },
+    "websocket": {
+      "hint": "页面可加载，但 WebSocket 无法连接。请检查反向代理设置。",
+      "title": "WebSocket 连接失败"
+    }
+  },
   "main": {
     "description": "在你的网络中搜索以找到你的 evcc 安装。",
     "title": "设置服务器"
@@ -11,6 +46,7 @@
       "checkAdress": "此服务器不是 evcc 实例。请检查地址。",
       "checkAndSave": "检查并保存",
       "enterUrl": "输入 URL",
+      "loginRequired": "服务器需要登录。",
       "missingOrWrongAuthentication": "缺少或不正确的认证",
       "password": "密码",
       "qrcode": {
