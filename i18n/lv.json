@@ -1,7 +1,7 @@
 {
   "connection": {
     "auth": {
-      "hint": "Nepareizs lietotājvārds vai parole. Atjauniniet pieteikšanās datus, izmantojot Mainīt serveri.",
+      "hint": "Nepareizs lietotājvārds vai parole. Atjauniniet pieteikšanās datus, izvēloties \"Mainīt serveri\".",
       "title": "Pieteikšanās neizdevās"
     },
     "httpError": {
@@ -10,28 +10,28 @@
     },
     "offline": {
       "hint": "Jūsu ierīce ir bezsaistē. Izveidojiet savienojumu ar WiFi vai mobilajiem datiem.",
-      "title": "Nav tīkla"
+      "title": "Nav tīkla savienojuma"
     },
     "rateLimited": {
       "hint": "Serveris īslaicīgi bloķē pieprasījumus.",
       "title": "Pārāk daudz mēģinājumu"
     },
     "remoteOffline": {
-      "hint": "Jūsu evcc instance nav savienota.",
+      "hint": "Jūsu evcc eksemplārs nav savienots.",
       "title": "evcc ir bezsaistē"
     },
-    "retry": "Mēģināt vēlreiz",
+    "retry": "Mēģiniet vēlreiz",
     "timeout": {
-      "hint": "Serveris nav atsūtījis atbildi.",
+      "hint": "No servera nav saņemta atbilde.",
       "title": "Serveris neatbild"
     },
     "unreachable": {
-      "hint": "Pārbaudiet tīklu un to, vai jūsu evcc instance darbojas.",
-      "title": "Serveris nav sasniedzams"
+      "hint": "Pārbaudiet savu tīklu un to, vai jūsu evcc eksemplārs darbojas.",
+      "title": "Nevar sasniegt serveri"
     },
     "websocket": {
-      "hint": "Lapa ielādējas, bet WebSocket neizveido savienojumu. Pārbaudiet reverse proxy iestatījumus.",
-      "title": "WebSocket savienojums neizdevās"
+      "hint": "Lapa ielādējas, taču WebSocket savienojums netiek izveidots. Pārbaudiet savas apgrieztā starpniekservera (reverse proxy) iestatījumus.",
+      "title": "WebSocket savienojumu neizdevās izveidot"
     }
   },
   "main": {
@@ -136,7 +136,7 @@
     },
     "unreachable": {
       "body": "Neizdevās ielādēt evcc instanci.",
-      "title": "Serveris nav sasniedzams"
+      "title": "Serveris nav pieejams"
     }
   }
 }
