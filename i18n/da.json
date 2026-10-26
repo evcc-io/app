@@ -1,4 +1,39 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "Forkert brugernavn eller kodeord. Opdater loginoplysningerne via Skift Server.",
+      "title": "Login mislykkedes"
+    },
+    "httpError": {
+      "hint": "Serveren svarede uventet.",
+      "title": "Serverfejl (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "Din enhed er offline. Opret forbindelse til WiFi eller mobildata.",
+      "title": "Intet netværk"
+    },
+    "rateLimited": {
+      "hint": "Serveren blokerer midlertidigt forespørgsler.",
+      "title": "For mange forsøg"
+    },
+    "remoteOffline": {
+      "hint": "Din evcc-instans er ikke forbundet.",
+      "title": "evcc er offline"
+    },
+    "retry": "Prøv igen",
+    "timeout": {
+      "hint": "Intet svar fra serveren.",
+      "title": "Server svarer ikke"
+    },
+    "unreachable": {
+      "hint": "Tjek dit netværk, og at din evcc-instans kører.",
+      "title": "Server ikke tilgængelig"
+    },
+    "websocket": {
+      "hint": "Siden indlæses, men WebSocket opretter ikke forbindelse. Tjek indstillingerne for din reverse proxy.",
+      "title": "WebSocket-forbindelse mislykkedes"
+    }
+  },
   "main": {
     "description": "Lad os forbinde til din server.",
     "title": "Velkommen"
@@ -11,6 +46,7 @@
       "checkAdress": "Serveren ser ikke ud til at være en evcc-instans. Tjek venligst adressen.",
       "checkAndSave": "Bekræft og gem",
       "enterUrl": "Indtast URL",
+      "loginRequired": "Serveren kræver login.",
       "missingOrWrongAuthentication": "Manglende eller forkert godkendelse",
       "password": "Kodeord",
       "qrcode": {
