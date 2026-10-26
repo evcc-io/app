@@ -1,4 +1,39 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "Pogrešno korisničko ime ili lozinka. Ažurirajte pristupne podatke putem opcije Promijeni server.",
+      "title": "Prijava nije uspjela"
+    },
+    "httpError": {
+      "hint": "Server je odgovorio neočekivano.",
+      "title": "Greška servera (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "Vaš uređaj je offline. Povežite se na WiFi ili mobilne podatke.",
+      "title": "Nema mreže"
+    },
+    "rateLimited": {
+      "hint": "Server privremeno blokira zahtjeve.",
+      "title": "Previše pokušaja"
+    },
+    "remoteOffline": {
+      "hint": "Vaša evcc instanca nije povezana.",
+      "title": "evcc je offline"
+    },
+    "retry": "Pokušaj ponovo",
+    "timeout": {
+      "hint": "Nema odgovora od servera.",
+      "title": "Server ne odgovara"
+    },
+    "unreachable": {
+      "hint": "Provjerite mrežu i da li vaša evcc instanca radi.",
+      "title": "Server nije dostupan"
+    },
+    "websocket": {
+      "hint": "Stranica se učitava, ali se WebSocket ne povezuje. Provjerite postavke svog reverse proxyja.",
+      "title": "WebSocket veza nije uspjela"
+    }
+  },
   "main": {
     "description": "Pretražite svoju mrežu da pronađete svoju evcc instalaciju.",
     "title": "Postavite server"
@@ -11,6 +46,7 @@
       "checkAdress": "Čini se da server nije evcc instanca. Molimo provjerite adresu.",
       "checkAndSave": "Provjeri i sačuvaj",
       "enterUrl": "Unesite URL",
+      "loginRequired": "Server zahtijeva prijavu.",
       "missingOrWrongAuthentication": "Izostavljena ili netačna autentifikacija",
       "password": "Lozinka",
       "qrcode": {
