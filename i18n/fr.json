@@ -1,4 +1,39 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "Nom d'utilisateur ou mot de passe incorrect. Mettez à jour les identifiants via Modifier le serveur.",
+      "title": "Échec de la connexion"
+    },
+    "httpError": {
+      "hint": "Le serveur a répondu de manière inattendue.",
+      "title": "Erreur du serveur (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "Votre appareil est hors ligne. Connectez-vous au Wi-Fi ou aux données mobiles.",
+      "title": "Aucun réseau"
+    },
+    "rateLimited": {
+      "hint": "Le serveur bloque temporairement les requêtes.",
+      "title": "Trop de tentatives"
+    },
+    "remoteOffline": {
+      "hint": "Votre instance evcc n'est pas connectée.",
+      "title": "evcc est hors ligne"
+    },
+    "retry": "Réessayer",
+    "timeout": {
+      "hint": "Aucune réponse du serveur.",
+      "title": "Le serveur ne répond pas"
+    },
+    "unreachable": {
+      "hint": "Vérifiez votre réseau et que votre instance evcc est en cours d'exécution.",
+      "title": "Serveur injoignable"
+    },
+    "websocket": {
+      "hint": "La page se charge, mais le WebSocket ne se connecte pas. Vérifiez les paramètres de votre proxy inverse.",
+      "title": "Échec de la connexion WebSocket"
+    }
+  },
   "main": {
     "description": "Connectons-nous à votre serveur.",
     "title": "Bienvenue"
@@ -11,6 +46,7 @@
       "checkAdress": "Le serveur ne semble pas être une instance evcc. Veuillez vérifier l'adresse.",
       "checkAndSave": "Vérifier et sauvegarder",
       "enterUrl": "Entrez l'URL",
+      "loginRequired": "Le serveur nécessite une connexion.",
       "missingOrWrongAuthentication": "Authentification manquante ou incorrecte",
       "password": "Mot de passe",
       "qrcode": {
