@@ -1,4 +1,39 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "Vale kasutajanimi või salasõna. Uuenda andmeid valikuga Vaheta serverit.",
+      "title": "Sisselogimine ebaõnnestus"
+    },
+    "httpError": {
+      "hint": "Server vastas ootamatult.",
+      "title": "Serveri viga (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "Seade on võrguühenduseta. Ühendu WiFi-võrku või mobiilsidevõrku.",
+      "title": "Võrk puudub"
+    },
+    "rateLimited": {
+      "hint": "Server blokeerib päringud ajutiselt.",
+      "title": "Liiga palju katseid"
+    },
+    "remoteOffline": {
+      "hint": "Sinu evcc ei ole ühendatud.",
+      "title": "evcc on võrguühenduseta"
+    },
+    "retry": "Proovi uuesti",
+    "timeout": {
+      "hint": "Server ei andnud vastust.",
+      "title": "Server ei vasta"
+    },
+    "unreachable": {
+      "hint": "Kontrolli oma võrku ja seda, et evcc töötab.",
+      "title": "Server ei ole kättesaadav"
+    },
+    "websocket": {
+      "hint": "Leht laadib, kuid WebSocket ei ühendu. Kontrolli oma pöördvahendusserveri (reverse proxy) seadeid.",
+      "title": "WebSocket-ühendus ebaõnnestus"
+    }
+  },
   "main": {
     "description": "Ühendame sinu serveriga.",
     "title": "Tere tulemast"
@@ -11,6 +46,7 @@
       "checkAdress": "See server ei tundu olema elektrisõiduki sidekontroller. Palun kontrolli aadressi.",
       "checkAndSave": "Kontrolli ja salvesta",
       "enterUrl": "Sisesta võrguaadress",
+      "loginRequired": "Server nõuab sisselogimist.",
       "missingOrWrongAuthentication": "Autentimine on puudu või vigane",
       "password": "Salasõna",
       "qrcode": {
