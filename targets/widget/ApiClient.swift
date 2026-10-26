@@ -15,7 +15,12 @@ enum ApiClient {
     return b
   }
 
-  private static func authorize(_ req: inout URLRequest, _ server: StoredServer) {
+  // Same UA suffix as the app's WebView (utils/constants.ts)
+  private static let userAgent =
+    "evcc/\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "")"
+
+  private static func applyHeaders(_ req: inout URLRequest, _ server: StoredServer) {
+    req.setValue(userAgent, forHTTPHeaderField: "User-Agent")
     if server.authRequired == true, let u = server.username, !u.isEmpty, let p = server.password {
       let token = Data("\(u):\(p)".utf8).base64EncodedString()
       req.setValue("Basic \(token)", forHTTPHeaderField: "Authorization")
@@ -28,7 +33,7 @@ enum ApiClient {
     guard let url = comps.url else { return nil }
     var req = URLRequest(url: url, timeoutInterval: 15)
     req.cachePolicy = .reloadIgnoringLocalCacheData
-    authorize(&req, server)
+    applyHeaders(&req, server)
     return req
   }
 
@@ -58,7 +63,7 @@ enum ApiClient {
     guard let url = URL(string: base(server) + p) else { return false }
     var req = URLRequest(url: url, timeoutInterval: 15)
     req.httpMethod = "POST"
-    authorize(&req, server)
+    applyHeaders(&req, server)
     do {
       let (_, response) = try await URLSession.shared.data(for: req)
       return (response as? HTTPURLResponse).map { (200..<300).contains($0.statusCode) } ?? false
