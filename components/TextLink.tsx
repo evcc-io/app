@@ -19,14 +19,17 @@ export default function TextLink({
     <Pressable
       onPress={onPress}
       testID={testID}
-      style={[
-        { paddingVertical: 12, paddingHorizontal: 8, alignItems: "center" },
-        style,
-      ]}
+      style={[{ paddingVertical: 12, paddingHorizontal: 8 }, style]}
     >
       <AppText
         color="hint"
-        style={{ fontSize: 14, textDecorationLine: "underline" }}
+        // centered by textAlign, not shrink-wrapped: Android sometimes
+        // measures short labels a bit too narrow and clips the last word
+        style={{
+          fontSize: 14,
+          textDecorationLine: "underline",
+          textAlign: "center",
+        }}
       >
         {children}
       </AppText>
