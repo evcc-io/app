@@ -125,6 +125,14 @@ export default function ServerForm({
       serverSelected(server);
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
+      // reveal the login fields the server asks for
+      if ((err as { loginRequired?: boolean }).loginRequired) {
+        setInternalServer((s) => ({
+          title: s?.title,
+          url: s?.url || "",
+          basicAuth: { ...s?.basicAuth, required: true },
+        }));
+      }
     } finally {
       setInProgress(false);
     }

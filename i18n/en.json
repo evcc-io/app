@@ -3,6 +3,41 @@
     "description": "Let's connect to your server.",
     "title": "Welcome"
   },
+  "connection": {
+    "retry": "Try again",
+    "offline": {
+      "title": "No network",
+      "hint": "Your device is offline. Connect to WiFi or mobile data."
+    },
+    "unreachable": {
+      "title": "Server not reachable",
+      "hint": "Check your network and that your evcc instance is running."
+    },
+    "timeout": {
+      "title": "Server not responding",
+      "hint": "No response from the server."
+    },
+    "auth": {
+      "title": "Login failed",
+      "hint": "Wrong username or password. Update the credentials via Change Server."
+    },
+    "rateLimited": {
+      "title": "Too many attempts",
+      "hint": "The server is temporarily blocking requests."
+    },
+    "remoteOffline": {
+      "title": "evcc is offline",
+      "hint": "Your evcc instance is not connected."
+    },
+    "websocket": {
+      "title": "WebSocket connection failed",
+      "hint": "The page loads, but the WebSocket doesn't connect. Check your reverse proxy settings."
+    },
+    "httpError": {
+      "title": "Server error (HTTP {{status}})",
+      "hint": "The server responded unexpectedly."
+    }
+  },
   "servers": {
     "changeServer": "Change Server",
     "switchServer": {
@@ -13,6 +48,7 @@
       "authenticationRequired": "Authentication required",
       "checkAdress": "The server does not appear to be an evcc instance. Please check the address.",
       "checkAndSave": "Check and save",
+      "loginRequired": "Server requires login.",
       "missingOrWrongAuthentication": "Missing or incorrect authentication",
       "password": "Password",
       "serverIncompatible": "The evcc instance is not yet app-compatible. Update your installation.",
