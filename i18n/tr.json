@@ -82,7 +82,7 @@
       "name": "Doldurma noktası"
     },
     "name": {
-      "co2": "",
+      "co2": "CO₂",
       "feedin": "Şebekeye satış fiyatı",
       "price": "Şebekeden alım fiyatı",
       "solar": "Güneş tahmini"

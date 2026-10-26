@@ -68,7 +68,6 @@
     "config": {
       "desc": "Server za prognozu.",
       "loadpoint": "Tačka punjenja",
-      "server": "",
       "title": "evcc prognoza"
     },
     "description": {
@@ -82,7 +81,6 @@
       "name": "Tačka punjenja"
     },
     "name": {
-      "co2": "",
       "feedin": "Cijena izvoza u mrežu",
       "price": "Cijena uvoza iz mreže",
       "solar": "Solarna prognoza"
