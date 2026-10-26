@@ -13,6 +13,8 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.state.updateAppWidgetState
 import io.evcc.android.R
@@ -71,7 +73,12 @@ class LoadpointWidgetConfigActivity : Activity() {
     private fun buildLayout(): View {
         val root = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            setPadding(0, dp(24), 0, 0)
+        }
+        // the window draws edge-to-edge, keep content (esp. the confirm button) clear of the system bars
+        ViewCompat.setOnApplyWindowInsetsListener(root) { v, insets ->
+            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
+            v.setPadding(bars.left, dp(24) + bars.top, bars.right, bars.bottom)
+            insets
         }
         titleView = TextView(this).apply {
             setPadding(dp(20), dp(8), dp(20), dp(16))
