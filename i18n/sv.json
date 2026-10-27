@@ -1,4 +1,39 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "Fel användarnamn eller lösenord. Uppdatera inloggningsuppgifterna via Byt server.",
+      "title": "Inloggningen misslyckades"
+    },
+    "httpError": {
+      "hint": "Servern svarade oväntat.",
+      "title": "Serverfel (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "Din enhet är offline. Anslut till WiFi eller mobildata.",
+      "title": "Inget nätverk"
+    },
+    "rateLimited": {
+      "hint": "Servern blockerar tillfälligt förfrågningar.",
+      "title": "För många försök"
+    },
+    "remoteOffline": {
+      "hint": "Din evcc-instans är inte ansluten.",
+      "title": "evcc är offline"
+    },
+    "retry": "Försök igen",
+    "timeout": {
+      "hint": "Inget svar från servern.",
+      "title": "Servern svarar inte"
+    },
+    "unreachable": {
+      "hint": "Kontrollera ditt nätverk och att din evcc-instans körs.",
+      "title": "Servern kan inte nås"
+    },
+    "websocket": {
+      "hint": "Sidan laddas, men WebSocket ansluter inte. Kontrollera inställningarna för din reverse proxy.",
+      "title": "WebSocket-anslutningen misslyckades"
+    }
+  },
   "main": {
     "description": "Låt oss ansluta till din server.",
     "title": "Hej"
@@ -11,6 +46,7 @@
       "checkAdress": "Servern verkar inte vara en evcc-instans. Vänligen kolla adressen.",
       "checkAndSave": "Kolla och spara",
       "enterUrl": "Ange URL",
+      "loginRequired": "Servern kräver inloggning.",
       "missingOrWrongAuthentication": "Saknad eller inkorrekt registrering",
       "password": "Lösenord",
       "qrcode": {

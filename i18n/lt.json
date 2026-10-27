@@ -1,4 +1,39 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "Neteisingas vartotojo vardas arba slaptažodis. Atnaujinkite prisijungimo duomenis per Keisti serverį.",
+      "title": "Prisijungti nepavyko"
+    },
+    "httpError": {
+      "hint": "Serveris atsakė netikėtai.",
+      "title": "Serverio klaida (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "Jūsų įrenginys neprisijungęs. Prisijunkite prie WiFi arba mobiliojo ryšio.",
+      "title": "Nėra tinklo"
+    },
+    "rateLimited": {
+      "hint": "Serveris laikinai blokuoja užklausas.",
+      "title": "Per daug bandymų"
+    },
+    "remoteOffline": {
+      "hint": "Jūsų evcc egzempliorius neprisijungęs.",
+      "title": "evcc neprisijungęs"
+    },
+    "retry": "Bandyti dar kartą",
+    "timeout": {
+      "hint": "Serveris neatsakė.",
+      "title": "Serveris neatsako"
+    },
+    "unreachable": {
+      "hint": "Patikrinkite tinklą ir ar veikia jūsų evcc egzempliorius.",
+      "title": "Serveris nepasiekiamas"
+    },
+    "websocket": {
+      "hint": "Puslapis įkeliamas, bet WebSocket nesijungia. Patikrinkite atvirkštinio tarpinio serverio nustatymus.",
+      "title": "WebSocket ryšys nepavyko"
+    }
+  },
   "main": {
     "description": "Prisijunkime prie jūsų serverio.",
     "title": "Sveiki atvykę"
@@ -11,6 +46,7 @@
       "checkAdress": "Atrodo, kad šis serveris nėra evcc serveris. Patikrinkite adresą.",
       "checkAndSave": "Patikrinti ir išsaugoti",
       "enterUrl": "Įveskite URL",
+      "loginRequired": "Serveris reikalauja prisijungimo.",
       "missingOrWrongAuthentication": "Nėra autentifikavimo arba jis neteisingas",
       "password": "Slaptažodis",
       "qrcode": {

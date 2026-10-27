@@ -1,4 +1,39 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "Błędna nazwa użytkownika lub hasło. Zaktualizuj dane logowania przez Zmień serwer.",
+      "title": "Logowanie nie powiodło się"
+    },
+    "httpError": {
+      "hint": "Serwer odpowiedział nieoczekiwanie.",
+      "title": "Błąd serwera (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "Twoje urządzenie jest offline. Połącz się z WiFi lub siecią komórkową.",
+      "title": "Brak sieci"
+    },
+    "rateLimited": {
+      "hint": "Serwer tymczasowo blokuje żądania.",
+      "title": "Zbyt wiele prób"
+    },
+    "remoteOffline": {
+      "hint": "Twoja instancja evcc nie jest połączona.",
+      "title": "evcc jest offline"
+    },
+    "retry": "Spróbuj ponownie",
+    "timeout": {
+      "hint": "Brak odpowiedzi z serwera.",
+      "title": "Serwer nie odpowiada"
+    },
+    "unreachable": {
+      "hint": "Sprawdź sieć i czy Twoja instancja evcc jest uruchomiona.",
+      "title": "Serwer niedostępny"
+    },
+    "websocket": {
+      "hint": "Strona się ładuje, ale WebSocket nie łączy się. Sprawdź ustawienia reverse proxy.",
+      "title": "Połączenie WebSocket nie powiodło się"
+    }
+  },
   "main": {
     "description": "Połączmy się z Twoim serwerem.",
     "title": "Witamy"
@@ -11,6 +46,7 @@
       "checkAdress": "Wygląda na to że na serwerze evcc nie występuje. Proszę sprawdzić adres.",
       "checkAndSave": "Sprawdź i zachowaj",
       "enterUrl": "Wprowadź adres URL",
+      "loginRequired": "Serwer wymaga logowania.",
       "missingOrWrongAuthentication": "Brak lub błędne uwierzytelnienie",
       "password": "Hasło",
       "qrcode": {

@@ -1,4 +1,39 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "Falschen Benotzernumm oder falscht Passwuert. Aktualiséier d'Zougangsdaten iwwer Server änneren.",
+      "title": "Umeldung feelgeschloen"
+    },
+    "httpError": {
+      "hint": "De Server huet onerwaart geäntwert.",
+      "title": "Serverfehler (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "Däin Apparat ass offline. Verbann dech mam WiFi oder mat mobilen Daten.",
+      "title": "Kee Netzwierk"
+    },
+    "rateLimited": {
+      "hint": "De Server blockéiert Ufroen temporär.",
+      "title": "Ze vill Versich"
+    },
+    "remoteOffline": {
+      "hint": "Deng evcc Instanz ass net verbonnen.",
+      "title": "evcc ass offline"
+    },
+    "retry": "Nach eng Kéier probéieren",
+    "timeout": {
+      "hint": "Keng Äntwert vum Server.",
+      "title": "Server äntwert net"
+    },
+    "unreachable": {
+      "hint": "Iwwerpréif däin Netzwierk a ob deng evcc Instanz leeft.",
+      "title": "Server net erreechbar"
+    },
+    "websocket": {
+      "hint": "D'Säit lued, awer de WebSocket verbënnt sech net. Iwwerpréif d'Astellunge vun dengem Reverse-Proxy.",
+      "title": "WebSocket-Verbindung feelgeschloen"
+    }
+  },
   "main": {
     "description": "Duerchsich däin Netzwierk, fir deng evcc Installatioun ze fannen.",
     "title": "Server ariichten"
@@ -11,6 +46,7 @@
       "checkAdress": "De Server schéngt keng evcc Instanz ze sinn. Iwwerpréif wgl. d'Adress.",
       "checkAndSave": "Iwwerpréiwen a späicheren",
       "enterUrl": "URL aginn",
+      "loginRequired": "De Server verlaangt eng Umeldung.",
       "missingOrWrongAuthentication": "Fehlend oder falsch Umeldung",
       "password": "Passwuert",
       "qrcode": {

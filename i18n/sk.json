@@ -1,4 +1,39 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "Nesprávne meno alebo heslo. Aktualizujte poverenia cez Zmeniť server.",
+      "title": "Prihlásenie zlyhalo"
+    },
+    "httpError": {
+      "hint": "Server odpovedal neočakávane.",
+      "title": "Chyba servera (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "Vaše zariadenie je offline. Pripojte sa k WiFi alebo mobilným dátam.",
+      "title": "Žiadna sieť"
+    },
+    "rateLimited": {
+      "hint": "Server dočasne blokuje požiadavky.",
+      "title": "Príliš veľa pokusov"
+    },
+    "remoteOffline": {
+      "hint": "Vaša inštancia evcc nie je pripojená.",
+      "title": "evcc je offline"
+    },
+    "retry": "Skúsiť znova",
+    "timeout": {
+      "hint": "Server neodpovedá.",
+      "title": "Server neodpovedá"
+    },
+    "unreachable": {
+      "hint": "Skontrolujte sieť a či vaša inštancia evcc beží.",
+      "title": "Server nie je dostupný"
+    },
+    "websocket": {
+      "hint": "Stránka sa načíta, ale WebSocket sa nepripojí. Skontrolujte nastavenia reverzného proxy.",
+      "title": "Pripojenie WebSocket zlyhalo"
+    }
+  },
   "main": {
     "description": "Prehľadávajte svoju sieť a nájdite inštaláciu evcc.",
     "title": "Nastavenie servera"
@@ -10,6 +45,7 @@
       "authenticationRequired": "Potrebná autorizácia",
       "checkAdress": "Server pravdepodobne nieje instanciou evcc. Prosím skontrolujte adresu.",
       "checkAndSave": "Skontrolovať a uložiť",
+      "loginRequired": "Server vyžaduje prihlásenie.",
       "missingOrWrongAuthentication": "Chýbajúce alebo nesprávne overenie",
       "password": "Heslo",
       "qrcode": {

@@ -1,4 +1,38 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "Verkeerde gebruikersnaam of wachtwoord. Werk de inloggegevens bij via Wijzig Server.",
+      "title": "Inloggen mislukt"
+    },
+    "httpError": {
+      "hint": "De server reageerde onverwacht.",
+      "title": "Serverfout (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "Je apparaat is offline. Maak verbinding met wifi of mobiele data.",
+      "title": "Geen netwerk"
+    },
+    "rateLimited": {
+      "hint": "De server blokkeert tijdelijk verzoeken.",
+      "title": "Te veel pogingen"
+    },
+    "remoteOffline": {
+      "hint": "Je evcc-instantie is niet verbonden."
+    },
+    "retry": "Opnieuw proberen",
+    "timeout": {
+      "hint": "Geen reactie van de server.",
+      "title": "Server reageert niet"
+    },
+    "unreachable": {
+      "hint": "Controleer je netwerk en of je evcc-instantie draait.",
+      "title": "Server niet bereikbaar"
+    },
+    "websocket": {
+      "hint": "De pagina laadt, maar de WebSocket maakt geen verbinding. Controleer de instellingen van je reverse proxy.",
+      "title": "WebSocket-verbinding mislukt"
+    }
+  },
   "main": {
     "description": "Laten we verbinding maken met jouw server.",
     "title": "Welkom"
@@ -11,6 +45,7 @@
       "checkAdress": "De server lijkt geen evcc server te zijn. Controleer het adres.",
       "checkAndSave": "Controleren en opslaan",
       "enterUrl": "URL invoeren",
+      "loginRequired": "Server vereist inloggen.",
       "missingOrWrongAuthentication": "Ontbrekende of foutieve authenticatie",
       "password": "Wachtwoord",
       "qrcode": {
