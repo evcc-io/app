@@ -45,7 +45,6 @@
       "authenticationRequired": "Godkendelse påkrævet",
       "checkAdress": "Serveren ser ikke ud til at være en evcc-instans. Tjek venligst adressen.",
       "checkAndSave": "Bekræft og gem",
-      "enterUrl": "Indtast URL",
       "loginRequired": "Serveren kræver login.",
       "missingOrWrongAuthentication": "Manglende eller forkert godkendelse",
       "password": "Kodeord",
@@ -82,7 +81,6 @@
       "start": "Find server",
       "tryAgain": "Søg igen"
     },
-    "select": "Vælg",
     "switchServer": {
       "addServer": "Tilføj Server",
       "title": "Skift Server"

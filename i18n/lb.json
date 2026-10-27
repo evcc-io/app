@@ -45,7 +45,6 @@
       "authenticationRequired": "Umellung néideg",
       "checkAdress": "De Server schéngt keng evcc Instanz ze sinn. Iwwerpréif wgl. d'Adress.",
       "checkAndSave": "Iwwerpréiwen a späicheren",
-      "enterUrl": "URL aginn",
       "loginRequired": "De Server verlaangt eng Umeldung.",
       "missingOrWrongAuthentication": "Fehlend oder falsch Umeldung",
       "password": "Passwuert",
@@ -82,7 +81,6 @@
       "start": "Sich starten",
       "tryAgain": "Nei sichen"
     },
-    "select": "Auswielen",
     "switchServer": {
       "addServer": "Server dobäifügen",
       "title": "Server wiesselen"

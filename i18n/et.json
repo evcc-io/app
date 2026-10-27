@@ -45,7 +45,6 @@
       "authenticationRequired": "Autentimine on vajalik",
       "checkAdress": "See server ei tundu olema elektrisõiduki sidekontroller. Palun kontrolli aadressi.",
       "checkAndSave": "Kontrolli ja salvesta",
-      "enterUrl": "Sisesta võrguaadress",
       "loginRequired": "Server nõuab sisselogimist.",
       "missingOrWrongAuthentication": "Autentimine on puudu või vigane",
       "password": "Salasõna",
@@ -82,7 +81,6 @@
       "start": "Otsi serverit",
       "tryAgain": "Otsi uuesti"
     },
-    "select": "Vali",
     "switchServer": {
       "addServer": "Lisa server",
       "title": "Vaheta serverit"

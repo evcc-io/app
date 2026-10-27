@@ -45,7 +45,6 @@
       "authenticationRequired": "Potrebna je avtentikacija",
       "checkAdress": "Na strežniku ni najdene evcc instance. Prosim, preverite naslov strežnika.",
       "checkAndSave": "Preveri in shrani",
-      "enterUrl": "Vnesite URL",
       "loginRequired": "Strežnik zahteva prijavo.",
       "missingOrWrongAuthentication": "Manjkajoča ali nepravilna avtentikacija",
       "password": "Geslo",
@@ -82,7 +81,6 @@
       "start": "Začnite iskanje",
       "tryAgain": "Išči znova"
     },
-    "select": "Izberite",
     "switchServer": {
       "addServer": "Dodaj strežnik",
       "title": "Zamenjava strežnika"

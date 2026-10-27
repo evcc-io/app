@@ -45,7 +45,6 @@
       "authenticationRequired": "Vyžaduje se autentifikace",
       "checkAdress": "Server se nezdá být instancí evcc. Zkontrolujte prosím adresu.",
       "checkAndSave": "Zkontrolovat a uložit",
-      "enterUrl": "Zadejte URL",
       "loginRequired": "Server vyžaduje přihlášení.",
       "missingOrWrongAuthentication": "Chybějící nebo nesprávná autentifikace",
       "password": "Heslo",
@@ -82,7 +81,6 @@
       "start": "Spustit vyhledávání",
       "tryAgain": "Hledat znovu"
     },
-    "select": "Vybrat",
     "switchServer": {
       "addServer": "Přidat server",
       "title": "Přepnout server"
