@@ -2,7 +2,7 @@
   "connection": {
     "auth": {
       "hint": "Vale kasutajanimi või salasõna. Uuenda andmeid valikuga Vaheta serverit.",
-      "title": "Sisselogimine ebaõnnestus"
+      "title": "Sisselogimine ei õnnestunud"
     },
     "httpError": {
       "hint": "Server vastas ootamatult.",
@@ -10,7 +10,7 @@
     },
     "offline": {
       "hint": "Seade on võrguühenduseta. Ühendu WiFi-võrku või mobiilsidevõrku.",
-      "title": "Võrk puudub"
+      "title": "Võrkguühendus puudub"
     },
     "rateLimited": {
       "hint": "Server blokeerib päringud ajutiselt.",
@@ -30,8 +30,8 @@
       "title": "Server ei ole kättesaadav"
     },
     "websocket": {
-      "hint": "Leht laadib, kuid WebSocket ei ühendu. Kontrolli oma pöördvahendusserveri (reverse proxy) seadeid.",
-      "title": "WebSocket-ühendus ebaõnnestus"
+      "hint": "Leht laadib, kuid WebSocket ei ühendu. Kontrolli oma pöördvahendusserveri (reverse proxy) seadistusi.",
+      "title": "WebSocket-ühendus ei õnnestunud"
     }
   },
   "main": {
@@ -45,7 +45,7 @@
       "authenticationRequired": "Autentimine on vajalik",
       "checkAdress": "See server ei tundu olema elektrisõiduki sidekontroller. Palun kontrolli aadressi.",
       "checkAndSave": "Kontrolli ja salvesta",
-      "loginRequired": "Server nõuab sisselogimist.",
+      "loginRequired": "Server eeldb sisselogimist.",
       "missingOrWrongAuthentication": "Autentimine on puudu või vigane",
       "password": "Salasõna",
       "qrcode": {
