@@ -45,7 +45,6 @@
       "authenticationRequired": "Doğrulama gerekli",
       "checkAdress": "Sunucu bir evcc örneği gibi görünmüyor. Lütfen adresi kontrol edin.",
       "checkAndSave": "Doğrula ve kaydet",
-      "enterUrl": "URL girin",
       "loginRequired": "Sunucu giriş gerektiriyor.",
       "missingOrWrongAuthentication": "Eksik veya yanlış kimlik doğrulaması",
       "password": "Şifre",
@@ -82,7 +81,6 @@
       "start": "Aramaya başla",
       "tryAgain": "Tekrar ara"
     },
-    "select": "Seç",
     "switchServer": {
       "addServer": "Sunucu ekle",
       "title": "Sunucuyu değiştir"

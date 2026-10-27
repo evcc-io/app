@@ -45,7 +45,6 @@
       "authenticationRequired": "Registrering krävs",
       "checkAdress": "Servern verkar inte vara en evcc-instans. Vänligen kolla adressen.",
       "checkAndSave": "Kolla och spara",
-      "enterUrl": "Ange URL",
       "loginRequired": "Servern kräver inloggning.",
       "missingOrWrongAuthentication": "Saknad eller inkorrekt registrering",
       "password": "Lösenord",
@@ -82,7 +81,6 @@
       "start": "Hitta server",
       "tryAgain": "Sök igen"
     },
-    "select": "Välj",
     "switchServer": {
       "addServer": "Lägg till server",
       "title": "Byt server"

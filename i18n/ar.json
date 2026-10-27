@@ -9,7 +9,6 @@
       "authenticationRequired": "المصادقة مطلوبة",
       "checkAdress": "لا يبدو أن الخادم هو مثيل evcc. يرجى التحقق من العنوان.",
       "checkAndSave": "تحقق واحفظ",
-      "enterUrl": "أدخل عنوان URL",
       "missingOrWrongAuthentication": "المصادقة مفقودة أو غير صحيحة",
       "password": "كلمة السر",
       "serverIncompatible": "نسخة evcc ليست متوافقة مع التطبيق حتى الآن. يرجى تحديث التثبيت.",

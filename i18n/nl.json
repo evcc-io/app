@@ -44,7 +44,6 @@
       "authenticationRequired": "Authenticatie vereist",
       "checkAdress": "De server lijkt geen evcc server te zijn. Controleer het adres.",
       "checkAndSave": "Controleren en opslaan",
-      "enterUrl": "URL invoeren",
       "loginRequired": "Server vereist inloggen.",
       "missingOrWrongAuthentication": "Ontbrekende of foutieve authenticatie",
       "password": "Wachtwoord",
@@ -81,7 +80,6 @@
       "start": "Server zoeken",
       "tryAgain": "Opnieuw zoeken"
     },
-    "select": "Selecteren",
     "switchServer": {
       "addServer": "Server toevoegen",
       "title": "Server wijzigen"

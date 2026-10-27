@@ -45,7 +45,6 @@
       "authenticationRequired": "Authentification requise",
       "checkAdress": "Le serveur ne semble pas être une instance evcc. Veuillez vérifier l'adresse.",
       "checkAndSave": "Vérifier et sauvegarder",
-      "enterUrl": "Entrez l'URL",
       "loginRequired": "Le serveur nécessite une connexion.",
       "missingOrWrongAuthentication": "Authentification manquante ou incorrecte",
       "password": "Mot de passe",
@@ -82,7 +81,6 @@
       "start": "Chercher un serveur",
       "tryAgain": "Chercher à nouveau"
     },
-    "select": "Sélectionner",
     "switchServer": {
       "addServer": "Ajouter un serveur",
       "title": "Changer de serveur"

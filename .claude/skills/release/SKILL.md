@@ -25,7 +25,7 @@ Steps are marked 🤖 (agent runs it) or 👤 (human does it). Stop and wait at 
    - Draft per [Release notes](#release-notes), show the final markdown, iterate until approved. Save it to a scratch file.
    - Also draft the store text per [Store text](#release-notes): TestFlight "What to Test" + Play notes for beta, "What's New" for stable.
 
-3. 🤖 **Bump**: `npm run bump -- <ver> <code>`, then `npm run lint`, then show `git diff --stat` (expect `package.json`, `package-lock.json`, `app.config.ts`).
+3. 🤖 **Bump**: `npm run bump -- <ver> <code>`, then `npm run widget:strings` (pulls current evcc translations from `../evcc`, `git -C ../evcc pull` first), then `npm run lint`, then show `git diff --stat` (expect `package.json`, `package-lock.json`, `app.config.ts`, possibly `targets/widget/Localizable.xcstrings`).
 
 4. 👤 **Commit + push**: propose `chore: version bump <ver>`. Human commits and pushes.
 

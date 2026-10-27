@@ -45,7 +45,6 @@
       "authenticationRequired": "Potrebna je prijava",
       "checkAdress": "Na poslužitelju nije pronađen evcc. Provjerite adresu.",
       "checkAndSave": "Provjeri i spremi",
-      "enterUrl": "Unesite URL",
       "loginRequired": "Poslužitelj zahtijeva prijavu.",
       "missingOrWrongAuthentication": "Nepostojeća ili netočna prijava",
       "password": "Lozinka",
@@ -82,7 +81,6 @@
       "start": "Pokreni traženje",
       "tryAgain": "Traži ponovno"
     },
-    "select": "Odaberi",
     "switchServer": {
       "addServer": "Dodaj poslužitelj",
       "title": "Promijeni poslužitelj"

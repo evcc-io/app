@@ -45,7 +45,6 @@
       "authenticationRequired": "Hitelesítés szükséges",
       "checkAdress": "A szerver nem tűnik evcc példánynak. Kérjük, ellenőrizze a címet.",
       "checkAndSave": "Ellenőrizze és mentse el",
-      "enterUrl": "URL beírása",
       "loginRequired": "A szerver bejelentkezést igényel.",
       "missingOrWrongAuthentication": "Hiányzó vagy helytelen hitelesítés",
       "password": "Jelszó",
@@ -82,7 +81,6 @@
       "start": "Keresés indítása",
       "tryAgain": "Újra keresés"
     },
-    "select": "Válasszon",
     "switchServer": {
       "addServer": "Szerver hozzáadása",
       "title": "Szerver váltása"
