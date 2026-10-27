@@ -1,4 +1,39 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "Nepareizs lietotājvārds vai parole. Atjauniniet pieteikšanās datus, izvēloties \"Mainīt serveri\".",
+      "title": "Pieteikšanās neizdevās"
+    },
+    "httpError": {
+      "hint": "Serveris atbildēja negaidīti.",
+      "title": "Servera kļūda (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "Jūsu ierīce ir bezsaistē. Izveidojiet savienojumu ar WiFi vai mobilajiem datiem.",
+      "title": "Nav tīkla savienojuma"
+    },
+    "rateLimited": {
+      "hint": "Serveris īslaicīgi bloķē pieprasījumus.",
+      "title": "Pārāk daudz mēģinājumu"
+    },
+    "remoteOffline": {
+      "hint": "Jūsu evcc eksemplārs nav savienots.",
+      "title": "evcc ir bezsaistē"
+    },
+    "retry": "Mēģiniet vēlreiz",
+    "timeout": {
+      "hint": "No servera nav saņemta atbilde.",
+      "title": "Serveris neatbild"
+    },
+    "unreachable": {
+      "hint": "Pārbaudiet savu tīklu un to, vai jūsu evcc eksemplārs darbojas.",
+      "title": "Nevar sasniegt serveri"
+    },
+    "websocket": {
+      "hint": "Lapa ielādējas, taču WebSocket savienojums netiek izveidots. Pārbaudiet savas apgrieztā starpniekservera (reverse proxy) iestatījumus.",
+      "title": "WebSocket savienojumu neizdevās izveidot"
+    }
+  },
   "main": {
     "description": "Savienosimies ar jūsu serveri.",
     "title": "Laipni lūdzam"
@@ -10,6 +45,7 @@
       "authenticationRequired": "Nepieciešama autentifikācija",
       "checkAdress": "Serveris nešķiet esam evcc instance. Lūdzu pārbaudiet adresi.",
       "checkAndSave": "Pārbaudīt un saglabāt",
+      "loginRequired": "Serverim nepieciešama pieteikšanās.",
       "missingOrWrongAuthentication": "Trūkstoša vai nepareiza autentifikācija",
       "password": "Parole",
       "qrcode": {
@@ -100,7 +136,7 @@
     },
     "unreachable": {
       "body": "Neizdevās ielādēt evcc instanci.",
-      "title": "Serveris nav sasniedzams"
+      "title": "Serveris nav pieejams"
     }
   }
 }

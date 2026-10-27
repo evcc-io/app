@@ -1,4 +1,39 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "ユーザー名またはパスワードが正しくありません。「サーバー変更」から認証情報を更新してください。",
+      "title": "ログインに失敗しました"
+    },
+    "httpError": {
+      "hint": "サーバーが予期しない応答を返しました。",
+      "title": "サーバーエラー (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "お使いのデバイスはオフラインです。Wi-Fiまたはモバイルデータに接続してください。",
+      "title": "ネットワークに接続されていません"
+    },
+    "rateLimited": {
+      "hint": "サーバーが一時的にリクエストをブロックしています。",
+      "title": "試行回数が多すぎます"
+    },
+    "remoteOffline": {
+      "hint": "evccインスタンスが接続されていません。",
+      "title": "evccはオフラインです"
+    },
+    "retry": "再試行",
+    "timeout": {
+      "hint": "サーバーから応答がありません。",
+      "title": "サーバーが応答しません"
+    },
+    "unreachable": {
+      "hint": "ネットワークと、evccインスタンスが起動していることを確認してください。",
+      "title": "サーバーに到達できません"
+    },
+    "websocket": {
+      "hint": "ページは読み込まれますが、WebSocketが接続されません。リバースプロキシの設定を確認してください。",
+      "title": "WebSocket接続に失敗しました"
+    }
+  },
   "main": {
     "description": "ネットワーク内を検索して、お使いのevccサーバーを見つけます。",
     "title": "サーバーをセットアップ"
@@ -10,6 +45,7 @@
       "authenticationRequired": "認証が必要です",
       "checkAdress": "指定されたアドレスはevccサーバーではないようです。アドレスを確認してください。",
       "checkAndSave": "確認して保存",
+      "loginRequired": "サーバーにはログインが必要です。",
       "missingOrWrongAuthentication": "認証情報が不足しているか、正しくありません",
       "password": "パスワード",
       "qrcode": {

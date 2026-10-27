@@ -1,4 +1,39 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "Väärä käyttäjätunnus tai salasana. Päivitä tunnistetiedot kohdassa Vaihda palvelinta.",
+      "title": "Kirjautuminen epäonnistui"
+    },
+    "httpError": {
+      "hint": "Palvelin vastasi odottamattomasti.",
+      "title": "Palvelinvirhe (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "Laitteesi on offline-tilassa. Yhdistä WiFi- tai mobiilidataan.",
+      "title": "Ei verkkoyhteyttä"
+    },
+    "rateLimited": {
+      "hint": "Palvelin estää tilapäisesti pyynnöt.",
+      "title": "Liian monta yritystä"
+    },
+    "remoteOffline": {
+      "hint": "evcc-instanssiasi ei ole yhdistetty.",
+      "title": "evcc on offline-tilassa"
+    },
+    "retry": "Yritä uudelleen",
+    "timeout": {
+      "hint": "Palvelimelta ei saatu vastausta.",
+      "title": "Palvelin ei vastaa"
+    },
+    "unreachable": {
+      "hint": "Tarkista verkkoyhteytesi ja että evcc-instanssisi on käynnissä.",
+      "title": "Palvelinta ei tavoiteta"
+    },
+    "websocket": {
+      "hint": "Sivu latautuu, mutta WebSocket ei yhdistä. Tarkista käänteisen välityspalvelimen asetukset.",
+      "title": "WebSocket-yhteys epäonnistui"
+    }
+  },
   "main": {
     "description": "Yhdistetään palvelimellesi.",
     "title": "Tervetuloa"
@@ -10,6 +45,7 @@
       "authenticationRequired": "Todennus vaaditaan",
       "checkAdress": "Määritetty palvelin ei näytä olevan evcc-palvelin. Tarkista osoite.",
       "checkAndSave": "Tarkista ja tallenna",
+      "loginRequired": "Palvelin vaatii kirjautumisen.",
       "missingOrWrongAuthentication": "Todennus puuttuu tai virheellinen",
       "password": "Salasana",
       "qrcode": {

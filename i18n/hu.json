@@ -1,4 +1,39 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "Hibás felhasználónév vagy jelszó. Frissítsd a hitelesítő adatokat a Szerver módosítása menüben.",
+      "title": "Sikertelen bejelentkezés"
+    },
+    "httpError": {
+      "hint": "A szerver váratlanul válaszolt.",
+      "title": "Szerverhiba (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "Az eszközöd offline. Csatlakozz WiFi-hez vagy mobiladathoz.",
+      "title": "Nincs hálózat"
+    },
+    "rateLimited": {
+      "hint": "A szerver ideiglenesen blokkolja a kéréseket.",
+      "title": "Túl sok próbálkozás"
+    },
+    "remoteOffline": {
+      "hint": "Az evcc példányod nincs csatlakoztatva.",
+      "title": "Az evcc offline"
+    },
+    "retry": "Újra",
+    "timeout": {
+      "hint": "Nincs válasz a szervertől.",
+      "title": "A szerver nem válaszol"
+    },
+    "unreachable": {
+      "hint": "Ellenőrizd a hálózatot, és hogy az evcc példányod fut-e.",
+      "title": "A szerver nem érhető el"
+    },
+    "websocket": {
+      "hint": "Az oldal betöltődik, de a WebSocket nem csatlakozik. Ellenőrizd a reverse proxy beállításait.",
+      "title": "A WebSocket-kapcsolat sikertelen"
+    }
+  },
   "main": {
     "description": "Keresse meg hálózatán az evcc telepítését.",
     "title": "Szerver beállítása"
@@ -10,6 +45,7 @@
       "authenticationRequired": "Hitelesítés szükséges",
       "checkAdress": "A szerver nem tűnik evcc példánynak. Kérjük, ellenőrizze a címet.",
       "checkAndSave": "Ellenőrizze és mentse el",
+      "loginRequired": "A szerver bejelentkezést igényel.",
       "missingOrWrongAuthentication": "Hiányzó vagy helytelen hitelesítés",
       "password": "Jelszó",
       "qrcode": {

@@ -1,4 +1,39 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "Utilizador ou password incorretos. Atualize as credenciais em Alterar servidor.",
+      "title": "Falha no início de sessão"
+    },
+    "httpError": {
+      "hint": "O servidor respondeu de forma inesperada.",
+      "title": "Erro do servidor (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "O seu dispositivo está offline. Ligue-se ao WiFi ou aos dados móveis.",
+      "title": "Sem rede"
+    },
+    "rateLimited": {
+      "hint": "O servidor está a bloquear pedidos temporariamente.",
+      "title": "Demasiadas tentativas"
+    },
+    "remoteOffline": {
+      "hint": "A sua instalação evcc não está ligada.",
+      "title": "O evcc está offline"
+    },
+    "retry": "Tentar novamente",
+    "timeout": {
+      "hint": "Sem resposta do servidor.",
+      "title": "O servidor não responde"
+    },
+    "unreachable": {
+      "hint": "Verifique a sua rede e se a instalação evcc está em execução.",
+      "title": "Servidor inacessível"
+    },
+    "websocket": {
+      "hint": "A página carrega, mas o WebSocket não se liga. Verifique as definições do reverse proxy.",
+      "title": "Falha na ligação WebSocket"
+    }
+  },
   "main": {
     "description": "Procurar a rede para localizar a sua instalação evcc.",
     "title": "Configurar o servidor"
@@ -10,6 +45,7 @@
       "authenticationRequired": "Necessário Autenticação",
       "checkAdress": "O servidor não parece ser uma instalação do evcc. Por favor, verifique o endereço.",
       "checkAndSave": "Verificar e guardar",
+      "loginRequired": "O servidor requer início de sessão.",
       "missingOrWrongAuthentication": "Autenticação inexistente ou incorreta",
       "password": "Password",
       "qrcode": {

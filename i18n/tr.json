@@ -1,4 +1,39 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "Kullanıcı adı veya parola yanlış. Kimlik bilgilerini Sunucuyu Değiştir bölümünden güncelle.",
+      "title": "Giriş başarısız"
+    },
+    "httpError": {
+      "hint": "Sunucu beklenmedik bir yanıt verdi.",
+      "title": "Sunucu hatası (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "Cihazın çevrimdışı. WiFi'ye veya mobil veriye bağlan.",
+      "title": "Ağ yok"
+    },
+    "rateLimited": {
+      "hint": "Sunucu istekleri geçici olarak engelliyor.",
+      "title": "Çok fazla deneme"
+    },
+    "remoteOffline": {
+      "hint": "evcc örneğin bağlı değil.",
+      "title": "evcc çevrimdışı"
+    },
+    "retry": "Tekrar dene",
+    "timeout": {
+      "hint": "Sunucudan yanıt gelmedi.",
+      "title": "Sunucu yanıt vermiyor"
+    },
+    "unreachable": {
+      "hint": "Ağını ve evcc örneğinin çalıştığını kontrol et.",
+      "title": "Sunucuya ulaşılamıyor"
+    },
+    "websocket": {
+      "hint": "Sayfa yükleniyor ama WebSocket bağlanmıyor. Ters proxy ayarlarını kontrol et.",
+      "title": "WebSocket bağlantısı başarısız"
+    }
+  },
   "main": {
     "description": "Evcc'nizi bulmak için ağınızı arayın.",
     "title": "Sunucu Kurulumu"
@@ -10,6 +45,7 @@
       "authenticationRequired": "Doğrulama gerekli",
       "checkAdress": "Sunucu bir evcc örneği gibi görünmüyor. Lütfen adresi kontrol edin.",
       "checkAndSave": "Doğrula ve kaydet",
+      "loginRequired": "Sunucu giriş gerektiriyor.",
       "missingOrWrongAuthentication": "Eksik veya yanlış kimlik doğrulaması",
       "password": "Şifre",
       "qrcode": {

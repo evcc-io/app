@@ -1,4 +1,39 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "Napačno uporabniško ime ali geslo. Posodobite poverilnice prek možnosti Spremeni strežnik.",
+      "title": "Prijava ni uspela"
+    },
+    "httpError": {
+      "hint": "Strežnik se je odzval nepričakovano.",
+      "title": "Napaka strežnika (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "Vaša naprava je brez povezave. Povežite se z WiFi ali mobilnimi podatki.",
+      "title": "Ni omrežja"
+    },
+    "rateLimited": {
+      "hint": "Strežnik začasno blokira zahteve.",
+      "title": "Preveč poskusov"
+    },
+    "remoteOffline": {
+      "hint": "Vaša instanca evcc ni povezana.",
+      "title": "evcc je brez povezave"
+    },
+    "retry": "Poskusi znova",
+    "timeout": {
+      "hint": "Strežnik se ni odzval.",
+      "title": "Strežnik se ne odziva"
+    },
+    "unreachable": {
+      "hint": "Preverite omrežje in ali vaša instanca evcc deluje.",
+      "title": "Strežnik ni dosegljiv"
+    },
+    "websocket": {
+      "hint": "Stran se naloži, vendar se WebSocket ne poveže. Preverite nastavitve povratnega posrednika (reverse proxy).",
+      "title": "Povezava WebSocket ni uspela"
+    }
+  },
   "main": {
     "description": "Poiščite evcc strežnik na vaši mreži.",
     "title": "Nastavitev strežnika"
@@ -10,6 +45,7 @@
       "authenticationRequired": "Potrebna je avtentikacija",
       "checkAdress": "Na strežniku ni najdene evcc instance. Prosim, preverite naslov strežnika.",
       "checkAndSave": "Preveri in shrani",
+      "loginRequired": "Strežnik zahteva prijavo.",
       "missingOrWrongAuthentication": "Manjkajoča ali nepravilna avtentikacija",
       "password": "Geslo",
       "qrcode": {
