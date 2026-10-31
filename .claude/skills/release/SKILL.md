@@ -32,7 +32,7 @@ Steps are marked 🤖 (agent runs it) or 👤 (human does it). Stop and wait at 
 5. 🤖👤 **Store builds**
    - 🤖 `eas build -p all --profile production --non-interactive` in the background (~20 min). Status: `eas build:list --limit 2 --json --non-interactive`.
    - 🤖 Android: `eas submit -p android --latest --non-interactive`, plus `--profile beta` for beta → closed test "evcc community" (`alpha` track; if Play reports the track missing, it's a custom track: put its name in `eas.json`). Stable → internal track.
-   - 🤖 iOS: `eas submit -p ios --latest --non-interactive` → TestFlight.
+   - 🤖 iOS: `eas submit -p ios --latest --non-interactive --what-to-test "$(cat <en-what-to-test-file>)"` → TestFlight with English "What to Test" set (one language only; `--groups` is internal-only, external groups stay manual).
 
 6. 🤖 **F-Droid APK from CI**
    - `gh run list --branch main --workflow ci.yaml --commit <bump-sha>` → `gh run watch <id>` (the `F-Droid` job is enough, Detox can still be running).
@@ -41,10 +41,10 @@ Steps are marked 🤖 (agent runs it) or 👤 (human does it). Stop and wait at 
 
 7. 🤖 **Draft release**: `gh release create <ver> --draft --target <bump-sha> --title <ver> --notes-file <notes> "$d/evcc-<ver>-fdroid.apk"`, plus `--prerelease` for beta or `--latest` for stable. Verify with `gh release view <ver> --json isDraft,assets` (~110 MB asset, similar to the previous release).
 
-8. 👤 **Publish**: after explicit go, `gh release edit <ver> --draft=false`. ⚠️ Irreversible: tag + asset freeze (immutable releases), F-Droid builds the tag within days.
+8. 👤 **Publish**: after explicit go, `id=$(gh api repos/evcc-io/app/releases -q '.[] | select(.name=="<ver>" and .draft) | .id') && gh api -X PATCH repos/evcc-io/app/releases/$id -F draft=false -f tag_name=<ver>` (`gh release edit <ver>` can't find drafts: the tag doesn't exist yet). ⚠️ Irreversible: tag + asset freeze (immutable releases), F-Droid builds the tag within days.
 
 9. 👤 **Stores**
-   - Beta: TestFlight external group ("What to Test"). Play: already on the closed track via `--profile beta`; otherwise Closed test → "Neuen Release erstellen" → "Aus der Bibliothek hinzufügen" → paste notes. Done; a later `/release` run promotes it to stable.
+   - Beta: TestFlight → add build to the external group (English "What to Test" already set by submit; add German via `pbcopy`). Play: already on the closed track via `--profile beta`; otherwise Closed test → "Neuen Release erstellen" → "Aus der Bibliothek hinzufügen" → paste notes. Done; a later `/release` run promotes it to stable.
    - Stable: App Store Connect → new version, pick build, paste "What's New", submit for review (covers iOS + macOS). Play Console → promote release to production with notes. When promoting an existing beta, 🤖 also run `gh release edit <ver> --prerelease=false --latest`.
 
 ## Release notes
