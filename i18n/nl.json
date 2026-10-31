@@ -9,7 +9,7 @@
       "title": "Serverfout (HTTP {{status}})"
     },
     "offline": {
-      "hint": "Je apparaat is offline. Maak verbinding met wifi of mobiele data.",
+      "hint": "Je apparaat is offline. Maak verbinding met WiFi of mobiele data.",
       "title": "Geen netwerk"
     },
     "rateLimited": {
@@ -17,7 +17,8 @@
       "title": "Te veel pogingen"
     },
     "remoteOffline": {
-      "hint": "Je evcc-instantie is niet verbonden."
+      "hint": "Je evcc-instantie is niet verbonden.",
+      "title": "evcc is offline"
     },
     "retry": "Opnieuw proberen",
     "timeout": {
@@ -25,7 +26,7 @@
       "title": "Server reageert niet"
     },
     "unreachable": {
-      "hint": "Controleer je netwerk en of je evcc-instantie draait.",
+      "hint": "Controleer je netwerk en of je evcc-instantie actief is.",
       "title": "Server niet bereikbaar"
     },
     "websocket": {
@@ -99,16 +100,16 @@
       "useThisLoadpoint": "Dit laadpunt gebruiken"
     },
     "config": {
-      "desc": "Server voor de voorspelling.",
+      "desc": "Server voor de verwachting.",
       "loadpoint": "Laadpunt",
       "server": "Server",
-      "title": "evcc voorspelling"
+      "title": "evcc verwachting"
     },
     "description": {
-      "co2": "Voorspelling CO₂-emissies.",
-      "feedin": "Voorspelling netexportprijs.",
-      "price": "Voorspelling netimportprijs.",
-      "solar": "Voorspelling PV-productie."
+      "co2": "Verwachting CO₂-emissies.",
+      "feedin": "Verwachting netexportprijs.",
+      "price": "Verwachting netimportprijs.",
+      "solar": "Verwachting PV-productie."
     },
     "loadpoint": {
       "description": "Laadpuntstatus en laadmodus.",
@@ -118,7 +119,7 @@
       "co2": "CO₂",
       "feedin": "Netexportprijs",
       "price": "Net import prijs",
-      "solar": "PV-voorspelling"
+      "solar": "PV-verwachting"
     },
     "noData": {
       "body": "Deze server heeft geen data van dit type.",
