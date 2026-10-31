@@ -3324,7 +3324,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Τιμή εξαγωγής προς δίκτυο"
+            "value": "Τιμολόγιο έγχυσης στο δίκτυο"
           }
         },
         "en": {
@@ -4786,7 +4786,7 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "evcc voorspelling"
+            "value": "evcc verwachting"
           }
         },
         "pl": {
@@ -4959,7 +4959,7 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Server voor de voorspelling."
+            "value": "Server voor de verwachting."
           }
         },
         "pl": {
@@ -5824,7 +5824,7 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "PV-voorspelling"
+            "value": "PV-verwachting"
           }
         },
         "pl": {
@@ -6265,7 +6265,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Τιμή εξαγωγής προς δίκτυο"
+            "value": "Τιμολόγιο έγχυσης στο δίκτυο"
           }
         },
         "en": {
@@ -6516,7 +6516,7 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Voorspelling PV-productie."
+            "value": "Verwachting PV-productie."
           }
         },
         "pl": {
@@ -6689,7 +6689,7 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Voorspelling netimportprijs."
+            "value": "Verwachting netimportprijs."
           }
         },
         "pl": {
@@ -6862,7 +6862,7 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Voorspelling CO₂-emissies."
+            "value": "Verwachting CO₂-emissies."
           }
         },
         "pl": {
@@ -6957,7 +6957,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Πρόγνωση τιμής εξαγωγής προς δίκτυο."
+            "value": "Πρόγνωση τιμολογίου έγχυσης στο δίκτυο."
           }
         },
         "en": {
@@ -7035,7 +7035,7 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Voorspelling netexportprijs."
+            "value": "Verwachting netexportprijs."
           }
         },
         "pl": {
