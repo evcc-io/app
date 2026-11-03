@@ -38,6 +38,9 @@ struct StoredServer: Codable, Identifiable {
   let username: String?
   let password: String?
   let authRequired: Bool?
+  /// Watch only: the IP the phone resolved a `.local` host to. watchOS can't
+  /// resolve Bonjour names, at least not while routed through the phone.
+  var fallbackUrl: String? = nil
 
   var displayTitle: String {
     if let t = title, !t.trimmingCharacters(in: .whitespaces).isEmpty { return t }
@@ -69,13 +72,39 @@ final class FetchDiagnostics: @unchecked Sendable {
   }
 }
 
+/// Remembers per server whether its fallback URL answered last, so a failing
+/// `.local` name isn't retried on every poll.
+final class ServerRoutes: @unchecked Sendable {
+  static let shared = ServerRoutes()
+  private let lock = NSLock()
+  private var useFallback: Set<String> = []
+
+  func prefersFallback(_ server: StoredServer) -> Bool {
+    lock.lock(); defer { lock.unlock() }
+    return useFallback.contains(server.url)
+  }
+
+  func record(_ server: StoredServer, fallback: Bool) {
+    lock.lock(); defer { lock.unlock() }
+    if fallback { useFallback.insert(server.url) } else { useFallback.remove(server.url) }
+  }
+}
+
 /// Minimal evcc API client (GET jq slices of /api/state + POST actions), with
 /// optional basic auth.
 enum ApiClient {
-  private static func base(_ server: StoredServer) -> String {
-    var b = server.url
+  private static func trimmed(_ url: String) -> String {
+    var b = url
     while b.hasSuffix("/") { b.removeLast() }
     return b
+  }
+
+  /// Base URLs to try in order: the last one that worked first.
+  private static func bases(_ server: StoredServer) -> [(base: String, fallback: Bool)] {
+    let primary = (trimmed(server.url), false)
+    guard let f = server.fallbackUrl, !f.isEmpty else { return [primary] }
+    let fallback = (trimmed(f), true)
+    return ServerRoutes.shared.prefersFallback(server) ? [fallback, primary] : [primary, fallback]
   }
 
   // Same UA suffix as the app's WebView (utils/constants.ts)
@@ -93,7 +122,7 @@ enum ApiClient {
   /// evcc blocks remote logins after 10 failures per minute: after a 401/429,
   /// pause requests to that server for a minute instead of adding to it.
   private static func backoffKey(_ server: StoredServer) -> String {
-    "backoff.\(base(server))|\(server.username ?? "")"
+    "backoff.\(trimmed(server.url))|\(server.username ?? "")"
   }
 
   private static func backedOff(_ server: StoredServer) -> Bool {
@@ -108,13 +137,40 @@ enum ApiClient {
     return code
   }
 
-  static func request(_ server: StoredServer, jq: String) -> URLRequest? {
-    guard var comps = URLComponents(string: base(server) + "/api/state") else { return nil }
+  /// Errors where the other URL of the server may still work.
+  private static func isUnreachable(_ error: Error) -> Bool {
+    guard let e = error as? URLError else { return false }
+    return [.cannotFindHost, .cannotConnectToHost, .dnsLookupFailed, .timedOut,
+            .networkConnectionLost].contains(e.code)
+  }
+
+  /// Sends the request built for each base URL until one connects.
+  private static func send(
+    _ server: StoredServer, _ build: (String) -> URLRequest?
+  ) async throws -> (Data, URLResponse) {
+    let candidates = bases(server)
+    var lastError: Error = URLError(.badURL)
+    for (i, candidate) in candidates.enumerated() {
+      guard var req = build(candidate.base) else { continue }
+      applyHeaders(&req, server)
+      do {
+        let result = try await URLSession.shared.data(for: req)
+        if candidates.count > 1 { ServerRoutes.shared.record(server, fallback: candidate.fallback) }
+        return result
+      } catch {
+        lastError = error
+        if i == candidates.count - 1 || !isUnreachable(error) { throw error }
+      }
+    }
+    throw lastError
+  }
+
+  private static func request(base: String, jq: String) -> URLRequest? {
+    guard var comps = URLComponents(string: base + "/api/state") else { return nil }
     comps.queryItems = [URLQueryItem(name: "jq", value: jq)]
     guard let url = comps.url else { return nil }
     var req = URLRequest(url: url, timeoutInterval: 15)
     req.cachePolicy = .reloadIgnoringLocalCacheData
-    applyHeaders(&req, server)
     return req
   }
 
@@ -124,13 +180,9 @@ enum ApiClient {
       diag.set(server.url, "backoff")
       return .failure
     }
-    guard let req = request(server, jq: jq) else {
-      diag.set(server.url, "invalid URL")
-      return .failure
-    }
     let data: Data
     do {
-      let (d, response) = try await URLSession.shared.data(for: req)
+      let (d, response) = try await send(server) { request(base: $0, jq: jq) }
       let code = status(response, server)
       guard (200..<300).contains(code) else {
         diag.set(server.url, "HTTP \(code)")
@@ -160,12 +212,14 @@ enum ApiClient {
   @discardableResult
   static func post(_ server: StoredServer, path: String) async -> Bool {
     let p = path.hasPrefix("/") ? path : "/" + path
-    guard !backedOff(server), let url = URL(string: base(server) + p) else { return false }
-    var req = URLRequest(url: url, timeoutInterval: 15)
-    req.httpMethod = "POST"
-    applyHeaders(&req, server)
+    guard !backedOff(server) else { return false }
     do {
-      let (_, response) = try await URLSession.shared.data(for: req)
+      let (_, response) = try await send(server) { base in
+        guard let url = URL(string: base + p) else { return nil }
+        var req = URLRequest(url: url, timeoutInterval: 15)
+        req.httpMethod = "POST"
+        return req
+      }
       return (200..<300).contains(status(response, server))
     } catch {
       return false
