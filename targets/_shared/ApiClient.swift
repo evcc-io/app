@@ -51,6 +51,24 @@ enum FetchOutcome<T> {
   case failure  // network or auth error
 }
 
+/// Last failure per server URL ("HTTP 400", "URLError -1004", "decoding"), shown
+/// next to "unreachable" so a failing fetch can be told apart without logs.
+final class FetchDiagnostics: @unchecked Sendable {
+  static let shared = FetchDiagnostics()
+  private let lock = NSLock()
+  private var errors: [String: String] = [:]
+
+  func set(_ url: String, _ error: String?) {
+    lock.lock(); defer { lock.unlock() }
+    errors[url] = error
+  }
+
+  func get(_ url: String) -> String? {
+    lock.lock(); defer { lock.unlock() }
+    return errors[url]
+  }
+}
+
 /// Minimal evcc API client (GET jq slices of /api/state + POST actions), with
 /// optional basic auth.
 enum ApiClient {
@@ -101,18 +119,39 @@ enum ApiClient {
   }
 
   static func fetch<T: Decodable>(_ server: StoredServer, jq: String, as type: T.Type) async -> FetchOutcome<T> {
-    guard !backedOff(server), let req = request(server, jq: jq) else { return .failure }
+    let diag = FetchDiagnostics.shared
+    guard !backedOff(server) else {
+      diag.set(server.url, "backoff")
+      return .failure
+    }
+    guard let req = request(server, jq: jq) else {
+      diag.set(server.url, "invalid URL")
+      return .failure
+    }
+    let data: Data
     do {
-      let (data, response) = try await URLSession.shared.data(for: req)
-      guard (200..<300).contains(status(response, server)) else { return .failure }
-      if let s = String(data: data, encoding: .utf8)?
-        .trimmingCharacters(in: .whitespacesAndNewlines),
-        s.isEmpty || s == "null" || s == "[]" || s == "{}" {
-        return .noData
+      let (d, response) = try await URLSession.shared.data(for: req)
+      let code = status(response, server)
+      guard (200..<300).contains(code) else {
+        diag.set(server.url, "HTTP \(code)")
+        return .failure
       }
-      let decoded = try EvccJSON.decoder.decode(T.self, from: data)
-      return .success(decoded)
+      data = d
     } catch {
+      let e = error as NSError
+      diag.set(server.url, e.domain == NSURLErrorDomain ? "URLError \(e.code)" : "\(e.domain) \(e.code)")
+      return .failure
+    }
+    diag.set(server.url, nil)
+    if let s = String(data: data, encoding: .utf8)?
+      .trimmingCharacters(in: .whitespacesAndNewlines),
+      s.isEmpty || s == "null" || s == "[]" || s == "{}" {
+      return .noData
+    }
+    do {
+      return .success(try EvccJSON.decoder.decode(T.self, from: data))
+    } catch {
+      diag.set(server.url, "decoding: " + String("\(error)".prefix(200)))
       return .failure
     }
   }
