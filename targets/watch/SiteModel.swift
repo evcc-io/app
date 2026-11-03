@@ -24,6 +24,7 @@ final class SiteModel: ObservableObject {
   @Published private(set) var state: SiteState?
   @Published private(set) var lastUpdate: Date?
   @Published private(set) var unreachable = false
+  @Published private(set) var errorDetail: String?
   @Published private(set) var pendingModes: [Int: String] = [:]
   @Published var modeFailed = false
 
@@ -59,6 +60,7 @@ final class SiteModel: ObservableObject {
     case .noData, .failure:
       guard server.id == serverId else { return }
       unreachable = true
+      errorDetail = FetchDiagnostics.shared.get(server.url) ?? "no data"
     }
   }
 

@@ -23,7 +23,7 @@ struct OverviewPage: View {
         .opacity(model.unreachable ? 0.5 : 1)
       } else if model.unreachable {
         MessagePage(symbol: "wifi.slash", title: L.t("widget.unreachable.title"),
-                    message: L.t("widget.unreachable.body"))
+                    message: L.t("widget.unreachable.body"), detail: model.errorDetail)
       } else {
         ProgressView()
       }
@@ -174,7 +174,12 @@ struct StaleFooter: View {
   var body: some View {
     if model.unreachable, let at = model.lastUpdate {
       Label {
-        Text(at, style: .relative)
+        VStack(alignment: .leading) {
+          Text(at, style: .relative)
+          if let detail = model.errorDetail {
+            Text(detail).font(.caption2).foregroundStyle(.tertiary)
+          }
+        }
       } icon: {
         Image(systemName: "wifi.slash")
       }
@@ -190,12 +195,18 @@ struct MessagePage: View {
   let symbol: String
   let title: String
   let message: String
+  var detail: String? = nil
 
   var body: some View {
-    VStack(spacing: 6) {
-      Image(systemName: symbol).font(.title2).foregroundStyle(.secondary)
-      Text(title).font(.headline).multilineTextAlignment(.center)
-      Text(message).font(.footnote).foregroundStyle(.secondary).multilineTextAlignment(.center)
+    ScrollView {
+      VStack(spacing: 6) {
+        Image(systemName: symbol).font(.title2).foregroundStyle(.secondary)
+        Text(title).font(.headline).multilineTextAlignment(.center)
+        Text(message).font(.footnote).foregroundStyle(.secondary).multilineTextAlignment(.center)
+        if let detail {
+          Text(detail).font(.caption2).foregroundStyle(.tertiary).multilineTextAlignment(.center)
+        }
+      }
     }
   }
 }
