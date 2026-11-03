@@ -1,6 +1,6 @@
 /**
- * Generates targets/widget/Localizable.xcstrings (a String Catalog) for the iOS
- * widget extension by compiling strings from TWO community-translated sources:
+ * Generates targets/_shared/Localizable.xcstrings (a String Catalog) for the iOS
+ * widget and the Apple Watch app + complication by compiling strings from TWO community-translated sources:
  *
  *   - ../evcc/i18n  — the evcc daemon's translations (forecast type labels etc.)
  *   - ./i18n        — this app's translations (widget-only strings)
@@ -16,7 +16,7 @@ import path from "path";
 
 const APP_I18N = "./i18n";
 const EVCC_I18N = "../evcc/i18n";
-const OUT = "./targets/widget/Localizable.xcstrings";
+const OUT = "./targets/_shared/Localizable.xcstrings";
 const SOURCE_LANG = "en";
 
 // iOS string key  →  { repo, dotted source key }
@@ -65,6 +65,17 @@ const KEYS: Record<string, { repo: "evcc" | "app"; key: string }> = {
   "widget.description.price": { repo: "app", key: "widget.description.price" },
   "widget.description.co2": { repo: "app", key: "widget.description.co2" },
   "widget.description.feedin": { repo: "app", key: "widget.description.feedin" },
+  // Apple Watch: energy flow labels from evcc, the rest from this app
+  "watch.flow.pv": { repo: "evcc", key: "main.energyflow.pvProduction" },
+  "watch.flow.home": { repo: "evcc", key: "main.energyflow.homePower" },
+  "watch.flow.gridImport": { repo: "evcc", key: "main.energyflow.gridImport" },
+  "watch.flow.gridExport": { repo: "evcc", key: "main.energyflow.pvExport" },
+  "watch.flow.battery": { repo: "evcc", key: "main.energyflow.battery" },
+  "watch.flow.batteryCharge": { repo: "evcc", key: "main.energyflow.batteryCharge" },
+  "watch.flow.batteryDischarge": { repo: "evcc", key: "main.energyflow.batteryDischarge" },
+  "watch.empty.title": { repo: "app", key: "watch.empty.title" },
+  "watch.empty.body": { repo: "app", key: "watch.empty.body" },
+  "watch.modeFailed": { repo: "app", key: "watch.modeFailed" },
 };
 
 // Labels for legacy servers (pre smart-mode redesign). evcc removed
