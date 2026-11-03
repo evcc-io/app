@@ -1,5 +1,50 @@
 import Foundation
 
+// Dates arrive as ISO-8601 strings (e.g. 2026-06-23T00:15:00+02:00) from older
+// evcc versions, or as unix seconds from newer ones (evcc-io/evcc#32391).
+enum EvccJSON {
+  private static let isoNoFrac: ISO8601DateFormatter = {
+    let f = ISO8601DateFormatter()
+    f.formatOptions = [.withInternetDateTime]
+    return f
+  }()
+  private static let isoFrac: ISO8601DateFormatter = {
+    let f = ISO8601DateFormatter()
+    f.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+    return f
+  }()
+
+  static let decoder: JSONDecoder = {
+    let d = JSONDecoder()
+    d.dateDecodingStrategy = .custom { dec in
+      let c = try dec.singleValueContainer()
+      if let seconds = try? c.decode(Double.self) {
+        return Date(timeIntervalSince1970: seconds)
+      }
+      let s = try c.decode(String.self)
+      if let date = isoNoFrac.date(from: s) ?? isoFrac.date(from: s) { return date }
+      throw DecodingError.dataCorruptedError(in: c, debugDescription: "bad date \(s)")
+    }
+    return d
+  }()
+}
+
+/// One evcc server as synced from the React Native app (widget: App Group,
+/// watch: WatchConnectivity). Written by `utils/widgetSync.ts`.
+struct StoredServer: Codable, Identifiable {
+  let id: String
+  let title: String?
+  let url: String
+  let username: String?
+  let password: String?
+  let authRequired: Bool?
+
+  var displayTitle: String {
+    if let t = title, !t.trimmingCharacters(in: .whitespaces).isEmpty { return t }
+    return url
+  }
+}
+
 enum FetchOutcome<T> {
   case success(T)
   case noData   // reachable, but the requested slice is null / empty
