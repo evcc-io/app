@@ -1,6 +1,7 @@
 import { Platform } from "react-native";
 import { File, Paths } from "expo-file-system";
 import { Server } from "types";
+import { syncWatchServers } from "modules/watch-sync";
 
 const APP_GROUP = "group.io.evcc.app";
 
@@ -52,7 +53,8 @@ function getExtensionStorage() {
 /**
  * Mirror the server list into the shared App Group so the iOS widget extension
  * can list servers in its config and authenticate its own /api/state fetches,
- * then ask WidgetKit to reload. Best-effort: failures are swallowed.
+ * then ask WidgetKit to reload. Also hands it to the Apple Watch app.
+ * Best-effort: failures are swallowed.
  */
 export function syncWidgetServers(
   servers: Server[],
@@ -75,14 +77,17 @@ function syncIosWidgetServers(
   servers: Server[],
   activeServerId?: string,
 ): void {
+  const serversJson = JSON.stringify(servers.map(toWidgetServer));
+  try {
+    syncWatchServers(serversJson, activeServerId);
+  } catch {
+    // watch sync is non-critical
+  }
   const mod = getExtensionStorage();
   if (!mod) return;
   try {
     const storage = new mod.ExtensionStorage(APP_GROUP);
-    storage.set(
-      WidgetStorageKeys.SERVERS,
-      JSON.stringify(servers.map(toWidgetServer)),
-    );
+    storage.set(WidgetStorageKeys.SERVERS, serversJson);
     if (activeServerId !== undefined) {
       storage.set(WidgetStorageKeys.ACTIVE_SERVER_ID, activeServerId);
     } else {

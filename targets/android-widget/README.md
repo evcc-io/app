@@ -9,7 +9,7 @@ Jetpack Glance counterpart of the iOS loadpoint widget (`targets/widget/`).
   - `ApiClient.kt`, `Format.kt`, `Theme.kt`, `ProgressBarRenderer.kt` — ports of the Swift equivalents.
 - `scripts/androidWidget/withAndroidWidget.ts` — Expo config plugin. Injects the Kotlin, widget info / preview / icon resources, manifest `<receiver>` + `<activity>`, Glance dependency and Compose compiler wiring. Registered in `app.config.ts`.
 
-Strings: shared widget strings come from `targets/widget/Localizable.xcstrings` (`npm run widget:strings`), the Android-only config Activity strings (`widget.androidConfig.*`) from `i18n/*.json`. The plugin turns both into `res/values-b+<locale>/strings.xml` at prebuild; nothing generated is committed.
+Strings: shared widget strings come from `targets/_shared/Localizable.xcstrings` (`npm run widget:strings`), the Android-only config Activity strings (`widget.androidConfig.*`) from `i18n/*.json`. The plugin turns both into `res/values-b+<locale>/strings.xml` at prebuild; nothing generated is committed.
 
 ## Build
 
