@@ -35,8 +35,8 @@
     }
   },
   "main": {
-    "description": "Evcc'nizi bulmak için ağınızı arayın.",
-    "title": "Sunucu Kurulumu"
+    "description": "Sunucuna bağlanalım.",
+    "title": "Hoş geldin"
   },
   "servers": {
     "changeServer": "Sunucu değiştir",
