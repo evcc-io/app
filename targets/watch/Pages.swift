@@ -110,14 +110,16 @@ struct LoadpointPage: View {
         Text(vm.title.isEmpty ? L.t("widget.loadpoint.name") : vm.title)
           .font(.headline)
           .lineLimit(1)
-        HStack(spacing: 4) {
+        HStack(alignment: .firstTextBaseline, spacing: 4) {
           Circle()
             .fill(vm.status.active ? accent : Color.bsGrayMedium)
             .frame(width: 6, height: 6)
+            .alignmentGuide(.firstTextBaseline) { $0[.bottom] }
           Text(L.t(vm.statusKey))
             .font(.footnote)
             .foregroundStyle(.secondary)
-            .lineLimit(1)
+            .lineLimit(2)
+            .fixedSize(horizontal: false, vertical: true)
         }
         HStack(alignment: .firstTextBaseline, spacing: 2) {
           Text(vm.metricValue)
@@ -143,6 +145,7 @@ struct LoadpointPage: View {
     .containerBackground(accent.gradient.opacity(0.25), for: .tabView)
   }
 
+  // Opaque gray: a translucent fill picks up the tinted page background.
   private var modeGrid: some View {
     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 4) {
       ForEach(vm.modes, id: \.rawValue) { mode in
@@ -157,7 +160,7 @@ struct LoadpointPage: View {
             .frame(maxWidth: .infinity)
             .padding(.vertical, 7)
             .foregroundStyle(selected ? Color.onGreen : Color.primary)
-            .background(selected ? accent : Color.white.opacity(0.15), in: Capsule())
+            .background(selected ? accent : Color(white: 0.22), in: Capsule())
         }
         .buttonStyle(.plain)
         .disabled(model.unreachable)
