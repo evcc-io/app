@@ -471,7 +471,7 @@ export default function MainScreen({
             </View>
             {/* retrying early doesn't lift a rate limit */}
             {problem && problem.type !== "rateLimited" && (
-              <RetryLink visible={!probing} onPress={retry} />
+              <RetryLink probing={probing} onPress={retry} />
             )}
           </View>
           <View
@@ -529,22 +529,26 @@ export default function MainScreen({
   );
 }
 
-// Fades in a while after each attempt, so the user sees retries happen and
-// isn't invited to hammer the server. Keeps its space to avoid layout jumps.
+// Hides on tap and fades in a while after that attempt, so the user isn't
+// invited to hammer the server. Keeps its space to avoid layout jumps.
 function RetryLink({
-  visible,
+  probing,
   onPress,
 }: {
-  visible: boolean;
+  probing: boolean;
   onPress: () => void;
 }) {
   const { t } = useTranslation();
+  const [pending, setPending] = useState(false);
   const [shown, setShown] = useState(false);
   const opacity = useRef(new Animated.Value(0)).current;
   useEffect(() => {
+    if (!probing) setPending(false);
+  }, [probing]);
+  useEffect(() => {
     setShown(false);
     opacity.setValue(0);
-    if (!visible) return;
+    if (pending) return;
     const id = setTimeout(() => {
       setShown(true);
       Animated.timing(opacity, {
@@ -554,7 +558,11 @@ function RetryLink({
       }).start();
     }, 5000);
     return () => clearTimeout(id);
-  }, [visible, opacity]);
+  }, [pending, opacity]);
+  const press = useCallback(() => {
+    setPending(true);
+    onPress();
+  }, [onPress]);
   return (
     <Animated.View
       style={{ alignSelf: "stretch", opacity }}
@@ -562,7 +570,7 @@ function RetryLink({
     >
       <TextLink
         testID={shown ? "connectionRetry" : undefined}
-        onPress={onPress}
+        onPress={press}
       >
         {t("connection.retry")}
       </TextLink>
