@@ -1,7 +1,7 @@
 {
   "connection": {
     "auth": {
-      "hint": "Neteisingas vartotojo vardas arba slaptažodis. Atnaujinkite prisijungimo duomenis per Keisti serverį.",
+      "hint": "Neteisingas vartotojo vardas arba slaptažodis. Atnaujinkite prisijungimo duomenis per Keisti Serverį.",
       "title": "Prisijungti nepavyko"
     },
     "httpError": {
