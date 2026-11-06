@@ -9,7 +9,7 @@
       "title": "Serverfehler (HTTP {{status}})"
     },
     "offline": {
-      "hint": "Däin Apparat ass offline. Verbann dech mam WiFi oder mat mobilen Daten.",
+      "hint": "Däin Apparat ass offline. Verbann dech mam WiFi oder mat de mobilen Daten.",
       "title": "Keen Netzwierk"
     },
     "rateLimited": {
@@ -35,7 +35,7 @@
     }
   },
   "main": {
-    "description": "Let's connect to your server.",
+    "description": "Loosst eis d'Verbindung mat Ärem Server erstellen.",
     "title": "Wëllkomm"
   },
   "servers": {
@@ -70,15 +70,15 @@
     "search": {
       "cancel": "Ofbriechen",
       "connect": "Verbannen",
-      "foundMany": "{{count}} Serveren fonnt",
+      "foundMany": "{{count}} Servere fonnt",
       "foundOne": "Server fonnt",
-      "hint": "Dat dauert normalerweis e puer Sekonnen.",
+      "hint": "Dëst dauert normalerweis e puer Sekonnen.",
       "inProgress": "Sichen …",
       "notAvailable": "D'Sich ass op auf dësem Gerät net méiglech. Benotz de manuellen Input.",
       "nothingFound": "Et gouf keen evcc Server fonnt.",
       "searching": "Siche no enger Verbindung ...",
       "selectHelper": "Wiel deen aus, mat deem s du dech verbanne wëlls.",
-      "start": "Sich starten",
+      "start": "Server fannen",
       "tryAgain": "Nees sichen"
     },
     "switchServer": {
