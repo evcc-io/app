@@ -35,8 +35,8 @@
     }
   },
   "main": {
-    "description": "Poiščite evcc strežnik na vaši mreži.",
-    "title": "Nastavitev strežnika"
+    "description": "Povežimo se z vašim strežnikom.",
+    "title": "Dobrodošli"
   },
   "servers": {
     "changeServer": "Spremenite strežnik",
@@ -75,10 +75,10 @@
       "hint": "To običajno traja nekaj sekund.",
       "inProgress": "Iskanje …",
       "notAvailable": "Iskanje na tej napravi ni mogoče. Uporabite ročni vnos.",
-      "nothingFound": "Najden ni bil noben strežnik z evcc.",
+      "nothingFound": "Najden ni bil noben strežnik.",
       "searching": "Iskanje povezave ...",
       "selectHelper": "Izberite tistega, s katerim se želite povezati.",
-      "start": "Začnite iskanje",
+      "start": "Poišči strežnik",
       "tryAgain": "Išči znova"
     },
     "switchServer": {
@@ -89,15 +89,15 @@
   },
   "widget": {
     "androidConfig": {
-      "chooseLoadpoint": "Izberite polnilno točko",
+      "chooseLoadpoint": "Izberite polnilno mesto",
       "chooseServer": "Izberite strežnik",
       "loading": "Nalaganje…",
       "loadingPreview": "Nalaganje predogleda…",
-      "noLoadpoints": "Nobena polnilna točka ni dosegljiva",
+      "noLoadpoints": "Nobeno polnilno mesto ni dosegljivo",
       "noServers": "Ni strežnikov. Najprej ga dodajte v aplikaciji.",
       "previewError": "Predogleda ni bilo mogoče naložiti",
-      "setupBody": "Tapnite za izbiro strežnika in polnilne točke.",
-      "useThisLoadpoint": "Uporabi to polnilno točko"
+      "setupBody": "Tapnite za izbiro strežnika in polnilnega mesta.",
+      "useThisLoadpoint": "Uporabi to polnilno mesto"
     },
     "config": {
       "desc": "Strežnik za napoved.",
@@ -107,16 +107,17 @@
     },
     "description": {
       "co2": "Napoved emisij CO₂.",
-      "feedin": "Napoved cene dovajanja v omrežje.",
+      "feedin": "Napoved cene oddaje v omrežje.",
       "price": "Napoved cene odjema iz omrežja.",
       "solar": "Napoved sončne proizvodnje."
     },
     "loadpoint": {
-      "description": "Stanje polnilne točke in način polnjenja.",
-      "name": "Polnilna točka"
+      "description": "Stanje polnilnega mesta in način polnjenja.",
+      "name": "Polnilno mesto"
     },
     "name": {
-      "feedin": "Cena dovajanja v omrežje",
+      "co2": "CO₂",
+      "feedin": "Cena oddaje v omrežje",
       "price": "Cena odjema iz omrežja",
       "solar": "Napoved sončne energije"
     },
@@ -130,7 +131,7 @@
       "title": "Nastavite evcc"
     },
     "type": {
-      "feedin": "Cena dovajanja v omrežje",
+      "feedin": "Cena oddaje v omrežje",
       "price": "Cena odjema iz omrežja"
     },
     "unreachable": {

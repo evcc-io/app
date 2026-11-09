@@ -1,8 +1,8 @@
 {
   "connection": {
     "auth": {
-      "hint": "Utilizador ou password incorretos. Atualize as credenciais em Alterar servidor.",
-      "title": "Falha no início de sessão"
+      "hint": "Utilizador ou password incorretos. Atualize as credenciais através Alterar servidor.",
+      "title": "Falha no login"
     },
     "httpError": {
       "hint": "O servidor respondeu de forma inesperada.",
@@ -35,11 +35,11 @@
     }
   },
   "main": {
-    "description": "Procurar a rede para localizar a sua instalação evcc.",
-    "title": "Configurar o servidor"
+    "description": "Vamos nos conectar ao seu servidor.",
+    "title": "Bem-vindo"
   },
   "servers": {
-    "changeServer": "Mudar o servidor",
+    "changeServer": "Mudar de servidor",
     "editServer": "Editar servidor",
     "manually": {
       "authenticationRequired": "Necessário Autenticação",
@@ -75,10 +75,10 @@
       "hint": "Normalmente demora alguns segundos.",
       "inProgress": "A procurar …",
       "notAvailable": "A pesquisa não é possível neste dispositivo. Utilize a entrada manual.",
-      "nothingFound": "Não foi encontrado nenhum servidor evcc.",
+      "nothingFound": "Não foi encontrado nenhum servidor.",
       "searching": "A procurar ...",
       "selectHelper": "Selecione aquele a que se pretende ligar.",
-      "start": "Iniciar a pesquisa",
+      "start": "Encontrar servidor",
       "tryAgain": "Procurar de novo"
     },
     "switchServer": {
@@ -128,14 +128,14 @@
     "now": "agora",
     "setup": {
       "body": "Toque para ligar a um servidor e selecionar um tipo de dados.",
-      "title": "Configurar o evcc"
+      "title": "Setup evcc"
     },
     "type": {
-      "feedin": "Preço de exportação da rede",
+      "feedin": "Preço de venda à rede",
       "price": "Preço de importação da rede"
     },
     "unreachable": {
-      "body": "Não foi possível carregar a instância do evcc.",
+      "body": "Não foi possível encontrar a instância evcc.",
       "title": "Servidor inacessível"
     }
   }

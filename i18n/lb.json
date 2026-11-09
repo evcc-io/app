@@ -1,7 +1,7 @@
 {
   "connection": {
     "auth": {
-      "hint": "Falschen Benotzernumm oder falscht Passwuert. Aktualiséier d'Zougangsdaten iwwer Server änneren.",
+      "hint": "Falsche Benotzernumm oder falscht Passwuert. Aktualiséier d'Zougangsdaten iwwer Server änneren.",
       "title": "Umeldung feelgeschloen"
     },
     "httpError": {
@@ -9,8 +9,8 @@
       "title": "Serverfehler (HTTP {{status}})"
     },
     "offline": {
-      "hint": "Däin Apparat ass offline. Verbann dech mam WiFi oder mat mobilen Daten.",
-      "title": "Kee Netzwierk"
+      "hint": "Däin Apparat ass offline. Verbann dech mam WiFi oder mat de mobilen Daten.",
+      "title": "Keen Netzwierk"
     },
     "rateLimited": {
       "hint": "De Server blockéiert Ufroen temporär.",
@@ -23,10 +23,10 @@
     "retry": "Nach eng Kéier probéieren",
     "timeout": {
       "hint": "Keng Äntwert vum Server.",
-      "title": "Server äntwert net"
+      "title": "De Server äntwert net"
     },
     "unreachable": {
-      "hint": "Iwwerpréif däin Netzwierk a ob deng evcc Instanz leeft.",
+      "hint": "Iwwerpréif däin Netzwierk an ob deng evcc Instanz leeft.",
       "title": "Server net erreechbar"
     },
     "websocket": {
@@ -35,8 +35,8 @@
     }
   },
   "main": {
-    "description": "Duerchsich däin Netzwierk, fir deng evcc Installatioun ze fannen.",
-    "title": "Server ariichten"
+    "description": "Loosst eis d'Verbindung mat Ärem Server erstellen.",
+    "title": "Wëllkomm"
   },
   "servers": {
     "changeServer": "Server änneren",
@@ -70,19 +70,19 @@
     "search": {
       "cancel": "Ofbriechen",
       "connect": "Verbannen",
-      "foundMany": "{{count}} Serveren fonnt",
+      "foundMany": "{{count}} Servere fonnt",
       "foundOne": "Server fonnt",
-      "hint": "Dat dauert normalerweis e puer Sekonnen.",
+      "hint": "Dëst dauert normalerweis e puer Sekonnen.",
       "inProgress": "Sichen …",
       "notAvailable": "D'Sich ass op auf dësem Gerät net méiglech. Benotz de manuellen Input.",
       "nothingFound": "Et gouf keen evcc Server fonnt.",
       "searching": "Siche no enger Verbindung ...",
       "selectHelper": "Wiel deen aus, mat deem s du dech verbanne wëlls.",
-      "start": "Sich starten",
-      "tryAgain": "Nei sichen"
+      "start": "Server fannen",
+      "tryAgain": "Nees sichen"
     },
     "switchServer": {
-      "addServer": "Server dobäifügen",
+      "addServer": "Server derbäi fügen",
       "title": "Server wiesselen"
     },
     "useDemo": "Demoinstanz verwennen"
