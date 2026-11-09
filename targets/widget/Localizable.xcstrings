@@ -37,7 +37,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ηλιακή"
+            "value": "Ηλιακή παραγωγή"
           }
         },
         "en": {
@@ -210,7 +210,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "CO₂"
+            "value": "Εκπομπές CO₂"
           }
         },
         "en": {
@@ -383,7 +383,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Απομένει"
+            "value": "απομένει"
           }
         },
         "en": {
@@ -1272,7 +1272,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Enclenché"
+            "value": "Allumé"
           }
         },
         "hr": {
@@ -2978,7 +2978,7 @@
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Έτοιμο. Αναμονή για θερμαντήρα…"
+            "value": "Έτοιμο για θέρμανση…"
           }
         },
         "en": {
@@ -3414,7 +3414,7 @@
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Preço de exportação da rede"
+            "value": "Preço de venda à rede"
           }
         },
         "sk": {
@@ -3426,7 +3426,7 @@
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cena dovajanja v omrežje"
+            "value": "Cena oddaje v omrežje"
           }
         },
         "sv": {
@@ -4279,7 +4279,7 @@
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Não foi possível carregar a instância do evcc."
+            "value": "Não foi possível encontrar a instância evcc."
           }
         },
         "sk": {
@@ -4452,7 +4452,7 @@
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Configurar o evcc"
+            "value": "Setup evcc"
           }
         },
         "sk": {
@@ -5502,7 +5502,7 @@
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Polnilna točka"
+            "value": "Polnilno mesto"
           }
         },
         "sv": {
@@ -5675,7 +5675,7 @@
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Stanje polnilne točke in način polnjenja."
+            "value": "Stanje polnilnega mesta in način polnjenja."
           }
         },
         "sv": {
@@ -6367,7 +6367,7 @@
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cena dovajanja v omrežje"
+            "value": "Cena oddaje v omrežje"
           }
         },
         "sv": {
@@ -7059,7 +7059,7 @@
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Napoved cene dovajanja v omrežje."
+            "value": "Napoved cene oddaje v omrežje."
           }
         },
         "sv": {
