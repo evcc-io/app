@@ -1,30 +1,141 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "Hibás felhasználónév vagy jelszó. Frissítsd a hitelesítő adatokat a Szerver módosítása menüben.",
+      "title": "Sikertelen bejelentkezés"
+    },
+    "httpError": {
+      "hint": "A szerver váratlanul válaszolt.",
+      "title": "Szerverhiba (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "Az eszközöd offline. Csatlakozz WiFi-hez vagy mobiladathoz.",
+      "title": "Nincs hálózat"
+    },
+    "rateLimited": {
+      "hint": "A szerver ideiglenesen blokkolja a kéréseket.",
+      "title": "Túl sok próbálkozás"
+    },
+    "remoteOffline": {
+      "hint": "Az evcc példányod nincs csatlakoztatva.",
+      "title": "Az evcc offline"
+    },
+    "retry": "Újra",
+    "timeout": {
+      "hint": "Nincs válasz a szervertől.",
+      "title": "A szerver nem válaszol"
+    },
+    "unreachable": {
+      "hint": "Ellenőrizd a hálózatot, és hogy az evcc példányod fut-e.",
+      "title": "A szerver nem érhető el"
+    },
+    "websocket": {
+      "hint": "Az oldal betöltődik, de a WebSocket nem csatlakozik. Ellenőrizd a reverse proxy beállításait.",
+      "title": "A WebSocket-kapcsolat sikertelen"
+    }
+  },
   "main": {
     "description": "Keresse meg hálózatán az evcc telepítését.",
     "title": "Szerver beállítása"
   },
   "servers": {
     "changeServer": "Szerver váltás",
+    "editServer": "Szerver szerkesztése",
     "manually": {
       "authenticationRequired": "Hitelesítés szükséges",
       "checkAdress": "A szerver nem tűnik evcc példánynak. Kérjük, ellenőrizze a címet.",
       "checkAndSave": "Ellenőrizze és mentse el",
-      "enterUrl": "URL beírása",
+      "loginRequired": "A szerver bejelentkezést igényel.",
       "missingOrWrongAuthentication": "Hiányzó vagy helytelen hitelesítés",
       "password": "Jelszó",
+      "qrcode": {
+        "invalid": "Érvénytelen evcc QR-kód.",
+        "permissionDenied": "A kamerához való hozzáférés megtagadva. A QR-kódok beolvasásához engedélyezze a beállításokban.",
+        "recognized": "QR-kód felismerve!",
+        "scan": "QR-kód beolvasása",
+        "scanOnboarding": "Beállítás QR-kóddal",
+        "scanPrefill": "Kitöltés QR-kóddal",
+        "scanning": "felismerés..."
+      },
+      "serverExistsAlready": "Ez a szerver már létezik.",
       "serverIncompatible": "Az evcc példány még nem kompatibilis az alkalmazással. Frissítse a telepítést.",
       "serverNotAvailable": "A szerver nem elérhető. Kérjük, ellenőrizze a címet.",
       "specify": "Cím kézi beírása",
+      "title": "Megnevezés",
       "user": "Felhasználó"
     },
+    "remove": "Eltávolítás",
+    "removeConfirm": "Biztosan el szeretné távolítani a(z) {{title}} szervert?",
     "removeServer": "Szerver eltávolítása",
     "search": {
+      "cancel": "Mégse",
+      "connect": "Csatlakozás",
+      "foundMany": "{{count}} szerver megtalálva",
+      "foundOne": "Szerver megtalálva",
+      "hint": "Ez általában néhány másodpercet vesz igénybe.",
+      "inProgress": "Keresés …",
       "notAvailable": "A keresés ezen az eszközön nem lehetséges. Használja a kézi bevitelt.",
       "nothingFound": "Nem található evcc szerver.",
       "searching": "Kapcsolat keresése ...",
-      "start": "Keresés indítása"
+      "selectHelper": "Válassza ki, amelyikhez csatlakozni szeretne.",
+      "start": "Keresés indítása",
+      "tryAgain": "Újra keresés"
     },
-    "select": "Válasszon",
+    "switchServer": {
+      "addServer": "Szerver hozzáadása",
+      "title": "Szerver váltása"
+    },
     "useDemo": "Demo példa használata"
+  },
+  "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "Válasszon töltőpontot",
+      "chooseServer": "Válasszon szervert",
+      "loading": "Betöltés…",
+      "loadingPreview": "Előnézet betöltése…",
+      "noLoadpoints": "Nem érhető el töltőpont",
+      "noServers": "Nincs szerver. Először adjon hozzá egyet az alkalmazásban.",
+      "previewError": "Az előnézet nem tölthető be",
+      "setupBody": "Koppintson a szerver és a töltőpont kiválasztásához.",
+      "useThisLoadpoint": "Ezen töltőpont használata"
+    },
+    "config": {
+      "desc": "Az előrejelzéshez használt szerver.",
+      "loadpoint": "Töltőpont",
+      "server": "Szerver",
+      "title": "evcc előrejelzés"
+    },
+    "description": {
+      "co2": "CO₂-kibocsátás előrejelzése.",
+      "feedin": "Hálózati betáplálási ár előrejelzése.",
+      "price": "Hálózati vételezési ár előrejelzése.",
+      "solar": "Napenergia-termelés előrejelzése."
+    },
+    "loadpoint": {
+      "description": "Töltőpont állapota és töltési mód.",
+      "name": "Töltőpont"
+    },
+    "name": {
+      "feedin": "Hálózati betáplálási ár",
+      "price": "Hálózati vételezési ár",
+      "solar": "Napenergia előrejelzés"
+    },
+    "noData": {
+      "body": "Ezen a szerveren nincs ilyen típusú adat.",
+      "title": "Nincs adat"
+    },
+    "now": "most",
+    "setup": {
+      "body": "Koppintson a szerver csatlakoztatásához és az adattípus kiválasztásához.",
+      "title": "evcc beállítása"
+    },
+    "type": {
+      "feedin": "Hálózati betáplálási ár",
+      "price": "Hálózati vételezési ár"
+    },
+    "unreachable": {
+      "body": "Az evcc példány nem tölthető be.",
+      "title": "A szerver nem elérhető"
+    }
   }
 }

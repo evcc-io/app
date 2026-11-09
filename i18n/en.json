@@ -1,36 +1,142 @@
 {
   "main": {
-    "description": "Search your network to find your evcc installation.",
-    "title": "Setup server"
+    "description": "Let's connect to your server.",
+    "title": "Welcome"
+  },
+  "connection": {
+    "retry": "Try again",
+    "offline": {
+      "title": "No network",
+      "hint": "Your device is offline. Connect to WiFi or mobile data."
+    },
+    "unreachable": {
+      "title": "Server not reachable",
+      "hint": "Check your network and that your evcc instance is running."
+    },
+    "timeout": {
+      "title": "Server not responding",
+      "hint": "No response from the server."
+    },
+    "auth": {
+      "title": "Login failed",
+      "hint": "Wrong username or password. Update the credentials via Change Server."
+    },
+    "rateLimited": {
+      "title": "Too many attempts",
+      "hint": "The server is temporarily blocking requests."
+    },
+    "remoteOffline": {
+      "title": "evcc is offline",
+      "hint": "Your evcc instance is not connected."
+    },
+    "websocket": {
+      "title": "WebSocket connection failed",
+      "hint": "The page loads, but the WebSocket doesn't connect. Check your reverse proxy settings."
+    },
+    "httpError": {
+      "title": "Server error (HTTP {{status}})",
+      "hint": "The server responded unexpectedly."
+    }
   },
   "servers": {
-    "changeServer": "Change server",
+    "changeServer": "Change Server",
     "switchServer": {
-      "title": "Switch server",
-      "addServer": "Add server"
+      "title": "Change Server",
+      "addServer": "Add Server"
     },
     "manually": {
       "authenticationRequired": "Authentication required",
       "checkAdress": "The server does not appear to be an evcc instance. Please check the address.",
       "checkAndSave": "Check and save",
-      "enterUrl": "Enter URL",
+      "loginRequired": "Server requires login.",
       "missingOrWrongAuthentication": "Missing or incorrect authentication",
       "password": "Password",
       "serverIncompatible": "The evcc instance is not yet app-compatible. Update your installation.",
       "serverNotAvailable": "Server not available. Please check the address.",
       "specify": "Enter address manually",
       "user": "User",
+      "qrcode": {
+        "scan": "Scan QR Code",
+        "scanOnboarding": "Set up via QR code",
+        "scanPrefill": "Fill in via QR code",
+        "recognized": "QR code detected!",
+        "invalid": "Not a valid evcc QR code.",
+        "permissionDenied": "Camera access denied. Enable it in settings to scan QR codes.",
+        "scanning": "detecting..."
+      },
       "title": "Title",
       "serverExistsAlready": "This server already exists."
     },
     "removeServer": "Remove server",
     "search": {
+      "inProgress": "Searching …",
+      "connect": "Connect",
+      "tryAgain": "Search again",
       "notAvailable": "The search is not possible on this device. Use the manual input.",
-      "nothingFound": "No evcc server was found.",
+      "nothingFound": "No server found.",
       "searching": "Search for connection ...",
-      "start": "Start search"
+      "start": "Find server",
+      "hint": "This usually takes a few seconds.",
+      "foundOne": "Server found",
+      "foundMany": "{{count}} servers found",
+      "selectHelper": "Select the one you want to connect to.",
+      "cancel": "Cancel"
     },
-    "select": "Select",
-    "useDemo": "Use demo instance"
+    "useDemo": "Use demo instance",
+    "remove": "Remove",
+    "removeConfirm": "Do you really want to remove {{title}}?",
+    "editServer": "Edit Server"
+  },
+  "widget": {
+    "type": {
+      "price": "Grid import price",
+      "feedin": "Grid export price"
+    },
+    "now": "now",
+    "noData": {
+      "title": "No data",
+      "body": "This server has no data of this type."
+    },
+    "unreachable": {
+      "title": "Server unreachable",
+      "body": "Could not load the evcc instance."
+    },
+    "setup": {
+      "title": "Set up evcc",
+      "body": "Tap to connect a server and pick a data type."
+    },
+    "config": {
+      "title": "evcc Forecast",
+      "desc": "Server for the forecast.",
+      "server": "Server",
+      "loadpoint": "Loadpoint"
+    },
+    "androidConfig": {
+      "chooseServer": "Choose server",
+      "chooseLoadpoint": "Choose charging point",
+      "noServers": "No servers. Add one in the app first.",
+      "noLoadpoints": "No charging points reachable",
+      "loading": "Loading…",
+      "loadingPreview": "Loading preview…",
+      "previewError": "Couldn't load a preview",
+      "useThisLoadpoint": "Use this charging point",
+      "setupBody": "Tap to choose a server and charging point."
+    },
+    "loadpoint": {
+      "name": "Charging point",
+      "description": "Loadpoint status and charge mode."
+    },
+    "name": {
+      "solar": "Solar forecast",
+      "price": "Grid import price",
+      "co2": "CO₂",
+      "feedin": "Grid export price"
+    },
+    "description": {
+      "solar": "Forecast solar production.",
+      "price": "Forecast grid import price.",
+      "co2": "Forecast CO₂ emissions.",
+      "feedin": "Forecast grid export price."
+    }
   }
 }

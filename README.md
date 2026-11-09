@@ -2,7 +2,7 @@
 
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/evcc-io/app/badge)](https://scorecard.dev/viewer/?uri=github.com/evcc-io/app)
 
-Native app wrapper for evcc UI based on [react-native](https://reactnative.dev/) and [expo.dev](https://expo.dev/). It uses [UI Kitten / Eva](https://akveo.github.io/react-native-ui-kitten/) as a design system. Native parts are written in TypeScript and kept to a minimum.
+Native app wrapper for evcc UI based on [react-native](https://reactnative.dev/) and [expo.dev](https://expo.dev/). It uses [Expo UI](https://docs.expo.dev/versions/latest/sdk/ui/) (SwiftUI / Jetpack Compose) for native components. Native parts are written in TypeScript and kept to a minimum.
 
 ## Download the App
 
@@ -14,8 +14,11 @@ Native app wrapper for evcc UI based on [react-native](https://reactnative.dev/)
 
 ## Beta Testing
 
-- Apple Testflight https://testflight.apple.com/join/8Y4elMpv
-- Android: Download the APK from [GitHub Releases](https://github.com/evcc-io/app/releases)
+Want to try new features before release? Join the beta:
+
+- **iOS / macOS:** Apple TestFlight https://testflight.apple.com/join/8Y4elMpv
+- **Android (Play Store):** Send an email to [michael@evcc.io](mailto:michael@evcc.io) with the Google account you use for the Play Store to get added as a tester and receive beta versions.
+- **Android (APK):** Download the APK from [GitHub Releases](https://github.com/evcc-io/app/releases)
 
 ## Features
 
@@ -35,8 +38,15 @@ Native app wrapper for evcc UI based on [react-native](https://reactnative.dev/)
 - Configured URL can be changed
   - in offline mode
   - via additional top navigation entry "Change server"
+- Self-signed certificates
+  - trusts CA certificates the user has installed on the device (Android)
+  - lets the app reach evcc behind a TLS proxy with a private CA (see [here](#self-signed-certificates))
 - Light and dark mode for native UI
   - based on system settings (not configurable)
+- Home screen widgets
+  - solar, price, CO₂ and feed-in forecast (iOS)
+  - charging point status with quick mode switching (iOS, Android)
+  - tap to jump straight into the app
 
 ## Screenshots
 
@@ -50,7 +60,7 @@ Especially helpful when dealing with longer URLs for public tunnels or related s
 
 The app supports the following URL scheme:
 
-**Format:**
+### Add a server
 
 Opens the server entry field with prefilled values.
 All params are optional.
@@ -66,6 +76,29 @@ _Note: Ensure that query values are properly encoded._
 ![URL Scheme Example](https://api.qrserver.com/v1/create-qr-code/?color=000000&bgcolor=FFFFFF&data=evcc%3A%2F%2Fserver%3Furl%3Dhttps%3A%2F%2Fdemo.evcc.io%26title%3DDemo%2520Server%26username%3Dadmin%26password%3Dsecret&qzone=1&margin=0&size=150x150&ecc=L)
 
 [evcc://server?url=https://demo.evcc.io&title=Demo%20Server&username=admin&password=secret](evcc://server?url=https://demo.evcc.io&title=Demo%20Server&username=admin&password=secret)
+
+### Open the forecast
+
+Navigates to the forecast page. `server` is the 0-based index of the saved server. If omitted, the active server is used.
+
+```
+evcc://forecast?server=<index>
+```
+
+### Open a loadpoint
+
+Navigates to the loadpoints page. `lp` focuses the loadpoint with that 1-based number. If omitted, the current loadpoint is used. `server` as above.
+
+```
+evcc://loadpoint?lp=<number>&server=<index>
+```
+
+## Self-signed certificates
+
+To reach evcc behind a TLS proxy that uses a private CA, install the root CA on the device and connect via `https://…`. The certificate must have a SAN matching the hostname or IP you connect to. Plain-HTTP setups keep working unchanged.
+
+- **Android:** _Settings → Security & privacy → More security settings → Encryption & credentials → Install a certificate → CA certificate_ (requires a screen lock). The app opts in to trusting user-installed CAs, so it is honored in both the connection check and the WebView.
+- **iOS:** No app-specific step. Install the CA profile, then enable full trust under _Settings → General → About → Certificate Trust Settings_.
 
 ## Development
 
@@ -83,12 +116,11 @@ Start dev mode to get into an interactive development environment.
 npm run start
 ```
 
-Or start iOS, Android or Web simulator directly.
+Or start iOS or Android simulator directly.
 
 ```bash
 npm run ios
 npm run android
-npm run web
 ```
 
 You can test basic auth locally by with a [caddy server](https://caddyserver.com):
@@ -104,10 +136,13 @@ It will open a server on http://localhost:7080 with `admin:secret` as basic auth
 This is how F-Droid builds the APK:
 
 ```bash
+sed -i '/^\s*\[$/{ N; /\n\s*"expo-camera"/{ :loop; N; /\],$/!b loop; d } }' app.config.ts
+touch fdroid-build
+npm remove expo-camera
 npx expo prebuild --platform android --clean
 cd android/app
 sed -i -e '/signingConfig /d' build.gradle
-./../gradlew assembleRelease
+./../gradlew :app:assembleRelease
 ```
 
 ## Testing
@@ -143,6 +178,15 @@ caddy run
 This will run caddy on port 7080.
 
 ### Testing Android app _(available on Linux, macOS and Windows)_
+
+#### Create build-type file
+
+For Android-Detox testing the detox scripts (see `./scripts/detox`) have to run.
+To do this, you need to create a file called `android-detox-build`:
+
+```
+touch android-detox-build
+```
 
 #### Emulator (slower):
 
@@ -201,6 +245,16 @@ This will run caddy on port 7080.
    ```bash
    npm run test:ios
    ```
+
+### Troubleshooting
+
+If the Android emulator misbehaves (e.g. builds install but the app won't launch), its state may be corrupted. Wipe it and start fresh (`-list-avds` shows your device names):
+
+```bash
+$ANDROID_HOME/emulator/emulator -avd test -wipe-data
+```
+
+If that doesn't help, delete the virtual device and recreate it (see above).
 
 ## Translation
 

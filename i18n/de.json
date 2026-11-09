@@ -1,36 +1,142 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "Benutzername oder Passwort falsch. Aktualisiere die Zugangsdaten über „Server wechseln“.",
+      "title": "Anmeldung fehlgeschlagen"
+    },
+    "httpError": {
+      "hint": "Der Server hat unerwartet geantwortet.",
+      "title": "Serverfehler (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "Dein Gerät ist offline. Verbinde dich mit WLAN oder mobilen Daten.",
+      "title": "Kein Netzwerk"
+    },
+    "rateLimited": {
+      "hint": "Der Server blockiert Anfragen vorübergehend.",
+      "title": "Zu viele Versuche"
+    },
+    "remoteOffline": {
+      "hint": "Deine evcc-Instanz ist nicht verbunden.",
+      "title": "evcc ist offline"
+    },
+    "retry": "Erneut versuchen",
+    "timeout": {
+      "hint": "Keine Antwort vom Server.",
+      "title": "Server antwortet nicht"
+    },
+    "unreachable": {
+      "hint": "Prüfe dein Netzwerk und ob deine evcc-Instanz läuft.",
+      "title": "Server nicht erreichbar"
+    },
+    "websocket": {
+      "hint": "Die Seite lädt, aber der WebSocket verbindet sich nicht. Prüfe die Einstellungen deines Reverse Proxys.",
+      "title": "WebSocket-Verbindung fehlgeschlagen"
+    }
+  },
   "main": {
-    "description": "Durchsuche dein Netzwerk, um deine evcc Installation zu finden.",
-    "title": "Server einrichten"
+    "description": "Lass uns deinen Server anschließen.",
+    "title": "Willkommen"
   },
   "servers": {
-    "changeServer": "Server ändern",
-    "switchServer": {
-      "title": "Server wechseln",
-      "addServer": "Server hinzufügen"
-    },
+    "changeServer": "Server wechseln",
+    "editServer": "Server bearbeiten",
     "manually": {
       "authenticationRequired": "Anmeldung erforderlich",
       "checkAdress": "Der Server scheint keine evcc Instanz zu sein. Bitte prüfe die Adresse.",
       "checkAndSave": "Prüfen und speichern",
-      "enterUrl": "URL eingeben",
+      "loginRequired": "Server erfordert Anmeldung.",
       "missingOrWrongAuthentication": "Fehlende oder falsche Anmeldung",
       "password": "Passwort",
+      "qrcode": {
+        "invalid": "Kein gültiger evcc QR-Code.",
+        "permissionDenied": "Kamerazugriff verweigert. Aktiviere ihn in den Einstellungen, um QR-Codes zu scannen.",
+        "recognized": "QR-Code erkannt!",
+        "scan": "QR-Code scannen",
+        "scanOnboarding": "Mit QR-Code einrichten",
+        "scanPrefill": "Daten aus QR-Code übernehmen",
+        "scanning": "erkennung..."
+      },
+      "serverExistsAlready": "Dieser Server existiert bereits.",
       "serverIncompatible": "Die evcc Instanz ist noch nicht App-kompatibel. Aktualisiere deine Installation.",
       "serverNotAvailable": "Server nicht erreichbar. Bitte prüfe die Adresse.",
       "specify": "Adresse manuell eingeben",
-      "user": "Benutzer",
       "title": "Titel",
-      "serverExistsAlready": "Dieser Server existiert bereits."
+      "user": "Benutzer"
     },
+    "remove": "Entfernen",
+    "removeConfirm": "Möchtest du {{title}} wirklich entfernen?",
     "removeServer": "Server entfernen",
     "search": {
+      "cancel": "Abbrechen",
+      "connect": "Verbinden",
+      "foundMany": "{{count}} Server gefunden",
+      "foundOne": "Server gefunden",
+      "hint": "Das dauert normalerweise nur wenige Sekunden.",
+      "inProgress": "Suche läuft …",
       "notAvailable": "Die Suche ist auf diesem Gerät nicht möglich. Nutze die manuelle Eingabe.",
-      "nothingFound": "Es wurde kein evcc Server gefunden.",
+      "nothingFound": "Es wurde kein Server gefunden.",
       "searching": "Suche nach Verbindung ...",
-      "start": "Suche starten"
+      "selectHelper": "Wähle aus, womit du dich verbinden möchtest.",
+      "start": "Server suchen",
+      "tryAgain": "Erneut suchen"
     },
-    "select": "Auswählen",
+    "switchServer": {
+      "addServer": "Server hinzufügen",
+      "title": "Server wechseln"
+    },
     "useDemo": "Demoinstanz verwenden"
+  },
+  "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "Ladepunkt auswählen",
+      "chooseServer": "Server auswählen",
+      "loading": "Lädt…",
+      "loadingPreview": "Vorschau wird geladen…",
+      "noLoadpoints": "Keine Ladepunkte erreichbar",
+      "noServers": "Keine Server. Füge zuerst einen in der App hinzu.",
+      "previewError": "Vorschau konnte nicht geladen werden",
+      "setupBody": "Tippen, um Server und Ladepunkt zu wählen.",
+      "useThisLoadpoint": "Diesen Ladepunkt verwenden"
+    },
+    "config": {
+      "desc": "Server der Vorhersage.",
+      "loadpoint": "Ladepunkt",
+      "server": "Server",
+      "title": "evcc Vorhersage"
+    },
+    "description": {
+      "co2": "Vorhergesagte CO₂-Emissionen.",
+      "feedin": "Vorhergesagte Einspeisevergütung.",
+      "price": "Vorhergesagter Netzbezugspreis.",
+      "solar": "Vorhergesagte Solarproduktion."
+    },
+    "loadpoint": {
+      "description": "Ladepunkt-Status und Lademodus.",
+      "name": "Ladepunkt"
+    },
+    "name": {
+      "co2": "CO₂",
+      "feedin": "Einspeisevergütung",
+      "price": "Netzbezugspreis",
+      "solar": "Solarprognose"
+    },
+    "noData": {
+      "body": "Dieser Server liefert keine Daten dieses Typs.",
+      "title": "Keine Daten"
+    },
+    "now": "jetzt",
+    "setup": {
+      "body": "Tippen, um Server zu verbinden und einen Datentyp zu wählen.",
+      "title": "evcc einrichten"
+    },
+    "type": {
+      "feedin": "Einspeisevergütung",
+      "price": "Netzbezugspreis"
+    },
+    "unreachable": {
+      "body": "evcc-Instanz konnte nicht geladen werden.",
+      "title": "Server nicht erreichbar"
+    }
   }
 }

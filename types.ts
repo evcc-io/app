@@ -27,11 +27,14 @@ export type SwitchServerStackParamList = {
     serverIndex: number;
   };
   AddServer?: AddServerParams;
+  QRCodeCamera: undefined;
 };
 
 export type RootStackParamList = {
+  QRCodeCamera: undefined;
   Main: undefined;
   Onboarding: undefined;
+  SearchServer: undefined;
   SwitchServerModal?: NavigatorScreenParams<SwitchServerStackParamList>;
   AddServer?: AddServerParams;
 };

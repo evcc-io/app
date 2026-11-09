@@ -1,1 +1,1 @@
-evcc - solar charging
+evcc - smart charging

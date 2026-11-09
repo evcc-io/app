@@ -1,11 +1,15 @@
 node_modules/
 .expo/
-ios/
-android/
+/ios/
+/android/
 !fastlane/metadata/android
 !fastlane/metadata/ios
 caddy*.*
 tsconfig.tsbuildinfo
-.claude/
+.claude/*
+!.claude/skills/
 e2e/artifacts
 evcc*.*
+
+# @bacons/apple-targets plugin output (regenerated on prebuild)
+targets/*/generated.entitlements

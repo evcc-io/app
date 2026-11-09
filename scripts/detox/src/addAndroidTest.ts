@@ -39,6 +39,8 @@ const addAndroidTest: ConfigPlugin = (config) => {
   return withDangerousMod(config, [
     "android",
     async (config) => {
+      console.log("» Detox config plugin: Add DetoxTest.java");
+
       const packageName = config.android?.package;
       assert(packageName, "android.package must be defined");
 

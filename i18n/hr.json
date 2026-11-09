@@ -1,30 +1,141 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "Pogrešno korisničko ime ili lozinka. Ažurirajte vjerodajnice putem opcije Promijeni poslužitelj.",
+      "title": "Prijava nije uspjela"
+    },
+    "httpError": {
+      "hint": "Poslužitelj je odgovorio neočekivano.",
+      "title": "Pogreška poslužitelja (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "Vaš uređaj nije na mreži. Povežite se na WiFi ili mobilne podatke.",
+      "title": "Nema mreže"
+    },
+    "rateLimited": {
+      "hint": "Poslužitelj privremeno blokira zahtjeve.",
+      "title": "Previše pokušaja"
+    },
+    "remoteOffline": {
+      "hint": "Vaša evcc instanca nije povezana.",
+      "title": "evcc nije na mreži"
+    },
+    "retry": "Pokušaj ponovno",
+    "timeout": {
+      "hint": "Nema odgovora poslužitelja.",
+      "title": "Poslužitelj ne odgovara"
+    },
+    "unreachable": {
+      "hint": "Provjerite mrežu i radi li vaša evcc instanca.",
+      "title": "Poslužitelj nije dostupan"
+    },
+    "websocket": {
+      "hint": "Stranica se učitava, ali se WebSocket ne povezuje. Provjerite postavke reverse proxyja.",
+      "title": "WebSocket veza nije uspjela"
+    }
+  },
   "main": {
     "description": "Pretraživanje mreže u potrazi za evcc instalacijom.",
     "title": "Postavi poslužitelj"
   },
   "servers": {
     "changeServer": "Promijeni poslužitelj",
+    "editServer": "Uredi poslužitelj",
     "manually": {
       "authenticationRequired": "Potrebna je prijava",
       "checkAdress": "Na poslužitelju nije pronađen evcc. Provjerite adresu.",
       "checkAndSave": "Provjeri i spremi",
-      "enterUrl": "Unesite URL",
+      "loginRequired": "Poslužitelj zahtijeva prijavu.",
       "missingOrWrongAuthentication": "Nepostojeća ili netočna prijava",
       "password": "Lozinka",
+      "qrcode": {
+        "invalid": "Nije valjani evcc QR kod.",
+        "permissionDenied": "Pristup kameri je odbijen. Omogućite ga u postavkama za skeniranje QR kodova.",
+        "recognized": "QR kod je prepoznat!",
+        "scan": "Skeniraj QR kod",
+        "scanOnboarding": "Postavi putem QR koda",
+        "scanPrefill": "Ispuni putem QR koda",
+        "scanning": "prepoznavanje..."
+      },
+      "serverExistsAlready": "Ovaj poslužitelj već postoji.",
       "serverIncompatible": "Ova evcc instanca ne podržava aplikaciju. Ažurirajte svoju evcc instalaciju.",
       "serverNotAvailable": "Poslužitelj nije dostupan. Provjerite adresu.",
       "specify": "Ručno unesite adresu",
+      "title": "Naziv",
       "user": "Korisnik"
     },
+    "remove": "Ukloni",
+    "removeConfirm": "Želite li zaista ukloniti {{title}}?",
     "removeServer": "Ukloni poslužitelj",
     "search": {
+      "cancel": "Odustani",
+      "connect": "Poveži",
+      "foundMany": "Pronađeno poslužitelja: {{count}}",
+      "foundOne": "Poslužitelj je pronađen",
+      "hint": "Ovo obično traje nekoliko sekundi.",
+      "inProgress": "Pretraživanje …",
       "notAvailable": "Pretraživanje nije moguće na ovom uređaju. Upotrijebite ručni unos.",
       "nothingFound": "Evcc poslužitelj nije pronađen.",
       "searching": "Traženje točke za povezivanje...",
-      "start": "Pokreni traženje"
+      "selectHelper": "Odaberite onaj na koji se želite povezati.",
+      "start": "Pokreni traženje",
+      "tryAgain": "Traži ponovno"
     },
-    "select": "Odaberi",
+    "switchServer": {
+      "addServer": "Dodaj poslužitelj",
+      "title": "Promijeni poslužitelj"
+    },
     "useDemo": "Koristi demo verziju"
+  },
+  "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "Odaberite mjesto punjenja",
+      "chooseServer": "Odaberite poslužitelj",
+      "loading": "Učitavanje…",
+      "loadingPreview": "Učitavanje pregleda…",
+      "noLoadpoints": "Nijedno mjesto punjenja nije dostupno",
+      "noServers": "Nema poslužitelja. Najprije dodajte jedan u aplikaciji.",
+      "previewError": "Nije moguće učitati pregled",
+      "setupBody": "Dodirnite za odabir poslužitelja i mjesta punjenja.",
+      "useThisLoadpoint": "Koristi ovo mjesto punjenja"
+    },
+    "config": {
+      "desc": "Poslužitelj za prognozu.",
+      "loadpoint": "Mjesto punjenja",
+      "server": "Poslužitelj",
+      "title": "evcc prognoza"
+    },
+    "description": {
+      "co2": "Prognoza emisija CO₂.",
+      "feedin": "Prognoza cijene izvoza u mrežu.",
+      "price": "Prognoza cijene uvoza iz mreže.",
+      "solar": "Prognoza solarne proizvodnje."
+    },
+    "loadpoint": {
+      "description": "Stanje mjesta punjenja i način punjenja.",
+      "name": "Mjesto punjenja"
+    },
+    "name": {
+      "feedin": "Cijena izvoza u mrežu",
+      "price": "Cijena uvoza iz mreže",
+      "solar": "Solarna prognoza"
+    },
+    "noData": {
+      "body": "Ovaj poslužitelj nema podataka ove vrste.",
+      "title": "Nema podataka"
+    },
+    "now": "sada",
+    "setup": {
+      "body": "Dodirnite za povezivanje poslužitelja i odabir vrste podataka.",
+      "title": "Postavi evcc"
+    },
+    "type": {
+      "feedin": "Cijena izvoza u mrežu",
+      "price": "Cijena uvoza iz mreže"
+    },
+    "unreachable": {
+      "body": "Nije moguće učitati evcc instancu.",
+      "title": "Poslužitelj nije dostupan"
+    }
   }
 }

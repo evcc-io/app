@@ -15,6 +15,8 @@ const patchAppGradle: ConfigPlugin = (config) => {
 };
 
 const addDetoxDefaultConfigBlock = (config: string) => {
+  console.log("» Detox config plugin: Edit defaultConfig block");
+
   return config.replace(
     "defaultConfig {",
     `defaultConfig {
@@ -24,6 +26,8 @@ const addDetoxDefaultConfigBlock = (config: string) => {
 };
 
 const addDetoxProguardRules = (config: string) => {
+  console.log("» Detox config plugin: Add proguard rules");
+
   return config.replace(
     `proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"`,
     `proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
@@ -32,6 +36,10 @@ const addDetoxProguardRules = (config: string) => {
 };
 
 const setGradleAndroidTestImplementation = (config: string) => {
+  console.log(
+    "» Detox config plugin: Add android test implementation in dependencies block",
+  );
+
   return config.replace(
     "dependencies {",
     `dependencies {

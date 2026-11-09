@@ -1,22 +1,60 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "Vale kasutajanimi või salasõna. Uuenda andmeid valikuga Vaheta serverit.",
+      "title": "Sisselogimine ei õnnestunud"
+    },
+    "httpError": {
+      "hint": "Server vastas ootamatult.",
+      "title": "Serveri viga (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "Seade on võrguühenduseta. Ühendu WiFi-võrku või mobiilsidevõrku.",
+      "title": "Võrkguühendus puudub"
+    },
+    "rateLimited": {
+      "hint": "Server blokeerib päringud ajutiselt.",
+      "title": "Liiga palju katseid"
+    },
+    "remoteOffline": {
+      "hint": "Sinu evcc ei ole ühendatud.",
+      "title": "evcc on võrguühenduseta"
+    },
+    "retry": "Proovi uuesti",
+    "timeout": {
+      "hint": "Server ei andnud vastust.",
+      "title": "Server ei vasta"
+    },
+    "unreachable": {
+      "hint": "Kontrolli oma võrku ja seda, et evcc töötab.",
+      "title": "Server ei ole kättesaadav"
+    },
+    "websocket": {
+      "hint": "Leht laadib, kuid WebSocket ei ühendu. Kontrolli oma pöördvahendusserveri (reverse proxy) seadistusi.",
+      "title": "WebSocket-ühendus ei õnnestunud"
+    }
+  },
   "main": {
-    "description": "Otsi oma kohtvõrgust elektrisõiduki sidekontrollerit.",
-    "title": "Seadista serverit"
+    "description": "Ühendame sinu serveriga.",
+    "title": "Tere tulemast"
   },
   "servers": {
     "changeServer": "Vaheta serverit",
+    "editServer": "Muuda serverit",
     "manually": {
       "authenticationRequired": "Autentimine on vajalik",
       "checkAdress": "See server ei tundu olema elektrisõiduki sidekontroller. Palun kontrolli aadressi.",
       "checkAndSave": "Kontrolli ja salvesta",
-      "enterUrl": "Sisesta võrguaadress",
+      "loginRequired": "Server eeldb sisselogimist.",
       "missingOrWrongAuthentication": "Autentimine on puudu või vigane",
       "password": "Salasõna",
       "qrcode": {
         "invalid": "Pole korrektne evcc QR-kood.",
-        "permissionDenied": "QR-koodi skaneerimiseks luba seadistustest kaamera kasutamine.",
+        "permissionDenied": "Puudub õigus kasutada kaamerat. Et QR-koodide skaneerimine toimiks, palun luba see seadistustest.",
         "recognized": "QR-kood on tuvastatud!",
         "scan": "Skaneeri QR-koodi",
+        "scanOnboarding": "Seadista QR-koodiga",
+        "scanPrefill": "Täida QR-koodi abil",
         "scanning": "tuvastan..."
       },
       "serverExistsAlready": "Selline server on juba olemas.",
@@ -26,18 +64,79 @@
       "title": "Nimi",
       "user": "Kasutaja"
     },
+    "remove": "Eemalda",
+    "removeConfirm": "Kas sa kindlasti soovid „{{title}}“ serveri eemaldada?",
     "removeServer": "Eemalda server",
     "search": {
+      "cancel": "Katkesta",
+      "connect": "Ühenda",
+      "foundMany": "Leidus {{count}} serverit",
+      "foundOne": "Server leidus",
+      "hint": "Tavaliselt kulub selleks mõni sekund.",
+      "inProgress": "Otsin…",
       "notAvailable": "Selle seadmega otsing ei õnnestu. Proovi käsitsi sisestamist.",
-      "nothingFound": "Ühtegi elektrisõiduki sidekontrolleri serverit ei leidunud.",
+      "nothingFound": "Ühtegi serverit ei leidunud.",
       "searching": "Otsi ühendust...",
-      "start": "Alusta otsingut"
+      "selectHelper": "Vali see, millega tahad ühendada.",
+      "start": "Otsi serverit",
+      "tryAgain": "Otsi uuesti"
     },
-    "select": "Vali",
     "switchServer": {
       "addServer": "Lisa server",
       "title": "Vaheta serverit"
     },
     "useDemo": "Kasuta demo-vaadet"
+  },
+  "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "Vali laadimispunkt",
+      "chooseServer": "Vali server",
+      "loading": "Laadin…",
+      "loadingPreview": "Laadin eelvaadet…",
+      "noLoadpoints": "Ühtegi laadimispunkti pole kättesaadavad",
+      "noServers": "Servereid pole. Esmalt lisa rakendusest vähemalt üks.",
+      "previewError": "Eelvaate laadimine ei õnnestunud",
+      "setupBody": "Klõpsa serveri ja laadimispunkti valimiseks.",
+      "useThisLoadpoint": "Kasuta seda laadimispunkti"
+    },
+    "config": {
+      "desc": "Server ennustuse jaoks.",
+      "loadpoint": "Laadimispunkt",
+      "server": "Server",
+      "title": "evcc ennustus"
+    },
+    "description": {
+      "co2": "CO₂ heitmete ennustus.",
+      "feedin": "Võrku eksportimise hinna ennustus.",
+      "price": "Võrgust importimise hinna ennustus.",
+      "solar": "Päikeseenergia tootmise ennustus."
+    },
+    "loadpoint": {
+      "description": "Laadimispunkti olek ja laadimisviis.",
+      "name": "Laadimispunkt"
+    },
+    "name": {
+      "co2": "CO₂",
+      "feedin": "Võrku eksportimise hind",
+      "price": "Võrgust importimise hind",
+      "solar": "Päikeseenergia ennustus"
+    },
+    "noData": {
+      "body": "Selles serveris pole antud tüüpi andmeid.",
+      "title": "Andmeid pole"
+    },
+    "now": "praegu",
+    "setup": {
+      "body": "Klõpsa ühendamaks serveriga ja andmetüübi valimiseks.",
+      "title": "Seadista evcc-ühendus"
+    },
+    "type": {
+      "feedin": "Võrku eksportimise hind",
+      "price": "Võrgust importimise hind"
+    },
+    "unreachable": {
+      "body": "evcc serveri laadimine ei õnnestunud.",
+      "title": "Server pole leitav"
+    }
   }
 }

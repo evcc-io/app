@@ -9,17 +9,23 @@ export default ({ config }: ConfigContext) =>
       name: "evcc",
       slug: "evcc",
       scheme: SCHEME,
-      description: "open source solar charging",
-      version: "1.2.0",
+      description: "smart charging",
+      version: "1.7.0",
       orientation: "default",
       icon: "./assets/icon-light.png",
       userInterfaceStyle: "automatic",
       assetBundlePatterns: ["**/*"],
       ios: {
-        jsEngine: "hermes",
         supportsTablet: true,
         icon: "./assets/icon-liquid.icon",
         bundleIdentifier: "io.evcc.ios",
+        appleTeamId: "UX3KG7U4Y6",
+        // Shared App Group: the app writes the server list here and the widget
+        // extension reads it. `@bacons/apple-targets` auto-syncs this group to
+        // the widget target on prebuild.
+        entitlements: {
+          "com.apple.security.application-groups": ["group.io.evcc.app"],
+        },
         infoPlist: {
           CFBundleLocalizations: ["de"],
           CFBundleDevelopmentRegion: "de",
@@ -34,10 +40,9 @@ export default ({ config }: ConfigContext) =>
         config: {
           usesNonExemptEncryption: false,
         },
-        buildNumber: "37",
+        buildNumber: "52",
       },
       android: {
-        jsEngine: "hermes",
         permissions: [
           "android.permission.ACCESS_NETWORK_STATE",
           "android.permission.ACCESS_WIFI_STATE",
@@ -48,29 +53,41 @@ export default ({ config }: ConfigContext) =>
           foregroundImage: "./assets/adaptive-icon.png",
           backgroundColor: "#010322",
         },
-        versionCode: 37,
+        versionCode: 52,
       },
       web: {
         favicon: "./assets/favicon.png",
-        build: {
-          babel: {
-            include: ["@ui-kitten/components"],
-          },
-        },
       },
       plugins: [
-        ["./scripts/fdroid/removeDKBuildId.ts"],
-        ["./scripts/fdroid/disableDependencyMetadata.ts"],
+        "@bacons/apple-targets",
+        ["./scripts/androidWidget/withAndroidWidget.ts"],
+        ["./scripts/fdroid/configureFdroid.ts"],
         [
           "./scripts/detox/configureDetox.ts",
           { subdomains: "*" }, // uncomment to debug app
         ],
+        ["./scripts/trustUserCAs.ts"],
+        ["./scripts/increaseGradleMemory.ts"],
         [
           "expo-build-properties",
           {
             android: {
               usesCleartextTraffic: true,
             },
+            ios: {
+              deploymentTarget: "16.4",
+              // Xcode 27 SDK requires the UIScene lifecycle; template default from SDK 58
+              enableSceneSupport: true,
+            },
+          },
+        ],
+        [
+          "expo-camera",
+          {
+            cameraPermission:
+              "Die App benötigt Zugriff auf die Kamera, um QR-Codes zur Servereinrichtung zu scannen.",
+            microphonePermission: false,
+            recordAudioAndroid: false,
           },
         ],
         [
@@ -96,6 +113,7 @@ export default ({ config }: ConfigContext) =>
         ],
         "expo-localization",
         "expo-sharing",
+        "expo-status-bar",
         "expo-web-browser",
         "react-native-edge-to-edge",
       ],

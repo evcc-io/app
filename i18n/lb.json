@@ -1,30 +1,142 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "Falsche Benotzernumm oder falscht Passwuert. Aktualiséier d'Zougangsdaten iwwer Server änneren.",
+      "title": "Umeldung feelgeschloen"
+    },
+    "httpError": {
+      "hint": "De Server huet onerwaart geäntwert.",
+      "title": "Serverfehler (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "Däin Apparat ass offline. Verbann dech mam WiFi oder mat de mobilen Daten.",
+      "title": "Keen Netzwierk"
+    },
+    "rateLimited": {
+      "hint": "De Server blockéiert Ufroen temporär.",
+      "title": "Ze vill Versich"
+    },
+    "remoteOffline": {
+      "hint": "Deng evcc Instanz ass net verbonnen.",
+      "title": "evcc ass offline"
+    },
+    "retry": "Nach eng Kéier probéieren",
+    "timeout": {
+      "hint": "Keng Äntwert vum Server.",
+      "title": "De Server äntwert net"
+    },
+    "unreachable": {
+      "hint": "Iwwerpréif däin Netzwierk an ob deng evcc Instanz leeft.",
+      "title": "Server net erreechbar"
+    },
+    "websocket": {
+      "hint": "D'Säit lued, awer de WebSocket verbënnt sech net. Iwwerpréif d'Astellunge vun dengem Reverse-Proxy.",
+      "title": "WebSocket-Verbindung feelgeschloen"
+    }
+  },
   "main": {
-    "description": "Duerchsich däin Netzwierk, fir deng evcc Installatioun ze fannen.",
-    "title": "Server ariichten"
+    "description": "Loosst eis d'Verbindung mat Ärem Server erstellen.",
+    "title": "Wëllkomm"
   },
   "servers": {
     "changeServer": "Server änneren",
+    "editServer": "Server beaarbechten",
     "manually": {
       "authenticationRequired": "Umellung néideg",
       "checkAdress": "De Server schéngt keng evcc Instanz ze sinn. Iwwerpréif wgl. d'Adress.",
       "checkAndSave": "Iwwerpréiwen a späicheren",
-      "enterUrl": "URL aginn",
+      "loginRequired": "De Server verlaangt eng Umeldung.",
       "missingOrWrongAuthentication": "Fehlend oder falsch Umeldung",
       "password": "Passwuert",
+      "qrcode": {
+        "invalid": "Keen validen evcc QR-Code.",
+        "permissionDenied": "Accès op d'Kamera verweigert. An den Astellungen aktiveieren fir QR-Codes ze scannen.",
+        "recognized": "QR-Code erkannt!",
+        "scan": "QR-Code scannen",
+        "scanOnboarding": "Mat QR-Code arichten",
+        "scanPrefill": "Daten aus dem QR-Code iwwerhuelen",
+        "scanning": "erkennen..."
+      },
+      "serverExistsAlready": "Dësen Server existéiert schon.",
       "serverIncompatible": "D'evcc Instanz ass nach net App-kompatibel. Aktualiséier deng Installatioun.",
       "serverNotAvailable": "Server net erreechbar. Iwwerpréif wgl. d'Adress.",
       "specify": "Adress manuell aginn",
+      "title": "Titel",
       "user": "Benotzer"
     },
+    "remove": "Ewechhuelen",
+    "removeConfirm": "Wëlls du {{title}} wierklech ewechhuelen?",
     "removeServer": "Server ewechhuelen",
     "search": {
+      "cancel": "Ofbriechen",
+      "connect": "Verbannen",
+      "foundMany": "{{count}} Servere fonnt",
+      "foundOne": "Server fonnt",
+      "hint": "Dëst dauert normalerweis e puer Sekonnen.",
+      "inProgress": "Sichen …",
       "notAvailable": "D'Sich ass op auf dësem Gerät net méiglech. Benotz de manuellen Input.",
       "nothingFound": "Et gouf keen evcc Server fonnt.",
       "searching": "Siche no enger Verbindung ...",
-      "start": "Sich starten"
+      "selectHelper": "Wiel deen aus, mat deem s du dech verbanne wëlls.",
+      "start": "Server fannen",
+      "tryAgain": "Nees sichen"
     },
-    "select": "Auswielen",
+    "switchServer": {
+      "addServer": "Server derbäi fügen",
+      "title": "Server wiesselen"
+    },
     "useDemo": "Demoinstanz verwennen"
+  },
+  "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "Opluedpunkt auswielen",
+      "chooseServer": "Server auswielen",
+      "loading": "Gëtt gelueden…",
+      "loadingPreview": "Virschau gëtt gelueden…",
+      "noLoadpoints": "Keng Opluedpunkten erreechbar",
+      "noServers": "Keng Serveren. Füüg fir d'éischt een an der App derbäi.",
+      "previewError": "Virschau konnt net geluede ginn",
+      "setupBody": "Tippt fir e Server an en Opluedpunkt auszewielen.",
+      "useThisLoadpoint": "Dësen Opluedpunkt benotzen"
+    },
+    "config": {
+      "desc": "Server fir d'Viraussoen.",
+      "loadpoint": "Opluedpunkt",
+      "server": "Server",
+      "title": "evcc Viraussoen"
+    },
+    "description": {
+      "co2": "Virausgesote CO₂-Emissiounen.",
+      "feedin": "Virausgesote Präis vum Netz-Export.",
+      "price": "Virausgesote Kaafpräis vum Netz.",
+      "solar": "Prognose fir d'Solarproduktioun."
+    },
+    "loadpoint": {
+      "description": "Status vum Opluedpunkt a Luedmodus.",
+      "name": "Opluedpunkt"
+    },
+    "name": {
+      "co2": "CO₂",
+      "feedin": "Präis vum Netz-Export",
+      "price": "Käschte vum Netz-Import",
+      "solar": "Solarprognos"
+    },
+    "noData": {
+      "body": "Dëse Server huet keng Donnéeën vun dësem Typ.",
+      "title": "Keng Donnéeën"
+    },
+    "now": "elo",
+    "setup": {
+      "body": "Tippt fir e Server ze verbannen an e Datentyp auszewielen.",
+      "title": "evcc astellen"
+    },
+    "type": {
+      "feedin": "Käschte vum Export an d'Netz",
+      "price": "Käschte vum Import vum Netz"
+    },
+    "unreachable": {
+      "body": "Et war net méiglech, d'evcc-Instanz ze lueden.",
+      "title": "De Server ass net erreechbar"
+    }
   }
 }

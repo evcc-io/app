@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BasicAuth, type Server } from "types";
 
 export enum StorageKeys {
-  SERVER_URL = "serverurl", // legacy
+  SERVER_URL = "serverUrl", // legacy
   BASIC_AUTH = "basicAuth", // legacy
   SERVERS = "servers",
   ACTIVE_SERVER = "activeServer",
@@ -21,7 +21,14 @@ async function loadLegacyStorage(): Promise<Server> {
 
 async function migrate() {
   const keys = await AsyncStorage.getAllKeys();
-  if (keys.includes(StorageKeys.SERVER_URL)) {
+  if (!keys.includes(StorageKeys.SERVER_URL)) return;
+  if (keys.includes(StorageKeys.SERVERS)) {
+    // stale legacy leftovers next to an existing config: current config wins
+    await AsyncStorage.removeMany([
+      StorageKeys.SERVER_URL,
+      StorageKeys.BASIC_AUTH,
+    ]);
+  } else {
     await migrateStorage();
   }
 }
@@ -30,7 +37,7 @@ async function migrateStorage() {
   const server = await loadLegacyStorage();
   await storeActiveServer(server);
   await storeServers([server]);
-  await AsyncStorage.multiRemove([
+  await AsyncStorage.removeMany([
     StorageKeys.SERVER_URL,
     StorageKeys.BASIC_AUTH,
   ]);

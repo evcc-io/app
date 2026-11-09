@@ -1,22 +1,60 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "Forkert brugernavn eller kodeord. Opdater loginoplysningerne via Skift Server.",
+      "title": "Login mislykkedes"
+    },
+    "httpError": {
+      "hint": "Serveren svarede uventet.",
+      "title": "Serverfejl (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "Din enhed er offline. Opret forbindelse til WiFi eller mobildata.",
+      "title": "Intet netværk"
+    },
+    "rateLimited": {
+      "hint": "Serveren blokerer midlertidigt forespørgsler.",
+      "title": "For mange forsøg"
+    },
+    "remoteOffline": {
+      "hint": "Din evcc-instans er ikke forbundet.",
+      "title": "evcc er offline"
+    },
+    "retry": "Prøv igen",
+    "timeout": {
+      "hint": "Intet svar fra serveren.",
+      "title": "Server svarer ikke"
+    },
+    "unreachable": {
+      "hint": "Tjek dit netværk, og at din evcc-instans kører.",
+      "title": "Server ikke tilgængelig"
+    },
+    "websocket": {
+      "hint": "Siden indlæses, men WebSocket opretter ikke forbindelse. Tjek indstillingerne for din reverse proxy.",
+      "title": "WebSocket-forbindelse mislykkedes"
+    }
+  },
   "main": {
-    "description": "Søg på netværket for at finde din evcc installation.",
-    "title": "Konfigurer serveren"
+    "description": "Lad os forbinde til din server.",
+    "title": "Velkommen"
   },
   "servers": {
-    "changeServer": "Skift server",
+    "changeServer": "Skift Server",
+    "editServer": "Rediger server",
     "manually": {
       "authenticationRequired": "Godkendelse påkrævet",
       "checkAdress": "Serveren ser ikke ud til at være en evcc-instans. Tjek venligst adressen.",
       "checkAndSave": "Bekræft og gem",
-      "enterUrl": "Indtast URL",
+      "loginRequired": "Serveren kræver login.",
       "missingOrWrongAuthentication": "Manglende eller forkert godkendelse",
       "password": "Kodeord",
       "qrcode": {
         "invalid": "Det er ikke en gyldig evcc QR kode.",
-        "permissionDenied": "Aktivér kameraadgang for at scanne en QR-kode.",
+        "permissionDenied": "Kamera ikke tilgængelig. Aktivér kamera i indstillinger for at scanne QR-koder.",
         "recognized": "QR code fundet!",
-        "scan": "Scan QR koden",
+        "scan": "Scan QR Kode",
+        "scanOnboarding": "Opsætning via QR-kode",
+        "scanPrefill": "Udfyld via QR-kode",
         "scanning": "Scanner..."
       },
       "serverExistsAlready": "Serveren findes allerede.",
@@ -26,18 +64,79 @@
       "title": "Titel",
       "user": "Bruger"
     },
+    "remove": "Fjern",
+    "removeConfirm": "Vil du virkelig fjerne {{title}}?",
     "removeServer": "Fjern server",
     "search": {
+      "cancel": "Afbryd",
+      "connect": "Forbind",
+      "foundMany": "{{count}} servere fundet",
+      "foundOne": "Server fundet",
+      "hint": "Det tager normalt et par sekunder.",
+      "inProgress": "Søger …",
       "notAvailable": "Søgningen er ikke mulig på enheden. Brug manuel indtastning.",
-      "nothingFound": "Ingen evcc-server blev fundet.",
+      "nothingFound": "Ingen server fundet.",
       "searching": "Søg efter forbindelse ...",
-      "start": "Start søgning"
+      "selectHelper": "Vælg den, du vil forbinde til.",
+      "start": "Find server",
+      "tryAgain": "Søg igen"
     },
-    "select": "Vælg",
     "switchServer": {
-      "addServer": "Tilføj server",
-      "title": "Skift server"
+      "addServer": "Tilføj Server",
+      "title": "Skift Server"
     },
     "useDemo": "Brug demo installation"
+  },
+  "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "Vælg ladepunkt",
+      "chooseServer": "Vælg server",
+      "loading": "Indlæser…",
+      "loadingPreview": "Indlæser forhåndsvisning…",
+      "noLoadpoints": "Ingen ladepunkter tilgængelige",
+      "noServers": "Ingen servere. Tilføj en i appen først.",
+      "previewError": "Kunne ikke indlæse forhåndsvisning",
+      "setupBody": "Tryk for at vælge en server og et ladepunkt.",
+      "useThisLoadpoint": "Brug dette ladepunkt"
+    },
+    "config": {
+      "desc": "Server til prognosen.",
+      "loadpoint": "Ladepunkt",
+      "server": "Server",
+      "title": "evcc-prognose"
+    },
+    "description": {
+      "co2": "Prognose for CO₂-emissioner.",
+      "feedin": "Prognose for elnet eksport pris.",
+      "price": "Prognose for elnet import pris.",
+      "solar": "Prognose for solenergiproduktion."
+    },
+    "loadpoint": {
+      "description": "Ladepunktets status og ladetilstand.",
+      "name": "Ladepunkt"
+    },
+    "name": {
+      "co2": "CO₂",
+      "feedin": "Elnet eksport pris",
+      "price": "Elnet import pris",
+      "solar": "Sol prognose"
+    },
+    "noData": {
+      "body": "Denne server har ingen data af denne type.",
+      "title": "Ingen data"
+    },
+    "now": "nu",
+    "setup": {
+      "body": "Tryk for at forbinde en server og vælge en datatype.",
+      "title": "Opsæt evcc"
+    },
+    "type": {
+      "feedin": "Elnet eksport pris",
+      "price": "Elnet import pris"
+    },
+    "unreachable": {
+      "body": "Kunne ikke indlæse evcc-instansen.",
+      "title": "Server ikke tilgængelig"
+    }
   }
 }

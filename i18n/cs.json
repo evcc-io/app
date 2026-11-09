@@ -1,22 +1,60 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "Nesprávné uživatelské jméno nebo heslo. Aktualizujte přihlašovací údaje přes „Změnit server“.",
+      "title": "Přihlášení se nezdařilo"
+    },
+    "httpError": {
+      "hint": "Server odpověděl neočekávaným způsobem.",
+      "title": "Chyba serveru (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "Vaše zařízení je offline. Připojte se k WiFi nebo mobilním datům.",
+      "title": "Žádná síť"
+    },
+    "rateLimited": {
+      "hint": "Server dočasně blokuje požadavky.",
+      "title": "Příliš mnoho pokusů"
+    },
+    "remoteOffline": {
+      "hint": "Vaše instance evcc není připojena.",
+      "title": "evcc je offline"
+    },
+    "retry": "Zkusit znovu",
+    "timeout": {
+      "hint": "Server neposlal žádnou odpověď.",
+      "title": "Server neodpovídá"
+    },
+    "unreachable": {
+      "hint": "Zkontrolujte síť a zda vaše instance evcc běží.",
+      "title": "Server není dostupný"
+    },
+    "websocket": {
+      "hint": "Stránka se načte, ale WebSocket se nepřipojí. Zkontrolujte nastavení reverzní proxy.",
+      "title": "Připojení WebSocket selhalo"
+    }
+  },
   "main": {
     "description": "Prohledejte vaši síť, abyste našli instalaci evcc.",
     "title": "Nastavit server"
   },
   "servers": {
     "changeServer": "Změnit server",
+    "editServer": "Upravit server",
     "manually": {
       "authenticationRequired": "Vyžaduje se autentifikace",
       "checkAdress": "Server se nezdá být instancí evcc. Zkontrolujte prosím adresu.",
       "checkAndSave": "Zkontrolovat a uložit",
-      "enterUrl": "Zadejte URL",
+      "loginRequired": "Server vyžaduje přihlášení.",
       "missingOrWrongAuthentication": "Chybějící nebo nesprávná autentifikace",
       "password": "Heslo",
       "qrcode": {
         "invalid": "Neplatný EVCC QR kod.",
-        "permissionDenied": "Povolte přístup ke kameře v nastavení, abyste mohli naskenovat QR kod.",
+        "permissionDenied": "Přístup ke kameře zakázán. Povolte v nastavení telefonu abyste mohli skenovat QR kody.",
         "recognized": "QR kod detekován!",
         "scan": "Naskenujte QR kod",
+        "scanOnboarding": "Nastavit přes QR kod",
+        "scanPrefill": "Vyplnit přes QR kod",
         "scanning": "analyzování..."
       },
       "serverExistsAlready": "Tento server už existuje.",
@@ -26,18 +64,77 @@
       "title": "Nadpis",
       "user": "Uživatel"
     },
+    "remove": "Odebrat",
+    "removeConfirm": "Opravdu chcete odebrat {{title}}?",
     "removeServer": "Odebrat server",
     "search": {
+      "cancel": "Zrušit",
+      "connect": "Připojit",
+      "foundMany": "Nalezené servery: {{count}}",
+      "foundOne": "Server nalezen",
+      "hint": "Obvykle to trvá několik sekund.",
+      "inProgress": "Hledání …",
       "notAvailable": "Vyhledávání není na tomto zařízení možné. Použijte ruční zadání.",
       "nothingFound": "Žádný server evcc nebyl nalezen.",
       "searching": "Hledání připojení ...",
-      "start": "Spustit vyhledávání"
+      "selectHelper": "Vyberte ten, ke kterému se chcete připojit.",
+      "start": "Spustit vyhledávání",
+      "tryAgain": "Hledat znovu"
     },
-    "select": "Vybrat",
     "switchServer": {
       "addServer": "Přidat server",
       "title": "Přepnout server"
     },
     "useDemo": "Použít ukázkovou instanci"
+  },
+  "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "Zvolte nabíjecí bod",
+      "chooseServer": "Zvolte server",
+      "loading": "Načítání…",
+      "loadingPreview": "Načítání náhledu…",
+      "noLoadpoints": "Žádné dostupné nabíjecí body",
+      "noServers": "Žádné servery. Nejprve jeden přidejte v aplikaci.",
+      "previewError": "Náhled se nepodařilo načíst",
+      "setupBody": "Klepnutím zvolíte server a nabíjecí bod.",
+      "useThisLoadpoint": "Použít tento nabíjecí bod"
+    },
+    "config": {
+      "desc": "Server pro předpověď.",
+      "loadpoint": "Nabíjecí bod",
+      "title": "evcc předpověď"
+    },
+    "description": {
+      "co2": "Předpověď emisí CO₂.",
+      "feedin": "Předpověď výkupní ceny.",
+      "price": "Předpověď ceny odběru ze sítě.",
+      "solar": "Předpověď solární výroby."
+    },
+    "loadpoint": {
+      "description": "Stav nabíjecího bodu a režim nabíjení.",
+      "name": "Nabíjecí bod"
+    },
+    "name": {
+      "feedin": "Výkupní cena",
+      "price": "Cena odběru ze sítě",
+      "solar": "Solární předpověď"
+    },
+    "noData": {
+      "body": "Tento server nemá data tohoto typu.",
+      "title": "Žádná data"
+    },
+    "now": "nyní",
+    "setup": {
+      "body": "Klepnutím připojíte server a zvolíte typ dat.",
+      "title": "Nastavit evcc"
+    },
+    "type": {
+      "feedin": "Výkupní cena",
+      "price": "Cena odběru ze sítě"
+    },
+    "unreachable": {
+      "body": "Instanci evcc se nepodařilo načíst.",
+      "title": "Server nedostupný"
+    }
   }
 }

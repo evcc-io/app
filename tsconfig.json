@@ -13,6 +13,7 @@
     "composite": true,
     "allowJs": true,
     "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
     "plugins": [
       {
         "name": "typescript-eslint-language-service"

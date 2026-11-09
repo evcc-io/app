@@ -1,30 +1,142 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "Fel användarnamn eller lösenord. Uppdatera inloggningsuppgifterna via Byt server.",
+      "title": "Inloggningen misslyckades"
+    },
+    "httpError": {
+      "hint": "Servern svarade oväntat.",
+      "title": "Serverfel (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "Din enhet är offline. Anslut till WiFi eller mobildata.",
+      "title": "Inget nätverk"
+    },
+    "rateLimited": {
+      "hint": "Servern blockerar tillfälligt förfrågningar.",
+      "title": "För många försök"
+    },
+    "remoteOffline": {
+      "hint": "Din evcc-instans är inte ansluten.",
+      "title": "evcc är offline"
+    },
+    "retry": "Försök igen",
+    "timeout": {
+      "hint": "Inget svar från servern.",
+      "title": "Servern svarar inte"
+    },
+    "unreachable": {
+      "hint": "Kontrollera ditt nätverk och att din evcc-instans körs.",
+      "title": "Servern kan inte nås"
+    },
+    "websocket": {
+      "hint": "Sidan laddas, men WebSocket ansluter inte. Kontrollera inställningarna för din reverse proxy.",
+      "title": "WebSocket-anslutningen misslyckades"
+    }
+  },
   "main": {
-    "description": "Sök på nätverket för att hitta din evcc installation.",
-    "title": "Konfigurera servern"
+    "description": "Låt oss ansluta till din server.",
+    "title": "Hej"
   },
   "servers": {
     "changeServer": "Byt server",
+    "editServer": "Ändra server",
     "manually": {
       "authenticationRequired": "Registrering krävs",
       "checkAdress": "Servern verkar inte vara en evcc-instans. Vänligen kolla adressen.",
       "checkAndSave": "Kolla och spara",
-      "enterUrl": "Ange URL",
+      "loginRequired": "Servern kräver inloggning.",
       "missingOrWrongAuthentication": "Saknad eller inkorrekt registrering",
       "password": "Lösenord",
+      "qrcode": {
+        "invalid": "Ej giltig evcc QR-kod.",
+        "permissionDenied": "Kamera ej tillgänglig. Aktivera i inställningar för att skanna QR-kod.",
+        "recognized": "QR-kod upptäckt!",
+        "scan": "Skanna QR-kod",
+        "scanOnboarding": "Ställ in via QR-kod",
+        "scanPrefill": "Fyll i via QR-kod",
+        "scanning": "söker..."
+      },
+      "serverExistsAlready": "Servern finns sedan tidigare.",
       "serverIncompatible": "Evcc-versionen är inte app-kompatibel. Uppgradera din installation.",
       "serverNotAvailable": "Servern är inte tillgänglig. Vänligen kolla adressen.",
       "specify": "Ange adress",
+      "title": "Titel",
       "user": "Användare"
     },
+    "remove": "Ta bort",
+    "removeConfirm": "Vill du verkligen ta bort {{title}}?",
     "removeServer": "Ta bort server",
     "search": {
+      "cancel": "Avbryt",
+      "connect": "Anslut",
+      "foundMany": "{{count}} servrar hittade",
+      "foundOne": "Server hittad",
+      "hint": "Detta tar vanligtvis några sekunder.",
+      "inProgress": "Söker …",
       "notAvailable": "Sökning är inte möjligt på denna enhet. Skriv in manuellt.",
-      "nothingFound": "Ingen evcc-server hittades.",
+      "nothingFound": "Ingen server hittades.",
       "searching": "Sök efter förbindelse...",
-      "start": "Starta sök"
+      "selectHelper": "Välj den du vill ansluta till.",
+      "start": "Hitta server",
+      "tryAgain": "Sök igen"
     },
-    "select": "Välj",
+    "switchServer": {
+      "addServer": "Lägg till server",
+      "title": "Byt server"
+    },
     "useDemo": "Använd demo-installation"
+  },
+  "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "Välj laddplats",
+      "chooseServer": "Välj server",
+      "loading": "Laddar…",
+      "loadingPreview": "Laddar förhandsvisning…",
+      "noLoadpoints": "Inga laddplatser nåbara",
+      "noServers": "Inga servrar. Lägg först till en i appen.",
+      "previewError": "Kunde inte ladda förhandsvisning",
+      "setupBody": "Tryck för att välja server och laddplats.",
+      "useThisLoadpoint": "Använd denna laddplats"
+    },
+    "config": {
+      "desc": "Server för prognosen.",
+      "loadpoint": "Laddplats",
+      "server": "Server",
+      "title": "evcc-prognos"
+    },
+    "description": {
+      "co2": "Prognos för CO₂-utsläpp.",
+      "feedin": "Prognos för exportpris till elnät.",
+      "price": "Prognos för importpris från elnät.",
+      "solar": "Prognos för solproduktion."
+    },
+    "loadpoint": {
+      "description": "Laddplatsens status och laddläge.",
+      "name": "Laddplats"
+    },
+    "name": {
+      "co2": "CO₂",
+      "feedin": "Exportpris till elnät",
+      "price": "Importpris från elnät",
+      "solar": "Solprognos"
+    },
+    "noData": {
+      "body": "Servern har ingen data av denna typ.",
+      "title": "Inga data"
+    },
+    "now": "nu",
+    "setup": {
+      "body": "Tryck för att ansluta en server och välja en datatyp.",
+      "title": "Konfigurera evcc"
+    },
+    "type": {
+      "feedin": "Exportpris till elnät",
+      "price": "Importpris från elnät"
+    },
+    "unreachable": {
+      "body": "Kunde inte ladda evcc-instansen.",
+      "title": "Servern kan inte nås"
+    }
   }
 }

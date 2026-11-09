@@ -9,7 +9,7 @@ import addAndroidTest from "./src/addAndroidTest";
 import enableUnencryptedTraffic, {
   SubdomainsType,
 } from "./src/enableUnencryptedTraffic";
-import increaseAllowedMemory from "./src/increaseAllowedMemory";
+import { isAndroidDetoxBuild } from "scripts/buildType";
 
 const configureDetox: ConfigPlugin<
   {
@@ -23,11 +23,11 @@ const configureDetox: ConfigPlugin<
     subdomains?: SubdomainsType;
   } | void
 > = (config, { subdomains } = {}) => {
+  if (!isAndroidDetoxBuild) return config;
   return withPlugins(config, [
     patchProjectGradle,
     patchAppGradle,
     addAndroidTest,
-    increaseAllowedMemory,
     [
       enableUnencryptedTraffic,
       { subdomains: subdomains ?? ["10.0.2.2", "localhost"] },

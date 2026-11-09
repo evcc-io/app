@@ -1,47 +1,45 @@
 import "detox";
 import { expect } from "detox";
-import { waitForWebview } from "./helper";
+import { waitForWebview, launchWithDeepLink } from "./helper";
 
 describe("Deep Linking", () => {
   it("open server", async () => {
-    await device.launchApp({
-      url: "evcc://server?url=localhost:7070&title=siteTitle",
-      resetAppState: true,
-    });
+    await launchWithDeepLink(
+      "evcc://server?url=localhost:7070&title=siteTitle",
+    );
 
-    await expect(element(by.id("@serverFormTitle/input"))).toHaveText(
+    await expect(element(by.id("serverFormTitle"))).toHaveText(
       "siteTitle",
     );
-    await expect(element(by.id("@serverFormUrl/input"))).toHaveText(
+    await expect(element(by.id("serverFormUrl"))).toHaveText(
       "localhost:7070",
     );
     // TODO: see https://github.com/wix/Detox/issues/4884
     // await expect(element(by.id("serverFormAuth"))).toHaveToggleValue(false);
-    await expect(element(by.id("@serverFormAuthUser/input"))).not.toExist();
-    await expect(element(by.id("@serverFormAuthPassword/input"))).not.toExist();
+    await expect(element(by.id("serverFormAuthUser"))).not.toExist();
+    await expect(element(by.id("serverFormAuthPassword"))).not.toExist();
 
     await element(by.id("serverFormCheckAndSave")).tap();
     await waitForWebview();
   });
 
   it("open server with basic auth", async () => {
-    await device.launchApp({
-      url: "evcc://server?url=http://localhost:7080&title=siteTitle&username=admin&password=secret",
-      resetAppState: true,
-    });
+    await launchWithDeepLink(
+      "evcc://server?url=http://localhost:7080&title=siteTitle&username=admin&password=secret",
+    );
 
-    await expect(element(by.id("@serverFormTitle/input"))).toHaveText(
+    await expect(element(by.id("serverFormTitle"))).toHaveText(
       "siteTitle",
     );
-    await expect(element(by.id("@serverFormUrl/input"))).toHaveText(
+    await expect(element(by.id("serverFormUrl"))).toHaveText(
       "http://localhost:7080",
     );
     // TODO: see https://github.com/wix/Detox/issues/4884
     // await expect(element(by.id("serverFormAuth"))).toHaveToggleValue(true);
-    await expect(element(by.id("@serverFormAuthUser/input"))).toHaveText(
+    await expect(element(by.id("serverFormAuthUser"))).toHaveText(
       "admin",
     );
-    await expect(element(by.id("@serverFormAuthPassword/input"))).toHaveText(
+    await expect(element(by.id("serverFormAuthPassword"))).toHaveText(
       "secret",
     );
 

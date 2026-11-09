@@ -20,6 +20,16 @@
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "ios": {
+        "ascAppId": "6478510176"
+      }
+    },
+    "beta": {
+      "extends": "production",
+      "android": {
+        "track": "alpha"
+      }
+    }
   }
 }

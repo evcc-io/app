@@ -1,5 +1,5 @@
 import "detox";
-import { waitForWebview } from "./helper";
+import { waitForWebview, launchWithDeepLink } from "./helper";
 
 async function testKeepingServer() {
   // bring from foreground to background to foreground
@@ -12,11 +12,8 @@ async function testKeepingServer() {
 }
 
 describe("Keep server after reopening", () => {
-  beforeEach(async () => {
-    await device.launchApp({ resetAppState: true });
-  });
-
   it("demo server", async () => {
+    await device.launchApp({ resetAppState: true });
     await element(by.id("useDemo")).tap();
     await waitForWebview();
 
@@ -24,10 +21,7 @@ describe("Keep server after reopening", () => {
   });
 
   it("manual: url only", async () => {
-    await device.launchApp({
-      url: "evcc://server?url=localhost:7070&title=Local",
-      resetAppState: true,
-    });
+    await launchWithDeepLink("evcc://server?url=localhost:7070&title=Local");
     await element(by.id("serverFormCheckAndSave")).tap();
     await waitForWebview();
 
@@ -35,10 +29,9 @@ describe("Keep server after reopening", () => {
   });
 
   it("manual: with basic auth", async () => {
-    await device.launchApp({
-      url: "evcc://server?url=http://localhost:7080&title=Local%20Auth&username=admin&password=secret",
-      resetAppState: true,
-    });
+    await launchWithDeepLink(
+      "evcc://server?url=http://localhost:7080&title=Local%20Auth&username=admin&password=secret",
+    );
     await element(by.id("serverFormCheckAndSave")).tap();
     await waitForWebview();
 

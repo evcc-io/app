@@ -6,16 +6,18 @@ describe("server discovery (mdns)", () => {
     await device.launchApp({ resetAppState: true });
   });
 
-  it.each([1, 2, 5])("search with %i tap(s)", async (n) => {
-    for (let i = 0; i < n; i++) {
-      await element(by.id("serverSearchButton")).tap();
-    }
+  it("search and connect", async () => {
+    await element(by.id("serverSearchButton")).tap();
 
-    await waitFor(element(by.id("serverSearchListItem0")))
+    // fullscreen search shows the found instance with a connect CTA
+    await waitFor(element(by.id("searchConnect")))
       .toExist()
-      .withTimeout(5000);
-    await element(by.id("serverSearchListItem0Button")).tap();
+      .withTimeout(10000);
+    await element(by.id("searchConnect")).tap();
 
     await waitForWebview();
   });
+
+  // no cancel test: discovery can resolve instantly (instance on the local
+  // network), racing the Searching screen away before the tap lands
 });

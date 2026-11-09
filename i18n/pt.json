@@ -1,30 +1,142 @@
 {
+  "connection": {
+    "auth": {
+      "hint": "Utilizador ou password incorretos. Atualize as credenciais através Alterar servidor.",
+      "title": "Falha no login"
+    },
+    "httpError": {
+      "hint": "O servidor respondeu de forma inesperada.",
+      "title": "Erro do servidor (HTTP {{status}})"
+    },
+    "offline": {
+      "hint": "O seu dispositivo está offline. Ligue-se ao WiFi ou aos dados móveis.",
+      "title": "Sem rede"
+    },
+    "rateLimited": {
+      "hint": "O servidor está a bloquear pedidos temporariamente.",
+      "title": "Demasiadas tentativas"
+    },
+    "remoteOffline": {
+      "hint": "A sua instalação evcc não está ligada.",
+      "title": "O evcc está offline"
+    },
+    "retry": "Tentar novamente",
+    "timeout": {
+      "hint": "Sem resposta do servidor.",
+      "title": "O servidor não responde"
+    },
+    "unreachable": {
+      "hint": "Verifique a sua rede e se a instalação evcc está em execução.",
+      "title": "Servidor inacessível"
+    },
+    "websocket": {
+      "hint": "A página carrega, mas o WebSocket não se liga. Verifique as definições do reverse proxy.",
+      "title": "Falha na ligação WebSocket"
+    }
+  },
   "main": {
-    "description": "Procurar a rede para localizar a sua instalação evcc.",
-    "title": "Configurar o servidor"
+    "description": "Vamos nos conectar ao seu servidor.",
+    "title": "Bem-vindo"
   },
   "servers": {
-    "changeServer": "Mudar o servidor",
+    "changeServer": "Mudar de servidor",
+    "editServer": "Editar servidor",
     "manually": {
       "authenticationRequired": "Necessário Autenticação",
       "checkAdress": "O servidor não parece ser uma instalação do evcc. Por favor, verifique o endereço.",
       "checkAndSave": "Verificar e guardar",
-      "enterUrl": "Inserir URL",
+      "loginRequired": "O servidor requer início de sessão.",
       "missingOrWrongAuthentication": "Autenticação inexistente ou incorreta",
       "password": "Password",
+      "qrcode": {
+        "invalid": "Este código QR não é um código do evcc válido.",
+        "permissionDenied": "Acesso à câmara negado. Ative-o nas definições para ler códigos QR.",
+        "recognized": "Foi detetado um código QR!",
+        "scan": "Escaneie o código QR",
+        "scanOnboarding": "Configurar através do código QR",
+        "scanPrefill": "Preencher através do código QR",
+        "scanning": "a detetar..."
+      },
+      "serverExistsAlready": "Este servidor já existe.",
       "serverIncompatible": "A instalação evcc ainda não é compatível com a aplicação. Atualize a sua instalação.",
       "serverNotAvailable": "Servidor não encontrado. Por favor, verifique o endereço.",
       "specify": "Introduzir o endereço manualmente",
+      "title": "Título",
       "user": "Utilizador"
     },
+    "remove": "Remover",
+    "removeConfirm": "Pretende mesmo remover {{title}}?",
     "removeServer": "Apagar servidor",
     "search": {
+      "cancel": "Cancelar",
+      "connect": "Ligar",
+      "foundMany": "{{count}} servidores encontrados",
+      "foundOne": "Servidor encontrado",
+      "hint": "Normalmente demora alguns segundos.",
+      "inProgress": "A procurar …",
       "notAvailable": "A pesquisa não é possível neste dispositivo. Utilize a entrada manual.",
-      "nothingFound": "Não foi encontrado nenhum servidor evcc.",
+      "nothingFound": "Não foi encontrado nenhum servidor.",
       "searching": "A procurar ...",
-      "start": "Iniciar a pesquisa"
+      "selectHelper": "Selecione aquele a que se pretende ligar.",
+      "start": "Encontrar servidor",
+      "tryAgain": "Procurar de novo"
     },
-    "select": "Selecionar",
+    "switchServer": {
+      "addServer": "Adicionar um servidor",
+      "title": "Mudar de servidor"
+    },
     "useDemo": "Usar modo de demonstração"
+  },
+  "widget": {
+    "androidConfig": {
+      "chooseLoadpoint": "Escolher ponto de carga",
+      "chooseServer": "Escolher servidor",
+      "loading": "A carregar…",
+      "loadingPreview": "A carregar pré-visualização…",
+      "noLoadpoints": "Nenhum ponto de carga acessível",
+      "noServers": "Sem servidores. Adicione um primeiro na aplicação.",
+      "previewError": "Não foi possível carregar a pré-visualização",
+      "setupBody": "Toque para escolher um servidor e um ponto de carga.",
+      "useThisLoadpoint": "Usar este ponto de carga"
+    },
+    "config": {
+      "desc": "Servidor para as previsões.",
+      "loadpoint": "Ponto de carga",
+      "server": "Servidor",
+      "title": "Previsões do evcc"
+    },
+    "description": {
+      "co2": "Previsão das emissões de CO₂.",
+      "feedin": "Preço de exportação previsto da rede.",
+      "price": "Preço de importação previsto da rede.",
+      "solar": "Previsão da produção solar."
+    },
+    "loadpoint": {
+      "description": "Estado do ponto de carga e modo de carga.",
+      "name": "Ponto de carga"
+    },
+    "name": {
+      "co2": "CO₂",
+      "feedin": "Preço de exportação para a rede",
+      "price": "Preço de importação da rede",
+      "solar": "Previsão solar"
+    },
+    "noData": {
+      "body": "Este servidor não possui dados deste tipo.",
+      "title": "Sem dados"
+    },
+    "now": "agora",
+    "setup": {
+      "body": "Toque para ligar a um servidor e selecionar um tipo de dados.",
+      "title": "Setup evcc"
+    },
+    "type": {
+      "feedin": "Preço de venda à rede",
+      "price": "Preço de importação da rede"
+    },
+    "unreachable": {
+      "body": "Não foi possível encontrar a instância evcc.",
+      "title": "Servidor inacessível"
+    }
   }
 }

@@ -52,6 +52,8 @@ const withNetworkSecurityConfigFile: ConfigPlugin<{
   return withDangerousMod(config, [
     "android",
     async (config) => {
+      console.log("» Detox config plugin: Add network security config file");
+
       const packageName = config.android?.package;
       assert(packageName, "android.package must be defined");
       const folder = path.join(
@@ -71,6 +73,8 @@ const withNetworkSecurityConfigFile: ConfigPlugin<{
 
 export const withNetworkSecurityConfigManifest: ConfigPlugin = (config) => {
   return withAndroidManifest(config, (config) => {
+    console.log("» Detox config plugin: Add network security config entry");
+
     const application = AndroidConfig.Manifest.getMainApplicationOrThrow(
       config.modResults,
     );

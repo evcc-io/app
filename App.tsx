@@ -1,21 +1,15 @@
-import React from "react";
 import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
-import * as eva from "@eva-design/eva";
-import { ApplicationProvider } from "@ui-kitten/components";
-import { useColorScheme } from "react-native";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import { getLocales } from "expo-localization";
-import mapping from "./style.json";
 
 import OnboardingScreen from "./screens/OnboardingScreen";
+import SearchServerScreen from "./screens/SearchServerScreen";
 import AddServerScreen from "./screens/AddServerScreen";
 import MainScreen from "./screens/MainScreen";
 import { AppProvider, useAppContext } from "./components/AppContext";
-import custom from "./themes.json";
-import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { decode, encode } from "base-64";
 import translations from "./i18n";
@@ -24,6 +18,7 @@ import { SCHEME } from "utils/constants";
 import SwitchServerScreen from "screens/SwitchServerScreen";
 import EditServerScreen from "screens/EditServerScreen";
 import { KeyboardProvider } from "react-native-keyboard-controller";
+import QRCodeCameraScreen from "screens/QRCodeCameraScreen";
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -41,8 +36,10 @@ const SwitchServerStackNav =
 
 i18n.use(initReactI18next).init({
   resources: translations,
-  lng: getLocales()[0].languageCode ?? undefined,
-  fallbackLng: "en",
+  // full tag so script/region locales (zh-Hans, nb-NO) resolve
+  lng: getLocales()[0].languageTag,
+  fallbackLng: { zh: ["zh-Hans", "en"], default: ["en"] },
+  returnEmptyString: false,
 });
 
 const hideSplash = () => {
@@ -68,12 +65,20 @@ function SwitchServerStack() {
         name="AddServer"
         component={AddServerScreen}
       />
+      <SwitchServerStackNav.Screen
+        name="QRCodeCamera"
+        component={QRCodeCameraScreen}
+        options={{
+          animation: "slide_from_bottom",
+          presentation: "modal",
+        }}
+      />
     </SwitchServerStackNav.Navigator>
   );
 }
 
 function AppNavigator() {
-  const { activeServer, isLoading, servers } = useAppContext();
+  const { isLoading, servers } = useAppContext();
 
   // Show splash/loading while determining initial route
   if (isLoading) {
@@ -84,9 +89,6 @@ function AppNavigator() {
     animation: "slide_from_bottom" as const,
     presentation: "modal" as const,
   };
-
-  console.log("activeServer", activeServer);
-  console.log("servers", servers);
 
   const linking: LinkingOptions<RootStackParamList> = {
     prefixes: [SCHEME + "://"],
@@ -124,8 +126,18 @@ function AppNavigator() {
             <>
               <Stack.Screen name="Onboarding" component={OnboardingScreen} />
               <Stack.Screen
+                name="SearchServer"
+                component={SearchServerScreen}
+                options={{ animation: "slide_from_right" }}
+              />
+              <Stack.Screen
                 name="AddServer"
                 component={AddServerScreen}
+                options={sheetOpts}
+              />
+              <Stack.Screen
+                name="QRCodeCamera"
+                component={QRCodeCameraScreen}
                 options={sheetOpts}
               />
             </>
@@ -137,29 +149,10 @@ function AppNavigator() {
 }
 
 export default function App() {
-  const colorScheme = useColorScheme();
-  const theme: "light" | "dark" = colorScheme === "dark" ? "dark" : "light";
-  const [fontsLoaded] = useFonts({
-    "Montserrat-Bold": require("./assets/fonts/Montserrat-Bold.ttf"),
-    "Montserrat-Medium": require("./assets/fonts/Montserrat-Medium.ttf"),
-  });
-
-  const mergedTheme = { ...eva[theme], ...custom[theme] };
-
-  if (!fontsLoaded) {
-    return null;
-  }
-
   return (
     <>
       <AppProvider>
-        <ApplicationProvider
-          {...eva}
-          theme={mergedTheme}
-          customMapping={{ ...eva.mapping, ...mapping }}
-        >
-          <AppNavigator />
-        </ApplicationProvider>
+        <AppNavigator />
       </AppProvider>
       <StatusBar style="auto" />
     </>

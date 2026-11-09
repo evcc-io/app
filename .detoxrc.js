@@ -1,5 +1,5 @@
 const basicLaunchArgs = {
-  disableAnimations: true,
+  testingEnvironment: true,
 };
 
 function createDetoxURLBlacklistRegex(patterns) {
@@ -23,14 +23,7 @@ module.exports = {
         keepOnlyFailedTestsArtifacts: true,
       },
       screenshot: {
-        enabled: true,
-        keepOnlyFailedTestsArtifacts: true,
-        takeWhen: {
-          testStart: true,
-          testFailure: true,
-          testDone: true,
-          appNotReady: true,
-        },
+        enabled: false,
       },
       video: {
         enabled: true,
@@ -53,7 +46,7 @@ module.exports = {
       type: "ios.app",
       binaryPath: "ios/build/Build/Products/Release-iphonesimulator/evcc.app",
       build:
-        "xcodebuild -workspace ios/evcc.xcworkspace -scheme evcc -configuration Release -destination 'platform=iOS Simulator,name=iPhone 16e' -derivedDataPath ios/build -quiet | xcbeautify --renderer github-actions",
+        "set -o pipefail; xcodebuild -workspace ios/evcc.xcworkspace -scheme evcc -configuration Release -destination 'platform=iOS Simulator,name=iPhone 17 Pro' -derivedDataPath ios/build -quiet | xcbeautify --renderer github-actions",
     },
     "android.release": {
       launchArgs: {
@@ -63,17 +56,17 @@ module.exports = {
           "10.0.2.2",
         ]),
       },
-      reversePorts: [7070, 7080],
+      reversePorts: [7070, 7080, 7081, 7082],
       type: "android.apk",
       binaryPath: "android/app/build/outputs/apk/release/app-release.apk",
-      build: `cd android && "./gradlew" assembleRelease assembleAndroidTest -DtestBuildType=release --parallel --build-cache`,
+      build: `cd android && "./gradlew" :app:assembleRelease :app:assembleAndroidTest -DtestBuildType=release --parallel --build-cache`,
     },
   },
   devices: {
     simulator: {
       type: "ios.simulator",
       device: {
-        type: "iPhone 16e",
+        type: "iPhone 17 Pro",
       },
     },
     attached: {

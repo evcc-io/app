@@ -12,6 +12,8 @@ allprojects {
 
 const patchProjectGradle: ConfigPlugin = (config) => {
   return withProjectBuildGradle(config, (config) => {
+    console.log("» Detox config plugin: Add maven url");
+
     config.modResults.contents += mavenPath;
     return config;
   });

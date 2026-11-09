@@ -1,0 +1,144 @@
+# Agent Rules for evcc Companion App
+
+Guidance for AI coding agents working in this repository.
+
+Related agent files in sibling repos:
+
+- [evcc-io/evcc AGENTS.md](https://github.com/evcc-io/evcc/blob/main/AGENTS.md) — main evcc daemon (Go + Vue web UI)
+- [evcc-io/docs AGENTS.md](https://github.com/evcc-io/docs/blob/main/AGENTS.md) — documentation site
+
+Paths starting with `../evcc/` refer to a local checkout of the main repository (https://github.com/evcc-io/evcc) next to this one; clone it there if it is missing.
+
+## Project Overview
+
+- Native mobile app wrapper around the evcc web UI, built with [Expo](https://expo.dev/) + [React Native](https://reactnative.dev/).
+- The app is intentionally thin: a `WebView` renders the actual evcc UI served by a user's local evcc instance. Native code only handles onboarding, server discovery, server management, deep links, downloads, haptics, and online/offline detection.
+- Design system: [Expo UI](https://docs.expo.dev/versions/latest/sdk/ui/) (`@expo/ui`, SwiftUI/Jetpack Compose native components) for buttons, plain React Native components elsewhere. The light/dark color palette lives in `utils/theme.ts` (`useThemeColors()`); themed text goes through `components/AppText.tsx`.
+- Ships on App Store, Mac App Store, Google Play, F-Droid, and as a direct APK on GitHub Releases.
+
+## Essential Commands
+
+- `npm install` — install dependencies
+- `npm run start` — Expo dev mode (interactive)
+- `npm run ios` / `npm run android` — start a platform target directly
+- `npm run lint` — `tsc --noEmit && eslint .` (TypeScript types + ESLint)
+- `npm run format` — Prettier on the whole repo
+- `npm run translations` — regenerate `i18n/index.ts` from the JSON files in `i18n/` (run after adding a locale)
+- `npm run test:ios` / `test:android:emulator` / `test:android:attached` — Detox e2e (requires a local `evcc --demo` on `:7070` and `caddy run` on `:7080` — see `README.md`)
+- `caddy run` — reverse proxy with basic auth (`admin:secret`) on `:7080` → `:7070`, used for auth-flow tests and manual basic-auth dev
+
+## Project Layout
+
+Most folders are self-explanatory (`screens/`, `components/`, `utils/`, `i18n/`, `e2e/`, …). Non-obvious bits:
+
+- `app.config.ts` — Expo config (replaces `app.json`). Bundle IDs, plugins, native permissions.
+- `i18n/index.ts` — **generated**, do not edit. See [i18n](#i18n).
+- `android/`, `ios/` — output of `expo prebuild`. Do not hand-edit; changes get blown away on regen. Inject native config via an Expo config plugin under `scripts/` instead.
+- `scripts/detox/`, `scripts/fdroid/` — Expo config plugins (Detox wiring, F-Droid reproducibility).
+- `Caddyfile` — local basic-auth proxy for dev/testing.
+- `ressources/` — marketing assets. Note the misspelling, kept for history.
+- `tsconfig.json` sets `baseUrl: "."`, so imports are root-relative (`import { Server } from "types"`, not `"../../types"`). Prefer this style.
+
+## Architecture Notes
+
+### Server state
+
+- Users can save multiple evcc servers and switch between them. Persisted in `AsyncStorage`.
+- All server reads/writes go through `AppContext`; screens use `useAppContext()` rather than touching storage directly.
+- A legacy single-server schema is migrated on first load — keep that migration path working (covered by a Detox test).
+
+### Server verification
+
+- Before saving a server, the app checks that the response identifies as an app-compatible evcc instance. Older evcc versions report a dedicated "not yet app-compatible" error. Don't loosen this check.
+
+### WebView bridge
+
+- `MainScreen` hosts the `WebView` that renders the evcc UI. It injects safe-area CSS variables so the web UI respects notches, and polyfills `navigator.vibrate` to forward to native haptics.
+- The web UI talks back via `window.ReactNativeWebView.postMessage(JSON.stringify({ type, ... }))`. Add new message types to the `switch` in `handleMessage`.
+- Cross-origin navigations open in the system browser, not in the WebView.
+- Online/offline state drives a periodic WebView remount for reconnection plus a crossfade to a loading overlay. Don't replace with hard navigations — it flickers.
+
+### Onboarding / discovery
+
+- mDNS discovery for evcc services on the local network. iOS requires matching `NSBonjourServices` entries in `app.config.ts`.
+- Manual entry and QR code scanning are the alternatives.
+- `evcc://server?url=…&title=…&username=…&password=…` deep link prefills the add-server form.
+
+### i18n
+
+- `i18n/index.ts` is **generated** by `scripts/load-translations.mts`. Edit per-locale JSON (`en.json`, `de.json`, …), then run `npm run translations`.
+- Translations are managed via [Weblate](https://hosted.weblate.org/projects/evcc/app/) — translation PRs come in automatically. Only edit `en.json` (source) and `de.json` (maintained in-house) manually; other locales come from Weblate.
+- Use `useTranslation()` / `t()` for user-facing strings. Keys are nested by screen/section (e.g. `servers.manually.checkAndSave`).
+- **Use the shared glossary** — agreed terms per language with explanations live in `../evcc/i18n/glossary/` (`en.json` + `de.json`, rules in `README.md`). Check it before wording anything user-facing; if a concept is missing there, fall back to the UI strings in `../evcc/i18n/en.json` and `de.json`.
+
+## Coding Conventions
+
+- **TypeScript everywhere**, `strict: true`. The lint script fails on type errors, so type things properly rather than `any`-casting.
+- React function components with hooks. Use `useCallback` / `useMemo` for handlers and JSX passed to children (see `MainScreen.tsx` for the established pattern).
+- Use `components/AppText.tsx` for text and `components/Button.tsx` (an `@expo/ui` wrapper) for buttons so theming stays consistent. Colors always come from `useThemeColors()` (`utils/theme.ts`) — no hardcoded hex values in components. Native `@expo/ui` subtrees need a `Host` wrapper; layout inside a `Host` uses SwiftUI stacks / Compose rows, not flexbox.
+- Theming is automatic light/dark via `useColorScheme()` — there is no in-app theme toggle. Don't add one.
+- Product name is **"evcc"** (always lowercase, even sentence-initial), matching the docs style guide.
+- Keep native code surface minimal — prefer doing things in the web UI (main evcc repo) when possible. The app's job is to host the UI and bridge the few things only native can do.
+- Comments: concise, not excessive. Don't describe what the code already says. No issue/PR links by default — `git blame` covers history. Only add a link when the extra context is required to understand the code.
+
+## Testing (Detox)
+
+- Tests live in `e2e/*.test.ts`, Jest config in `e2e/jest.config.ts` (`maxWorkers: 1`, 60 s timeout).
+- Local prerequisites:
+  - `evcc --demo` running on `:7070`
+  - `caddy run` on `:7080` (basic-auth wrapper for the auth tests)
+- Selectors: prefer `by.id("…")` matching `testID` props you set in components (e.g. `serverFormCheckAndSave`, `serverFormUrl`). For elements inside the WebView, use `byWebDataTestId` / `byWebCss` from `e2e/helper.ts`.
+- The WebView is "ready" before its content has loaded — always gate WebView assertions with `waitForWebview()`.
+- WebView taps can fail with "view not hittable" mid-layout; use `tapWebAfterWaitFor` / `tapAfterWaitFor` instead of bare `.tap()` for flaky-prone interactions.
+- Never use fixed `sleep`s as a substitute for these helpers.
+- Launch args (Detox) are read in `helper/launchArguments.ts`; add new flags there rather than scattering `process.env` checks.
+
+## Native Builds
+
+- `android/` and `ios/` are produced by `npx expo prebuild --platform <ios|android> --clean`. They are gitignored — never hand-edit them; regenerate instead. To inject native-level config, write or extend an Expo config plugin under `scripts/` and register it in `app.config.ts`.
+- F-Droid is a reproducible-build target. The plugins in `scripts/fdroid/` strip non-reproducible bits (DK build IDs, dependency metadata). The README documents the exact F-Droid recipe (`npx expo prebuild` → `sed` out `signingConfig` → `./gradlew :app:assembleRelease`); keep it working.
+- Never hand-edit versions; run `npm run bump -- <version> <buildNumber>` (keeps `package.json`, `app.config.ts` and the derived constants in `utils/constants.ts` in sync). Release flow: `.claude/skills/release/SKILL.md`.
+- `app.config.ts` sets `NSAllowsArbitraryLoads: true` and Android `usesCleartextTraffic: true` on purpose — users run evcc on plain-HTTP local IPs. Don't tighten these without a migration plan.
+
+## CI
+
+`.github/workflows/ci.yaml` runs on push/PR to `main`:
+
+- `lint` — `npm run lint`
+- `fastlane-validate` — store metadata sanity-checks
+- `ios-detox` — full iOS prebuild + Detox run on `depot-macos-26`
+- `android-build` → `android-test` — Android prebuild, then Detox on an emulator (API 35, 2 shards)
+
+Both Detox jobs install evcc + Caddy in CI before running. If you add a test that needs more services, mirror that setup in both jobs.
+
+## Pull Request Descriptions
+
+Structure PR descriptions in this order. No headlines. Be concise.
+
+1. **References first line**: link related issues or PRs (`fixes #1123`, `replaces #222`, `pairs with evcc-io/evcc#345`). PRs should almost always reference an issue or related PR — only skip in rare exceptions (e.g. trivial typo fixes).
+2. **Intro**: one or a few concise sentences framing what the PR does and why it was created this way. The full problem description belongs in the linked issue, not here.
+3. **Bullet list**: most significant changes or user-facing implications. Lead with the most significant.
+4. **TODO section** (only if open points remain):
+
+   ```
+   **TODO**
+   - [ ] item a
+   - [ ] item b
+   ```
+
+Avoid file paths, line numbers, or code listings reproduced from the diff. Include a code snippet only when it conveys the contract (event shape, API signature) more clearly than prose. No testing checklists, no co-author footers.
+
+## Git Workflow
+
+- Main branch: `main`
+- Commit and PR subjects: `prefix: short description`, no trailing period. Platform-specific changes use `Android: …` / `iOS: …`; everything else is prefixed with the affected part of the app (`onboarding: …`, `widget: …`) or `chore:` / `fix:` / `docs:` for non-feature changes. Same pattern as the main evcc repo. Keep messages short.
+
+## AI Attribution
+
+Work produced by an AI agent must be attributable as such on GitHub. Append the tool's attribution footer to every PR description, issue body, review, and comment written by an agent, for example:
+
+```
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+```
+
+Commit messages are the exception: no footer, and no `Co-Authored-By` trailer. Never dress agent work up as human review (e.g. "PR by an agent but looks good to me") in place of the footer.
