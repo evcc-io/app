@@ -6,7 +6,7 @@
     },
     "httpError": {
       "hint": "Palvelin vastasi odottamattomasti.",
-      "title": "Palvelinvirhe (HTTP {{status}})"
+      "title": "Palvelinvirhe (HTTP-virhe {{status}})"
     },
     "offline": {
       "hint": "Laitteesi on offline-tilassa. Yhdistä WiFi- tai mobiilidataan.",
