@@ -10,7 +10,7 @@ export default ({ config }: ConfigContext) =>
       slug: "evcc",
       scheme: SCHEME,
       description: "smart charging",
-      version: "1.7.0",
+      version: "1.7.1",
       orientation: "default",
       icon: "./assets/icon-light.png",
       userInterfaceStyle: "automatic",
@@ -40,7 +40,7 @@ export default ({ config }: ConfigContext) =>
         config: {
           usesNonExemptEncryption: false,
         },
-        buildNumber: "52",
+        buildNumber: "53",
       },
       android: {
         permissions: [
@@ -53,7 +53,7 @@ export default ({ config }: ConfigContext) =>
           foregroundImage: "./assets/adaptive-icon.png",
           backgroundColor: "#010322",
         },
-        versionCode: 52,
+        versionCode: 53,
       },
       web: {
         favicon: "./assets/favicon.png",
