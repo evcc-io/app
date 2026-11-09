@@ -2,7 +2,7 @@ import SwiftUI
 
 // Named colors, following evcc's tokens
 // (https://github.com/evcc-io/evcc/blob/master/assets/css/app.css) where they
-// map, plus a few widget-specific ones. `Color(hex:)` lives in Theme.swift.
+// map, plus a few widget-specific ones.
 extension Color {
   // evcc brand / energy tokens
   static let evccDarkGreen = Color(hex: 0x0FDE41)    // --evcc-dark-green
@@ -28,4 +28,15 @@ extension Color {
   static let modeBgDark = Color.black                // mode button (unselected, dark)
   static let modeTextLight = Color(hex: 0x7C7D8A)
   static let modeTextDark = Color(hex: 0x9A9A9A)
+}
+
+extension Color {
+  init(hex: UInt32) {
+    self.init(
+      .sRGB,
+      red: Double((hex >> 16) & 0xFF) / 255,
+      green: Double((hex >> 8) & 0xFF) / 255,
+      blue: Double(hex & 0xFF) / 255,
+      opacity: 1)
+  }
 }

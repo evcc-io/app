@@ -68,6 +68,10 @@ jobs:
           if ! xcrun simctl list runtimes | grep -q "iOS"; then
             sudo xcodebuild -downloadPlatform iOS
           fi
+          # the app embeds the Apple Watch app, which builds against watchOS
+          if ! xcrun simctl list runtimes | grep -q "watchOS"; then
+            sudo xcodebuild -downloadPlatform watchOS
+          fi
 
       - name: Setup Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0

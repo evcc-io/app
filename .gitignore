@@ -13,3 +13,4 @@ evcc*.*
 
 # @bacons/apple-targets plugin output (regenerated on prebuild)
 targets/*/generated.entitlements
+targets/watch/Assets.xcassets/AppIcon.appiconset/

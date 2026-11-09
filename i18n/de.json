@@ -138,5 +138,12 @@
       "body": "evcc-Instanz konnte nicht geladen werden.",
       "title": "Server nicht erreichbar"
     }
+  },
+  "watch": {
+    "empty": {
+      "title": "Kein Server",
+      "body": "Füge in der evcc-App auf deinem iPhone einen Server hinzu."
+    },
+    "modeFailed": "Modus konnte nicht geändert werden."
   }
 }
