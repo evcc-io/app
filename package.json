@@ -53,7 +53,7 @@
     "react-native": "0.86.3",
     "react-native-edge-to-edge": "^1.7.0",
     "react-native-gesture-handler": "^2.33.1",
-    "react-native-keyboard-controller": "1.22.9",
+    "react-native-keyboard-controller": "1.23.0",
     "react-native-reanimated": "~4.7.1",
     "react-native-safe-area-context": "^5.11.0",
     "react-native-screens": "^4.30.1",
