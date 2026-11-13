@@ -36,10 +36,10 @@ Steps are marked 🤖 (agent runs it) or 👤 (human does it). Stop and wait at 
 
 6. 🤖 **F-Droid APK from CI**
    - `gh run list --branch main --workflow ci.yaml --commit <bump-sha>` → `gh run watch <id>` (the `F-Droid` job is enough, Detox can still be running).
-   - `d=$(mktemp -d) && gh run download <id> -n evcc-<ver>-fdroid.apk -D "$d" && mv "$d/app-release.apk" "$d/evcc-<ver>-fdroid.apk"`
-   - Name is always `evcc-<ver>-fdroid.apk`.
+   - `d=$(mktemp -d) && gh run download <id> -n evcc-<ver>-fdroid.apk -D "$d"`
+   - Yields `evcc-<ver>-fdroid.apk` plus its signed provenance `evcc-<ver>-fdroid.apk.intoto.jsonl`. Check: `gh attestation verify "$d/evcc-<ver>-fdroid.apk" --repo evcc-io/app --bundle "$d/evcc-<ver>-fdroid.apk.intoto.jsonl"`.
 
-7. 🤖 **Draft release**: `gh release create <ver> --draft --target <bump-sha> --title <ver> --notes-file <notes> "$d/evcc-<ver>-fdroid.apk"`, plus `--prerelease` for beta or `--latest` for stable. Verify with `gh release view <ver> --json isDraft,assets` (~110 MB asset, similar to the previous release).
+7. 🤖 **Draft release**: `gh release create <ver> --draft --target <bump-sha> --title <ver> --notes-file <notes> "$d"/evcc-<ver>-fdroid.apk*`, plus `--prerelease` for beta or `--latest` for stable. Verify with `gh release view <ver> --json isDraft,assets` (~110 MB apk + `.intoto.jsonl`).
 
 8. 👤 **Publish**: after explicit go, `id=$(gh api repos/evcc-io/app/releases -q '.[] | select(.name=="<ver>" and .draft) | .id') && gh api -X PATCH repos/evcc-io/app/releases/$id -F draft=false -f tag_name=<ver>` (`gh release edit <ver>` can't find drafts: the tag doesn't exist yet). ⚠️ Irreversible: tag + asset freeze (immutable releases), F-Droid builds the tag within days.
 
@@ -90,7 +90,7 @@ Structure from 1.5.0 (`gh release view 1.5.0`) with `###` subheads; terse bullet
 
 ## Gotchas
 
-- Immutable releases: the asset has to be attached while the release is a draft. Once published, the tag and assets can't change, but notes, title and the prerelease flag can.
+- Immutable releases: the assets (apk + provenance) have to be attached while the release is a draft. Once published, the tag and assets can't change, but notes, title and the prerelease flag can.
 - Never reuse a build number. App Store and Play reject duplicates. Bad build → bump again.
 - F-Droid (`UpdateCheckMode: Tags`) builds every new tag, pre-releases included, so publishing (step 8) = F-Droid release.
 - CI artifacts expire after 90 days. Download the APK before then.

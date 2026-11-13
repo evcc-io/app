@@ -356,6 +356,10 @@ jobs:
     name: F-Droid
     runs-on: depot-ubuntu-24.04-32
     timeout-minutes: 20
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -409,10 +413,25 @@ jobs:
       - name: Scan
         run: fdroid scanner --verbose --exit-code android/app/build/outputs/apk/release/app-release.apk
 
+      - name: Rename apk
+        run: mkdir dist && cp android/app/build/outputs/apk/release/app-release.apk dist/evcc-${{ steps.version.outputs.version }}-fdroid.apk
+
+      # signed SLSA provenance, attached to the GitHub release next to the apk
+      - name: Attest apk
+        id: attest
+        if: github.event_name != 'pull_request'
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-path: dist/*.apk
+
+      - name: Copy provenance
+        if: github.event_name != 'pull_request'
+        run: cp "${{ steps.attest.outputs.bundle-path }}" dist/evcc-${{ steps.version.outputs.version }}-fdroid.apk.intoto.jsonl
+
       - name: Upload apk
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: evcc-${{ steps.version.outputs.version }}-fdroid.apk
-          path: android/app/build/outputs/apk/release/app-release.apk
+          path: dist/
           if-no-files-found: error
           retention-days: 90
