@@ -1,0 +1,17 @@
+# Unfixable transitive advisories in build/test tooling; nothing here ships in the app bundle.
+
+[[IgnoredVulns]]
+id = "GHSA-gcqx-w48m-w2h4"
+reason = "deepmerge: no patched release; build-time only (svgo config, jest)"
+
+[[IgnoredVulns]]
+id = "GHSA-528h-pc64-c93x"
+reason = "stream-json via detox: test-only, parses our own logs; fix is ESM-only 3.x, incompatible with detox"
+
+[[IgnoredVulns]]
+id = "GHSA-hqr4-qq8f-hg3x"
+reason = "stream-json via detox: test-only, parses our own logs; fix is ESM-only 3.x, incompatible with detox"
+
+[[IgnoredVulns]]
+id = "GHSA-mjw6-4jj6-33hc"
+reason = "stream-json via detox: test-only, parses our own logs; fix is ESM-only 3.x, incompatible with detox"
