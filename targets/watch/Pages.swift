@@ -104,10 +104,23 @@ struct LoadpointPage: View {
 
   private var accent: Color { vm.heating ? .evccOrange : .evccDarkGreen }
 
+  private var loadpointTitle: String { loadpoint.title?.trimmingCharacters(in: .whitespaces) ?? "" }
+
+  // The charging point leads, so a vehicle name can't hide where the car is plugged in.
+  private var headline: String {
+    if !loadpointTitle.isEmpty { return loadpointTitle }
+    return vm.title.isEmpty ? L.t("widget.loadpoint.name") : vm.title
+  }
+
+  private var vehicle: String? {
+    let title = loadpoint.vehicleTitle?.trimmingCharacters(in: .whitespaces) ?? ""
+    return title.isEmpty || title == headline ? nil : title
+  }
+
   var body: some View {
     ScrollView {
-      VStack(alignment: .leading, spacing: 6) {
-        Text(vm.title.isEmpty ? L.t("widget.loadpoint.name") : vm.title)
+      VStack(alignment: .leading, spacing: 4) {
+        Text(headline)
           .font(.headline)
           .lineLimit(1)
         HStack(alignment: .firstTextBaseline, spacing: 4) {
@@ -121,23 +134,10 @@ struct LoadpointPage: View {
             .lineLimit(2)
             .fixedSize(horizontal: false, vertical: true)
         }
-        HStack(alignment: .firstTextBaseline, spacing: 2) {
-          Text(vm.metricValue)
-            .font(.system(size: 34, weight: .semibold, design: .rounded))
-            .monospacedDigit()
-          Text(vm.metricUnit).font(.footnote).foregroundStyle(.secondary)
-          Spacer()
-          if vm.status.active {
-            Text("\(vm.power.value) \(vm.power.unit)")
-              .font(.footnote.weight(.semibold))
-              .foregroundStyle(accent)
-              .monospacedDigit()
-          }
+        HStack(alignment: .top, spacing: 6) {
+          summary.frame(maxWidth: .infinity, alignment: .leading)
+          modeColumn.frame(maxWidth: .infinity)
         }
-        if let fill = vm.fill {
-          ProgressView(value: fill).tint(accent)
-        }
-        modeGrid
         StaleFooter(model: model)
       }
     }
@@ -145,9 +145,37 @@ struct LoadpointPage: View {
     .containerBackground(accent.gradient.opacity(0.25), for: .tabView)
   }
 
+  private var summary: some View {
+    VStack(alignment: .leading, spacing: 3) {
+      HStack(alignment: .firstTextBaseline, spacing: 2) {
+        Text(vm.metricValue)
+          .font(.system(size: 30, weight: .semibold, design: .rounded))
+          .monospacedDigit()
+          .lineLimit(1)
+          .minimumScaleFactor(0.6)
+        Text(vm.metricUnit).font(.footnote).foregroundStyle(.secondary)
+      }
+      if let fill = vm.fill {
+        ProgressView(value: fill).tint(accent)
+      }
+      if vm.status.active {
+        Text("\(vm.power.value) \(vm.power.unit)")
+          .font(.footnote.weight(.semibold))
+          .foregroundStyle(accent)
+          .monospacedDigit()
+      }
+      if let vehicle {
+        Text(vehicle)
+          .font(.footnote)
+          .foregroundStyle(.secondary)
+          .lineLimit(2)
+      }
+    }
+  }
+
   // Opaque gray: a translucent fill picks up the tinted page background.
-  private var modeGrid: some View {
-    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 4) {
+  private var modeColumn: some View {
+    VStack(spacing: 3) {
       ForEach(vm.modes, id: \.rawValue) { mode in
         let selected = mode.rawValue == currentMode
         Button {
@@ -158,7 +186,7 @@ struct LoadpointPage: View {
             .lineLimit(1)
             .minimumScaleFactor(0.7)
             .frame(maxWidth: .infinity)
-            .padding(.vertical, 7)
+            .padding(.vertical, 5)
             .foregroundStyle(selected ? Color.onGreen : Color.primary)
             .background(selected ? accent : Color(white: 0.22), in: Capsule())
         }
@@ -167,7 +195,6 @@ struct LoadpointPage: View {
         .accessibilityAddTraits(selected ? .isSelected : [])
       }
     }
-    .padding(.top, 4)
   }
 }
 

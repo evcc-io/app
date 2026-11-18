@@ -17,6 +17,10 @@ struct ContentView: View {
   @StateObject private var model = SiteModel()
   @Environment(\.scenePhase) private var scenePhase
   @State private var showServers = false
+  @State private var page = Self.overviewPage
+
+  // Loadpoint pages are tagged with their API index.
+  private static let overviewPage = -1
 
   private var pollKey: String {
     "\(servers.selected?.id ?? "")|\(servers.selected?.url ?? "")|\(scenePhase == .active)"
@@ -52,14 +56,23 @@ struct ContentView: View {
     }
   }
 
+  // The offset stays the loadpoint's API index.
+  private var connectedFirst: [(offset: Int, element: Loadpoint)] {
+    let all = Array((model.state?.loadpoints ?? []).enumerated())
+    return all.filter { $0.element.connected == true } + all.filter { $0.element.connected != true }
+  }
+
   private func pages(_ server: StoredServer) -> some View {
-    TabView {
+    TabView(selection: $page) {
       OverviewPage(model: model)
-      ForEach(Array((model.state?.loadpoints ?? []).enumerated()), id: \.offset) { index, lp in
+        .tag(Self.overviewPage)
+      ForEach(connectedFirst, id: \.offset) { index, lp in
         LoadpointPage(model: model, server: server, index: index, loadpoint: lp)
+          .tag(index)
       }
     }
     .tabViewStyle(.verticalPage)
+    .onChange(of: server.id) { page = Self.overviewPage }
     .alert(L.t("watch.modeFailed"), isPresented: $model.modeFailed) {
       Button("OK", role: .cancel) {}
     }
