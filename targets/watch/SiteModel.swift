@@ -84,7 +84,8 @@ final class SiteModel: ObservableObject {
   private static func cache(_ s: SiteState, _ id: String) {
     UserDefaults.standard.set(try? JSONEncoder().encode(s), forKey: cacheKey(id))
     UserDefaults.standard.set(Date().timeIntervalSince1970, forKey: cacheKey(id) + ".at")
-    LoadpointTitles.set((s.loadpoints ?? []).map { LoadpointVM.build(from: $0).title }, serverId: id)
+    let titles = (s.loadpoints ?? []).active.map { (index: $0.offset + 1, title: LoadpointVM.build(from: $0.element).title) }
+    LoadpointTitles.set(titles, serverId: id)
   }
 
   private static func cached(_ id: String) -> (SiteState?, Date?) {

@@ -74,12 +74,17 @@ enum WatchServerStore {
 enum LoadpointTitles {
   private static var defaults: UserDefaults? { UserDefaults(suiteName: "group.io.evcc.app") }
 
-  static func get(_ serverId: String) -> [String] {
-    defaults?.stringArray(forKey: "loadpointTitles.\(serverId)") ?? []
+  /// Sorted by the 1-based API index, which has gaps where loadpoints are disabled.
+  static func get(_ serverId: String) -> [(index: Int, title: String)] {
+    let stored = defaults?.dictionary(forKey: "loadpointTitles.\(serverId)") as? [String: String] ?? [:]
+    return stored
+      .compactMap { key, title in Int(key).map { (index: $0, title: title) } }
+      .sorted { $0.index < $1.index }
   }
 
-  static func set(_ titles: [String], serverId: String) {
-    defaults?.set(titles, forKey: "loadpointTitles.\(serverId)")
+  static func set(_ titles: [(index: Int, title: String)], serverId: String) {
+    let stored = Dictionary(uniqueKeysWithValues: titles.map { (String($0.index), $0.title) })
+    defaults?.set(stored, forKey: "loadpointTitles.\(serverId)")
   }
 }
 #endif

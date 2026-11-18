@@ -58,7 +58,7 @@ struct ContentView: View {
 
   // The offset stays the loadpoint's API index.
   private var connectedFirst: [(offset: Int, element: Loadpoint)] {
-    let all = Array((model.state?.loadpoints ?? []).enumerated())
+    let all = (model.state?.loadpoints ?? []).active
     return all.filter { $0.element.connected == true } + all.filter { $0.element.connected != true }
   }
 

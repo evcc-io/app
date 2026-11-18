@@ -53,11 +53,11 @@ struct ComplicationProvider: AppIntentTimelineProvider {
     let servers = WatchServerStore.servers()
     return servers.flatMap { server in
       let titles = LoadpointTitles.get(server.id)
-      return (titles.isEmpty ? [""] : titles).enumerated().map { index, title in
+      return (titles.isEmpty ? [(index: 1, title: "")] : titles).map { index, title in
         var name = title.isEmpty ? L.t("widget.loadpoint.name") : title
         if servers.count > 1 { name += " · \(server.displayTitle)" }
         return AppIntentRecommendation(
-          intent: LoadpointComplicationIntent(server: server.id, loadpoint: index + 1),
+          intent: LoadpointComplicationIntent(server: server.id, loadpoint: index),
           description: name)
       }
     }
