@@ -28,7 +28,7 @@ struct LoadpointOptions: DynamicOptionsProvider {
     switch await ApiClient.fetch(server, jq: ".loadpoints", as: [Loadpoint].self) {
     case .success(let lps):
       return IntentItemCollection(sections: [
-        IntentItemSection(items: lps.enumerated().map { index, lp in
+        IntentItemSection(items: lps.active.map { index, lp in
           let vt = lp.vehicleTitle?.trimmingCharacters(in: .whitespaces) ?? ""
           let name = vt.isEmpty ? (lp.title ?? "Loadpoint \(index + 1)") : vt
           return IntentItem<Int>(index + 1, title: LocalizedStringResource(stringLiteral: name))

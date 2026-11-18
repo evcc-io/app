@@ -138,5 +138,12 @@
       "co2": "Forecast CO₂ emissions.",
       "feedin": "Forecast grid export price."
     }
+  },
+  "watch": {
+    "empty": {
+      "title": "No server",
+      "body": "Add a server in the evcc app on your iPhone."
+    },
+    "modeFailed": "Couldn't change the mode."
   }
 }
