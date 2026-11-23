@@ -5,6 +5,7 @@
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
+    "android:wear": "cd android && ./gradlew :wear:installDebug",
     "ios": "expo run:ios",
     "lint": "tsc --noEmit && eslint . && npm run lint:i18n",
     "lint:i18n": "node ./scripts/check-translations.mts",

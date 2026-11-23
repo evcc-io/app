@@ -33,14 +33,38 @@ const KEYS: Record<string, { repo: "evcc" | "app"; key: string }> = {
   "widget.mode.on": { repo: "evcc", key: "main.mode.on" },
   "widget.mode.normal": { repo: "evcc", key: "main.mode.normal" },
   "widget.mode.boost": { repo: "evcc", key: "main.mode.boost" },
-  "widget.lpstatus.disconnected": { repo: "evcc", key: "main.vehicleStatus.disconnected" },
-  "widget.lpstatus.connected": { repo: "evcc", key: "main.vehicleStatus.connected" },
-  "widget.lpstatus.waitForVehicle": { repo: "evcc", key: "main.vehicleStatus.waitForVehicle" },
-  "widget.lpstatus.finished": { repo: "evcc", key: "main.vehicleStatus.finished" },
-  "widget.lpstatus.charging": { repo: "evcc", key: "main.vehicleStatus.charging" },
-  "widget.lpheat.charging": { repo: "evcc", key: "main.heatingStatus.charging" },
-  "widget.lpheat.connected": { repo: "evcc", key: "main.heatingStatus.connected" },
-  "widget.lpheat.waitForVehicle": { repo: "evcc", key: "main.heatingStatus.waitForVehicle" },
+  "widget.lpstatus.disconnected": {
+    repo: "evcc",
+    key: "main.vehicleStatus.disconnected",
+  },
+  "widget.lpstatus.connected": {
+    repo: "evcc",
+    key: "main.vehicleStatus.connected",
+  },
+  "widget.lpstatus.waitForVehicle": {
+    repo: "evcc",
+    key: "main.vehicleStatus.waitForVehicle",
+  },
+  "widget.lpstatus.finished": {
+    repo: "evcc",
+    key: "main.vehicleStatus.finished",
+  },
+  "widget.lpstatus.charging": {
+    repo: "evcc",
+    key: "main.vehicleStatus.charging",
+  },
+  "widget.lpheat.charging": {
+    repo: "evcc",
+    key: "main.heatingStatus.charging",
+  },
+  "widget.lpheat.connected": {
+    repo: "evcc",
+    key: "main.heatingStatus.connected",
+  },
+  "widget.lpheat.waitForVehicle": {
+    repo: "evcc",
+    key: "main.heatingStatus.waitForVehicle",
+  },
   // everything else is widget-specific → this app's i18n
   "widget.type.price": { repo: "app", key: "widget.type.price" },
   "widget.type.feedin": { repo: "app", key: "widget.type.feedin" },
@@ -56,7 +80,10 @@ const KEYS: Record<string, { repo: "evcc" | "app"; key: string }> = {
   "widget.config.server": { repo: "app", key: "widget.config.server" },
   "widget.config.loadpoint": { repo: "app", key: "widget.config.loadpoint" },
   "widget.loadpoint.name": { repo: "app", key: "widget.loadpoint.name" },
-  "widget.loadpoint.description": { repo: "app", key: "widget.loadpoint.description" },
+  "widget.loadpoint.description": {
+    repo: "app",
+    key: "widget.loadpoint.description",
+  },
   "widget.name.solar": { repo: "app", key: "widget.name.solar" },
   "widget.name.price": { repo: "app", key: "widget.name.price" },
   "widget.name.co2": { repo: "app", key: "widget.name.co2" },
@@ -64,7 +91,28 @@ const KEYS: Record<string, { repo: "evcc" | "app"; key: string }> = {
   "widget.description.solar": { repo: "app", key: "widget.description.solar" },
   "widget.description.price": { repo: "app", key: "widget.description.price" },
   "widget.description.co2": { repo: "app", key: "widget.description.co2" },
-  "widget.description.feedin": { repo: "app", key: "widget.description.feedin" },
+  "widget.description.feedin": {
+    repo: "app",
+    key: "widget.description.feedin",
+  },
+  // Wear OS companion app - energy flow labels from evcc, the rest from this
+  // app. Same sourcing as the Apple Watch app's "watch.flow.*" (evcc-io/app#349).
+  "wear.flow.pv": { repo: "evcc", key: "main.energyflow.pvProduction" },
+  "wear.flow.home": { repo: "evcc", key: "main.energyflow.homePower" },
+  "wear.flow.gridImport": { repo: "evcc", key: "main.energyflow.gridImport" },
+  "wear.flow.gridExport": { repo: "evcc", key: "main.energyflow.pvExport" },
+  "wear.flow.battery": { repo: "evcc", key: "main.energyflow.battery" },
+  "wear.flow.batteryCharge": {
+    repo: "evcc",
+    key: "main.energyflow.batteryCharge",
+  },
+  "wear.flow.batteryDischarge": {
+    repo: "evcc",
+    key: "main.energyflow.batteryDischarge",
+  },
+  "wear.empty.title": { repo: "app", key: "wear.empty.title" },
+  "wear.empty.body": { repo: "app", key: "wear.empty.body" },
+  "wear.modeFailed": { repo: "app", key: "wear.modeFailed" },
 };
 
 // Labels for legacy servers (pre smart-mode redesign). evcc removed
@@ -128,10 +176,18 @@ if (!fs.existsSync(EVCC_I18N)) {
 }
 
 const cache: Record<string, Record<string, unknown> | null> = {};
-function load(repo: "evcc" | "app", locale: string): Record<string, unknown> | null {
-  const file = path.join(repo === "evcc" ? EVCC_I18N : APP_I18N, `${locale}.json`);
+function load(
+  repo: "evcc" | "app",
+  locale: string,
+): Record<string, unknown> | null {
+  const file = path.join(
+    repo === "evcc" ? EVCC_I18N : APP_I18N,
+    `${locale}.json`,
+  );
   if (!(file in cache)) {
-    cache[file] = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, "utf8")) : null;
+    cache[file] = fs.existsSync(file)
+      ? JSON.parse(fs.readFileSync(file, "utf8"))
+      : null;
   }
   return cache[file];
 }
@@ -139,7 +195,11 @@ function load(repo: "evcc" | "app", locale: string): Record<string, unknown> | n
 function dig(obj: unknown, dotted: string): string | undefined {
   let cur: unknown = obj;
   for (const part of dotted.split(".")) {
-    if (cur && typeof cur === "object" && part in (cur as Record<string, unknown>)) {
+    if (
+      cur &&
+      typeof cur === "object" &&
+      part in (cur as Record<string, unknown>)
+    ) {
       cur = (cur as Record<string, unknown>)[part];
     } else {
       return undefined;
@@ -149,10 +209,16 @@ function dig(obj: unknown, dotted: string): string | undefined {
 }
 
 // look up a key for a locale, falling back to the language part (e.g. nb-NO → nb)
-function lookup(repo: "evcc" | "app", key: string, locale: string): string | undefined {
+function lookup(
+  repo: "evcc" | "app",
+  key: string,
+  locale: string,
+): string | undefined {
   return (
     dig(load(repo, locale), key) ??
-    (locale.includes("-") ? dig(load(repo, locale.split("-")[0]), key) : undefined)
+    (locale.includes("-")
+      ? dig(load(repo, locale.split("-")[0]), key)
+      : undefined)
   );
 }
 
@@ -183,14 +249,17 @@ for (const [iosKey, src] of Object.entries(KEYS)) {
 for (const [iosKey, frozen] of Object.entries(FROZEN)) {
   const localizations: Record<string, unknown> = {};
   for (const locale of locales) {
-    const value = frozen[locale] ?? frozen[locale.split("-")[0]] ?? frozen[SOURCE_LANG];
+    const value =
+      frozen[locale] ?? frozen[locale.split("-")[0]] ?? frozen[SOURCE_LANG];
     localizations[locale] = { stringUnit: { state: "translated", value } };
   }
   strings[iosKey] = { extractionState: "manual", localizations };
 }
 
 if (missing.length) {
-  console.error(`[widget:strings] missing source (en) strings:\n  ${missing.join("\n  ")}`);
+  console.error(
+    `[widget:strings] missing source (en) strings:\n  ${missing.join("\n  ")}`,
+  );
   process.exit(1);
 }
 
