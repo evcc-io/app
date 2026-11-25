@@ -263,7 +263,7 @@ The app reads `EVCC_APP_CUSTOM_*` variables when Expo resolves its build configu
 
 The example covers the app name and platform identifiers, Android launcher icons, web favicon, onboarding SVG, splash images and backgrounds, native fonts, and light/dark primary colors. Use `#RRGGBB` for colors. For custom fonts, use static TTF files whose PostScript names match their filenames without `.ttf`. Clean prebuild regenerates the selected native project; use a separate checkout if you have local native changes.
 
-For distribution, choose your own bundle/package identifiers and signing credentials. Use a separate EAS project rather than the evcc Expo project. The iOS Liquid Glass icon, widget App Group, and URL scheme are not overridden by the branding profile; review those before distributing an independent iOS build. See [Maschga/app-publisher](https://github.com/Maschga/app-publisher) for an example of keeping branding assets and an Android EAS Build workflow in a separate repository.
+For distribution, choose your own bundle/package identifiers and signing credentials. Set `EVCC_APP_CUSTOM_EXPO_SLUG`, `EVCC_APP_CUSTOM_EXPO_OWNER`, and `EVCC_APP_CUSTOM_EAS_PROJECT_ID` to the slug, account or organization, and ID of your own EAS project. Keep the same values in your EAS build profile so the cloud builder receives them as well. The iOS Liquid Glass icon, widget App Group, and URL scheme are not overridden by the branding profile; review those before distributing an independent iOS build. See [Maschga/app-publisher](https://github.com/Maschga/app-publisher) for an example of keeping branding assets and an Android EAS Build workflow in a separate repository.
 
 ### Testing white-label configuration
 

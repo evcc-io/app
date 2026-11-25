@@ -1,4 +1,7 @@
 export EVCC_APP_CUSTOM_NAME=ChargeOrbitDemo
+export EVCC_APP_CUSTOM_EXPO_SLUG=charge-orbit-demo
+export EVCC_APP_CUSTOM_EXPO_OWNER=example-org
+export EVCC_APP_CUSTOM_EAS_PROJECT_ID=00000000-0000-4000-8000-000000000001
 export EVCC_APP_CUSTOM_FONT_BOLD=./custom-assets/fonts/Roboto-Bold.ttf
 export EVCC_APP_CUSTOM_FONT_MEDIUM=./custom-assets/fonts/Roboto-Medium.ttf
 export EVCC_APP_CUSTOM_LOGO_LIGHT=./custom-assets/icon-light.png

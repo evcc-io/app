@@ -6,6 +6,7 @@ import { SCHEME } from "utils/constants";
 import { Envs, getEnv } from "utils/envs";
 
 export default ({ config, projectRoot }: ConfigContext) => {
+  const name = getEnv(Envs.EVCC_APP_CUSTOM_NAME, "evcc");
   const onboardingIcon = getEnv(Envs.EVCC_APP_CUSTOM_ONBOARDING_ICON);
   const fontBold = getEnv(
     Envs.EVCC_APP_CUSTOM_FONT_BOLD,
@@ -19,8 +20,8 @@ export default ({ config, projectRoot }: ConfigContext) => {
   return {
     ...config,
     expo: {
-      name: getEnv(Envs.EVCC_APP_CUSTOM_NAME, "evcc"),
-      slug: getEnv(Envs.EVCC_APP_CUSTOM_NAME, "evcc"),
+      name,
+      slug: getEnv(Envs.EVCC_APP_CUSTOM_EXPO_SLUG, name),
       scheme: SCHEME,
       description: "smart charging",
       version: "1.7.1",
@@ -165,10 +166,13 @@ export default ({ config, projectRoot }: ConfigContext) => {
           onboardingIconSvg: readFileSync(resolve(projectRoot, onboardingIcon), "utf8"),
         }),
         eas: {
-          projectId: "b1b49826-1d85-42bf-997f-653600e16c51",
+          projectId: getEnv(
+            Envs.EVCC_APP_CUSTOM_EAS_PROJECT_ID,
+            "b1b49826-1d85-42bf-997f-653600e16c51",
+          ),
         },
       },
-      owner: "evcc-io",
+      owner: getEnv(Envs.EVCC_APP_CUSTOM_EXPO_OWNER, "evcc-io"),
     },
   } satisfies AppJSONConfig;
 };

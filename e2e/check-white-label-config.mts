@@ -27,6 +27,12 @@ const splash = plugins["expo-splash-screen"];
 // Each entry pairs the resolved Expo value with its evcc default
 const checks = {
   EVCC_APP_CUSTOM_NAME: [config.name, "evcc"],
+  EVCC_APP_CUSTOM_EXPO_SLUG: [config.slug, "evcc"],
+  EVCC_APP_CUSTOM_EXPO_OWNER: [config.owner, "evcc-io"],
+  EVCC_APP_CUSTOM_EAS_PROJECT_ID: [
+    config.extra?.["eas"]?.projectId,
+    "b1b49826-1d85-42bf-997f-653600e16c51",
+  ],
   EVCC_APP_CUSTOM_LOGO_LIGHT: [config.icon, "./assets/icon-light.png"],
   EVCC_APP_CUSTOM_IOS_BUNDLE_IDENTIFIER: [
     config.ios?.bundleIdentifier,

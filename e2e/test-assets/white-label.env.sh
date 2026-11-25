@@ -1,5 +1,8 @@
 # Source from the repository root before checking the branded Expo configuration
 export EVCC_APP_CUSTOM_NAME=WhiteLabelTest
+export EVCC_APP_CUSTOM_EXPO_SLUG=white-label-test
+export EVCC_APP_CUSTOM_EXPO_OWNER=example-org
+export EVCC_APP_CUSTOM_EAS_PROJECT_ID=00000000-0000-4000-8000-000000000001
 export EVCC_APP_CUSTOM_LOGO_LIGHT=./e2e/test-assets/icon.png
 export EVCC_APP_CUSTOM_IOS_BUNDLE_IDENTIFIER=io.evcc.whitelabel.ios
 export EVCC_APP_CUSTOM_IOS_APPLE_TEAM_ID=TESTTEAM01
