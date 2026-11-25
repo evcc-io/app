@@ -239,7 +239,7 @@ jobs:
 
   android-test:
     name: "Android Detox (test)"
-    runs-on: depot-ubuntu-24.04-8
+    runs-on: ubuntu-latest
     timeout-minutes: 30
     needs: android-build
     strategy:
