@@ -1,4 +1,4 @@
-package io.evcc.android.widget
+package __ANDROID_PACKAGE__.widget
 
 import android.util.Base64
 import org.json.JSONObject
@@ -41,7 +41,7 @@ object ApiClient {
     }
 
     // Same UA suffix as the app's WebView (utils/constants.ts)
-    private val USER_AGENT = "evcc/${io.evcc.android.BuildConfig.VERSION_NAME}"
+    private val USER_AGENT = "evcc/${__ANDROID_PACKAGE__.BuildConfig.VERSION_NAME}"
 
     private fun applyHeaders(conn: HttpURLConnection, server: StoredServer) {
         conn.setRequestProperty("User-Agent", USER_AGENT)

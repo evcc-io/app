@@ -1,4 +1,4 @@
-package io.evcc.android.widget
+package __ANDROID_PACKAGE__.widget
 
 import android.app.Activity
 import android.appwidget.AppWidgetManager
@@ -17,7 +17,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.state.updateAppWidgetState
-import io.evcc.android.R
+import __ANDROID_PACKAGE__.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch

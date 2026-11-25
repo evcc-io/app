@@ -15,6 +15,7 @@ import {
   tint,
 } from "@expo/ui/swift-ui/modifiers";
 import { radius, useThemeColors } from "utils/theme";
+import { fontFamilies } from "utils/fonts";
 import { testingEnvironment } from "helper/launchArguments";
 
 // spinner sits next to the label so the button keeps its width while loading
@@ -35,7 +36,7 @@ function IosLoadingLabel({ color, label }: { color?: string; label: string }) {
       <NativeText
         textStyle={{
           fontSize: 17,
-          fontFamily: "Montserrat-Bold",
+          fontFamily: fontFamilies.bold,
           ...(color ? { color } : {}),
         }}
       >
@@ -112,7 +113,7 @@ export default function Button({
         <Text
           style={{
             fontSize: 17,
-            fontFamily: "Montserrat-Bold",
+            fontFamily: fontFamilies.bold,
             color: labelColor,
           }}
         >
@@ -145,7 +146,7 @@ export default function Button({
               modifiers={[frame({ maxWidth: 100000 })]}
               textStyle={{
                 fontSize: 17,
-                fontFamily: "Montserrat-Bold",
+                fontFamily: fontFamilies.bold,
                 color: filledLabelColor,
               }}
             >

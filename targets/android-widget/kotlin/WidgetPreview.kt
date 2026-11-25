@@ -1,4 +1,4 @@
-package io.evcc.android.widget
+package __ANDROID_PACKAGE__.widget
 
 import android.content.Context
 import android.graphics.Typeface
@@ -11,7 +11,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import io.evcc.android.R
+import __ANDROID_PACKAGE__.R
 
 /**
  * Builds a plain-Views mock of the 4x1 Loadpoint widget for the config screen's

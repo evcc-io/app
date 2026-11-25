@@ -1,4 +1,4 @@
-package io.evcc.android.widget
+package __ANDROID_PACKAGE__.widget
 
 import android.content.Context
 import org.json.JSONObject
