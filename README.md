@@ -248,6 +248,8 @@ touch android-detox-build
 
 ### Testing white-label configuration
 
+`white_label.sh` is a fictional branding example. Source it from the repository root before running Expo to preview the overrides. Use your own app identifiers and Apple Developer Team ID for signed builds.
+
 Run the commands from the repository root in a fresh Bash shell without existing `EVCC_APP_CUSTOM_*` exports. The check compares the configuration resolved from `app.config.ts` with the evcc defaults and then with the exported test profile. It does not build or launch the app.
 
 ```bash
