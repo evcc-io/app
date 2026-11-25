@@ -246,6 +246,18 @@ touch android-detox-build
    npm run test:ios
    ```
 
+### Testing white-label configuration
+
+Run the commands from the repository root in a fresh Bash shell without existing `EVCC_APP_CUSTOM_*` exports. The check compares the configuration resolved from `app.config.ts` with the evcc defaults and then with the exported test profile. It does not build or launch the app.
+
+```bash
+npm ci
+export EXPO_NO_DOTENV=1
+npx tsx e2e/check-white-label-config.mts defaults
+source e2e/test-assets/white-label.env.sh
+npx tsx e2e/check-white-label-config.mts branded
+```
+
 ### Troubleshooting
 
 If the Android emulator misbehaves (e.g. builds install but the app won't launch), its state may be corrupted. Wipe it and start fresh (`-list-avds` shows your device names):

@@ -339,6 +339,31 @@ jobs:
           path: e2e/artifacts/
           retention-days: 7
 
+  white-label-config:
+    name: White-Label Configuration
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      EXPO_NO_DOTENV: "1"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: ".node-version"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check Expo defaults and white-label overrides
+        run: |
+          npx tsx e2e/check-white-label-config.mts defaults
+          source e2e/test-assets/white-label.env.sh
+          npx tsx e2e/check-white-label-config.mts branded
+
   detox-status:
     name: Detox Status
     runs-on: ubuntu-24.04
