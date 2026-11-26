@@ -372,6 +372,12 @@ jobs:
         run: |
           sed -i '/^\s*\[$/{ N; /\n\s*"expo-camera"/{ :loop; N; /\],$/!b loop; d } }' app.config.ts
           touch fdroid-build
+          # modules/watch-sync's Android side pulls in play-services-wearable
+          # (non-free). The JS side already no-ops gracefully when the native
+          # module is missing (see modules/watch-sync/index.ts), so dropping
+          # just the android/ implementation keeps the F-Droid build free
+          # without touching the TS import.
+          rm -rf modules/watch-sync/android
 
       - name: Setup F-Droid
         run: |

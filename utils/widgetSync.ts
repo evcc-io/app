@@ -1,6 +1,7 @@
 import { Platform } from "react-native";
 import { File, Paths } from "expo-file-system";
 import { Server } from "types";
+import { syncWatchServers } from "modules/watch-sync";
 
 const APP_GROUP = "group.io.evcc.app";
 
@@ -95,13 +96,21 @@ function syncIosWidgetServers(
 }
 
 // The widget re-reads the file on its next update (periodic, reload button, tap).
+// Also hands the same list to a paired Wear OS watch, if any (evcc-io/app#349's
+// Wear OS counterpart).
 function syncAndroidWidgetServers(
   servers: Server[],
   activeServerId?: string,
 ): void {
+  const widgetServers = servers.map(toWidgetServer);
+  try {
+    syncWatchServers(JSON.stringify(widgetServers), activeServerId);
+  } catch (e) {
+    console.warn("watch sync failed (non-critical)", e);
+  }
   try {
     const payload = {
-      [WidgetStorageKeys.SERVERS]: servers.map(toWidgetServer),
+      [WidgetStorageKeys.SERVERS]: widgetServers,
       [WidgetStorageKeys.ACTIVE_SERVER_ID]: activeServerId ?? null,
     };
     const file = new File(Paths.document, ANDROID_SERVERS_FILE);

@@ -139,6 +139,7 @@ This is how F-Droid builds the APK:
 sed -i '/^\s*\[$/{ N; /\n\s*"expo-camera"/{ :loop; N; /\],$/!b loop; d } }' app.config.ts
 touch fdroid-build
 npm remove expo-camera
+rm -rf modules/watch-sync/android
 npx expo prebuild --platform android --clean
 cd android/app
 sed -i -e '/signingConfig /d' build.gradle
