@@ -1,21 +1,5 @@
 import Foundation
 
-/// One server as mirrored from the React Native app into the shared App Group.
-/// Written by `utils/widgetSync.ts` via `ExtensionStorage.set("servers", JSON.stringify(...))`.
-struct StoredServer: Codable, Identifiable {
-  let id: String
-  let title: String?
-  let url: String
-  let username: String?
-  let password: String?
-  let authRequired: Bool?
-
-  var displayTitle: String {
-    if let t = title, !t.trimmingCharacters(in: .whitespaces).isEmpty { return t }
-    return url
-  }
-}
-
 /// Reads the server list the app writes into the shared App Group container.
 enum SharedStore {
   static let appGroup = "group.io.evcc.app"

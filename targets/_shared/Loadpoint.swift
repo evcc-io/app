@@ -24,6 +24,14 @@ struct Loadpoint: Codable {
   let chargerFeatureSwitchDevice: Bool?
   let chargerFeatureContinuous: Bool?
   let ui: LoadpointUI?
+  let disabled: Bool?
+}
+
+extension Array where Element == Loadpoint {
+  /// Disabled loadpoints are bare placeholders in the API. Offsets stay the API index.
+  var active: [(offset: Int, element: Loadpoint)] {
+    enumerated().filter { $0.element.disabled != true }.map { (offset: $0.offset, element: $0.element) }
+  }
 }
 
 // MARK: - Modes / status

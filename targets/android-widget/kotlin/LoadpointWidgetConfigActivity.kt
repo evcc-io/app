@@ -173,7 +173,7 @@ class LoadpointWidgetConfigActivity : Activity() {
                 setRows(listOf(getString(R.string.widget_androidConfig_noLoadpoints)), null)
                 return@launch
             }
-            setRows(titles) { index -> preview(server, index) }
+            setRows(titles.map { it.second }) { row -> preview(server, titles[row].first) }
         }
     }
 

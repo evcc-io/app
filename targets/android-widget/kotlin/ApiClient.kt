@@ -79,14 +79,16 @@ object ApiClient {
         }.getOrDefault(FetchOutcome.Failure)
     }
 
-    /** Loadpoint titles for the widget config picker, index-aligned to .loadpoints[]. */
-    fun loadpointTitles(server: StoredServer): List<String> {
-        val out = fetch(server, "[.loadpoints[].title]")
+    /** Enabled loadpoints for the widget config picker, as .loadpoints[] index to title. */
+    fun loadpointTitles(server: StoredServer): List<Pair<Int, String>> {
+        val out = fetch(server, "[.loadpoints[] | {title, disabled}]")
         if (out !is FetchOutcome.Success) return emptyList()
         return runCatching {
             val arr = org.json.JSONArray(out.json)
-            (0 until arr.length()).map { i ->
-                arr.optString(i).takeIf { it.isNotEmpty() && it != "null" } ?: "Loadpoint ${i + 1}"
+            (0 until arr.length()).mapNotNull { i ->
+                val lp = arr.getJSONObject(i)
+                if (lp.optBoolean("disabled")) return@mapNotNull null
+                i to (lp.optString("title").takeIf { it.isNotEmpty() && it != "null" } ?: "Loadpoint ${i + 1}")
             }
         }.getOrDefault(emptyList())
     }
