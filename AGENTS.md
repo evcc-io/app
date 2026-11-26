@@ -71,6 +71,13 @@ Most folders are self-explanatory (`screens/`, `components/`, `utils/`, `i18n/`,
 - Use `useTranslation()` / `t()` for user-facing strings. Keys are nested by screen/section (e.g. `servers.manually.checkAndSave`).
 - **Use the shared glossary** — agreed terms per language with explanations live in `../evcc/i18n/glossary/` (`en.json` + `de.json`, rules in `README.md`). Check it before wording anything user-facing; if a concept is missing there, fall back to the UI strings in `../evcc/i18n/en.json` and `de.json`.
 
+### Design decisions
+
+High-level decisions with their reasoning live in `docs/`. Read before changing the affected area, and record new decisions there.
+
+- [Widgets](docs/widgets.md) — home-screen widgets (iOS, Android)
+- [Watch Apps](docs/watch.md) — Apple Watch and Wear OS apps, complications
+
 ## Coding Conventions
 
 - **TypeScript everywhere**, `strict: true`. The lint script fails on type errors, so type things properly rather than `any`-casting.
