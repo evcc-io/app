@@ -34,11 +34,11 @@ On iOS the server picker is a `String` parameter with a dynamic options provider
 
 Why: `AppEntity` identifiers failed to resolve inside the widget extension and broke selection.
 
-## 6. Servers are identified by list position (known debt)
+## 6. Servers are identified by a stable id
 
-A widget stores the server's index in the app's list. Loadpoints are addressed by their 1-based index, as in the evcc API.
+A widget stores the server's id, see [watch.md](watch.md) decision 4. Loadpoints are addressed by their 1-based index, as in the evcc API.
 
-Why: servers had no id when widgets were built. Reordering or deleting servers can point a widget at a different server. To be replaced by a stable per-server id, see [watch.md](watch.md) decision 4.
+Why: widgets first stored the server's position in the app's list, so deleting a server could point a widget at a different one. The widget's own configuration is stored by the system and cannot be migrated by the app. Servers that existed before ids were introduced therefore keep their former position as id, and already placed widgets continue to resolve.
 
 ## 7. Wording and formatting come from evcc
 
