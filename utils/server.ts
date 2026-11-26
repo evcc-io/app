@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import { t } from "i18next";
 import { getNetworkStateAsync } from "expo-network";
 import { USER_AGENT } from "./constants";
-import { Server } from "types";
+import { NewServer } from "types";
 
 const AXIOS_OPTIONS: AxiosRequestConfig = {
   timeout: 10000,
@@ -20,7 +20,7 @@ export function cleanServerUrl(url: string) {
   return result;
 }
 
-function requestOptions(server: Server): AxiosRequestConfig {
+function requestOptions(server: NewServer): AxiosRequestConfig {
   const options: AxiosRequestConfig = { ...AXIOS_OPTIONS };
   if (server.basicAuth) {
     const { username, password } = server.basicAuth;
@@ -47,7 +47,7 @@ export type ConnectionProblem =
 // Single request to explain why the web UI can't connect. Basic auth is sent
 // upfront, so a wrong password costs one failed login, not a WebView retry loop.
 export async function probeServer(
-  server: Server,
+  server: NewServer,
 ): Promise<ConnectionProblem | undefined> {
   if ((await getNetworkStateAsync()).isConnected === false) {
     return { type: "offline" };
@@ -88,7 +88,7 @@ export function retryDelay(
   return delay * (0.8 + Math.random() * 0.4); // jitter, avoid synchronized retries
 }
 
-export async function verifyEvccServer(server: Server) {
+export async function verifyEvccServer(server: NewServer) {
   const options = requestOptions(server);
 
   let response;
@@ -120,7 +120,7 @@ export async function verifyEvccServer(server: Server) {
   return finalUrl;
 }
 
-export function getTitle(server: Server): string {
+export function getTitle(server: NewServer): string {
   const url = new URL(server.url);
   let host = url.host;
   for (const s of [`:${url.port}`, ".local.", ".fritz.box"]) {
@@ -132,7 +132,7 @@ export function getTitle(server: Server): string {
   return host;
 }
 
-export async function fetchTitle(server: Server) {
+export async function fetchTitle(server: NewServer) {
   try {
     const resp = await axios.get(
       `${server.url}/api/state?jq=.siteTitle`,
@@ -143,11 +143,11 @@ export async function fetchTitle(server: Server) {
   } catch {}
 }
 
-export async function fetchOrGetTitle(server: Server) {
+export async function fetchOrGetTitle(server: NewServer) {
   const title = await fetchTitle(server);
   return title ? title : getTitle(server);
 }
 
-export function sameServer(s1?: Server, s2?: Server) {
+export function sameServer(s1?: NewServer, s2?: NewServer) {
   return s1 && s2 && s1.url === s2.url;
 }

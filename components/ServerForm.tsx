@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { cleanServerUrl, sameServer, verifyEvccServer } from "../utils/server";
 import { useTranslation } from "react-i18next";
-import { BasicAuth, Server } from "types";
+import { BasicAuth, NewServer } from "types";
 import { useAppContext } from "./AppContext";
 import ScanQRCodeButton from "./ScanQRCodeButton";
 import AppText from "components/AppText";
@@ -16,8 +16,8 @@ import Button from "components/Button";
 import { radius, useThemeColors } from "utils/theme";
 
 interface ServerFormProps {
-  server: Server | undefined;
-  serverSelected: (server: Server) => void;
+  server: NewServer | undefined;
+  serverSelected: (server: NewServer) => void;
   mode: "create" | "update";
 }
 
@@ -66,7 +66,7 @@ export default function ServerForm({
   const usernameRef = useRef<TextInput | null>(null);
   const passwordRef = useRef<TextInput | null>(null);
 
-  const [internalServer, setInternalServer] = useState<Server | undefined>(
+  const [internalServer, setInternalServer] = useState<NewServer | undefined>(
     server,
   );
   React.useEffect(() => setInternalServer(server), [server]);

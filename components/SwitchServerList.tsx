@@ -51,8 +51,9 @@ export default function SwitchServerList({
                 style={cellStyle}
                 testID={`server${index}`}
               >
-                <ServerCard selected={isActive}>
+                <ServerCard selected={isActive} testID={`serverId${server.id}`}>
                   <ServerEntry
+                    testID={isActive ? "activeServer" : undefined}
                     title={server.title}
                     url={server.url}
                     leftIcon={

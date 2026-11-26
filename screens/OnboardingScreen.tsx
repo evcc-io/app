@@ -11,7 +11,7 @@ import { useThemeColors } from "utils/theme";
 import { fetchOrGetTitle, verifyEvccServer } from "../utils/server";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList, Server } from "types";
+import { NewServer, RootStackParamList } from "types";
 import ScanQRCodeButton from "components/ScanQRCodeButton";
 import StatusCircle from "components/StatusCircle";
 
@@ -35,13 +35,12 @@ export default function OnboardingScreen({
   const { addServer, setActiveServer } = useAppContext();
 
   const selectDemoServer = useCallback(async () => {
-    const server = { url: "https://demo.evcc.io/", basicAuth: {} } as Server;
+    const server: NewServer = { url: "https://demo.evcc.io/", basicAuth: {} };
     server.title = await fetchOrGetTitle(server);
     try {
       const finalUrl = await verifyEvccServer(server);
       const verifiedServer = { ...server, url: finalUrl };
-      await addServer(verifiedServer);
-      await setActiveServer(verifiedServer);
+      await setActiveServer(await addServer(verifiedServer));
     } catch (error) {
       Alert.alert((error as Error).message);
     }

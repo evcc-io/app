@@ -1,10 +1,15 @@
 import { NavigatorScreenParams } from "@react-navigation/native";
 
 export interface Server {
+  // persistent, referenced by widgets and deep links; assigned when saved
+  id: string;
   title?: string;
   url: string;
   basicAuth: BasicAuth;
 }
+
+// not saved yet (form state, discovery results)
+export type NewServer = Omit<Server, "id">;
 
 export interface BasicAuth {
   required?: boolean;

@@ -8,7 +8,7 @@ import IconCheck from "@material-symbols/svg-400/rounded/check.svg";
 import IconCheckCircle from "@material-symbols/svg-400/rounded/check_circle-fill.svg";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList, Server } from "types";
+import { NewServer, RootStackParamList } from "types";
 import { useAppContext } from "components/AppContext";
 import { fetchOrGetTitle, sameServer, verifyEvccServer } from "utils/server";
 import AppText from "components/AppText";
@@ -29,7 +29,7 @@ export default function SearchServerScreen({
   const colors = useThemeColors();
   const { addServer, setActiveServer } = useAppContext();
 
-  const [found, setFound] = useState<Server[]>([]);
+  const [found, setFound] = useState<NewServer[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [finished, setFinished] = useState(false);
   const [notPossible, setNotPossible] = useState(false);
@@ -46,7 +46,7 @@ export default function SearchServerScreen({
     return `${scheme}://${hostName}${port}`;
   };
 
-  const toServer = (service: ServiceDiscovery.Service): Server => {
+  const toServer = (service: ServiceDiscovery.Service): NewServer => {
     return { url: getUrl(service), basicAuth: {} };
   };
 
@@ -138,13 +138,12 @@ export default function SearchServerScreen({
   }, [hasResult, badgeProgress]);
 
   const connect = useCallback(
-    async (server: Server) => {
+    async (server: NewServer) => {
       setConnecting(true);
       try {
         const finalUrl = await verifyEvccServer(server);
         const verifiedServer = { ...server, url: finalUrl };
-        await addServer(verifiedServer);
-        await setActiveServer(verifiedServer);
+        await setActiveServer(await addServer(verifiedServer));
       } catch (error) {
         Alert.alert((error as Error).message);
       } finally {
@@ -164,7 +163,7 @@ export default function SearchServerScreen({
     navigation.navigate("AddServer");
   }, [navigation]);
 
-  const selected: Server | undefined = found[selectedIndex] ?? found[0];
+  const selected: NewServer | undefined = found[selectedIndex] ?? found[0];
   const multi = found.length > 1;
 
   return (

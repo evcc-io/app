@@ -1,5 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { testLegacyServerConfig } from "helper/launchArguments";
+import {
+  testLegacyServerConfig,
+  testServersWithoutId,
+} from "helper/launchArguments";
 import {
   createContext,
   useContext,
@@ -8,7 +11,7 @@ import {
   PropsWithChildren,
 } from "react";
 import * as Linking from "expo-linking";
-import { BasicAuth, Server } from "types";
+import { BasicAuth, NewServer, Server } from "types";
 import { sameServer } from "utils/server";
 import { syncWidgetServers } from "utils/widgetSync";
 import {
@@ -27,10 +30,12 @@ const AppContext = createContext({
   setActiveServer: async (_server?: Server) => {},
   servers: [] as Server[],
   isLoading: true,
+  addServer: async (server: NewServer): Promise<Server> => ({
+    ...server,
+    id: "",
+  }),
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  addServer: async (_server: Server) => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  updateServer: async (_server: Server, _index: number) => {},
+  updateServer: async (_server: NewServer, _index: number) => {},
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   removeServer: async (_index: number) => {},
   // webview path a deep link wants to open (e.g. "/forecast"); MainScreen consumes it
@@ -63,11 +68,34 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
         });
       }
 
-      const loadedServers = await loadServers();
-      let active = await loadActiveServer();
-      if (!active && loadedServers.length > 0) {
-        active = loadedServers[0];
+      // needed for e2e migration test
+      if (testServersWithoutId()) {
+        // literal schema from before servers had ids
+        const servers = [
+          { title: "Local", url: "http://localhost:7070/", basicAuth: {} },
+          {
+            title: "Local Auth",
+            url: "http://localhost:7080/",
+            basicAuth: {
+              username: "admin",
+              password: "secret",
+              required: true,
+            },
+          },
+          { title: "Demo", url: "https://demo.evcc.io/", basicAuth: {} },
+        ];
+        await AsyncStorage.setMany({
+          servers: JSON.stringify(servers),
+          activeServer: JSON.stringify(servers[1]),
+        });
       }
+
+      const loadedServers = await loadServers();
+      const stored = await loadActiveServer();
+      // take the active server from the list: a copy stored before servers
+      // had ids doesn't carry one
+      const active =
+        loadedServers.find((s) => sameServer(s, stored)) ?? loadedServers[0];
       await setActiveServer(active);
       setServers(loadedServers);
       setIsLoading(false);
@@ -97,7 +125,7 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
     if (hostname === "forecast" || hostname === "loadpoint") {
       const id = queryParams?.["server"];
       if (typeof id === "string") {
-        const match = servers[Number(id)];
+        const match = servers.find((s) => s.id === id);
         if (match && !sameServer(match, activeServer)) setActiveServer(match);
       }
       if (hostname === "loadpoint") {
@@ -115,19 +143,21 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
     await storeActiveServer(server);
   };
 
-  const addServer = async (server: Server) => {
+  const addServer = async (server: NewServer) => {
     // ignore duplicates — double-taps and repeated deep links otherwise add
     // the same server twice
     const existing = await loadServers();
-    if (!existing.some((s) => sameServer(s, server))) {
-      await storageAddServer(server);
-    }
+    const saved =
+      existing.find((s) => sameServer(s, server)) ??
+      (await storageAddServer(server));
     setServers(await loadServers());
+    return saved;
   };
 
-  const updateServer = async (server: Server, index: number) => {
-    await storageUpdateServer(server, index);
+  const updateServer = async (server: NewServer, index: number) => {
+    const updated = await storageUpdateServer(server, index);
     setServers(await loadServers());
+    if (activeServer?.id === updated.id) await setActiveServer(updated);
   };
 
   const removeServer = async (index: number) => {
