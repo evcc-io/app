@@ -1,25 +1,45 @@
 import "tsx/cjs";
+import { readFileSync } from "node:fs";
+import { parse, resolve } from "node:path";
 import { AppJSONConfig, ConfigContext } from "expo/config";
 import { SCHEME } from "utils/constants";
+import { Envs, getEnv } from "utils/envs";
 
-export default ({ config }: ConfigContext) =>
-  ({
+export default ({ config, projectRoot }: ConfigContext) => {
+  const name = getEnv(Envs.EVCC_APP_CUSTOM_NAME, "evcc");
+  const onboardingIcon = getEnv(Envs.EVCC_APP_CUSTOM_ONBOARDING_ICON);
+  const fontBold = getEnv(
+    Envs.EVCC_APP_CUSTOM_FONT_BOLD,
+    "./assets/fonts/Montserrat-Bold.ttf",
+  );
+  const fontMedium = getEnv(
+    Envs.EVCC_APP_CUSTOM_FONT_MEDIUM,
+    "./assets/fonts/Montserrat-Medium.ttf",
+  );
+
+  return {
     ...config,
     expo: {
-      name: "evcc",
-      slug: "evcc",
+      name,
+      slug: getEnv(Envs.EVCC_APP_CUSTOM_EXPO_SLUG, name),
       scheme: SCHEME,
       description: "smart charging",
       version: "1.7.1",
       orientation: "default",
-      icon: "./assets/icon-light.png",
+      icon: getEnv(Envs.EVCC_APP_CUSTOM_LOGO_LIGHT, "./assets/icon-light.png"),
       userInterfaceStyle: "automatic",
       assetBundlePatterns: ["**/*"],
       ios: {
         supportsTablet: true,
         icon: "./assets/icon-liquid.icon",
-        bundleIdentifier: "io.evcc.ios",
-        appleTeamId: "UX3KG7U4Y6",
+        bundleIdentifier: getEnv(
+          Envs.EVCC_APP_CUSTOM_IOS_BUNDLE_IDENTIFIER,
+          "io.evcc.ios",
+        ),
+        appleTeamId: getEnv(
+          Envs.EVCC_APP_CUSTOM_IOS_APPLE_TEAM_ID,
+          "UX3KG7U4Y6",
+        ),
         // Shared App Group: the app writes the server list here and the widget
         // extension reads it. `@bacons/apple-targets` auto-syncs this group to
         // the widget target on prebuild.
@@ -48,15 +68,27 @@ export default ({ config }: ConfigContext) =>
           "android.permission.ACCESS_WIFI_STATE",
           "android.permission.CHANGE_WIFI_MULTICAST_STATE",
         ],
-        package: "io.evcc.android",
+        package: getEnv(
+          Envs.EVCC_APP_CUSTOM_ANDROID_PACKAGE,
+          "io.evcc.android",
+        ),
         adaptiveIcon: {
-          foregroundImage: "./assets/adaptive-icon.png",
-          backgroundColor: "#010322",
+          foregroundImage: getEnv(
+            Envs.EVCC_APP_CUSTOM_ANDROID_ADAPTIVE_ICON,
+            "./assets/adaptive-icon.png",
+          ),
+          backgroundColor: getEnv(
+            Envs.EVCC_APP_CUSTOM_ANDROID_ADAPTIVE_ICON_BACKGROUND_COLOR,
+            "#010322",
+          ),
         },
         versionCode: 53,
       },
       web: {
-        favicon: "./assets/favicon.png",
+        favicon: getEnv(
+          Envs.EVCC_APP_CUSTOM_WEB_FAVICON,
+          "./assets/favicon.png",
+        ),
       },
       plugins: [
         "@bacons/apple-targets",
@@ -93,21 +125,30 @@ export default ({ config }: ConfigContext) =>
         [
           "expo-font",
           {
-            fonts: [
-              "./assets/fonts/Montserrat-Bold.ttf",
-              "./assets/fonts/Montserrat-Medium.ttf",
-            ],
+            fonts: [fontBold, fontMedium],
           },
         ],
         [
           "expo-splash-screen",
           {
-            image: "./assets/splash-icon-light.png",
-            backgroundColor: "#0FDE41",
+            image: getEnv(
+              Envs.EVCC_APP_CUSTOM_SPLASH_IMAGE_LIGHT,
+              "./assets/splash-icon-light.png",
+            ),
+            backgroundColor: getEnv(
+              Envs.EVCC_APP_CUSTOM_SPLASH_BACKGROUND_COLOR_LIGHT,
+              "#0FDE41",
+            ),
             resizeMode: "contain",
             dark: {
-              image: "./assets/splash-icon-dark.png",
-              backgroundColor: "#010322",
+              image: getEnv(
+                Envs.EVCC_APP_CUSTOM_SPLASH_IMAGE_DARK,
+                "./assets/splash-icon-dark.png",
+              ),
+              backgroundColor: getEnv(
+                Envs.EVCC_APP_CUSTOM_SPLASH_BACKGROUND_COLOR_DARK,
+                "#010322",
+              ),
             },
           },
         ],
@@ -118,10 +159,20 @@ export default ({ config }: ConfigContext) =>
         "react-native-edge-to-edge",
       ],
       extra: {
+        fontFamilies: { bold: parse(fontBold).name, medium: parse(fontMedium).name },
+        themePrimaryLight: getEnv(Envs.EVCC_APP_CUSTOM_THEME_PRIMARY_LIGHT),
+        themePrimaryDark: getEnv(Envs.EVCC_APP_CUSTOM_THEME_PRIMARY_DARK),
+        ...(onboardingIcon && {
+          onboardingIconSvg: readFileSync(resolve(projectRoot, onboardingIcon), "utf8"),
+        }),
         eas: {
-          projectId: "b1b49826-1d85-42bf-997f-653600e16c51",
+          projectId: getEnv(
+            Envs.EVCC_APP_CUSTOM_EAS_PROJECT_ID,
+            "b1b49826-1d85-42bf-997f-653600e16c51",
+          ),
         },
       },
-      owner: "evcc-io",
+      owner: getEnv(Envs.EVCC_APP_CUSTOM_EXPO_OWNER, "evcc-io"),
     },
-  }) satisfies AppJSONConfig;
+  } satisfies AppJSONConfig;
+};

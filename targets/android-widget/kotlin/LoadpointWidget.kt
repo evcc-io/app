@@ -1,4 +1,4 @@
-package io.evcc.android.widget
+package __ANDROID_PACKAGE__.widget
 
 import android.appwidget.AppWidgetManager
 import android.content.Context
@@ -55,7 +55,7 @@ import androidx.glance.layout.padding
 import androidx.glance.layout.width
 import androidx.glance.text.Text
 import androidx.glance.text.TextAlign
-import io.evcc.android.R
+import __ANDROID_PACKAGE__.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

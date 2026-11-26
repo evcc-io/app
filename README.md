@@ -246,7 +246,38 @@ touch android-detox-build
    npm run test:ios
    ```
 
-### Troubleshooting
+## White-label builds
+
+The app reads `EVCC_APP_CUSTOM_*` variables when Expo resolves its build configuration. Unset variables use the evcc defaults. The overrides affect the native app, not the evcc web UI served by your instance.
+
+1. Use the Node version in `.node-version` and install dependencies with `npm ci`.
+2. Put your artwork and fonts in `custom-assets/`. Copy [`white_label.sh`](./white_label.sh) and adjust the example values. Asset paths are relative to the app repository root.
+3. From that root, source your profile in Bash before running Expo. Keep the same variables set for prebuild and bundling.
+
+   ```bash
+   source ./white_label.sh
+   npx expo config --type public --json
+   npx expo prebuild --platform android --clean
+   npx expo run:android
+   ```
+
+The example covers the app name and platform identifiers, Android launcher icons, web favicon, onboarding SVG, splash images and backgrounds, native fonts, and light/dark primary colors. Use `#RRGGBB` for colors. For custom fonts, use static TTF files whose PostScript names match their filenames without `.ttf`. Clean prebuild regenerates the selected native project; use a separate checkout if you have local native changes.
+
+For distribution, choose your own bundle/package identifiers and signing credentials. Set `EVCC_APP_CUSTOM_EXPO_SLUG`, `EVCC_APP_CUSTOM_EXPO_OWNER`, and `EVCC_APP_CUSTOM_EAS_PROJECT_ID` to the slug, account or organization, and ID of your own EAS project. Keep the same values in your EAS build profile so the cloud builder receives them as well. The iOS Liquid Glass icon, widget App Group, and URL scheme are not overridden by the branding profile; review those before distributing an independent iOS build. See [Maschga/app-publisher](https://github.com/Maschga/app-publisher) for an example of keeping branding assets and an Android EAS Build workflow in a separate repository.
+
+### Testing white-label configuration
+
+Run the commands from the repository root in a fresh Bash shell without existing `EVCC_APP_CUSTOM_*` exports. The check compares the configuration resolved from `app.config.ts` with the evcc defaults and then with the exported test profile. It does not build or launch the app.
+
+```bash
+npm ci
+export EXPO_NO_DOTENV=1
+npx tsx e2e/check-white-label-config.mts defaults
+source e2e/test-assets/white-label.env.sh
+npx tsx e2e/check-white-label-config.mts branded
+```
+
+## Troubleshooting
 
 If the Android emulator misbehaves (e.g. builds install but the app won't launch), its state may be corrupted. Wipe it and start fresh (`-list-avds` shows your device names):
 

@@ -1,4 +1,5 @@
 import { Text, TextProps, TextStyle } from "react-native";
+import { fontFamilies } from "utils/fonts";
 import { useThemeColors } from "utils/theme";
 
 type Variant = "h2" | "h3" | "body" | "s1" | "c1";
@@ -6,11 +7,11 @@ type Color = "default" | "hint" | "danger" | "success";
 
 // fontFamily selects the embedded cut — no fontWeight, Android would fake-bold on top
 const variants: Record<Variant, TextStyle> = {
-  h2: { fontSize: 34, fontFamily: "Montserrat-Bold" },
-  h3: { fontSize: 26, fontFamily: "Montserrat-Bold" },
-  body: { fontSize: 15, fontFamily: "Montserrat-Medium", lineHeight: 22 },
-  s1: { fontSize: 15, fontFamily: "Montserrat-Bold" },
-  c1: { fontSize: 12, fontFamily: "Montserrat-Medium" },
+  h2: { fontSize: 34, fontFamily: fontFamilies.bold },
+  h3: { fontSize: 26, fontFamily: fontFamilies.bold },
+  body: { fontSize: 15, fontFamily: fontFamilies.medium, lineHeight: 22 },
+  s1: { fontSize: 15, fontFamily: fontFamilies.bold },
+  c1: { fontSize: 12, fontFamily: fontFamilies.medium },
 };
 
 interface AppTextProps extends TextProps {

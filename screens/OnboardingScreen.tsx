@@ -1,7 +1,9 @@
 import { useCallback } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Alert, ScrollView, View } from "react-native";
-import Svg, { Path } from "react-native-svg";
+import Constants from "expo-constants";
+import { SvgXml } from "react-native-svg";
+import DefaultOnboardingIcon from "assets/icon-trans-light.svg";
 
 import { useAppContext } from "../components/AppContext";
 import AppText from "components/AppText";
@@ -15,23 +17,14 @@ import { RootStackParamList, Server } from "types";
 import ScanQRCodeButton from "components/ScanQRCodeButton";
 import StatusCircle from "components/StatusCircle";
 
-// the evcc logo bolt (assets/icon-trans-light.svg), recolorable
-function EvccBolt({ size, color }: { size: number; color: string }) {
-  return (
-    <Svg width={size} height={size} viewBox="0 0 1024 1024">
-      <Path
-        fill={color}
-        d="M495.562,140.165l192.397,-0c6.932,-0 13.369,3.589 17.013,9.485c3.644,5.896 3.976,13.259 0.876,19.459l-113.793,227.585l95.904,-0c7.036,-0 13.554,3.697 17.165,9.735c3.611,6.038 3.784,13.529 0.455,19.727l-241.013,448.797c-4.605,8.574 -14.713,12.589 -23.945,9.512c-9.233,-3.078 -14.91,-12.355 -13.449,-21.977l45.124,-297.142l-137.065,0c-6.686,0 -12.929,-3.34 -16.639,-8.903c-3.709,-5.562 -4.394,-12.61 -1.825,-18.782l160.331,-385.182c3.104,-7.457 10.387,-12.314 18.464,-12.314Z"
-      />
-    </Svg>
-  );
-}
 
 export default function OnboardingScreen({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "Onboarding">) {
   const { t } = useTranslation();
   const colors = useThemeColors();
+  const onboardingIconSvg: unknown =
+    Constants.expoConfig?.extra?.["onboardingIconSvg"];
   const { addServer, setActiveServer } = useAppContext();
 
   const selectDemoServer = useCallback(async () => {
@@ -77,7 +70,11 @@ export default function OnboardingScreen({
             style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
           >
             <StatusCircle color={colors.primaryTint}>
-              <EvccBolt size={88} color={colors.onPrimaryTint} />
+              {typeof onboardingIconSvg === "string" ? (
+                <SvgXml xml={onboardingIconSvg} width={88} height={88} fill={colors.onPrimaryTint} />
+              ) : (
+                <DefaultOnboardingIcon width={88} height={88} fill={colors.onPrimaryTint} />
+              )}
             </StatusCircle>
             <AppText
               testID="serverScreenTitle"
