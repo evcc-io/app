@@ -27,7 +27,7 @@ export default function SearchServerScreen({
 }: NativeStackScreenProps<RootStackParamList, "SearchServer">) {
   const { t } = useTranslation();
   const colors = useThemeColors();
-  const { addServer, setActiveServer } = useAppContext();
+  const { addServer } = useAppContext();
 
   const [found, setFound] = useState<Server[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -144,14 +144,13 @@ export default function SearchServerScreen({
         const finalUrl = await verifyEvccServer(server);
         const verifiedServer = { ...server, url: finalUrl };
         await addServer(verifiedServer);
-        await setActiveServer(verifiedServer);
       } catch (error) {
         Alert.alert((error as Error).message);
       } finally {
         setConnecting(false);
       }
     },
-    [addServer, setActiveServer],
+    [addServer],
   );
 
   const goBack = useCallback(() => {

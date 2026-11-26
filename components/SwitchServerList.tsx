@@ -6,15 +6,14 @@ import IconAdd from "@material-symbols/svg-400/rounded/add.svg";
 import { useTranslation } from "react-i18next";
 import { useAppContext } from "components/AppContext";
 import { radius, useThemeColors } from "utils/theme";
-import { sameServer } from "utils/server";
 import AppText from "components/AppText";
 import ServerCard from "components/ServerCard";
 import ServerEntry, { SERVER_ENTRY_MIN_HEIGHT } from "components/ServerEntry";
-import { Server } from "types";
+import { SavedServer } from "types";
 
 export interface SwitchServerListProps {
-  onSelect: (server: Server) => void;
-  onEdit: (server: Server, index: number) => void;
+  onSelect: (server: SavedServer) => void;
+  onEdit: (server: SavedServer) => void;
   onAdd: () => void;
 }
 
@@ -44,10 +43,10 @@ export default function SwitchServerList({
           }}
         >
           {servers.map((server, index) => {
-            const isActive = sameServer(server, activeServer);
+            const isActive = server.id === activeServer?.id;
             return (
               <View
-                key={server.url ?? `server-${index}`}
+                key={server.id}
                 style={cellStyle}
                 testID={`server${index}`}
               >
@@ -81,7 +80,7 @@ export default function SwitchServerList({
                       />
                     }
                     onPress={() => onSelect(server)}
-                    onRightPress={() => onEdit(server, index)}
+                    onRightPress={() => onEdit(server)}
                   />
                 </ServerCard>
               </View>

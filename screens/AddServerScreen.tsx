@@ -16,7 +16,7 @@ function AddServerScreen({
 }: NativeStackScreenProps<RootStackParamList, "AddServer">) {
   const { t } = useTranslation();
   const colors = useThemeColors();
-  const { setActiveServer, addServer } = useAppContext();
+  const { addServer } = useAppContext();
 
   const {
     title,
@@ -54,13 +54,12 @@ function AddServerScreen({
 
       // a freshly added server becomes the active one
       await addServer(server);
-      await setActiveServer(server);
 
       if (navigation.canGoBack()) {
         navigation.goBack();
       }
     },
-    [setActiveServer, addServer, navigation],
+    [addServer, navigation],
   );
 
   const isNested = navigation

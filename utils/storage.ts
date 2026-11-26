@@ -1,93 +1,67 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { BasicAuth, type Server } from "types";
+import type { BasicAuth, SavedServer, Server } from "types";
 
-export enum StorageKeys {
-  SERVER_URL = "serverUrl", // legacy
-  BASIC_AUTH = "basicAuth", // legacy
-  SERVERS = "servers",
-  ACTIVE_SERVER = "activeServer",
+export interface ServerConfig {
+  servers: SavedServer[];
+  activeServer?: SavedServer;
 }
 
-async function loadLegacyStorage(): Promise<Server> {
-  const url = (await AsyncStorage.getItem(StorageKeys.SERVER_URL)) || "";
-  const basicAuthJson = await AsyncStorage.getItem(StorageKeys.BASIC_AUTH);
-
-  const basicAuth = basicAuthJson
-    ? (JSON.parse(basicAuthJson) as BasicAuth)
-    : { required: false };
-
-  return { url, basicAuth };
+export async function storeServerConfig({
+  servers,
+  activeServer,
+}: ServerConfig) {
+  await AsyncStorage.setMany({
+    servers: JSON.stringify(servers),
+    activeServer: JSON.stringify(activeServer ?? null),
+  });
 }
 
-async function migrate() {
-  const keys = await AsyncStorage.getAllKeys();
-  if (!keys.includes(StorageKeys.SERVER_URL)) return;
-  if (keys.includes(StorageKeys.SERVERS)) {
-    // stale legacy leftovers next to an existing config: current config wins
-    await AsyncStorage.removeMany([
-      StorageKeys.SERVER_URL,
-      StorageKeys.BASIC_AUTH,
-    ]);
-  } else {
-    await migrateStorage();
-  }
-}
-
-async function migrateStorage() {
-  const server = await loadLegacyStorage();
-  await storeActiveServer(server);
-  await storeServers([server]);
-  await AsyncStorage.removeMany([
-    StorageKeys.SERVER_URL,
-    StorageKeys.BASIC_AUTH,
+export async function loadServerConfig(): Promise<ServerConfig> {
+  const {
+    servers: serversJson,
+    activeServer: activeJson,
+    serverUrl,
+    basicAuth: authJson,
+  } = await AsyncStorage.getMany([
+    "servers",
+    "activeServer",
+    "serverUrl",
+    "basicAuth",
   ]);
-}
 
-export async function loadActiveServer(): Promise<Server | undefined> {
-  await migrate();
-  const activeServerJson = await AsyncStorage.getItem(
-    StorageKeys.ACTIVE_SERVER,
-  );
-  return activeServerJson ? JSON.parse(activeServerJson) : undefined;
-}
-
-export async function loadServers(): Promise<Server[]> {
-  await migrate();
-  const serversJson = await AsyncStorage.getItem(StorageKeys.SERVERS);
-  return serversJson ? JSON.parse(serversJson) : [];
-}
-
-export async function storeActiveServer(server?: Server) {
-  if (server !== undefined) {
-    await AsyncStorage.setItem(
-      StorageKeys.ACTIVE_SERVER,
-      JSON.stringify(server),
-    );
-  } else {
-    await AsyncStorage.removeItem(StorageKeys.ACTIVE_SERVER);
+  // Before multi-server support the URL and credentials had separate keys.
+  let entries: (Server & { id?: string })[] = [];
+  if (serversJson) {
+    entries = JSON.parse(serversJson);
+  } else if (serverUrl != null) {
+    const basicAuth: BasicAuth = authJson
+      ? JSON.parse(authJson)
+      : { required: false };
+    entries = [{ url: serverUrl, basicAuth }];
   }
-}
 
-async function storeServers(servers: Server[]) {
-  await AsyncStorage.setItem(StorageKeys.SERVERS, JSON.stringify(servers));
-}
+  // Keep the IDs already embedded in widget configurations and mode actions.
+  // New servers get UUIDs, so these numeric IDs can never be reused.
+  const servers = entries.map((server, index) => ({
+    ...server,
+    id: server.id ?? String(index),
+  }));
+  const previousActive: (Server & { id?: string }) | null = activeJson
+    ? JSON.parse(activeJson)
+    : null;
+  const activeServer =
+    servers.find((s) =>
+      previousActive?.id !== undefined
+        ? s.id === previousActive.id
+        : s.url === previousActive?.url,
+    ) ?? servers[0];
+  const config = { servers, activeServer };
 
-export async function addServer(server: Server) {
-  const servers = await loadServers();
-  servers.push(server);
-  await storeServers(servers);
-}
-
-export async function updateServer(server: Server, index: number) {
-  const servers = await loadServers();
-  servers[index] = server;
-  await storeServers(servers);
-  return index;
-}
-
-export async function removeServer(index: number): Promise<Server> {
-  const servers = await loadServers();
-  const server = servers.splice(index, 1);
-  await storeServers(servers);
-  return server[0];
+  if (entries.some((server) => server.id === undefined)) {
+    await storeServerConfig(config);
+  }
+  if (serverUrl != null) {
+    await AsyncStorage.removeMany(["serverUrl", "basicAuth"]);
+  }
+  return config;
 }

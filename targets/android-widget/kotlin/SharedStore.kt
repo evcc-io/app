@@ -56,9 +56,9 @@ object SharedStore {
         return all.firstOrNull { it.id == id } ?: all.firstOrNull()
     }
 
-    /** Resolve the server selected in the widget config, else the active one. */
+    /** Only unpinned widgets follow the active server. */
     fun server(context: Context, id: String?): StoredServer? {
-        if (id.isNullOrEmpty()) return defaultServer(context)
-        return servers(context).firstOrNull { it.id == id } ?: defaultServer(context)
+        if (id == null) return defaultServer(context)
+        return servers(context).firstOrNull { it.id == id }
     }
 }

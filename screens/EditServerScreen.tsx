@@ -9,7 +9,6 @@ import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { SwitchServerStackParamList, Server } from "types";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { sameServer } from "utils/server";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 
 function EditServerScreen({
@@ -18,26 +17,17 @@ function EditServerScreen({
 }: NativeStackScreenProps<SwitchServerStackParamList, "EditServer">) {
   const { t } = useTranslation();
   const colors = useThemeColors();
-  const { activeServer, updateServer, removeServer, servers, setActiveServer } =
-    useAppContext();
-  const { server: internalServer, serverIndex } = route.params || {};
+  const { updateServer, removeServer, servers } = useAppContext();
+  const { server: internalServer } = route.params || {};
 
   const saveServer = React.useCallback(
     async (server: Server) => {
-      if (serverIndex !== undefined) {
-        if (
-          activeServer &&
-          servers.findIndex((s) => sameServer(activeServer, s)) === serverIndex
-        ) {
-          await setActiveServer(server);
-        }
-        await updateServer(server, serverIndex);
-      }
+      if (internalServer) await updateServer(server, internalServer.id);
       if (navigation.canGoBack()) {
         navigation.goBack();
       }
     },
-    [navigation, updateServer, serverIndex, activeServer, servers],
+    [navigation, updateServer, internalServer],
   );
 
   const serverForm = React.useMemo(
@@ -76,7 +66,7 @@ function EditServerScreen({
             <TextLink
               testID="setingsScreenRemoveServer"
               onPress={() => {
-                if (serverIndex === undefined) return;
+                if (!internalServer) return;
                 Alert.alert(
                   t("servers.removeConfirm", {
                     title: internalServer?.title ?? internalServer?.url,
@@ -94,7 +84,7 @@ function EditServerScreen({
                         if (servers.length > 1 && navigation.canGoBack()) {
                           navigation.goBack();
                         }
-                        await removeServer(serverIndex);
+                        await removeServer(internalServer.id);
                       },
                     },
                   ],

@@ -262,7 +262,7 @@ class LoadpointWidget : GlanceAppWidget() {
             )
         } else {
             val (serverId, lpIndex) = resolved!!
-            deepLinkAction("evcc://loadpoint?lp=${lpIndex + 1}" + (serverId?.let { "&server=$it" } ?: ""))
+            deepLinkAction("evcc://loadpoint?lp=${lpIndex + 1}" + (serverId?.let { "&serverId=$it" } ?: ""))
         }
         // launcher cells vary in height; cap the card and center it in the cell
         val size = LocalSize.current
@@ -486,7 +486,7 @@ class LoadpointWidget : GlanceAppWidget() {
 /** Applies a charge mode from a widget button, then refreshes the widget. */
 class ModeAction : ActionCallback {
     override suspend fun onAction(context: Context, glanceId: GlanceId, parameters: ActionParameters) {
-        val serverId = parameters[serverKey]
+        val serverId = parameters[serverKey] ?: return
         val lp = parameters[lpKey] ?: return
         val mode = parameters[modeKey] ?: return
         val server = SharedStore.server(context, serverId) ?: return

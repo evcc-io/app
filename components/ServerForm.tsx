@@ -17,7 +17,7 @@ import { radius, useThemeColors } from "utils/theme";
 
 interface ServerFormProps {
   server: Server | undefined;
-  serverSelected: (server: Server) => void;
+  serverSelected: (server: Server) => Promise<void>;
   mode: "create" | "update";
 }
 
@@ -122,7 +122,7 @@ export default function ServerForm({
         throw Error(t("servers.manually.serverExistsAlready"));
       }
 
-      serverSelected(server);
+      await serverSelected(server);
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
       // reveal the login fields the server asks for

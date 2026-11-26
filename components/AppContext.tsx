@@ -1,38 +1,39 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { testLegacyServerConfig } from "helper/launchArguments";
+import {
+  testLegacyServerConfig,
+  testIndexedServerConfig,
+} from "helper/launchArguments";
 import {
   createContext,
   useContext,
   useState,
   useEffect,
+  useRef,
   PropsWithChildren,
 } from "react";
 import * as Linking from "expo-linking";
-import { BasicAuth, Server } from "types";
+import { BasicAuth, SavedServer, Server } from "types";
 import { sameServer } from "utils/server";
 import { syncWidgetServers } from "utils/widgetSync";
 import {
-  storeActiveServer,
-  addServer as storageAddServer,
-  updateServer as storageUpdateServer,
-  removeServer as storageRemoveServer,
-  loadServers,
-  loadActiveServer,
+  loadServerConfig,
+  storeServerConfig,
+  type ServerConfig,
 } from "utils/storage";
 
 // Create a context
 const AppContext = createContext({
-  activeServer: undefined as Server | undefined,
+  activeServer: undefined as SavedServer | undefined,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setActiveServer: async (_server?: Server) => {},
-  servers: [] as Server[],
+  setActiveServer: async (_server: SavedServer) => {},
+  servers: [] as SavedServer[],
   isLoading: true,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   addServer: async (_server: Server) => {},
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  updateServer: async (_server: Server, _index: number) => {},
+  updateServer: async (_server: Server, _id: string) => {},
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  removeServer: async (_index: number) => {},
+  removeServer: async (_id: string) => {},
   // webview path a deep link wants to open (e.g. "/forecast"); MainScreen consumes it
   targetPath: undefined as string | undefined,
   clearTargetPath: () => {},
@@ -40,8 +41,10 @@ const AppContext = createContext({
 
 // Provider component
 export const AppProvider = ({ children }: PropsWithChildren) => {
-  const [activeServer, setActiveServerState] = useState<Server | undefined>();
-  const [servers, setServers] = useState<Server[]>([]);
+  const current = useRef<ServerConfig>({ servers: [] });
+  const persisted = useRef(current.current);
+  const pendingWrite = useRef(Promise.resolve());
+  const [{ activeServer, servers }, setConfig] = useState(current.current);
   const [isLoading, setIsLoading] = useState(true);
   const [targetPath, setTargetPath] = useState<string>();
   const [pendingUrl, setPendingUrl] = useState<string | null>(null);
@@ -49,10 +52,8 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
   // Load the URL from AsyncStorage on startup
   useEffect(() => {
     (async () => {
-      // needed for e2e migration test
       if (testLegacyServerConfig()) {
-        // seed the literal keys the pre-multi-server app wrote, so the
-        // migration test guards the real key names rather than the enum
+        // Seed the keys written by the original single-server app.
         await AsyncStorage.setMany({
           serverUrl: "http://localhost:7080",
           basicAuth: JSON.stringify({
@@ -63,18 +64,26 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
         });
       }
 
-      const loadedServers = await loadServers();
-      let active = await loadActiveServer();
-      if (!active && loadedServers.length > 0) {
-        active = loadedServers[0];
+      if (
+        testIndexedServerConfig() &&
+        (await AsyncStorage.getItem("servers")) === null
+      ) {
+        const servers = [7081, 7070, 7080].map((port) => ({
+          url: `http://localhost:${port}/`,
+          basicAuth: {},
+        }));
+        await AsyncStorage.setItem("servers", JSON.stringify(servers));
       }
-      await setActiveServer(active);
-      setServers(loadedServers);
+
+      const config = await loadServerConfig();
+      persisted.current = config;
+      current.current = config;
+      setConfig(config);
       setIsLoading(false);
     })();
   }, []);
 
-  // Keep the iOS widget's shared App Group in sync with the server list.
+  // Mirror saved servers for the native widgets after migration.
   useEffect(() => {
     if (!isLoading) syncWidgetServers(servers, activeServer);
   }, [servers, activeServer, isLoading]);
@@ -90,16 +99,24 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
 
   // Process a widget deep link once servers are loaded: switch to the matching
   // server and ask MainScreen to open the target page.
-  // `evcc://forecast?server=<id>` or `evcc://loadpoint?server=<id>&lp=<n>`.
   useEffect(() => {
     if (!pendingUrl || isLoading) return;
     const { hostname, queryParams } = Linking.parse(pendingUrl);
     if (hostname === "forecast" || hostname === "loadpoint") {
-      const id = queryParams?.["server"];
-      if (typeof id === "string") {
-        const match = servers[Number(id)];
-        if (match && !sameServer(match, activeServer)) setActiveServer(match);
+      const id = queryParams?.["serverId"];
+      const index = queryParams?.["server"];
+      const match =
+        id !== undefined
+          ? servers.find((server) => server.id === id)
+          : typeof index === "string"
+            ? servers[Number(index)]
+            : undefined;
+      if (id !== undefined && !match) {
+        // A widget can outlive its pinned server.
+        setPendingUrl(null);
+        return;
       }
+      if (match && match.id !== activeServer?.id) setActiveServer(match);
       if (hostname === "loadpoint") {
         const lp = queryParams?.["lp"];
         setTargetPath(typeof lp === "string" ? `/?lp=${lp}` : "/");
@@ -110,34 +127,61 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
     setPendingUrl(null);
   }, [pendingUrl, isLoading, servers, activeServer]);
 
-  const setActiveServer = async (server?: Server) => {
-    setActiveServerState(server);
-    await storeActiveServer(server);
+  const saveConfig = (config: ServerConfig) => {
+    // Update synchronously so rapid taps and incoming links see the latest list.
+    if (current.current.activeServer?.id !== config.activeServer?.id) {
+      setTargetPath(undefined);
+    }
+    current.current = config;
+    setConfig(config);
+    const write = pendingWrite.current.then(async () => {
+      await storeServerConfig(config);
+      persisted.current = config;
+    });
+    pendingWrite.current = write.catch(() => {
+      if (current.current === config) {
+        setTargetPath(undefined);
+        current.current = persisted.current;
+        setConfig(persisted.current);
+      }
+    });
+    return write;
+  };
+
+  const setActiveServer = async (server: SavedServer) => {
+    const { servers } = current.current;
+    const activeServer = servers.find((entry) => entry.id === server.id);
+    if (activeServer) await saveConfig({ servers, activeServer });
   };
 
   const addServer = async (server: Server) => {
-    // ignore duplicates — double-taps and repeated deep links otherwise add
-    // the same server twice
-    const existing = await loadServers();
-    if (!existing.some((s) => sameServer(s, server))) {
-      await storageAddServer(server);
+    const { servers } = current.current;
+    const existing = servers.find((entry) => sameServer(entry, server));
+    if (existing) {
+      await setActiveServer(existing);
+      return;
     }
-    setServers(await loadServers());
+    const saved = { ...server, id: globalThis.expo.uuidv4() };
+    await saveConfig({ servers: [...servers, saved], activeServer: saved });
   };
 
-  const updateServer = async (server: Server, index: number) => {
-    await storageUpdateServer(server, index);
-    setServers(await loadServers());
+  const updateServer = async (server: Server, id: string) => {
+    const { servers, activeServer } = current.current;
+    if (!servers.some((entry) => entry.id === id)) return;
+    const updated = { ...server, id };
+    await saveConfig({
+      servers: servers.map((entry) => (entry.id === id ? updated : entry)),
+      activeServer: activeServer?.id === id ? updated : activeServer,
+    });
   };
 
-  const removeServer = async (index: number) => {
-    const removedServer = await storageRemoveServer(index);
-    const remaining = await loadServers();
-    setServers(remaining);
-
-    if (sameServer(activeServer, removedServer)) {
-      await setActiveServer(remaining.length > 0 ? remaining[0] : undefined);
-    }
+  const removeServer = async (id: string) => {
+    const { servers, activeServer } = current.current;
+    const remaining = servers.filter((entry) => entry.id !== id);
+    await saveConfig({
+      servers: remaining,
+      activeServer: activeServer?.id === id ? remaining[0] : activeServer,
+    });
   };
 
   return (

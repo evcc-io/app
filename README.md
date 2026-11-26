@@ -79,18 +79,18 @@ _Note: Ensure that query values are properly encoded._
 
 ### Open the forecast
 
-Navigates to the forecast page. `server` is the 0-based index of the saved server. If omitted, the active server is used.
+Navigates to the forecast page. Widgets use `serverId`, the persistent ID of a saved server. Links can also use `server`, the 0-based position in the current server list. Omitting both opens the active server. A link to a deleted `serverId` is ignored.
 
 ```
-evcc://forecast?server=<index>
+evcc://forecast?serverId=<id>
 ```
 
 ### Open a loadpoint
 
-Navigates to the loadpoints page. `lp` focuses the loadpoint with that 1-based number. If omitted, the current loadpoint is used. `server` as above.
+Navigates to the loadpoints page. `lp` focuses the loadpoint with that 1-based number. If omitted, the current loadpoint is used. Server selection works as above.
 
 ```
-evcc://loadpoint?lp=<number>&server=<index>
+evcc://loadpoint?lp=<number>&serverId=<id>
 ```
 
 ## Self-signed certificates

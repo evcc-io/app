@@ -3,7 +3,7 @@ import * as Haptics from "expo-haptics";
 import { useCallback } from "react";
 import { useAppContext } from "../components/AppContext";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Server, SwitchServerStackParamList } from "types";
+import { SavedServer, SwitchServerStackParamList } from "types";
 import {
   SafeAreaView,
   useSafeAreaInsets,
@@ -25,7 +25,7 @@ export default function SwitchServerScreen({
   const { setActiveServer } = useAppContext();
 
   const onSelect = useCallback(
-    async (server: Server) => {
+    async (server: SavedServer) => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
       await setActiveServer(server);
       navigation.goBack();
@@ -34,8 +34,8 @@ export default function SwitchServerScreen({
   );
 
   const onEdit = useCallback(
-    (server: Server, serverIndex: number) => {
-      navigation.navigate("EditServer", { server, serverIndex });
+    (server: SavedServer) => {
+      navigation.navigate("EditServer", { server });
     },
     [navigation],
   );

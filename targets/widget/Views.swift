@@ -25,7 +25,7 @@ struct ForecastWidgetView: View {
     c.scheme = "evcc"
     c.host = "forecast"
     if let id = entry.serverId {
-      c.queryItems = [URLQueryItem(name: "server", value: id)]
+      c.queryItems = [URLQueryItem(name: "serverId", value: id)]
     }
     return c.url
   }
