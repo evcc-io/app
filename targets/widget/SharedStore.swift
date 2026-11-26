@@ -44,10 +44,10 @@ enum SharedStore {
     return all.first
   }
 
-  /// Resolve the server selected in the widget config, falling back to the active one.
+  /// Only an unconfigured widget follows the active server.
   static func server(id: String?) -> StoredServer? {
     guard let id, !id.isEmpty else { return defaultServer() }
-    return servers().first(where: { $0.id == id }) ?? defaultServer()
+    return servers().first(where: { $0.id == id })
   }
 
   /// Timestamp of the last mode change made from the widget, so the loadpoint

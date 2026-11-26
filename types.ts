@@ -6,6 +6,10 @@ export interface Server {
   basicAuth: BasicAuth;
 }
 
+export interface SavedServer extends Server {
+  readonly id: string;
+}
+
 export interface BasicAuth {
   required?: boolean;
   username?: string;
@@ -23,8 +27,7 @@ export type AddServerParams = {
 export type SwitchServerStackParamList = {
   SwitchServer: undefined;
   EditServer?: {
-    server?: Server;
-    serverIndex: number;
+    server: SavedServer;
   };
   AddServer?: AddServerParams;
   QRCodeCamera: undefined;

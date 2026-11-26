@@ -1,6 +1,6 @@
 import { Platform } from "react-native";
 import { File, Paths } from "expo-file-system";
-import { Server } from "types";
+import { SavedServer } from "types";
 
 const APP_GROUP = "group.io.evcc.app";
 
@@ -13,11 +13,6 @@ enum WidgetStorageKeys {
   ACTIVE_SERVER_ID = "activeServerId",
 }
 
-// Position-based id. Not stable across reorder/delete — revisit with a uuid.
-export function widgetServerId(index: number): string {
-  return String(index);
-}
-
 interface WidgetServer {
   id: string;
   title: string;
@@ -27,10 +22,10 @@ interface WidgetServer {
   authRequired: boolean;
 }
 
-function toWidgetServer(server: Server, index: number): WidgetServer {
+function toWidgetServer(server: SavedServer): WidgetServer {
   const required = !!server.basicAuth?.required;
   return {
-    id: widgetServerId(index),
+    id: server.id,
     title: server.title?.trim() || server.url,
     url: server.url,
     username: required ? (server.basicAuth?.username ?? "") : "",
@@ -55,24 +50,18 @@ function getExtensionStorage() {
  * then ask WidgetKit to reload. Best-effort: failures are swallowed.
  */
 export function syncWidgetServers(
-  servers: Server[],
-  activeServer?: Server,
+  servers: SavedServer[],
+  activeServer?: SavedServer,
 ): void {
-  const activeIndex = activeServer
-    ? servers.findIndex((s) => s.url === activeServer.url)
-    : -1;
-  const activeServerId =
-    activeIndex >= 0 ? widgetServerId(activeIndex) : undefined;
-
   if (Platform.OS === "android") {
-    syncAndroidWidgetServers(servers, activeServerId);
+    syncAndroidWidgetServers(servers, activeServer?.id);
     return;
   }
-  syncIosWidgetServers(servers, activeServerId);
+  syncIosWidgetServers(servers, activeServer?.id);
 }
 
 function syncIosWidgetServers(
-  servers: Server[],
+  servers: SavedServer[],
   activeServerId?: string,
 ): void {
   const mod = getExtensionStorage();
@@ -96,7 +85,7 @@ function syncIosWidgetServers(
 
 // The widget re-reads the file on its next update (periodic, reload button, tap).
 function syncAndroidWidgetServers(
-  servers: Server[],
+  servers: SavedServer[],
   activeServerId?: string,
 ): void {
   try {

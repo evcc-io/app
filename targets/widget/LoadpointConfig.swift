@@ -66,7 +66,7 @@ struct SetModeIntent: AppIntent {
   }
 
   func perform() async throws -> some IntentResult {
-    if let server = SharedStore.server(id: serverId) {
+    if !serverId.isEmpty, let server = SharedStore.server(id: serverId) {
       if await ApiClient.post(server, path: "/api/loadpoints/\(lp)/mode/\(mode)") {
         SharedStore.markModeChanged()  // triggers quick follow-up reloads
       }

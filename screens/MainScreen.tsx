@@ -92,17 +92,6 @@ export default function MainScreen({
     webViewRef.current?.injectJavaScript(safeAreaJs(insets));
   }, [insets]);
 
-  // Tell the web UI to navigate to a deep-linked path (e.g. "/forecast") once
-  // it's connected. The web UI handles the actual routing (added separately).
-  useEffect(() => {
-    if (targetPath && isConnected && webViewRef.current) {
-      webViewRef.current.postMessage(
-        JSON.stringify({ type: "navigate", path: targetPath }),
-      );
-      clearTargetPath();
-    }
-  }, [targetPath, isConnected, clearTargetPath]);
-
   // Android back button navigates the web UI's history instead of leaving the app
   useEffect(() => {
     if (Platform.OS !== "android") return;
@@ -174,6 +163,17 @@ export default function MainScreen({
     check();
     return () => clearTimeout(checkTimerRef.current);
   }, [check]);
+
+  // A widget tap can switch servers and request navigation in the same render.
+  // Wait for the newly selected server to report online.
+  useEffect(() => {
+    if (targetPath && connectedRef.current && webViewRef.current) {
+      webViewRef.current.postMessage(
+        JSON.stringify({ type: "navigate", path: targetPath }),
+      );
+      clearTargetPath();
+    }
+  }, [targetPath, isConnected, clearTargetPath]);
 
   const setOnline = useCallback(() => {
     clearTimeout(checkTimerRef.current);

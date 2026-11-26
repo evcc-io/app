@@ -32,7 +32,7 @@ export default function OnboardingScreen({
 }: NativeStackScreenProps<RootStackParamList, "Onboarding">) {
   const { t } = useTranslation();
   const colors = useThemeColors();
-  const { addServer, setActiveServer } = useAppContext();
+  const { addServer } = useAppContext();
 
   const selectDemoServer = useCallback(async () => {
     const server = { url: "https://demo.evcc.io/", basicAuth: {} } as Server;
@@ -41,11 +41,10 @@ export default function OnboardingScreen({
       const finalUrl = await verifyEvccServer(server);
       const verifiedServer = { ...server, url: finalUrl };
       await addServer(verifiedServer);
-      await setActiveServer(verifiedServer);
     } catch (error) {
       Alert.alert((error as Error).message);
     }
-  }, [addServer, setActiveServer]);
+  }, [addServer]);
 
   const startSearch = useCallback(() => {
     navigation.navigate("SearchServer");
