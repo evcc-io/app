@@ -6,7 +6,7 @@ import Header from "../components/Header";
 import { useAppContext } from "../components/AppContext";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Server, RootStackParamList } from "types";
+import { NewServer, RootStackParamList } from "types";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 
@@ -26,7 +26,7 @@ function AddServerScreen({
     required,
   } = route.params || {};
 
-  const [internalServer, setInternalServer] = useState<Server>({
+  const [internalServer, setInternalServer] = useState<NewServer>({
     title,
     url: initialUrl,
     basicAuth: {
@@ -49,12 +49,11 @@ function AddServerScreen({
   }, [title, initialUrl, username, password]);
 
   const serverSelected = useCallback(
-    async (server: Server) => {
+    async (server: NewServer) => {
       setInternalServer(server);
 
       // a freshly added server becomes the active one
-      await addServer(server);
-      await setActiveServer(server);
+      await setActiveServer(await addServer(server));
 
       if (navigation.canGoBack()) {
         navigation.goBack();

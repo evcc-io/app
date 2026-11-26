@@ -7,9 +7,8 @@ import { useAppContext } from "../components/AppContext";
 import Header from "../components/Header";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { SwitchServerStackParamList, Server } from "types";
+import { SwitchServerStackParamList, NewServer } from "types";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { sameServer } from "utils/server";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 
 function EditServerScreen({
@@ -18,26 +17,19 @@ function EditServerScreen({
 }: NativeStackScreenProps<SwitchServerStackParamList, "EditServer">) {
   const { t } = useTranslation();
   const colors = useThemeColors();
-  const { activeServer, updateServer, removeServer, servers, setActiveServer } =
-    useAppContext();
+  const { updateServer, removeServer, servers } = useAppContext();
   const { server: internalServer, serverIndex } = route.params || {};
 
   const saveServer = React.useCallback(
-    async (server: Server) => {
+    async (server: NewServer) => {
       if (serverIndex !== undefined) {
-        if (
-          activeServer &&
-          servers.findIndex((s) => sameServer(activeServer, s)) === serverIndex
-        ) {
-          await setActiveServer(server);
-        }
         await updateServer(server, serverIndex);
       }
       if (navigation.canGoBack()) {
         navigation.goBack();
       }
     },
-    [navigation, updateServer, serverIndex, activeServer, servers],
+    [navigation, updateServer, serverIndex],
   );
 
   const serverForm = React.useMemo(

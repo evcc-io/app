@@ -13,11 +13,6 @@ enum WidgetStorageKeys {
   ACTIVE_SERVER_ID = "activeServerId",
 }
 
-// Position-based id. Not stable across reorder/delete — revisit with a uuid.
-export function widgetServerId(index: number): string {
-  return String(index);
-}
-
 interface WidgetServer {
   id: string;
   title: string;
@@ -27,10 +22,10 @@ interface WidgetServer {
   authRequired: boolean;
 }
 
-function toWidgetServer(server: Server, index: number): WidgetServer {
+function toWidgetServer(server: Server): WidgetServer {
   const required = !!server.basicAuth?.required;
   return {
-    id: widgetServerId(index),
+    id: server.id,
     title: server.title?.trim() || server.url,
     url: server.url,
     username: required ? (server.basicAuth?.username ?? "") : "",
@@ -58,17 +53,11 @@ export function syncWidgetServers(
   servers: Server[],
   activeServer?: Server,
 ): void {
-  const activeIndex = activeServer
-    ? servers.findIndex((s) => s.url === activeServer.url)
-    : -1;
-  const activeServerId =
-    activeIndex >= 0 ? widgetServerId(activeIndex) : undefined;
-
   if (Platform.OS === "android") {
-    syncAndroidWidgetServers(servers, activeServerId);
+    syncAndroidWidgetServers(servers, activeServer?.id);
     return;
   }
-  syncIosWidgetServers(servers, activeServerId);
+  syncIosWidgetServers(servers, activeServer?.id);
 }
 
 function syncIosWidgetServers(
