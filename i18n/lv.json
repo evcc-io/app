@@ -91,7 +91,7 @@
     "androidConfig": {
       "chooseLoadpoint": "Izvēlēties uzlādes punktu",
       "chooseServer": "Izvēlēties serveri",
-      "loading": "Ielādē…",
+      "loading": "Ielāde notiek…",
       "loadingPreview": "Ielādē priekšskatījumu…",
       "noLoadpoints": "Nav sasniedzamu uzlādes punktu",
       "noServers": "Nav serveru. Vispirms pievienojiet vienu lietotnē.",
