@@ -1,7 +1,7 @@
 {
   "connection": {
     "auth": {
-      "hint": "Nesprávne meno alebo heslo. Aktualizujte poverenia cez Zmeniť server.",
+      "hint": "Nesprávne užívateľské meno alebo heslo. Aktualizovať poverenia prostredníctvom Zmeniť Server.",
       "title": "Prihlásenie zlyhalo"
     },
     "httpError": {
@@ -9,7 +9,7 @@
       "title": "Chyba servera (HTTP {{status}})"
     },
     "offline": {
-      "hint": "Vaše zariadenie je offline. Pripojte sa k WiFi alebo mobilným dátam.",
+      "hint": "Vaše zariadenie je offline. Pripojte sa k Wi-Fi alebo cez mobilné dáta.",
       "title": "Žiadna sieť"
     },
     "rateLimited": {
@@ -17,12 +17,12 @@
       "title": "Príliš veľa pokusov"
     },
     "remoteOffline": {
-      "hint": "Vaša inštancia evcc nie je pripojená.",
+      "hint": "Váša inštancia evcc nie je pripojená.",
       "title": "evcc je offline"
     },
-    "retry": "Skúsiť znova",
+    "retry": "Skúste znova",
     "timeout": {
-      "hint": "Server neodpovedá.",
+      "hint": "Žiadna odpoveď zo servera.",
       "title": "Server neodpovedá"
     },
     "unreachable": {
@@ -31,12 +31,12 @@
     },
     "websocket": {
       "hint": "Stránka sa načíta, ale WebSocket sa nepripojí. Skontrolujte nastavenia reverzného proxy.",
-      "title": "Pripojenie WebSocket zlyhalo"
+      "title": "WebSocket pripojenie zlyhalo"
     }
   },
   "main": {
-    "description": "Prehľadávajte svoju sieť a nájdite inštaláciu evcc.",
-    "title": "Nastavenie servera"
+    "description": "Pripojte sa k serveru.",
+    "title": "Vitajte"
   },
   "servers": {
     "changeServer": "Zmeniť server",
@@ -75,10 +75,10 @@
       "hint": "Zvyčajne to trvá niekoľko sekúnd.",
       "inProgress": "Hľadá sa …",
       "notAvailable": "Hľadanie nie je možné na tomto zariadení. Použite manuálny vstup.",
-      "nothingFound": "Nebol nájdený žiadny server evcc.",
+      "nothingFound": "Nebol nájdený žiadny server.",
       "searching": "Hľadať pripojenie ...",
       "selectHelper": "Vyberte ten, ku ktorému sa chcete pripojiť.",
-      "start": "Spustiť vyhľadávanie",
+      "start": "Hľadať server",
       "tryAgain": "Hľadať znova"
     },
     "switchServer": {
@@ -89,15 +89,15 @@
   },
   "widget": {
     "androidConfig": {
-      "chooseLoadpoint": "Vyberte nabíjací bod",
-      "chooseServer": "Vyberte server",
+      "chooseLoadpoint": "Vybrať nabíjací bod",
+      "chooseServer": "Vybrať server",
       "loading": "Načítava sa…",
       "loadingPreview": "Načítava sa ukážka…",
-      "noLoadpoints": "Žiadne dostupné nabíjacie body",
+      "noLoadpoints": "Žiadne dostupné nabíjacie stanice",
       "noServers": "Žiadne servery. Najprv jeden pridajte v aplikácii.",
       "previewError": "Ukážku sa nepodarilo načítať",
-      "setupBody": "Ťuknite a vyberte server a nabíjací bod.",
-      "useThisLoadpoint": "Použiť tento nabíjací bod"
+      "setupBody": "Ťuknite a vyberte server a nabíjaciu stanicu.",
+      "useThisLoadpoint": "Použiť túto nabíjaciu stanicu"
     },
     "config": {
       "desc": "Server pre predpoveď.",
@@ -113,7 +113,7 @@
     },
     "loadpoint": {
       "description": "Stav nabíjacieho bodu a režim nabíjania.",
-      "name": "Nabíjací bod"
+      "name": "Nabíjacia stanica"
     },
     "name": {
       "co2": "CO₂",
